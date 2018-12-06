@@ -81,7 +81,7 @@
 		<%@include file = "views/customer/navi.jsp" %>
 
 
-		<div class="titlePage">쇼핑몰 이름이양!!</div>
+		<div class="titlePage">SIEMPRE</div>
 		
 
 
