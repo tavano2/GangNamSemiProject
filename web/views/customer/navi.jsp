@@ -19,13 +19,13 @@
 		</nav>
 			<script> /* 윈도우 사이즈 변경시 네비 표시 변경*/
 		$(function() {
-			if ($(window).width() > 900) {
+			if ($(window).width() > 750) {
 				$('#top_nav').show();
 			} else {
 				$('#top_nav').hide();
 			}
 			$(window).resize(function() {
-				if ($(this).width() > 900) {
+				if ($(this).width() > 750) {
 					$('#top_nav').show();
 				} else {
 					$('#top_nav').hide();

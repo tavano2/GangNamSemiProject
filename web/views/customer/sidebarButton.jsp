@@ -13,7 +13,7 @@
 	
 		<div class="dropdown">
 			<button class="btn btn-outline-light text-dark dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown"
-			aria-haspopup="true" aria-expanded="false" style="color : rgb(243, 156, 18)">
+			aria-haspopup="true" aria-expanded="false">
 			COUPLE
 			</button>
 			<div class="dropdown-menu" aria-labelledby="dropdownMenu3">

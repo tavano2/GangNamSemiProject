@@ -65,9 +65,12 @@
 	font-size : 25px;
 	text-align: center;
 	padding-top : 35px;
-	
-
 }
+#titlePage1:link,:visited,:hover{
+	text-decoration: none;
+	color: black;
+}
+
 </style>
 
 
@@ -75,13 +78,13 @@
 <body>
 	<div class="wrapper">
 		<%@ include file="views/customer/sidebar.jsp"%>
-		<div class="wrapper">
+		
 		
 		
 		<%@include file = "views/customer/navi.jsp" %>
 
 
-		<div class="titlePage">SIEMPRE</div>
+		<div class="titlePage" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><a href="#" id="titlePage1">SIEMPRE</a></div>
 		
 
 
@@ -107,7 +110,7 @@
 		<h1>dddddddddddddd</h1>
 		<h1>dddddddddddddd</h1>
 		<h1>dddddddddddddd</h1>
-	</div>
+	
 
 		<%@ include file="views/customer/Footer.jsp"%>
 	</div>
