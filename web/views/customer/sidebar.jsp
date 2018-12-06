@@ -11,12 +11,26 @@
 	</div>
 
 	<div class="sidebar-header">
-		<h4>제목</h4>
+		<button class="ui black basic button">로그인</button><br><br>
+		<table style="width:210px;">
+			<tr>
+				<td><a href="#" class="a-link">아이디/비밀번호 찾기</a></td>
+				<td align="right"><a href="#" class="a-link">회원가입</a></td>
+			</tr>
+		</table>
 	</div>
 
 	<ul class="list-unstyled components">
-		<p>소제목</p>
-		<li class="active"><a href="#homeSubmenu" data-toggle="collapse"
+		<!-- <p>소제목</p> -->
+
+		<li><a href="index.jsp">홈</a></li>
+		<li><a href="#">공지사항</a></li>
+		<li><a href="#">마이페이지</a></li>
+		<li><a href="#">장바구니</a></li>
+		<li><a href="#">주문내역</a></li>
+		<li><a href="#">쪽지/쿠폰함</a></li>
+
+		<!-- <li class="active"><a href="#homeSubmenu" data-toggle="collapse"
 			aria-expanded="false">Home</a>
 			<ul class="collapse list-unstyled" id="homeSubmenu">
 				<li><a href="#">Home 1</a></li>
@@ -29,16 +43,8 @@
 				<li><a href="#">Page 1</a></li>
 				<li><a href="#">Page 2</a></li>
 				<li><a href="#">Page 3</a></li>
-			</ul></li>
-		<li><a href="#">Help</a></li>
-		<li><a href="#">NOTICE</a></li>
-		<li><a href="#">DAILY</a></li>
-		<li><a href="#">Log-In</a></li>
-		<li><a href="#">Join Us</a></li>
-		<li><a href="#">Cart</a></li>
-		<li><a href="#">My Page</a></li>
-		<li><a href="#">ORDER</a></li>
-		<li><a href="#">쪽지함</a></li>
+			</ul></li> -->
+
 	</ul>
 
 	<!-- 	<ul class="list-unstyled CTAs">
@@ -55,10 +61,12 @@
 		$("#sidebar").mCustomScrollbar({
 			theme : "minimal"
 		});
+
 		$('#dismiss, .overlay').on('click', function() {
 			$('#sidebar').removeClass('active');
 			$('.overlay').removeClass('active');
 		});
+
 		$('#sidebarCollapse').on('click', function() {
 			$('#sidebar').addClass('active');
 			$('.overlay').addClass('active');
