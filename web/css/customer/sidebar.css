@@ -109,6 +109,19 @@ a:focus {
     border-bottom: 1px solid black;
 }
 
+#sidebar .sidebar-header  button {	/* 헤더 */
+    width: 170px;
+    height: 40px;
+}
+
+#sidebar .sidebar-header  .a-link {	/* 헤더 */
+    color: black;
+}
+
+#sidebar .sidebar-header  .a-link:hover {	/* 헤더 */
+    color: #400000;
+}
+
 #sidebar ul.components {
     padding: 20px 0;
     border-bottom: 1px solid #47748b;
