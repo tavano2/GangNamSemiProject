@@ -25,7 +25,7 @@
 				$('#top_nav').hide();
 			}
 			$(window).resize(function() {
-				if ($(this).width() > 750) {
+				if ($(this).width() > 760) {
 					$('#top_nav').show();
 				} else {
 					$('#top_nav').hide();
