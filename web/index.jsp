@@ -77,18 +77,18 @@
 </head>
 <body>
 	<div class="wrapper">
-		<%@ include file="views/customer/sidebar.jsp"%>
+		<%@ include file="views/customer/common/sidebar.jsp"%>
 		
 		
 		
-		<%@include file = "views/customer/navi.jsp" %>
+		<%@include file = "views/customer/common/navi.jsp" %>
 
 
 		<div class="titlePage" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><a href="#" id="titlePage1">SIEMPRE</a></div>
 		
 
 
-		<%@include file = "views/customer/sidebarButton.jsp" %>
+		<%@include file = "views/customer/common/sidebarButton.jsp" %>
 		<br>
 		<br>
 
@@ -110,9 +110,9 @@
 		<h1>dddddddddddddd</h1>
 		<h1>dddddddddddddd</h1>
 		<h1>dddddddddddddd</h1>
-	
+		
 
-		<%@ include file="views/customer/Footer.jsp"%>
+		<%@ include file="views/customer/common/Footer.jsp"%>
 	</div>
 
 
