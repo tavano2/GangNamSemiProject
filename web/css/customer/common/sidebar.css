@@ -68,6 +68,10 @@ a:focus {
     left: 0;
 }
 
+#sidebar:focus {
+    border: none;
+}
+
 #dismiss {		/* 화살표 */
     width: 35px;
     height: 35px;
@@ -109,9 +113,13 @@ a:focus {
     border-bottom: 1px solid black;
 }
 
-#sidebar .sidebar-header  button {	/* 헤더 */
+#sidebar .sidebar-header button {	/* 헤더 */
     width: 170px;
     height: 40px;
+}
+
+#sidebar .sidebar-header button:hover {	/* 헤더 */
+    border: 1px solid #400000;
 }
 
 #sidebar .sidebar-header  .a-link {	/* 헤더 */
@@ -124,7 +132,7 @@ a:focus {
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+    border-bottom: 1px solid black;
 }
 
 #sidebar ul p {
