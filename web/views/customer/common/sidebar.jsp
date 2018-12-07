@@ -7,11 +7,11 @@
 
 <nav id="sidebar">
 	<div id="dismiss">
-		<i class="fas fa-arrow-left"></i>
+		<i class="fas fa-arrow-right"></i>
 	</div>
 
 	<div class="sidebar-header">
-		<button class="ui black basic button">로그인</button><br><br>
+		<div style="height: 40px;"></div><button class="ui black basic button">로그인</button><br><br>
 		<table style="width:210px;">
 			<tr>
 				<td><a href="#" class="a-link">아이디/비밀번호 찾기</a></td>

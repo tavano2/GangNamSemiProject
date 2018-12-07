@@ -76,42 +76,37 @@
 
 </head>
 <body>
+	<%@ include file="views/customer/common/sidebar.jsp"%>	
+	
 	<div class="wrapper">
-		<%@ include file="views/customer/common/sidebar.jsp"%>
-		
-		
-		
 		<%@include file = "views/customer/common/navi.jsp" %>
-
 
 		<div class="titlePage" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"><a href="#" id="titlePage1">SIEMPRE</a></div>
 		
-
-
 		<%@include file = "views/customer/common/sidebarButton.jsp" %>
 		<br>
 		<br>
-
-
-		<h1></h1>
-		<h1>이하 내용임</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
-		<h1>dddddddddddddd</h1>
 		
-
+		<div id="content">
+			<h1></h1>
+			<h1>이하 내용임</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+			<h1>dddddddddddddd</h1>
+		</div>
+		
 		<%@ include file="views/customer/common/Footer.jsp"%>
 	</div>
 
