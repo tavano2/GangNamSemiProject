@@ -10,7 +10,7 @@
 		background-color: white;
 	}
 
-    .login-btn {
+    .sidebar-btn {
         position: absolute;
         top: 6px;
         right: 7px;
@@ -19,6 +19,11 @@
     .cate-nav .btn-outline-light{
         margin-right: 15px;
     }
+    
+    .navbar ul.navbar-nav li.dropdown .dropdown-menu > a:active {
+    	background-color: red;
+	}
+	
 </style>
 	
 <nav class="cate-nav navbar navbar-expand-lg navbar-light bg-light sticky-top" style="z-index: 0;">
@@ -124,7 +129,7 @@
 
     </div>
 
-    <button type="button" id="sidebarCollapse" class="ui icon button login-btn">
+    <button type="button" id="sidebarCollapse" class="ui icon button sidebar-btn">
         <i class="chevron left icon"></i>
     </button> <!-- 사이드 버튼 -->
 
