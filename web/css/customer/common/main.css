@@ -1,0 +1,201 @@
+/* 메인 바디 CSS -------------------------------------------------- */
+.wrapper {
+    max-width: 1200px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.content{
+    min-height: 55%;
+    padding-bottom: 20px;
+}
+/* ------------------------------------------------------------ */
+
+
+
+
+
+/* 사이드바 CSS -------------------------------------------------- */
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+/* 사이드바 */
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    right: -250px;
+    height: 100vh;
+    z-index: 999;
+    background: white;
+    /* color: black; */
+    transition: all 0.3s;
+    overflow-y: scroll;
+    box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+#sidebar.active {
+    right: 0;
+}
+
+/* 화살표 */
+#dismiss {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: white;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+#dismiss:hover {
+    background: #f8f9fa;
+    color: #400000;
+}
+
+/* 흑백 오버레이 */
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* 사이드바 헤더 */
+#sidebar .sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid black;
+}
+#sidebar .sidebar-header .sidebar-login {
+    width: 210px;
+}
+#sidebar .sidebar-login table{
+    width: 100%;
+}
+#sidebar .sidebar-header .sidebar-login .button {
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    width: 100%;
+    height: 40px;
+    margin-top: 40px;
+    margin-bottom: 15px;
+}
+#sidebar .sidebar-header .sidebar-login .button:hover {
+    border: 1px solid #400000;
+    color: #400000;
+}
+#sidebar .sidebar-header .sidebar-login .button:active {
+    background-color: #f8f9fa;
+}
+
+/* a 태그 */
+#sidebar a {
+    color: black;
+}
+#sidebar a:hover {
+    color: #400000;
+    text-decoration: none; 
+}
+#sidebar ul a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul a:hover {
+    background: #f8f9fa;
+}
+
+/* ul 태그 */
+#sidebar ul.components {
+    padding: 20px 10px;
+    border-bottom: 1px solid black;
+    list-style-type: none;
+}
+
+/* p 태그 */
+#sidebar ul p {
+    color: black;
+    padding: 10px;
+}
+/* ------------------------------------------------------------ */
+
+
+
+
+/* 네비바 CSS -------------------------------------------------- */
+#top_nav, #cate_nav{
+    margin-top: 0;
+    background-color: #f8f9fa;
+}
+
+#cate_nav{
+    height: 50px;
+}
+
+#cate_nav .right.menu .search-box {
+    height: 30px;
+    background-color: white;
+}
+
+#top_nav .item:hover, #cate_nav .dropdown.item:hover {
+    color: #400000;
+}
+
+#sidebarCollapse{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 40px;
+    margin-right: 10px;
+    background-color: white;
+}
+
+#sidebarCollapse:hover{
+    color: #400000;
+}
+/* ------------------------------------------------------------ */
+
+
+
+
+/* 사이트명 CSS -------------------------------------------------- */
+.titlePage{
+    height : 100px;
+    font-size : 25px;
+    text-align: center;
+    padding-top : 35px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.titlePage a:link, .titlePage a:visited, .titlePage a:hover{
+    text-decoration: none;
+    color: black;
+}
+/* ------------------------------------------------------------ */
+
+
+
+
+/* 푸터 CSS -------------------------------------------------- */
+#customer-footer{
+    margin-bottom: 0;
+    padding-top: 5px;
+    padding-left: 0px;
+    background: white;
+    border-top: 1px solid black;
+}
+#customer-footer .footer-text{
+    font-size: 15px;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+/* ------------------------------------------------------------ */
