@@ -148,7 +148,8 @@
     background-color: white;
 }
 
-#top_nav .item:hover, #cate_nav .dropdown.item:hover {
+#top_nav .item:hover, #cate_nav .dropdown.item:hover,
+#cate_nav .dropdown.active {
     color: #400000;
 }
 
