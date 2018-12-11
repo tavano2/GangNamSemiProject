@@ -3,9 +3,11 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Insert title here</title
+
 
     <!-- Semantic UI CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -19,10 +21,12 @@
 
 	<%@ include file="views/customer/common/mainNav.jsp"%>	
 	
+  
 	<div class="content">
 		<h1>이하 내용임</h1>
 	</div>
 		
+  
 	<%@ include file="views/customer/common/mainFooter.jsp"%>
 
 
