@@ -52,13 +52,13 @@
 	margin-right: auto;
 }
 
-.nav-link{
-	color: black;
-}
 
-.nav-link:hover{
+
+
+#top_nav .item:hover{
 	color: #400000;
 }
+
 
 .titlePage{
 	height : 100px;
