@@ -46,7 +46,7 @@
     </div> <!-- 사이드바 목록-->
     <div class="ui fluid container">
     <div class="pusher">
-        <%@ include file = "../common/adminNavi.jsp" %>
+        <%@ include file = "/views/admin/common/adminNavi.jsp" %>
 
         <div class="content">
             <!-- 내용 -->
@@ -70,7 +70,7 @@
 
 		
 		<!-- Footer -->
-       <%@ include file = "../common/adminFooter.jsp" %>
+       <%@ include file = "/views/admin/common/adminFooter.jsp" %>
     </div>
 </div>
 </body>
