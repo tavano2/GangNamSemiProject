@@ -1,0 +1,12 @@
+/* 메인 바디 CSS */
+.pusher {
+    height: 100%;
+}
+.content {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    min-height: 70%;
+}
+.content-box{
+    max-width: 1200px;
+}

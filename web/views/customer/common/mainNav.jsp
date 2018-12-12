@@ -50,6 +50,9 @@
                 EVENT
             </a>
             <div class="right menu">
+            	<a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
+                        관리자 페이지
+                </a> <!-- 이후 삭제 -->
                 <a class="item">
                     Log-In
                 </a>
