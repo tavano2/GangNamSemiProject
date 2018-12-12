@@ -35,8 +35,8 @@
 	<div class="content">
 		<br> <br>
 		<div align="center"
-			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">My
-			Page</div>
+			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">MY
+			PAGE</div>
 		<br> <br>
 
 		<div align="center">
