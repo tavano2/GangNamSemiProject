@@ -28,7 +28,7 @@
             <li><a href="#">공지사항</a></li>
             <li><a href="/semi/views/customer/member/userMyPage.jsp">마이페이지</a></li>
             <li><a href="#">장바구니</a></li>
-            <li><a href="#">주문내역</a></li>
+            <li><a href="/semi/views/customer/product/orderList.jsp">주문내역</a></li>
             <li><a href="#">쪽지/쿠폰함</a></li>
         </ul>
     </nav>
@@ -65,7 +65,7 @@
                 <a class="item" href="/semi/views/customer/member/userMyPage.jsp">
                     My Page
                 </a>
-                <a class="item">
+                <a class="item" href="/semi/views/customer/product/orderList.jsp">
                     ORDER
                 </a>
                 <a class="item">
