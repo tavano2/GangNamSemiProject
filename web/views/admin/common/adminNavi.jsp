@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
         <!-- 상단 목록 -->
-        <div class="ui menu stackable" id="sticky1">
-            <a id="menu" class="item">
+        <div class="ui menu" id="sticky1">
+            <a id="sidebarCollapse" class="item toggle button">
                 <i class="chevron right icon"></i>
             </a>
             <a class="item" href="/semi/views/admin/main/adminMainHome.jsp">

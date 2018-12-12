@@ -195,12 +195,12 @@
     </div>
 
 
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <!-- J-query CDN -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Semantic UI JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-    <!-- Semantic UI JS-->
-    <script src="semantic/semantic.min.js"></script>
     
     <!-- Admin Common JS -->
     <script src="/semi/js/admin/common/adminMain.js"></script>

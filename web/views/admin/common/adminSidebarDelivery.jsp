@@ -3,7 +3,7 @@
     <!-- 사이드바 오픈시 오버레이 -->
     <div class="overlay"></div>
 
-    <!-- 사이드바 -->
+    <!-- 사이드바 --> 
     <nav id="adminSidebar">
 
         <div class="ui vertical thin menu">
