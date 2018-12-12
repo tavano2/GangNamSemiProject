@@ -23,11 +23,86 @@
 	
   
 	<div class="content">
-		<h1>이하 내용임</h1>
+        <br>
+        <br>
+        <div align = "center" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">My Page</div>
+        <br>
+        <br>
+           
+        <div align = "center">
+        <table class="ui structured table" style="width: 900px; height: 120px; text-align: center;">
+                <tbody>
+                  <tr> 
+                    <td style="width: 250px; border-right: white;" rowspan="3">이미지</td>
+                    <td style="border-bottom: white;">   
+                        <p>저희 쇼핑몰을 이용해 주셔서 감사합니다. ?? 님은 ?? 회원이십니다.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                   
+                    <td style="border-bottom: white; border-top: white;">
+                        <p>?? 까지 남은 구매금액은 ?? 입니다. (최근 12개월 동안 구매금액 : ?? )</p>
+                        </td>
+                  </tr>
+                  <tr>
+                   
+                    <td style="border-top: white;">
+                        <p>승급 기준에 따른 예상 금액이므로 총주문 금액과 다를 수 있습니다.</p>
+                    
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <br>
+        <br>
+        <div align = "center">
+                <table class="ui structured single line celled table" style="width: 900px; height: 120px; text-align: center;">
+                        <tbody>
+                          <tr> 
+                            <td style="text-align: left; border-bottom: white; border-right: white;">가용적립금</td>
+                            <td style="text-align: right; border-bottom: white; border-left: white;">?원&nbsp; <button class="ui grey basic mini button">
+                                    <i class="chevron left icon"></i>
+                                조회</button></td>
+                            <td style="text-align: left; border-bottom: white; border-right: white;">총 적립금</td>
+                            <td style="text-align: right; border-bottom: white; border-left: white;">   
+                                <p>?원</p>
+                            </td>
+                          </tr>
+                          <tr>
+                                <td style="text-align: left; border-top: white; border-bottom: white; border-right: white;">사용적립금</td>
+                            <td style="text-align: right; border-top: white; border-bottom: white; border-left: white;">?원 </td>
+                            <td style="text-align: left; border-top: white; border-bottom: white; border-right: white;">쿠폰</td>
+                            <td style="text-align: right; border-top: white; border-bottom: white; border-left: white;">   
+                                ?개&nbsp;<button class="ui grey basic mini button">
+                                        <i class="chevron left icon"></i>
+                                    조회</button>
+                            </td>
+                          </tr>
+                          <tr>
+                                <td style="text-align: left; border-top: white; border-bottom: white; border-right: white;">총 주문</td>
+                            <td style="text-align: right; border-top: white; border-bottom: white; border-left: white;">?원(?회)</td>
+                            <td style="text-align: left; border-top: white; border-bottom: white; border-right: white;"></td>
+                            <td style="text-align: right; border-top: white; border-bottom: white; border-left: white;">   
+                            
+                            </td>
+                            
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+                <br>
+                <br>
+                <hr>
+
+
+
+
 	</div>
 		
   
-	<%@ include file=/views/customer/common/mainFooter.jsp"%>
+	<%@ include file="/views/customer/common/mainFooter.jsp"%>
 
 
     <!-- J-query CDN -->
