@@ -56,7 +56,7 @@
                 <a class="item">
                     Log-In
                 </a>
-                <a class="item">
+                <a class="item" href="/semi/views/customer/member/InsertMember1.jsp">
                     Join Us
                 </a>
                 <a class="item">
