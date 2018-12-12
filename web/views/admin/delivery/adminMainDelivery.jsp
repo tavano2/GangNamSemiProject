@@ -13,7 +13,18 @@
     <!-- Admin Common CSS -->
     <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
     
-    
+    <style>
+        /* 테이블 CSS */
+        .order-search tr>td:first-child{
+            width: 200px;
+        }
+        .search-box{
+            padding-bottom: 50px;
+        }
+        .order-result tr>th:first-child{
+            width: 30px;
+        }
+    </style>
 </head>
 
 <body>
@@ -81,6 +92,31 @@
                                     <a class="item">3개월</a>
                                     <a class="item">6개월</a>
                                 </div>
+                                
+                                <div class="ui form">
+                                    <div class="two fields">
+                                        <div class="field">
+                                        	<label>Start date</label>
+                                            <div class="ui calendar" id="rangestart">
+                                                <div class="ui input left icon">
+                                                    <i class="calendar icon"></i>
+                                                    <input type="text" placeholder="Start">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span>~</span>
+                                        <div class="field">
+                                        	<label>End date</label>
+                                            <div class="ui calendar" id="rangeend">
+                                                <div class="ui input left icon">
+                                                    <i class="calendar icon"></i>
+                                                    <input type="text" placeholder="End">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+							  
                             </td>
                         </tr>
                         <tr>
@@ -166,7 +202,25 @@
 
     <!-- Admin Common JS -->
     <script src="/semi/js/admin/common/adminMain.js"></script>
-    
+
+    <!-- 컨텐츠 박스 JS -->
+    <script>
+        $('.content-box .ui.dropdown').dropdown();  //컨텐츠 박스의 드롭다운 실행
+        $('.content-box .ui.menu .item').on('click', function () {  //컨텐츠 박스의 메뉴 아이템 클릭시 active
+            $('.content-box .pagination.menu .item').removeClass('active');
+            $(this).addClass('active');
+        });
+        
+        $('#rangestart').calendar({
+      		type: 'date',
+        	endCalendar: $('#rangeend')
+        });
+        $('#rangeend').calendar({
+        	type: 'date',
+        	startCalendar: $('#rangestart')
+        });
+    </script>
+
 </body>
 
 </html>
