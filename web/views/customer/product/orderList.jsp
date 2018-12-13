@@ -48,7 +48,7 @@
 					<a class="ui label">오늘 </a> <a class="ui label"> 1주일 </a> <a
 						class="ui label"> 1개월 </a> <a class="ui label"> 3개월 </a> <a
 						class="ui label"> 6개월 </a>
-					
+
 					<!-- 데이트 피커 와야됨 -->
 
 					<a class="ui label" style="color: white; background: black;">
@@ -60,19 +60,49 @@
 				<li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li>
 				<li>주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.</li>
 			</ul>
-			<br>
-			<br>
-			<b>주문 상품 정보</b>
+			<br> <br> <b>주문 상품 정보</b>
+			
+			
+			<!-- 테이블 -->
+			<table class="ui single line table">
+				<thead>
+					<tr>
+						<th>주문일자(주문번호)</th>
+						<th>이미지</th>
+						<th>상품정보</th>
+						<th>수량</th>
+						<th>상품 구매 금액</th>
+						<th>주문 처리 상태</th>
+						<th>취소/교환/반품</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>0502-0505</td>
+						<td>이미지란</td>
+						<td>jhlilk22@yahoo.com</td>
+						<td>No</td>
+						<td>35000원</td>
+						<td>배송중</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			
+			
+			
+			
 		</div>
 
 
 		<div class="ui bottom attached tab segment" data-tab="second">
-						<div class="ui secondary  menu">
+			<div class="ui secondary  menu">
 				<div style="text-align: center; margin-top: 10px;">
 					<a class="ui label">오늘 </a> <a class="ui label"> 1주일 </a> <a
 						class="ui label"> 1개월 </a> <a class="ui label"> 3개월 </a> <a
 						class="ui label"> 6개월 </a>
-					
+
 					<!-- 데이트 피커 와야됨 -->
 
 					<a class="ui label" style="color: white; background: black;">
@@ -84,19 +114,42 @@
 				<li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li>
 				<li>주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.</li>
 			</ul>
-			<br>
-			<br>
-			<b>취소/반품/교환</b>
-			
-			
-			
-			
-			
-			
-			
-			</div>
-	</div>
+			<br> <br> <b>취소/반품/교환</b>
+			<!-- 테이블 -->
+						<table class="ui single line table">
+				<thead>
+					<tr>
+						<th>주문일자(주문번호)</th>
+						<th>이미지</th>
+						<th>상품정보</th>
+						<th>수량</th>
+						<th>상품 구매 금액</th>
+						<th>주문 처리 상태</th>
+						<th>취소/교환/반품</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>0502-0505</td>
+						<td>이미지란</td>
+						<td>jhlilk22@yahoo.com</td>
+						<td>No</td>
+						<td>35000원</td>
+						<td>배송중</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
 
+
+
+
+
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
 
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
