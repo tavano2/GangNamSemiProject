@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
         <!-- 상단 목록 -->
-        <div class="ui menu" id="sticky1">
+        <div class="ui menu fixed top">
             <a id="sidebarCollapse" class="item toggle button">
                 <i class="chevron right icon"></i>
             </a>
