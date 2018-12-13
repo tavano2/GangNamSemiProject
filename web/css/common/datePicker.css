@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+/* https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png */
+/* input[type="date"] {
+	background: #fff
+		url(/semi/image/common/calendar_2.png)
+		88% 50% no-repeat !important;
+} */
+
+input[type="date"]::-webkit-inner-spin-button {
+	display: none;
+}
+
+input[type="date"]::-webkit-calendar {
+	background: yellow;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+	color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    display: block;
+	background: url(/semi/image/common/calendar_2.png) no-repeat;
+	height: 15px;
+	border-width: thin;
+	margin: auto;
+	cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:active {
+	background-size: 90%;
+}
+
+input[type="date"]::-webkit-clear-button{
+	display: none;
+}
+
+input[type='date']::-webkit-datetime-edit-text {
+	padding: 0 0.2em;
+}
+
+input[type='date'] {
+	height: 2.7em;
+}
