@@ -46,7 +46,7 @@
             <a class="item" style="color : rgb(211, 84, 0)">
                 DELAY
             </a>
-            <a class="item" style="color : rgb(231, 76, 60)">
+            <a class="item" style="color : rgb(231, 76, 60)" href="/semi/views/customer/promotion/eventPage.jsp">
                 EVENT
             </a>
             <div class="right menu">
