@@ -115,8 +115,6 @@
 							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">
 
 						</td>
-
-						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -173,18 +171,18 @@
 					수정</button>
 			</div>
 			<div class="btn1">
-				<button class="ui grey basic button" style="font-size: 14px;">위시
-					리스트</button>
+				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/product/wishList.jsp'">
+				위시리스트</button>
 			</div>
 			<div class="btn1">
-				<button class="ui grey basic button" style="font-size: 14px;">적립금</button>
+				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/promotion/UserPoint.jsp'">적립금</button>
 			</div>
 
 		</div>
 		<br>
 		<div align="center">
 			<div class="btn1">
-				<button class="ui grey basic button" style="font-size: 14px;">쪽지/쿠폰함</button>
+				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/promotion/UserNoteCoupon.jsp'">쪽지/쿠폰함</button>
 			</div>
 			<div class="btn1">
 				<button class="ui grey basic button" style="font-size: 14px;">이벤트</button>
@@ -224,6 +222,9 @@
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
+	
+
+
 
 </body>
 

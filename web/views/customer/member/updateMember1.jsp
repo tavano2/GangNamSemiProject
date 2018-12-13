@@ -34,11 +34,13 @@
 			비밀번호를 재확인합니다.
 			<br>
 			<br>
-			<form action="" method="post" id="passwordCheck" class="ui equal width form" style="width: 200px;">
+			<form action="<%=request.getContextPath() %>/???" method="post" id="passwordCheck" class="ui equal width form" style="width: 200px;">
 				<div class="field">
 					<label>Password</label> <input type="password">
 					<br><br>
-					<button type="submit" class="ui secondary button">확인</button><button class="ui button">이전으로</button>
+					<button type="submit" class="ui secondary button">확인</button>
+					<div class="ui button" onclick="location.href='/semi/views/customer/member/updateMember2.jsp'">확인(임시)</div>
+					<div class="ui button" onclick="location.href='/semi/views/customer/member/userMyPage.jsp'">이전으로</div>
 				</div>
 			</form>
 		</div>
