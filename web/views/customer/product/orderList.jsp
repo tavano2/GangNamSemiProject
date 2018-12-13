@@ -33,31 +33,70 @@
 			<a class="active item" data-tab="first"> 주문 내역조회 (?) </a> <a
 				class="item" data-tab="second"> 취소/반품/교환 내역(?) </a>
 		</div>
-		<div class="ui bottom attached tab segment" data-tab="first" id="secondary">
+		<div class="ui bottom attached active tab segment" data-tab="first"
+			id="secondary">
 			<div class="ui secondary  menu">
 				<div class="ui dropdown item">
-                COUPLE
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item">TEE</a>
-                    <a class="item">SHIRT</a>
-                    <a class="item">KNIT</a>
-                    <a class="item">PANTS</a>
-                    <a class="item">OUTER</a>
-                    <a class="item">TRAINING</a>
-                </div>
-            </div>
-				
-				<a class="item"> Messages </a> 
-				<a class="item"> Friends </a>
+					전체 주문 상태 <i class="dropdown icon"></i>
+					<div class="menu">
+						<div class="item">TEE</div>
+						<a class="item">SHIRT</a> <a class="item">KNIT</a> <a class="item">PANTS</a>
+						<a class="item">OUTER</a> <a class="item">TRAINING</a>
+					</div>
+				</div>
+				<div style="text-align: center; margin-top: 10px;">
+					<a class="ui label">오늘 </a> <a class="ui label"> 1주일 </a> <a
+						class="ui label"> 1개월 </a> <a class="ui label"> 3개월 </a> <a
+						class="ui label"> 6개월 </a>
+					
+					<!-- 데이트 피커 와야됨 -->
+
+					<a class="ui label" style="color: white; background: black;">
+						조회 </a>
+				</div>
+
 			</div>
+			<ul>
+				<li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li>
+				<li>주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.</li>
+			</ul>
+			<br>
+			<br>
+			<b>주문 상품 정보</b>
 		</div>
+
+
 		<div class="ui bottom attached tab segment" data-tab="second">
-			Second</div>
+						<div class="ui secondary  menu">
+				<div style="text-align: center; margin-top: 10px;">
+					<a class="ui label">오늘 </a> <a class="ui label"> 1주일 </a> <a
+						class="ui label"> 1개월 </a> <a class="ui label"> 3개월 </a> <a
+						class="ui label"> 6개월 </a>
+					
+					<!-- 데이트 피커 와야됨 -->
 
+					<a class="ui label" style="color: white; background: black;">
+						조회 </a>
+				</div>
 
-
+			</div>
+			<ul>
+				<li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li>
+				<li>주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.</li>
+			</ul>
+			<br>
+			<br>
+			<b>취소/반품/교환</b>
+			
+			
+			
+			
+			
+			
+			
+			</div>
 	</div>
+
 
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
@@ -80,7 +119,9 @@
 	<!-- 오더 리스트 스크립트 -->
 	<script type="text/javascript">
 		$('.tabular a').tab();
-		$('.ui.dropdwon').dropdown({action:'select'});
+		$('.ui.dropdwon').dropdown({
+			action : 'select'
+		});
 	</script>
 </body>
 
