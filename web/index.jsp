@@ -24,6 +24,10 @@
   
 	<div class="content">
 		<h1>이하 내용임</h1>
+		
+	
+
+		
 	</div>
 		
   
