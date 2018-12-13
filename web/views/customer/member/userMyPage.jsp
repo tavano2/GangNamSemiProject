@@ -169,7 +169,7 @@
 					주문 내역</button>
 			</div>
 			<div class="btn1">
-				<button class="ui grey basic button" style="font-size: 14px;">회원정보
+				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/member/updateMember1.jsp'">회원정보
 					수정</button>
 			</div>
 			<div class="btn1">
