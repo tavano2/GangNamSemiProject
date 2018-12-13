@@ -165,7 +165,7 @@
 		<br> <br>
 		<div align="center">
 			<div class="btn1">
-				<button class="ui grey basic button" style="font-size: 14px;">상품
+				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/product/orderList.jsp'">상품
 					주문 내역</button>
 			</div>
 			<div class="btn1">
