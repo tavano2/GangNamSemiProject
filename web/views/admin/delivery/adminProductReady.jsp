@@ -13,6 +13,9 @@
     <!-- Admin Common CSS -->
     <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
     
+    <!-- DatePicker CSS -->
+    <link rel="stylesheet" href="/semi/css/admin/common/datePicker.css">
+    
     <style>
         /* 테이블 CSS */
         .order-search tr>td:first-child{
@@ -24,6 +27,15 @@
         .order-result tr>th:first-child{
             width: 30px;
         }
+        .date-range {
+        	display: inline-block;
+        	margin-left: 30px;
+        }
+        .date-range span {
+        	display: inline-block;
+        	margin:  0 10px;
+        }
+        
     </style>
 </head>
 
@@ -93,6 +105,15 @@
                                     <a class="item">6개월</a>
                                 </div>
                                 
+                                <div class="date-range">
+                                	<div class="ui input">
+	                                	<input type="date" id="startDate">
+	                                </div>
+	                                <span>~</span>
+	                                <div class="ui input">
+	                                	<input type="date" id="endDate">
+	                                </div>
+                                </div>
                                 
 							  
                             </td>
@@ -189,15 +210,27 @@
         $('.content-box .ui.menu .item').on('click', function () {  //컨텐츠 박스의 메뉴 아이템 클릭시 active
             $('.content-box .pagination.menu .item').removeClass('active');
             $(this).addClass('active');
+            
+            var today = new Date();
+            switch($(this).text()){
+            case "오늘":
+            	var str = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+            	$('#startDate').val(str);
+            	console.log("오늘")
+            	break;
+            case "어제":
+            	var str = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + (today.getDate()-1)).slice(-2);
+            	$('#startDate').val(str);
+            	break;
+            }
         });
         
-        $('#rangestart').calendar({
-      		type: 'date',
-        	endCalendar: $('#rangeend')
-        });
-        $('#rangeend').calendar({
-        	type: 'date',
-        	startCalendar: $('#rangestart')
+        $(function(){
+        	var today = new Date();
+        	var str = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+        	$('#startDate').val(str);
+        	$('#endDate').val(str);
+        	//console.log($('#endDate'));
         });
     </script>
 
