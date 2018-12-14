@@ -194,15 +194,30 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="ui container center aligned search-box">
-                        <button class="ui grey basic button border_button"><<</button>
-                        <button class="ui grey basic button border_button">1</button>
-                        <button class="ui grey basic button border_button">2</button>
-                        <button class="ui grey basic button border_button">3</button>
-                        <button class="ui grey basic button border_button">4</button>
-                        <button class="ui grey basic button border_button">5</button>
-                        <button class="ui grey basic button border_button">>></button>
-                        </div>
+                <!-- 페이징 넘버 -->
+					<div class="ui container center aligned">
+						<div aria-label="Pagination Navigation" role="navigation"
+							class="ui pagination menu">
+							<a aria-current="false" aria-disabled="false" tabindex="0"
+								value="1" aria-label="First item" type="firstItem" class="item">«</a><a
+								aria-current="false" aria-disabled="false" tabindex="0"
+								value="1" aria-label="Previous item" type="prevItem"
+								class="item">⟨</a><a aria-current="true" aria-disabled="false"
+								tabindex="0" value="1" type="pageItem" class="active item">1</a><a
+								aria-current="false" aria-disabled="false" tabindex="0"
+								value="2" type="pageItem" class="item">2</a><a
+								aria-current="false" aria-disabled="false" tabindex="0"
+								value="3" type="pageItem" class="item">3</a><a
+								aria-current="false" aria-disabled="false" tabindex="0"
+								value="4" type="pageItem" class="item">4</a><a
+								aria-current="false" aria-disabled="false" tabindex="0"
+								value="5" type="pageItem" class="item">5</a><a
+								aria-current="false" aria-disabled="false" tabindex="0"
+								value="2" aria-label="Next item" type="nextItem" class="item">⟩</a><a
+								aria-current="false" aria-disabled="false" tabindex="0"
+								value="5" aria-label="Last item" type="lastItem" class="item">»</a>
+						</div>
+					</div>
         		
         	
         	</div>
