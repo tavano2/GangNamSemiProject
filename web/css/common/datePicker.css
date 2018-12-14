@@ -11,16 +11,13 @@ input[type="date"]::-webkit-inner-spin-button {
 	display: none;
 }
 
-input[type="date"]::-webkit-calendar {
-	background: yellow;
-}
-
 input[type="date"]::-webkit-calendar-picker-indicator {
 	color: rgba(0, 0, 0, 0);
     opacity: 1;
     display: block;
 	background: url(/semi/image/common/calendar_2.png) no-repeat;
 	height: 15px;
+	background-size: 87%;
 	border-width: thin;
 	margin: auto;
 	cursor: pointer;
