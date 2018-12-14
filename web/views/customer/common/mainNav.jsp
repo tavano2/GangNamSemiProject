@@ -86,7 +86,7 @@
                 COUPLE
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <a class="item">TEE</a>
+                    <a href="views/customer/member/category.jsp" class="item">TEE</a>
                     <a class="item">SHIRT</a>
                     <a class="item">KNIT</a>
                     <a class="item">PANTS</a>
