@@ -51,7 +51,7 @@
             </a>
             <div class="right menu">
             	<a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
-                        관리자 페이지
+                        열려있습니다! 들어와서 개인정보 확인하세요!!
                 </a> <!-- 이후 삭제 -->
                 <a class="item">
                     Log-In
