@@ -27,7 +27,36 @@
 		<div align="center"
 			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">EVENT</div>
 		<br> <br>
-		
+		<hr>
+					<table class="ui single line table">
+				<thead>
+					<tr>
+						<th>게시글 번호</th>
+						<th>게시글 제목</th>
+						<th>작성자</th>
+						<th>조회수</th>
+						<th>작성일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>제목입니당</td>
+						<td>임수철</td>
+						<td>0</td>
+						<td>2018/12/14</td>
+					</tr>
+				</tbody>
+			</table>
+					<div align="right">
+					<button class="ui brown basic mini button">작성하기</button>
+			&nbsp;
+			<button class="ui brown basic mini button">수정하기</button>
+			&nbsp;
+			<button class="ui brown basic mini button">삭제하기</button>
+		</div>
+			<hr>
+			<br><br>
 	
 
 		
