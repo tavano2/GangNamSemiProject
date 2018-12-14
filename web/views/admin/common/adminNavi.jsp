@@ -14,7 +14,7 @@
             <a class="item" href="/semi/views/admin/product/adminMainProduct.jsp">
                 <i class="grid layout icon"></i> 상품관리
             </a>
-            <a class="item" href="/semi/views/admin/board/adminMainBoard.jsp">
+            <a class="item" href="/semi/views/admin/board/adminBoardManagement.jsp">
                 <i class="table icon"></i> 게시판관리
             </a>
             <a class="item" href="/semi/views/admin/delivery/adminProductReady.jsp">

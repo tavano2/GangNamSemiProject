@@ -50,6 +50,9 @@
                 EVENT
             </a>
             <div class="right menu">
+            <a class="item" href="/semi/views/customer/product/detailPage.jsp">
+                       예솔쓰 상세페이징
+                </a> 
             	<a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
                         열려있습니다! 들어와서 개인정보 확인하세요!!
                 </a> <!-- 이후 삭제 -->
