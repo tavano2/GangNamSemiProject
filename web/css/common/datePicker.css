@@ -17,6 +17,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: block;
 	background: url(/semi/image/common/calendar_2.png) no-repeat;
 	height: 15px;
+	background-size: 87%;
 	border-width: thin;
 	margin: auto;
 	cursor: pointer;
