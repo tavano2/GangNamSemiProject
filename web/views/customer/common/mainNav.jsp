@@ -12,7 +12,7 @@
 
         <div class="sidebar-header">
             <div class="sidebar-login">
-                <button class="ui button">로그인</button>
+                <button class="ui button" onclick="location.href='/semi/views/customer/member/memberLogin.jsp'">로그인</button>
                 <table>
                     <tr>
                         <td><a href="#">아이디/비밀번호 찾기</a></td>
@@ -24,11 +24,11 @@
 
         <ul class="components">
             <!-- <p>소제목</p> -->
-            <li><a href="#">홈</a></li>
+            <li><a href="/semi/index.jsp">홈</a></li>
             <li><a href="#">공지사항</a></li>
             <li><a href="/semi/views/customer/member/userMyPage.jsp">마이페이지</a></li>
             <li><a href="#">장바구니</a></li>
-            <li><a href="/semi/views/customer/product/orderList.jsp">주문내역</a></li>
+            <li><a href="/semi/views/customer/delivery/orderList.jsp">주문내역</a></li>
             <li><a href="/semi/views/customer/promotion/UserNoteCoupon.jsp">쪽지/쿠폰함</a></li>
         </ul>
     </nav>
@@ -56,7 +56,7 @@
             	<a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
                         열려있습니다! 들어와서 개인정보 확인하세요!!
                 </a> <!-- 이후 삭제 -->
-                <a class="item">
+                <a class="item" href="/semi/views/customer/member/memberLogin.jsp">
                     Log-In
                 </a>
                 <a class="item" href="/semi/views/customer/member/InsertMember1.jsp">
@@ -68,7 +68,7 @@
                 <a class="item" href="/semi/views/customer/member/userMyPage.jsp">
                     My Page
                 </a>
-                <a class="item" href="/semi/views/customer/product/orderList.jsp">
+                <a class="item" href="/semi/views/customer/delivery/orderList.jsp">
                     ORDER
                 </a>
                 <a class="item" href="/semi/views/customer/promotion/UserNoteCoupon.jsp">
@@ -78,7 +78,7 @@
         </div>
 
         <!-- 사이트명 -->
-        <div class="titlePage"><a href="#">SIEMPRE</a></div>
+        <div class="titlePage"><a href="/semi/index.jsp">SIEMPRE</a></div>
 
         <!-- 카테고리 네비 -->
         <div class="ui text menu" id="cate_nav">
@@ -89,7 +89,7 @@
                 COUPLE
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <a href="views/customer/member/category.jsp" class="item">TEE</a>
+                    <a href="/semi/views/customer/member/category.jsp" class="item">TEE</a>
                     <a class="item">SHIRT</a>
                     <a class="item">KNIT</a>
                     <a class="item">PANTS</a>

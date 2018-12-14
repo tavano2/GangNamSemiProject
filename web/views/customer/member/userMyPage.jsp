@@ -188,7 +188,7 @@
 				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/promotion/eventPage.jsp'">이벤트</button>
 			</div>
 			<div class="btn1">
-				<button class="ui grey basic button" style="font-size: 14px;">게시물
+				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/board/UserBoardManager.jsp'">내 게시물
 					관리</button>
 			</div>
 
