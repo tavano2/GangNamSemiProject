@@ -3,19 +3,20 @@ $('.content-box .ui.dropdown').dropdown();
 
 // 페이지 로드시 날짜를 오늘로 초기화
 $(function() {
-	var today = new Date();
+	var today = new Date();	//오늘 날짜로 Date 객체 생성
 	var todayStr = today.getFullYear() + '-'
 			+ ('0' + (today.getMonth() + 1)).slice(-2) + '-'
-			+ ('0' + today.getDate()).slice(-2);
-	$('#startDate').prop('defaultValue', todayStr);
+			+ ('0' + today.getDate()).slice(-2);	//Date 객체를 'yyyy-mm-dd' 스트링 객체로 변환
+	$('#startDate').prop('defaultValue', todayStr);	//defaultValue에 넣으면 reset버튼을 클릭하면 defaultValue로 초기화됨
 	$('#endDate').prop('defaultValue', todayStr);
 });
 
 //검색 조건 리셋
 function activeReset() {
-	$('#selDate .item').removeClass('active');
-	$('#selDate .item:first-child').addClass('active');
-	$('.content-box .ui.dropdown').dropdown('restore defaults');
+	$('#selDate .item').removeClass('active');	//기간 선택에 active 클래스 제거
+	$('#selDate .item:first-child').addClass('active');	//기간 선택을 오늘로 초기화
+	$('#searchBox .ui.dropdown').dropdown('restore defaults');	//드롭다운 선택 초기화
+	$('#orderState .master.checkbox').checkbox('check');
 }
 
 // 기간 선택 메뉴 클릭시 active 및 날짜 변경
@@ -75,27 +76,27 @@ $('#selDate .item').on('click', function() {
 $(function() {
 	var prevDate;
 
-	$('#startDate').click(function() {
-		prevDate = new Date($(this).val());
-	}).change(function() {
+	$('#startDate').click(function() {	//클릭시
+		prevDate = new Date($(this).val());	//선택 전의 날짜 백업
+	}).change(function() {					//값 변경시
 		var currDate = new Date($(this).val());
 		var endDate = new Date($("#endDate").val());
 
 		if (currDate.getTime() <= endDate.getTime()) {
-			$('#selDate .item').removeClass('active');
+			$('#selDate .item').removeClass('active');	//기간 선택에서 active 제거
 		} else {
 			var dateStr = prevDate.getFullYear() + '-'
 					+ ('0' + (prevDate.getMonth() + 1)).slice(-2) + '-'
 					+ ('0' + (prevDate.getDate())).slice(-2);
-			$('#startDate').val(dateStr);
+			$('#startDate').val(dateStr);	//선택 전의 날짜로 변경
 			
-			$('#startDate').popup({
+			$('#startDate').popup({	//팝업 요소 생성
 				html : '<span style="color: red;">기간을 잘못 입력했습니다.</span>',
-				on: 'click',
-				onHidden: () => {
+				on: 'click',	//클릭할때 보여짐
+				onHidden: () => {	//팝업창 히든시 팝업 요소 제거
 					$('#startDate').popup('destroy');
 			    }
-			}).popup('show');
+			}).popup('show');	//팝업 보이기
 		}
 	});
 
@@ -122,4 +123,61 @@ $(function() {
 			}).popup('show');
 		}
 	});
+});
+
+
+//채크박스
+$('#orderState .master.checkbox').checkbox({
+	onChecked: function() {
+		var $childCheckbox  = $(this).closest('tr').find('.child.checkbox');
+		$childCheckbox.checkbox('check');
+	},
+	onUnchecked: function() {
+		var $childCheckbox  = $(this).closest('tr').find('.child.checkbox');
+		$childCheckbox.checkbox('uncheck');
+	}
+});
+
+$('#orderState .chk-list .child.checkbox').checkbox({
+	fireOnInit : true,
+	onChange   : function() {
+		var $listGroup = $(this).closest('.chk-list');
+		var $parentCheckbox = $listGroup.siblings('.master.checkbox');
+		var $checkbox = $listGroup.find('.checkbox');
+		var allChecked = true;
+		var allUnchecked = true;
+		
+		$checkbox.each(function() {
+			if( $(this).checkbox('is checked') ) {
+				allUnchecked = false;
+			} else {
+				allChecked = false;
+			}
+		});
+		
+		if(allChecked) {
+			$parentCheckbox.checkbox('set checked');
+		} else if(allUnchecked) {
+			$parentCheckbox.checkbox('set unchecked');
+		} else {
+			$parentCheckbox.checkbox('set indeterminate');
+		}
+	}
+});
+
+
+
+
+
+//페이징넘버 클릭시 active
+$('.order-result .pagination.menu .item:not(.icon.item)').click(function(){
+	$('.order-result .pagination.menu .item').removeClass('active');
+	$(this).addClass('active');
+});
+
+//검색결과 리셋
+$('#resultReset').click(function(){
+	resultBox.reset();
+	$('#resultBox .ui.dropdown').dropdown('restore defaults');
+	$('#resultBox tbody').text("");
 });

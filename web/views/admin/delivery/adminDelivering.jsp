@@ -33,7 +33,7 @@
         <div class="content">
         	<div class="content-box">
         	
-                <h2 class="ui header">배송준비중</h2>
+                <h2 class="ui header">배송중</h2>
                 <div class="ui divider"></div>
 
 				<!-- search-box -->
@@ -48,11 +48,9 @@
 	                        <tr><th colspan="11">
                             	<div class="ui grid">
 		                            <div class="ten wide column">
-		                                <button class="ui black button" type="button" onclick="deliveryWatingTo();">배송대기중</button>
-		                                <button class="ui black button" type="button" onclick="deliveringTo();">배송중</button>
-		                                <button class="ui grey button" type="button" onclick="productReadyTo();">상품준비중</button>
-		                                <button class="ui grey button" type="button" onclick="cancelTo();">취소 신청</button>
-		                                <button class="ui grey button" type="button" onclick="exchangeTo();">교환 신청</button>
+		                                <button class="ui black button" type="button" onclick="deliveryCompleteTo();">배송완료</button>
+		                                <button class="ui grey button" type="button" onclick="deliveryReadyTo();">배송준비중</button>
+		                                <button class="ui grey button" type="button" onclick="deliveryWatingTo();">배송대기중</button>
 		                            </div>
 		                            
 	                                <div class="six wide column right aligned">
@@ -165,27 +163,17 @@
 	<script src="/semi/js/admin/delivery/adminDelivery.js"></script>
 	
 	<script>
+		function deliveryCompleteTo(){
+			resultBox.action = '';
+			resultBox.submit();
+		}
+		
+		function deliveryReadyTo(){
+			resultBox.action = '';
+			resultBox.submit();
+		}
+		
 		function deliveryWatingTo(){
-			resultBox.action = '';
-			resultBox.submit();
-		}
-		
-		function deliveringTo(){
-			resultBox.action = '';
-			resultBox.submit();
-		}
-		
-		function productReadyTo(){
-			resultBox.action = '';
-			resultBox.submit();
-		}
-		
-		function cancelTo(){
-			resultBox.action = '';
-			resultBox.submit();
-		}
-		
-		function exchangeTo(){
 			resultBox.action = '';
 			resultBox.submit();
 		}

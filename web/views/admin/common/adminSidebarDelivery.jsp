@@ -16,7 +16,7 @@
             <a class="item" href="/semi/views/admin/delivery/adminOrderAllSearch.jsp">전체주문조회</a>
             <a class="item" href="/semi/views/admin/delivery/adminOrderCancel.jsp">취소조회</a>
             <a class="item" href="/semi/views/admin/delivery/adminOrderExchange.jsp">교환조회</a>
-            <a class="item" href="/semi/views/admin/delivery/adminOrderReturn.jsp">반품조회</a>
+            <a class="item" href="/semi/views/admin/delivery/adminOrderReturnProd.jsp">반품조회</a>
             <a class="item" href="/semi/views/admin/delivery/adminOrderRefund.jsp">환불조회</a>
         </div>
 
