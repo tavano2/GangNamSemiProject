@@ -28,8 +28,14 @@
 			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">MY NOTE & COUPON</div>
 		
 		<br><br><br>
-		<b>마이 쿠폰 목록</b>
-		<br>
+						<div class="ui grid">
+			<div class="twelve wide column">
+				<b>쿠폰/쪽지함</b>
+			</div>
+			<div class="four wide column" align="right">
+				<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/member/userMyPage.jsp'">마이페이지로</button>
+			</div>
+		</div>
 			<!-- 테이블 -->
 			<table class="ui single line table">
 				<thead>
