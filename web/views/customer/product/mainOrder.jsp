@@ -292,39 +292,63 @@
 			style="width: 100%; height: 120px; text-align: center;">
 			<tbody>
 				<tr>
-					<td colspan="3" rowspan="2">테스트1</td>
-					
-					<td>테스트1</td>
-					<td rowspan="3">테스트2</td>
+					<td colspan="3" rowspan="2">
+						<div class="ui radio checkbox">
+							<input type="radio" name="order" checked="checked"> <label>카드결제</label>
+						</div>
+					</td>
+
+					<td>&nbsp;&nbsp;&nbsp;</td>
+					<td rowspan="3"><div align="right">
+							<b>카드결제 </b>: 최종 결제 금액
+						</div> <br>
+						<div align="center" style="color: olive; font-size: 20px;">?원</div>
+						<br>
+						<div align="center" style="">
+							<button class="ui brown basic button" style="width: 100px;" onclick = "showOrderPage();">결제하기</button>
+						</div></td>
 				</tr>
 				<tr>
-					
-					
-					
-					<td>테스트1</td>
-				
+
+
+
+					<td>&nbsp;&nbsp;&nbsp;</td>
+
 
 				</tr>
 				<tr>
-					<td colspan="3" rowspan="2">테스트4</td>
-	
-					<td>테스트1</td>
-					
+					<td colspan="3" rowspan="2">
+						<ul>
+							<li>최소 결제 가능 금액은 결제금액에서 배송비를 제외한 금액입니다.</li>
+							<li>소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.</li>
+						</ul>
+
+					</td>
+
+					<td>&nbsp;&nbsp;&nbsp;</td>
+
 				</tr>
 				<tr>
-			
-					<td>테스트1</td>
-					<td>테스트3</td>
+
+					<td>&nbsp;&nbsp;&nbsp;</td>
+					<td>총 적립예정금액 : ?</td>
 				</tr>
 				<tr>
-					<td>테스트4</td>
-					<td>테스트4</td>
-					<td>테스트4</td>
-					<td>테스트1</td>
-					<td>테스트3</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>&nbsp;&nbsp;&nbsp;</td>
+					<td>상품별 적립금 : ? won<br>
+					 회원 적립금 :  ? won </td>
 				</tr>
 			</tbody>
 		</table>
+
+		<hr>
+		<br>
+		<br>
+		<br>
+
 
 
 
@@ -349,6 +373,17 @@
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
+	
+	<!--  결제창 팝업 띄우기 -->
+	<script type="text/javascript">
+		function showOrderPage() {
+			window.open("/semi/views/customer/product/orderPopup.jsp","orderPage","width=400,height=300,left=100,top50");
+			
+			
+		}
+	
+	
+	</script>
 
 </body>
 

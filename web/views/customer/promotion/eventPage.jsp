@@ -48,10 +48,11 @@
 					</tr>
 				</tbody>
 			</table>
+			<!--  작성하기는 관리자만 가능하다.  -->
 					<div align="right">
-					<button class="ui brown basic mini button">작성하기</button>
+					<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/board/insertBoard.jsp';">작성하기</button>
 			&nbsp;
-			<button class="ui brown basic mini button">수정하기</button>
+			<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/board/updateBoard.jsp';">수정하기</button>
 			&nbsp;
 			<button class="ui brown basic mini button">삭제하기</button>
 		</div>

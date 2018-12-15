@@ -29,6 +29,15 @@
 		<br>
 		<br>
 		<hr>
+		<br>
+				<div class="ui grid">
+			<div class="twelve wide column">
+				<b>위시 리스트</b>
+			</div>
+			<div class="four wide column" align="right">
+				<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/member/userMyPage.jsp'">이전으로</button>
+			</div>
+		</div>
 		<!-- 위시리스트 내역 -->
 					<table class="ui single line table">
 				<thead>
@@ -58,12 +67,13 @@
 					</tr>
 				</tbody>
 			</table>
+			<br>
 		<hr>
 		<div align="right">
 		<b>선택 상품을</b>&nbsp;&nbsp;<button class="ui brown basic mini button">삭제하기</button>&nbsp;
 		<button class="ui brown basic mini button">장바구니 담기</button>
 		</div>
-
+	
 		
 	</div>
 		
