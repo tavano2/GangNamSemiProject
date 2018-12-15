@@ -33,7 +33,7 @@
         <div class="content">
         	<div class="content-box">
         	
-                <h2 class="ui header">배송준비중</h2>
+                <h2 class="ui header">전체주문조회</h2>
                 <div class="ui divider"></div>
 
 				<!-- search-box -->
@@ -45,14 +45,10 @@
 	                	<table class="ui celled table order-result">
 	                    <!-- 검색 결과 테이블 -->
 	                    <thead>
-	                        <tr><th colspan="11">
+	                        <tr><th colspan="12">
                             	<div class="ui grid">
 		                            <div class="ten wide column">
-		                                <button class="ui black button" type="button" onclick="deliveryWatingTo();">배송대기중</button>
-		                                <button class="ui black button" type="button" onclick="deliveringTo();">배송중</button>
-		                                <button class="ui grey button" type="button" onclick="productReadyTo();">상품준비중</button>
-		                                <button class="ui grey button" type="button" onclick="cancelTo();">취소 신청</button>
-		                                <button class="ui grey button" type="button" onclick="exchangeTo();">교환 신청</button>
+		                                <button class="ui grey button" type="button" onclick="deliveryCompleteTo();">배송완료</button>
 		                            </div>
 		                            
 	                                <div class="six wide column right aligned">
@@ -81,6 +77,7 @@
 	                            <th>상품구매금액</th>
 	                            <th>배송비</th>
 	                            <th>실결제<br>금액</th>
+	                            <th>주문상태</th>
 	                            <th>메모</th>
 	                        </tr>
 	                    </thead>
@@ -99,6 +96,7 @@
 	                            <td>50000</td>
 	                            <td>2500</td>
 	                            <td>45000</td>
+	                            <td>상품준비중</td>
 	                            <td>간단한 메시지를 남겨 주십시오</td>
 	                        </tr>
 	                        <tr>
@@ -114,13 +112,14 @@
 	                            <td>60000</td>
 	                            <td>2500</td>
 	                            <td>54000</td>
+	                            <td>구매확정</td>
 	                            <td>어흥</td>
 	                        </tr>
 	                    </tbody>
 	                    
 	                    <tfoot>
 							<tr>
-								<th colspan="11" class="center aligned">
+								<th colspan="12" class="center aligned">
 							    	<div class="ui pagination menu">
 							    		<a class="icon item"><i class="angle double left icon"></i></a>
 								        <a class="icon item"><i class="angle left icon"></i></a>
@@ -165,30 +164,14 @@
 	<script src="/semi/js/admin/delivery/adminDelivery.js"></script>
 	
 	<script>
-		function deliveryWatingTo(){
+		function deliveryCompleteTo(){
 			resultBox.action = '';
 			resultBox.submit();
 		}
 		
-		function deliveringTo(){
-			resultBox.action = '';
-			resultBox.submit();
-		}
-		
-		function productReadyTo(){
-			resultBox.action = '';
-			resultBox.submit();
-		}
-		
-		function cancelTo(){
-			resultBox.action = '';
-			resultBox.submit();
-		}
-		
-		function exchangeTo(){
-			resultBox.action = '';
-			resultBox.submit();
-		}
+		$(function(){
+			$('#orderState').show();
+		});
 	</script>
 	
 </body>

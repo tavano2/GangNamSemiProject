@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+/* searchBox CSS */
+.order-search td:first-child{
+	background-color: #f9fafb;
+    width: 200px;
+}
+.search-btn{
+    padding-bottom: 50px;
+}
+.date-range {
+	display: inline-block;
+}
+.date-range span {
+	display: inline-block;
+	margin:  0 10px;
+}
+.ui.pagination.menu {
+	margin-right: 30px;
+}
+
+#orderState {
+	display: none;
+}
+#orderState .chk-list {
+	display: inline-block;
+}
+#orderState .checkbox {
+	margin-right: 10px;
+}
+
+/* resultBox CSS */
+.order-result th:first-child{
+    width: 30px;
+}
+.order-result th:nth-child(2){
+    width: 110px;
+}
+.order-result th:nth-child(3){
+    width: 160px;
+}
+.order-result th:nth-child(4){
+    width: 80px;
+}
+.order-result th:nth-child(5){
+    width: 200px;
+}
+.order-result th:nth-child(6){
+    width: 60px;
+}
+.order-result th:nth-child(7){
+    width: 110px;
+}
+.order-result th:nth-child(8){
+    width: 80px;
+}
+.order-result th:nth-child(9){
+    width: 70px;
+}
+.order-result th:nth-child(10){
+    width: 80px;
+}
+.order-result th:nth-child(11){
+    width: 100px;
+}
