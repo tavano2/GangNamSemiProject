@@ -116,7 +116,7 @@
 											<div class="ui child checkbox">
 												<input type="checkbox" name="orderState" value="purchase" checked>
 												<label>구매확정</label>
-											</div><br><br>
+											</div>
 											<div class="ui child checkbox">
 												<input type="checkbox" name="orderState" value="cancel" checked>
 												<label>취소</label>
