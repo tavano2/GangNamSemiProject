@@ -33,7 +33,7 @@
         <div class="content">
         	<div class="content-box">
         	
-                <h2 class="ui header">상품준비중</h2>
+                <h2 class="ui header">환불조회</h2>
                 <div class="ui divider"></div>
 
 				<!-- search-box -->
@@ -48,9 +48,20 @@
 	                        <tr><th colspan="11">
                             	<div class="ui grid">
 		                            <div class="ten wide column">
-		                                <button class="ui black button" type="button" onclick="deliveryReadyTo();">배송준비중</button>
-		                                <button class="ui grey button" type="button" onclick="cancelTo();">취소 신청</button>
-		                                <button class="ui grey button" type="button" onclick="exchangeTo();">교환 신청</button>
+		                            	<div class="ui selection dropdown">
+		                                    <input type="hidden">
+		                                    <i class="dropdown icon"></i>
+		                                    <div class="default text">처리선택</div>
+		                                    <div class="menu">
+		                                        <div class="item" data-value="0" onclick="cancelProcessingTo();">취소처리중</div>
+		                                        <div class="item" data-value="1" onclick="exchangeProcessingTo();">교환처리중</div>
+		                                        <div class="item" data-value="2" onclick="returnProdProcessingTo();">반품처리중</div>
+		                                        <div class="item" data-value="3" onclick="refundProcessingTo();">환불처리중</div>
+		                                    </div>
+	                                    </div>
+	                                    
+		                                <button class="ui black button" type="button" onclick="refundCompleteTo();">환불완료</button>
+		                                <button class="ui grey button" type="button" onclick="deliveryCompleteTo();">배송완료</button>
 		                            </div>
 		                            
 	                                <div class="six wide column right aligned">
@@ -89,9 +100,9 @@
 	                                <input type="checkbox" name="resultChk" value="2018090900001"><label></label>
 	                            </div></td>
 	                            <td>2018-09-09</td>
-	                            <td><a href="/semi/views/admin/delivery/adminOrderDetail.jsp">2018090900001</a></td>
+	                            <td><a href="#">2018090900001</a></td>
 	                            <td>사람</td>
-	                            <td>바지 (블랙, 라지) 외 1개</td>
+	                            <td>바지 (블랙, 라지)</td>
 	                            <td>1</td>
 	                            <td>101-101-101</td>
 	                            <td>50000</td>
@@ -163,17 +174,32 @@
 	<script src="/semi/js/admin/delivery/adminDelivery.js"></script>
 	
 	<script>
-		function deliveryReadyTo(){
+		function cancelProcessingTo(){
+			resultBox.action = '';
+			resultBox.submit();
+		}
+	
+		function exchangeProcessingTo(){
 			resultBox.action = '';
 			resultBox.submit();
 		}
 		
-		function cancelTo(){
+		function returnProdProcessingTo(){
 			resultBox.action = '';
 			resultBox.submit();
 		}
 		
-		function exchangeTo(){
+		function refundProcessingTo(){
+			resultBox.action = '';
+			resultBox.submit();
+		}
+		
+		function refundCompleteTo(){
+			resultBox.action = '';
+			resultBox.submit();
+		}
+		
+		function deliveryCompleteTo(){
 			resultBox.action = '';
 			resultBox.submit();
 		}
