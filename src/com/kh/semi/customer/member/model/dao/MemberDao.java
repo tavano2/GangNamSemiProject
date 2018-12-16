@@ -31,36 +31,29 @@ public class MemberDao {
 	}
 
 	
-	// 로그인 유저가 있는지 확인 메소드
+/*	// 로그인 유저가 있는지 확인 메소드
 	public int checkMember(Connection con, Member member) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		int result = 0;
-		Member chkMember = null;
+		int result = SelectMemberServlet.ID_NOT_EXIST;
 		String query = prop.getProperty("checkMember");
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, member.getUserId());
-			pstmt.setString(2, member.getPassword());
 			rset = pstmt.executeQuery();
-			if(rset != null) {
-				while(rset.next()) {
-					chkMember = new Member();
-					chkMember.setUserId(rset.getString("USER_ID"));
-					chkMember.setPassword(rset.getString("USER_PWD"));
-				}
-				if(chkMember.getUserId().equals(member.getUserId()) && chkMember.getPassword().equals(member.getPassword())) {
-					result = SelectMemberServlet.LOGIN_OK;
-				}else {
-					if(chkMember.getUserId().equals(member.getUserId()) && !chkMember.getPassword().equals(member.getPassword())) {
-						result = SelectMemberServlet.WORNG_PASSWORD;
-					}else {
-						result = SelectMemberServlet.ID_NOT_EXIST;
-					}
-				}
-			}else {
-				result = SelectMemberServlet.NOT_USER;
+			String userId = "";
+			String password = "";
+			if(rset.next()) {
+				userId = rset.getString("USER_ID");
+				password = rset.getString("USER_PWD");
 			}
+			if(member.getUserId().equals(userId) && member.getPassword().equals(password)) {
+				result = SelectMemberServlet.LOGIN_OK;
+			}else if(member.getUserId().equals(userId) && !member.getPassword().equals(password)) {
+					result = SelectMemberServlet.WORNG_PASSWORD;
+				}else {
+					result = SelectMemberServlet.ID_NOT_EXIST;
+				}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -69,16 +62,36 @@ public class MemberDao {
 			close(pstmt);
 		}
 		
-		
+		System.out.println(result);
 		
 		
 		return result;
-	}
+	}*/
 
 	// 로그인 유저가 있을시 정보를 불러오는 메소드
 	public Member selectMember(Connection con, Member member) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member loginUser = null;
+		String query = prop.getProperty("selectOneMember");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, member.getUserId());
+			pstmt.setString(2, member.getPassword());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				loginUser = new Member();
+				loginUser.setUserId(rset.getString("USER_ID"));
+				loginUser.setPassword(rset.getString("USER_PWD"));
+				loginUser.setStatus(rset.getString("STATUS"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return loginUser;
 	}
 
 }
