@@ -12,10 +12,8 @@
 
     <!-- Admin Common CSS -->
     <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
-    
     <!-- DatePicker CSS -->
     <link rel="stylesheet" href="/semi/css/common/datePicker.css">
-    
     <!-- Delivery CSS -->
     <link rel="stylesheet" href="/semi/css/admin/delivery/adminDelivery.css">
     
@@ -160,7 +158,6 @@
     
     <!-- Admin Common JS -->
     <script src="/semi/js/admin/common/adminMain.js"></script>
-
 	<!-- Delivery JS -->
 	<script src="/semi/js/admin/delivery/adminDelivery.js"></script>
 	
