@@ -48,11 +48,13 @@
 	margin-left: auto;
 	margin-right: auto;
 }
-.categoryAddBtn{
-	display:inline;
+
+.categoryAddBtn {
+	display: inline;
 }
-.categoryAddContent{
-	height:300px;
+
+.categoryAddContent {
+	height: 300px;
 	margin-top: 10px;
 	border: 1px solid black;
 }
@@ -111,38 +113,40 @@
 			</div>
 
 
-			<!-- Footer -->
-			<!-- <%@ include file="/views/admin/common/adminFooter.jsp"%> -->
+			
 		</div>
+		<!-- Footer -->
+			<%@ include file="/views/admin/common/adminFooter.jsp"%>
+	</div>
 
+	<!-- J-query CDN -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<!-- Semantic UI JS CDN -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+	<!-- jQuery Custom Scroller CDN -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-		<!-- J-query CDN -->
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-			crossorigin="anonymous"></script>
-		<!-- Semantic UI JS CDN -->
-		<script
-			src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-		<!-- jQuery Custom Scroller CDN -->
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+	<!-- Admin Common JS -->
+	<script src="/semi/js/admin/common/adminMain.js"></script>
 
-		<!-- Admin Common JS -->
-		<script src="/semi/js/admin/common/adminMain.js"></script>
-
-		<script>
-			$('#sticky1').sticky(); //네이바 상단 고정
-			$('#menu').click(
-					function() { //사이드바 오픈 버튼
-						$('.ui.sidebar').sidebar('setting', 'transition',
-								'overlay').sidebar('toggle');
-					})
-			$('.content-box .ui.dropdown').dropdown(); //컨텐츠 박스의 드롭다운 실행
-			$('.content-box .ui.menu .item').on('click', function() { //컨텐츠 박스의 메뉴 아이템 클릭시 active
-				$('.ui .item').removeClass('active');
-				$(this).addClass('active');
-			});
-		</script>
+	<script>
+		$('#sticky1').sticky(); //네이바 상단 고정
+		$('#menu').click(
+				function() { //사이드바 오픈 버튼
+					$('.ui.sidebar')
+							.sidebar('setting', 'transition', 'overlay')
+							.sidebar('toggle');
+				})
+		$('.content-box .ui.dropdown').dropdown(); //컨텐츠 박스의 드롭다운 실행
+		$('.content-box .ui.menu .item').on('click', function() { //컨텐츠 박스의 메뉴 아이템 클릭시 active
+			$('.ui .item').removeClass('active');
+			$(this).addClass('active');
+		});
+	</script>
 </body>
 
 </html>

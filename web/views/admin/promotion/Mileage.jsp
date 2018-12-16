@@ -53,7 +53,8 @@
 	width: 100px;
 	margin-left: 1000px;
 }
-span{
+
+span {
 	font-weight: 2px;
 }
 </style>
@@ -108,17 +109,13 @@ span{
 											<button class="ui button">7일</button>
 											<button class="ui button">1개월</button>
 											<button class="ui button">1년</button>
-										</div>
-										&nbsp;
-										&nbsp;
+										</div> &nbsp; &nbsp;
 										<div class="ui input focus mileageInput">
 											<input type="text" placeholder="Search...">
 										</div>
 										<div class="mileageInput">
 											<i class=" th icon"></i>
-										</div>&nbsp; <span>
-											~
-									</span>&nbsp;
+										</div>&nbsp; <span> ~ </span>&nbsp;
 										<div class="ui input focus mileageInput">
 											<input type="text" placeholder="Search...">
 										</div>
@@ -163,7 +160,7 @@ span{
 						</div>
 					</div>
 					<!-- 세번째 테이블 -->
-	
+
 					<br> <br>
 					<div class="thirdContent">
 						<div>
@@ -186,14 +183,14 @@ span{
 							<table class="ui celled table" id="mileageTable">
 								<tbody>
 									<tr>
-										<td class="mileageTd" width="100px">일자</td>
-										<td class="mileageTd" width="100px">아이디</td>
-										<td class="mileageTd" width="130px">가용 적립금 증가</td>
-										<td class="mileageTd" width="130px">가용 적립금 차감</td>
-										<td class="mileageTd" width="130px">가용 적립금 잔액</td>
-										<td class="mileageTd" width="150px">관련주문/추천인</td>
-										<td class="mileageTd">내용</td>
-										<td class="mileageTd" width="100px">처리자</td>
+										<td class="mileageTd" width="100px" style="text-align: center">일자</td>
+										<td class="mileageTd" width="100px" style="text-align: center">아이디</td>
+										<td class="mileageTd" width="130px" style="text-align: center">가용 적립금 증가</td>
+										<td class="mileageTd" width="130px" style="text-align: center">가용 적립금 차감</td>
+										<td class="mileageTd" width="130px" style="text-align: center">가용 적립금 잔액</td>
+										<td class="mileageTd" width="150px" style="text-align: center">관련주문/추천인</td>
+										<td class="mileageTd" style="text-align: center">내용</td>
+										<td class="mileageTd" width="100px" style="text-align: center">처리자</td>
 									</tr>
 
 									<tr>
@@ -236,38 +233,40 @@ span{
 				</div>
 			</div>
 
-			<!-- Footer -->
-			<!-- <%@ include file="/views/admin/common/adminFooter.jsp"%> -->
+
 		</div>
+		<!-- Footer -->
+		<%@ include file="/views/admin/common/adminFooter.jsp"%>
+	</div>
 
+	<!-- J-query CDN -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<!-- Semantic UI JS CDN -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+	<!-- jQuery Custom Scroller CDN -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-		<!-- J-query CDN -->
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-			crossorigin="anonymous"></script>
-		<!-- Semantic UI JS CDN -->
-		<script
-			src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-		<!-- jQuery Custom Scroller CDN -->
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+	<!-- Admin Common JS -->
+	<script src="/semi/js/admin/common/adminMain.js"></script>
 
-		<!-- Admin Common JS -->
-		<script src="/semi/js/admin/common/adminMain.js"></script>
-
-		<script>
-			$('#sticky1').sticky(); //네이바 상단 고정
-			$('#menu').click(
-					function() { //사이드바 오픈 버튼
-						$('.ui.sidebar').sidebar('setting', 'transition',
-								'overlay').sidebar('toggle');
-					})
-			$('.content-box .ui.dropdown').dropdown(); //컨텐츠 박스의 드롭다운 실행
-			$('.content-box .ui.menu .item').on('click', function() { //컨텐츠 박스의 메뉴 아이템 클릭시 active
-				$('.ui .item').removeClass('active');
-				$(this).addClass('active');
-			});
-		</script>
+	<script>
+		$('#sticky1').sticky(); //네이바 상단 고정
+		$('#menu').click(
+				function() { //사이드바 오픈 버튼
+					$('.ui.sidebar')
+							.sidebar('setting', 'transition', 'overlay')
+							.sidebar('toggle');
+				})
+		$('.content-box .ui.dropdown').dropdown(); //컨텐츠 박스의 드롭다운 실행
+		$('.content-box .ui.menu .item').on('click', function() { //컨텐츠 박스의 메뉴 아이템 클릭시 active
+			$('.ui .item').removeClass('active');
+			$(this).addClass('active');
+		});
+	</script>
 </body>
 
 </html>

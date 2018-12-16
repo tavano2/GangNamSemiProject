@@ -59,12 +59,12 @@
 }
 
 .productIcon {
+	height: 300px;
 	display: inline-block;
-	height:300px;
 }
-.tableBox{
+
+.tableBox {
 	display: inline-block;
-	background:black;
 }
 </style>
 </head>
@@ -86,9 +86,8 @@
 					<div id="insert-title">
 						<h1>상품 선택</h1>
 					</div>
-					<br>
-					<br>
-					
+					<br> <br>
+
 					<!-- 첫번째 내용 -->
 					<div>
 						<div class="tableBox">
@@ -144,11 +143,14 @@
 											</div>
 										</td>
 									</tr>
-									<td colspan="3">
-										<div class="productSearch">
-											<button class="midium ui secondary button">검 &nbsp;색</button>
-										</div>
-									</td>
+									<tr>
+										<td colspan="3">
+											<div class="productSearch">
+												<button class="midium ui secondary button">검
+													&nbsp;색</button>
+											</div>
+										</td>
+									</tr>
 									<tr>
 										<td colspan="3">
 											<div class="searchResult">검색결과</div>
@@ -185,12 +187,10 @@
 							</table>
 						</div>
 						<!-- 아이콘 -->
-						&nbsp;
-						&nbsp;
-						<div class="productIcon">
-							<i class="arrow big right icon"></i> <br> <br> <br>
-							<i class="arrow big left icon"></i>
-						</div>
+						&nbsp; &nbsp; <span class="productIcon"> <i
+							class="arrow big right icon"></i> <br> <br> <br> <i
+							class="arrow big left icon"></i>
+						</span>
 					</div>
 
 					<!-- 내용의끝 -->
@@ -198,38 +198,41 @@
 			</div>
 
 
-			<!-- Footer -->
-			<!-- <%@ include file="/views/admin/common/adminFooter.jsp"%> -->
+
 		</div>
+		<!-- Footer -->
+		<!-- <%@ include file="/views/admin/common/adminFooter.jsp"%> -->
+	</div>
 
 
-		<!-- J-query CDN -->
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-			crossorigin="anonymous"></script>
-		<!-- Semantic UI JS CDN -->
-		<script
-			src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-		<!-- jQuery Custom Scroller CDN -->
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+	<!-- J-query CDN -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<!-- Semantic UI JS CDN -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+	<!-- jQuery Custom Scroller CDN -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-		<!-- Admin Common JS -->
-		<script src="/semi/js/admin/common/adminMain.js"></script>
+	<!-- Admin Common JS -->
+	<script src="/semi/js/admin/common/adminMain.js"></script>
 
-		<script>
-			$('#sticky1').sticky(); //네이바 상단 고정
-			$('#menu').click(
-					function() { //사이드바 오픈 버튼
-						$('.ui.sidebar').sidebar('setting', 'transition',
-								'overlay').sidebar('toggle');
-					})
-			$('.content-box .ui.dropdown').dropdown(); //컨텐츠 박스의 드롭다운 실행
-			$('.content-box .ui.menu .item').on('click', function() { //컨텐츠 박스의 메뉴 아이템 클릭시 active
-				$('.ui .item').removeClass('active');
-				$(this).addClass('active');
-			});
-		</script>
+	<script>
+		$('#sticky1').sticky(); //네이바 상단 고정
+		$('#menu').click(
+				function() { //사이드바 오픈 버튼
+					$('.ui.sidebar')
+							.sidebar('setting', 'transition', 'overlay')
+							.sidebar('toggle');
+				})
+		$('.content-box .ui.dropdown').dropdown(); //컨텐츠 박스의 드롭다운 실행
+		$('.content-box .ui.menu .item').on('click', function() { //컨텐츠 박스의 메뉴 아이템 클릭시 active
+			$('.ui .item').removeClass('active');
+			$(this).addClass('active');
+		});
+	</script>
 </body>
 
 </html>

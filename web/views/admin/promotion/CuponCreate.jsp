@@ -62,14 +62,16 @@ span {
 .cuponTr {
 	height: 300px;
 }
+
 .cuponSave {
 	width: 150px;
 	margin-left: auto;
 	margin-right: auto;
 }
-.fields{
-padding-top: 3px;
-margin-bottom: 3px;
+
+.fields {
+	padding-top: 3px;
+	margin-bottom: 3px;
 }
 </style>
 </head>
@@ -156,17 +158,19 @@ margin-bottom: 3px;
 												<div class="field">
 													<div class="ui radio checkbox">
 														<input type="radio" name="frequency" checked="checked">
-														<label>전체 적용	</label>
+														<label>전체 적용 </label>
 													</div>
 												</div>
 												<div class="field">
 													<div class="ui radio checkbox">
-														<input type="radio" name="frequency"> <label>상품 개별 적용</label>
+														<input type="radio" name="frequency"> <label>상품
+															개별 적용</label>
 													</div>
 												</div>
 												<div class="field">
 													<div class="ui radio checkbox">
-														<input type="radio" name="frequency"> <label>분류별 적용</label>
+														<input type="radio" name="frequency"> <label>분류별
+															적용</label>
 													</div>
 												</div>
 											</div>
@@ -184,44 +188,46 @@ margin-bottom: 3px;
 					<div class="cuponSave">
 						<button class="big ui secondary button">저 &nbsp;장</button>
 					</div>
-					
+
 					<!-- 내용의끝 -->
 				</div>
 			</div>
+
+
 			
-
-			<!-- Footer -->
-			<!-- <%@ include file="/views/admin/common/adminFooter.jsp"%> -->
 		</div>
+		<!-- Footer -->
+			<%@ include file="/views/admin/common/adminFooter.jsp"%>
+	</div>
 
+	<!-- J-query CDN -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<!-- Semantic UI JS CDN -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+	<!-- jQuery Custom Scroller CDN -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-		<!-- J-query CDN -->
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-			crossorigin="anonymous"></script>
-		<!-- Semantic UI JS CDN -->
-		<script
-			src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-		<!-- jQuery Custom Scroller CDN -->
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+	<!-- Admin Common JS -->
+	<script src="/semi/js/admin/common/adminMain.js"></script>
 
-		<!-- Admin Common JS -->
-		<script src="/semi/js/admin/common/adminMain.js"></script>
-
-		<script>
-			$('#sticky1').sticky(); //네이바 상단 고정
-			$('#menu').click(
-					function() { //사이드바 오픈 버튼
-						$('.ui.sidebar').sidebar('setting', 'transition',
-								'overlay').sidebar('toggle');
-					})
-			$('.content-box .ui.dropdown').dropdown(); //컨텐츠 박스의 드롭다운 실행
-			$('.content-box .ui.menu .item').on('click', function() { //컨텐츠 박스의 메뉴 아이템 클릭시 active
-				$('.ui .item').removeClass('active');
-				$(this).addClass('active');
-			});
-		</script>
+	<script>
+		$('#sticky1').sticky(); //네이바 상단 고정
+		$('#menu').click(
+				function() { //사이드바 오픈 버튼
+					$('.ui.sidebar')
+							.sidebar('setting', 'transition', 'overlay')
+							.sidebar('toggle');
+				})
+		$('.content-box .ui.dropdown').dropdown(); //컨텐츠 박스의 드롭다운 실행
+		$('.content-box .ui.menu .item').on('click', function() { //컨텐츠 박스의 메뉴 아이템 클릭시 active
+			$('.ui .item').removeClass('active');
+			$(this).addClass('active');
+		});
+	</script>
 </body>
 
 </html>
