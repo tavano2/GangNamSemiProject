@@ -15,22 +15,7 @@
     <!-- DatePicker CSS -->
     <link rel="stylesheet" href="/semi/css/common/datePicker.css">
     <!-- Delivery CSS -->
-    <link rel="stylesheet" href="/semi/css/admin/delivery/adminDelivery.css">
-    
-    <style>
-    	.top-info label{
-    		font-weight: bold;
-    	}
-    	
-    	#detailBox {
-    		padding-bottom: 50px;
-    	}
-    	
-    	.delivery-info td:first-child {
-    		width: 150px;
-    		background-color: #f9fafb;
-    	}
-    </style>
+    <link rel="stylesheet" href="/semi/css/admin/delivery/adminDeliveryDetail.css">
     
 </head>
 
@@ -49,40 +34,43 @@
                 <h2 class="ui header">주문상세내역</h2>
                 <div class="ui divider"></div>
 				
-				<!-- 주문 정보 기본 -->
-				<div class="ui segment tertiary grey grid top-info">
-					<div class="row">
-						<div class="five wide column">
-							<label>주문자 아이디 : </label><span id="userId">asdasdadsl1004@hanmail.net</span>
-						</div>
-						<div class="eight wide column">
-							<label>회원등급 : </label><span id="userGrade">이건희</span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="five wide column">
-							<label>주문번호 : </label><span id="orderNum">2018090900001</span>
-						</div>
-						<div class="eight wide column">
-							<label>주문일자 : </label><span id="orderDate">2018-09-09 14:30:32</span>
-						</div>
-					</div>
-				</div>
-				
-				
-				<!-- 주문 상세 내역 -->
 				<form action="" method="post" id="detailBox" name="detailBox">
+					
+					<!-- 주문 정보 기본 -->
+					<div class="ui segment tertiary grey grid top-info">
+						<div class="row">
+							<div class="five wide column">
+								<label>주문자 아이디 : </label><input type="text" id="userId" name="userId" value="asdasdadsl1004@hanmail.net" readonly></input>
+							</div>
+							<div class="eight wide column">
+								<label>회원등급 : </label><input type="text" id="userGrade" name="userGrade" value="이건희" readonly></input>
+							</div>
+						</div>
+						<div class="row">
+							<div class="five wide column">
+								<label>주문번호 : </label><input type="text" id="orderNumber" name="orderNumber" value="2018090900001" readonly></input>
+							</div>
+							<div class="eight wide column">
+								<label>주문일자 : </label><input type="text" id="orderDate" name="orderDate" value="2018-09-09 14:30:32" readonly></input>
+							</div>
+						</div>
+					</div>
+				
+				
+					<!-- 주문 상세 내역 -->
 	                <table class="ui celled table order-detail">
 	                    <!-- 주문 상세 내역 테이블 -->
 	                    <thead>
-	                        <tr><th colspan="11">
+	                        <tr><th colspan="12">
                             	<div class="ui grid">
 		                            <div class="ten wide column">
 		                                <button class="ui black button" type="button" onclick="addressInput();">배송정보입력</button>
 		                            </div>
 		                            
 	                                <div class="six wide column right aligned">
-	                                	
+	                                	<button class="ui basic black button" type="button" onclick="productCancel();">상품 취소</button>
+	                                	<button class="ui basic black button" type="button" onclick="productExchange();">상품 교환</button>
+	                                	<button class="ui basic black button" type="button" onclick="productReturn();">상품 반품</button>
 	                                </div>
                                 </div>
                             </th></tr>
@@ -97,9 +85,10 @@
 	                            <th>판매가</th>
 	                            <th>배송비</th>
 	                            <th>실결제<br>금액</th>
-	                            <th>배송지</th>
+	                            <th>배송지 주소</th>
+	                            <th>배송<br>업체</th>
 	                            <th>운송장번호</th>
-	                            <th>주문상태</th>
+	                            <th>주문<br>상태</th>
 	                            <th>메모</th>
 	                        </tr>
 	                    </thead>
@@ -116,6 +105,7 @@
 	                            <td>2500</td>
 	                            <td>45000</td>
 	                            <td>서울</td>
+	                            <td>CJ</td>
 	                            <td>101-101-101</td>
 	                            <td>상품준비중</td>
 	                            <td>주말에만 받습니다</td>
@@ -132,6 +122,7 @@
 	                            <td>54000</td>
 	                            <td></td>
 	                            <td></td>
+	                            <td></td>
 	                            <td>배송준비중</td>
 	                            <td>1주일 늦게 배송해주세요</td>
 	                        </tr>
@@ -143,70 +134,74 @@
 	                    		<th>114000</th>
 	                    		<th>2500</th>
 	                    		<th>101500</th>
-	                    		<th colspan="4"></th>
+	                    		<th colspan="5"></th>
 	                    	</tr>
 	                    </tfoot>
 	                </table>
+        		
+        		
+        		
+	        		<!-- 주문자 정보 -->
+	        		<div class="ui grid delivery-info">
+	        		
+						<div class="eight wide column">
+							<table class="ui celled table">
+								<thead>
+									<tr>
+										<th colspan="2">주문자 정보</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>주문자 이름</td>
+										<td><input type="text" id="orderName" value="사람이름" readonly></input></td>
+									</tr>
+									<tr>
+										<td>주문자 일반전화</td>
+										<td><input type="text" id="orderPhone1" value="02-0101-0101" readonly></input></td>
+									</tr>
+									<tr>
+										<td>주문자 휴대전화</td>
+										<td><input type="text" id="orderPhone2" value="010-1103-0141" readonly></input></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						
+						<div class="eight wide column">
+							<table class="ui celled table">
+								<thead>
+									<tr>
+										<th colspan="2">수령자 정보</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>수령자 이름</td>
+										<td><input type="text" id="receiverName" name="receiverName" value="사람이름" readonly></input></td>
+									</tr>
+									<tr>
+										<td>수령자 일반전화</td>
+										<td><input type="text" id="receiverPhone1" name="receiverPhone1" value="01-123-1234" readonly></input></td>
+									</tr>
+									<tr>
+										<td>수령자 휴대전화</td>
+										<td><input type="text" id="receiverPhone2" name="receiverPhone2" value="010-102-3021" readonly></input></td>
+									</tr>
+									<tr>
+										<td>배송지 주소</td>
+										<td><input type="text" id="receiverAddress" name="receiverAddress" value="서울 강남구 어딘가" readonly></input></td>
+									</tr>
+									<tr>
+										<td>배송메세지</td>
+										<td><input type="text" id="receiverMemo" name="receiverMemo" value="잘 보내주세요!" readonly></input></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				
         		</form>
-        		
-        		
-        		<!-- 주문자 정보 -->
-        		<div class="ui grid delivery-info">
-					<div class="eight wide column">
-						<table class="ui celled table">
-							<thead>
-								<tr>
-									<th colspan="2">주문자 정보</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>주문자 이름</td>
-									<td>사람이름</td>
-								</tr>
-								<tr>
-									<td>주문자 일반전화</td>
-									<td>02-0101-0101</td>
-								</tr>
-								<tr>
-									<td>주문자 휴대전화</td>
-									<td>010-0101-0101</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="eight wide column">
-						<table class="ui celled table">
-							<thead>
-								<tr>
-									<th colspan="2">수령자 정보</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>수령자 이름</td>
-									<td>사람이름</td>
-								</tr>
-								<tr>
-									<td>수령자 일반전화</td>
-									<td>01-123-1234</td>
-								</tr>
-								<tr>
-									<td>수령자 휴대전화</td>
-									<td>010-102-3021</td>
-								</tr>
-								<tr>
-									<td>배송지 주소</td>
-									<td>서울 강남구 어딘가</td>
-								</tr>
-								<tr>
-									<td>배송 메세지</td>
-									<td>잘 보내주세요!</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
         		
         	</div>
         </div>
@@ -230,11 +225,40 @@
 	
 	<script>
 		function addressInput(){
+			var cw = 840;
+			var ch = 400;
+			var sw = screen.availWidth;
+			var sh = screen.availHeight;
+
+			var px = (sw - cw) / 2;
+			var py = (sh - ch) / 2 - ch/4;
+			
+			var popupname = "popup";
+			window.open("view/join/login.html", popupname, "location=0, resizable=no, menubar=no, status=no, toolbar=no"
+					+ ", width=" + cw + ", height=" + ch + ", left=" + px + ", top=" + py);
+			
+			detailBox.target = popupname;
+			detailBox.action = '/semi/views/admin/delivery/adminOrderDetailAddressInput.jsp';
+			detailBox.submit();
+		}
+		
+		function productCancel(){
+			detailBox.target = '';
+			detailBox.action = '';
+			detailBox.submit();
+		}
+	
+		function productExchange(){
+			detailBox.target = '';
 			detailBox.action = '';
 			detailBox.submit();
 		}
 		
-	
+		function productReturn(){
+			detailBox.target = '';
+			detailBox.action = '';
+			detailBox.submit();
+		}
 	</script>
 	
 </body>

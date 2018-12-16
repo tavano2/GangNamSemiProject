@@ -55,7 +55,7 @@
 
         <!-- 상단 네비 -->
         <div class="ui small text menu" id="top_nav">
-            <a class="item">
+            <a class="item" href="/semi/views/customer/board/FAQBoard.jsp">
                 Help
             </a>
             <a class="item">

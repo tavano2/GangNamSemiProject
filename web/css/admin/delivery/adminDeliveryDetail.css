@@ -1,0 +1,52 @@
+@charset "UTF-8";
+.top-info label{
+	font-weight: bold;
+}
+
+#detailBox {
+	padding-bottom: 50px;
+}
+
+.delivery-info td:first-child {
+	width: 150px;
+	background-color: #f9fafb;
+}
+	
+.delivery-info input, .top-info input {
+	border: none;
+	width: 240px;
+	background-color: transparent;
+}
+.order-detail td:first-child {
+	width: 30px;
+}
+.order-detail td:nth-child(2) {
+	width: 160px;
+}
+.order-detail td:nth-child(3) {
+	width: 200px;
+}
+.order-detail td:nth-child(4){
+   width: 60px;
+}
+.order-detail td:nth-child(5){
+    width: 80px;
+}
+.order-detail td:nth-child(6){
+    width: 70px;
+}
+.order-detail td:nth-child(7){
+    width: 80px;
+}
+.order-detail td:nth-child(8){
+    width: 140px;
+}
+.order-detail td:nth-child(9){
+    width: 60px;
+}
+.order-detail td:nth-child(10){
+    width: 120px;
+}
+.order-detail td:nth-child(11){
+    width: 70px;
+}
