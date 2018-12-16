@@ -34,24 +34,24 @@
                 <h2 class="ui header">주문상세내역</h2>
                 <div class="ui divider"></div>
 				
-				<form action="" method="get" id="detailBox" name="detailBox">
+				<form action="" method="post" id="detailBox" name="detailBox">
 					
 					<!-- 주문 정보 기본 -->
 					<div class="ui segment tertiary grey grid top-info">
 						<div class="row">
 							<div class="five wide column">
-								<label>주문자 아이디 : </label><input type="text" id="userId" value="asdasdadsl1004@hanmail.net" readonly></input>
+								<label>주문자 아이디 : </label><input type="text" id="userId" name="userId" value="asdasdadsl1004@hanmail.net" readonly></input>
 							</div>
 							<div class="eight wide column">
-								<label>회원등급 : </label><input type="text" id="userGrade" value="이건희" readonly></input>
+								<label>회원등급 : </label><input type="text" id="userGrade" name="userGrade" value="이건희" readonly></input>
 							</div>
 						</div>
 						<div class="row">
 							<div class="five wide column">
-								<label>주문번호 : </label><input type="text" id="orderNumber" value="2018090900001" readonly></input>
+								<label>주문번호 : </label><input type="text" id="orderNumber" name="orderNumber" value="2018090900001" readonly></input>
 							</div>
 							<div class="eight wide column">
-								<label>주문일자 : </label><input type="text" id="orderDate" value="2018-09-09 14:30:32" readonly></input>
+								<label>주문일자 : </label><input type="text" id="orderDate" name="orderDate" value="2018-09-09 14:30:32" readonly></input>
 							</div>
 						</div>
 					</div>
