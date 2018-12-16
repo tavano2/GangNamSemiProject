@@ -30,12 +30,12 @@
 			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">LOGIN</div>
 		<br> <br>
 	
-		<form action="https://s.codepen.io/voltron2112/debug/PqrEPM?"
-			method="get" class="ui large form">
+		<form action="<%=request.getContextPath() %>/selectMember.me;"
+			method="get" class="ui large form" id="loginForm">
 			<div class="ui stacked secondary  segment" style="width: 443px; margin-left: auto; margin-right: auto;">
 				<div class="field">
 					<div class="ui left icon input">
-						<i class="user icon"></i> <input type="text" name="email"
+						<i class="user icon"></i> <input type="text" name="userId"
 							placeholder="아이디를 입력하세요">
 					</div>
 				</div>
@@ -45,7 +45,7 @@
 							placeholder="비밀번호를 입력하세요">
 					</div>
 				</div>
-				<div class="ui fluid large black submit button">Login</div>
+				<div class="ui fluid large black submit button" id="userLoginBtn" onclick="login();">Login</div>
 				
 				<hr>
 				<div class = "ui buttons">
@@ -60,10 +60,6 @@
 		<br>
  		<div class="ui message" style="width: 225px; margin-left: auto; margin-right: auto;">
 			<div class="ui fluid large black button" onclick="location.href='/semi/views/customer/member/InsertMember1.jsp';">회원가입</div>
-			<br>
-			<div class="ui fluid large yellow button">카카오로 회원가입</div>
-			<br>
-			<div class="ui fluid large green button">네이버로 회원가입</div>
 		</div>
 		<br><br>
 		<br><br><br>
@@ -89,6 +85,12 @@
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
+	<script type="text/javascript">
+		function login(){
+			$("#loginForm").submit();
+		}
+	
+	</script>
 
 </body>
 
