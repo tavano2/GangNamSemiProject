@@ -1,6 +1,8 @@
 package com.kh.semi.customer.member.model.vo;
 
-public class Member {
+import java.io.Serializable;
+
+public class Member implements Serializable{
 	
 	private String userId;
 	private String password;
