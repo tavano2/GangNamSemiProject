@@ -89,7 +89,7 @@
 	                        	<td>
 		                        	<div class="container">
 		                        		<div class="ui master checkbox">
-											<input type="checkbox" name="orderState" value="all" checked>
+											<input type="checkbox" checked>
 											<label>전체</label>
 										</div><br><br>
 										<div class="chk-list">
