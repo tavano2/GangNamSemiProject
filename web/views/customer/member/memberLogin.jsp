@@ -31,7 +31,7 @@
 		<br> <br>
 	
 		<form action="<%=request.getContextPath() %>/selectMember.me;"
-			method="get" class="ui large form" id="loginForm">
+			method="post" class="ui large form" id="loginForm">
 			<div class="ui stacked secondary  segment" style="width: 443px; margin-left: auto; margin-right: auto;">
 				<div class="field">
 					<div class="ui left icon input">

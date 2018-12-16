@@ -1,5 +1,10 @@
+<%@page import="com.kh.semi.customer.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%Member loginUser = (Member)session.getAttribute("loginUser");
+    	 
+    
+    %>
 
     <!-- 사이드바 오픈시 오버레이 -->
     <div class="overlay"></div>
@@ -12,13 +17,26 @@
 
         <div class="sidebar-header">
             <div class="sidebar-login">
+            	<%if(loginUser == null)  { %>
                 <button class="ui button" onclick="location.href='/semi/views/customer/member/memberLogin.jsp'">로그인</button>
                 <table>
                     <tr>
                         <td><a href="#">아이디/비밀번호 찾기</a></td>
-                        <td align="right"><a href="#">회원가입</a></td>
+                        <td align="right"><a href="/semi/views/customer/member/InsertMember1.jsp">회원가입</a></td>
                     </tr>
                 </table>
+                
+                <%} else{%>
+               	<div align = "center"> <%= loginUser.getUserId() %>님 환영합니다! </div> 
+                <br>
+                <table>
+                    <tr>
+                        <td><a style="margin-left: 75px;" id="logoutMmeber" href="<%=request.getContextPath()%>/logout.me">로그아웃</a></td>
+                    </tr>
+                </table>
+                <%} %>
+                
+                
             </div>
         </div>
 
@@ -53,8 +71,12 @@
             <a class="item" href="/semi/views/customer/product/detailPage.jsp">
                        예솔쓰 상세페이징
                 </a> 
-            	<a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
-                        열려있습니다! 들어와서 개인정보 확인하세요!!
+                <%if(loginUser != null) { %>
+                	<%if(loginUser.getUserId().equals("admin")) { %>
+            		<a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
+                       	관리자 페이지로
+                        <%} %>
+                 <%} %>
                 </a> <!-- 이후 삭제 -->
                 <a class="item" href="/semi/views/customer/member/memberLogin.jsp">
                     Log-In
@@ -157,3 +179,6 @@
                 </button>
             </div>
         </div>
+        
+        
+      

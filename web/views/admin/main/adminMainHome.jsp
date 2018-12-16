@@ -1,6 +1,9 @@
+<%@page import="com.kh.semi.customer.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+<%Member loginUser = (Member)session.getAttribute("loginUser"); %>
 <html>
 
 <head>
@@ -24,6 +27,16 @@
 </head>
 
 <body>
+		
+		
+	<%if(loginUser != null && !loginUser.getUserId().equals("admin")){ 
+			request.setAttribute("msg", "잘못된 페이지 접근!");
+			RequestDispatcher reqDispatcher = request.getRequestDispatcher("/views/customer/common/errorPage.jsp");
+			reqDispatcher.forward(request, response);
+	%>
+	
+	
+	<%}else{ %>
 	
 	<!-- 사이드바 메뉴 -->
     <%@ include file = "/views/admin/common/adminSidebarBoard.jsp" %>
@@ -267,6 +280,10 @@
     });
   $('.menu .item').tab();
 </script>
+
+
+<%} %>
+
     
 </body>
 
