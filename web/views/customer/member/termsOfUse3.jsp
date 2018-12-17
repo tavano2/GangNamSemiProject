@@ -55,7 +55,7 @@
 			</div>
 			<div class="check">
 				<div class="ui checkbox">
-					<input type="checkbox" name="example"><label> </label>
+					<input type="checkbox" name="checkAgree3" id="checkAgree3"><label> </label>
 				</div>
 			</div>
 		</div>

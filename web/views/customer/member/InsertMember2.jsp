@@ -15,6 +15,8 @@
 
 <!-- Common css -->
 <link href="/semi/css/customer/common/main.css" rel="stylesheet">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- alert CDN -->
 <style type="text/css">
 .tableBox {
 	width: 800px;
@@ -53,8 +55,9 @@ th>div {
 .insertTd {
 	background-color: #f9fafb;
 }
-.insertMiniDiv{
-	margin-left:7px;
+
+.insertMiniDiv {
+	margin-left: 7px;
 	display: inline;
 }
 </style>
@@ -63,46 +66,56 @@ th>div {
 <body>
 	<%@ include file="/views/customer/common/mainNav.jsp"%>
 	<div class="content">
-		<div class="insertTitle">
-			<p>너랑나랑옷사랑 가입정보 입력</p>
-		</div>
-		<div class="tableBox">
-			<table class="ui celled table">
+		<form id="insertMemberForm" action="<%=request.getContextPath() %>/insertMember.me" method="post">
+			<div class="insertTitle">
+				<p>너랑나랑옷사랑 가입정보 입력</p>
+			</div>
+			<div class="tableBox">
+				<table class="ui celled table">
 
-				<tbody>
-					<tr>
-						<td class="insertTd"><div>아이디 / 이메일</div></td>
-						<td><div class="ui input focus insertInput">
-								<input type="text" placeholder="이메일을 입력하세요">
-							</div>
-							<div class="insertMiniDiv">
-							<button class="small ui secondary button">중복확인</button></td>
-							</div>
-					</tr>
-					<tr>
-						<td class="insertTd"><div>비밀번호</div></td>
-						<td><div class="ui input focus insertInput">
-								<input type="text" placeholder="비밀번호를 입력하세요">
-							</div></td>
-					</tr>
-					<tr>
-						<td class="insertTd"><div>비밀번호 확인</div></td>
-						<td><div class="ui input focus insertInput">
-								<input type="text" placeholder="비밀번호를 입력하세요">
-							</div></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<br> <br>
-		<div class="insertButton">
-			<button class="ui secondary button" id="insert-Agree"
-				onclick="location.href='<%=request.getContextPath()%>/views/customer/member/InsertMember2.jsp'">확인</button>
-			<button class="ui button" onclick="location.href='/semi'">취소</button>
-		</div>
-		<br> <br>
+					<tbody>
+						<tr>
+							<td class="insertTd"><div>아이디 / 이메일</div></td>
+							<td><div class="ui input focus insertInput">
+									<input type="email" placeholder="이메일을 입력하세요" name="userId" id="userId">
+								</div>
+								<div class="insertMiniDiv">
+									<button type="button" class="small ui secondary button">중복확인</button>
+								</div></td>
+						</tr>
+						<tr>
+							<td class="insertTd"><div>비밀번호</div></td>
+							<td><div class="ui input focus insertInput">
+									<input type="password" placeholder="비밀번호를 입력하세요" name="userPwd1">
+								</div></td>
+						</tr>
+						<tr>
+							<td class="insertTd"><div>비밀번호 확인</div></td>
+							<td><div class="ui input focus insertInput">
+									<input type="password" placeholder="비밀번호를 입력하세요" name="userPwd2">
+								</div></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<br> <br>
+			<div class="insertButton">
+				<button type="button" class="ui secondary button" id="submitBtn">확인</button>
+				<button type="button" class="ui button" onclick="location.href='/semi'">취소</button>
+			</div>
+			<br> <br>
+		</form>
 	</div>
-
+	<script>
+	$("#submitBtn").click(function(){
+		swal("이메일을 입력해주세요");
+		if($("#userId").val()!=null){
+			$("#insertMemberForm").attr("action","<%=request.getContextPath() %>/insertMember.me");
+		}else{
+			swal("이메일을 입력해주세요");
+		}
+	})
+	</script>
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
 
