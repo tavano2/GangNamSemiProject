@@ -51,12 +51,17 @@
 					<td>2018/12/14</td>
 				</tr>
 			</tbody>
+												<tfoot>
+				<th colspan="6">
+					<!--  작성하기는 관리자만 가능하다.  -->
+					<div align="right">
+					<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/board/updateBoard.jsp';">수정하기</button>
+					<button class="ui brown basic mini button">삭제하기</button>
+				</div>
+				</th>
+			</tfoot>
 		</table>
-		<div align="right">
-			<button class="ui brown basic mini button">수정하기</button>
-			&nbsp;
-			<button class="ui brown basic mini button">삭제하기</button>
-		</div>
+
 		<hr>
 		<br>
 		<br> <b>리뷰 게시판 관리</b>
@@ -82,18 +87,27 @@
 					<td>2018/12/14</td>
 				</tr>
 			</tbody>
+									<tfoot>
+				<th colspan="6">
+					<!--  작성하기는 관리자만 가능하다.  -->
+					<div align="right">
+					<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/board/updateBoard.jsp';">수정하기</button>
+					<button class="ui brown basic mini button">삭제하기</button>
+				</div>
+				</th>
+			</tfoot>
+			
+			
 		</table>
-		<div align="right">
-			<button class="ui brown basic mini button">수정하기</button>
-			&nbsp;
-			<button class="ui brown basic mini button">삭제하기</button>
-		</div>
-
 		<hr>
 		<br>
 		<br>
+		<br>
+		<br>
+		<br>
+		<br>
 	</div>
-
+	
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
 
