@@ -43,7 +43,7 @@
         <ul class="components">
             <!-- <p>소제목</p> -->
             <li><a href="/semi/index.jsp">홈</a></li>
-            <li><a href="#">공지사항</a></li>
+            <li><a href="/semi/views/customer/board/notice.jsp">공지사항</a></li>
             <li><a href="/semi/views/customer/member/userMyPage.jsp">마이페이지</a></li>
             <li><a href="#">장바구니</a></li>
             <li><a href="/semi/views/customer/delivery/orderList.jsp">주문내역</a></li>
