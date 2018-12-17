@@ -48,6 +48,8 @@
 	margin-right: auto;
 }
 </style>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- alert CDN -->
 </head>
 
 <body>
@@ -81,15 +83,14 @@
 		</div>
 		<br> <br>
 		<div class="insertButton">
-			<button class="ui secondary button" id="insert-Agree"
-				onclick="location.href='<%=request.getContextPath()%>/views/customer/member/InsertMember2.jsp'">동의하기</button>
+			<button class="ui secondary button" id="insertAgree">동의하기</button>		
 			<button class="ui button" onclick="location.href='/semi'">취소</button>
 		</div>
 		<br>
 		<br>
 		<br>
 
-
+	<%-- onclick="location.href='<%=request.getContextPath()%>/views/customer/member/InsertMember2.jsp'">동의하기</button> --%>
 
 	</div>
 
@@ -110,7 +111,17 @@
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
+	<script type="text/javascript">
+	$("#insertAgree").click(function(){
+		if($("#checkAgree1").prop("checked") && $("#checkAgree2").prop("checked") && $("#checkAgree3").prop("checked")){
+			location.href="<%=request.getContextPath()%>/views/customer/member/InsertMember2.jsp";
+		}else{
+			swal("이용약관에 동의 해주세요!");
+		}	
+	})
+		
 
+	
+	</script>
 </body>
-
 </html>

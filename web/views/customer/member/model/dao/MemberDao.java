@@ -11,7 +11,7 @@ import java.util.Properties;
 
 import com.kh.semi.customer.member.controller.SelectMemberServlet;
 import com.kh.semi.customer.member.model.vo.Member;
-
+import com.kh.semi.customer.member.model.vo.Member1;
 
 import static com.kh.semi.customer.common.JDBCTemplate.*;
 

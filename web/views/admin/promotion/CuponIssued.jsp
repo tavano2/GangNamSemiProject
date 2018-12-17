@@ -249,7 +249,7 @@
 								<td class="cuponTd" style="width: 200px">주문번호</td>
 							</tr>
 							<tr>
-								<td>&nbsp</td>
+								<td>&nbsp;</td>
 								<td></td>
 								<td></td>
 								<td></td>
