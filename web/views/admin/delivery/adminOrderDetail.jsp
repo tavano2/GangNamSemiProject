@@ -222,6 +222,8 @@
     <script src="/semi/js/admin/common/adminMain.js"></script>
 	<!-- Delivery Detail JS -->
 	<script src="/semi/js/admin/delivery/adminDeliveryDetail.js"></script>
+	<!-- common js -->
+	<script src="/semi/js/common/common.js"></script>
 	
 	<script>
 		function addressInput(){
@@ -231,7 +233,7 @@
 			var sh = screen.availHeight;
 
 			var px = (sw - cw) / 2;
-			var py = (sh - ch) / 2 - ch/4;
+			var py = ((sh - ch) / 2) - ch/4;
 			
 			var popupname = "popup";
 			window.open("view/join/login.html", popupname, "location=0, resizable=no, menubar=no, status=no, toolbar=no"
