@@ -62,7 +62,7 @@
                 NOTICE
             </a>
             <a class="item" style="color : rgb(211, 84, 0)">
-                DELAY
+                DAILY
             </a>
             <a class="item" style="color : rgb(231, 76, 60)" href="/semi/views/customer/promotion/eventPage.jsp">
                 EVENT
