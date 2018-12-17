@@ -2,19 +2,9 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
+
 <head>
-<style>
-	/* .table, th, td {
-		font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-		font-size: 20px;
-		padding: 5px;
-		text-align: center;
-		 border: 1px solid black;
- 		 border-collapse: collapse;
-	}
-	.background-color:#f9fafb; 
-	 */
-</style>
 	<meta charset="UTF-8">
 	<title>notice.jsp</title>
 
