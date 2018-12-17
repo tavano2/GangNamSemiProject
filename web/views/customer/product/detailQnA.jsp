@@ -29,6 +29,9 @@ text-align:center;
 
 /*  border: 1px solid lightcoral;  */
 }
+.updateDeleteBtn{
+margin-right:200px;
+}
 
 </style>
 </head>
@@ -78,11 +81,20 @@ text-align:center;
                </div>
             </div>
          </div>
+         
+         
 
       </div>
       
       <br><br>
       <hr>
+      <div class="updateDeleteBtn" align="right">
+					
+			 <button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/product/updateQnA.jsp';">수정하기</button>
+			&nbsp;
+			<button class="ui brown basic mini button">삭제하기</button> 
+		</div>
+      <br> <br>
 
 
 

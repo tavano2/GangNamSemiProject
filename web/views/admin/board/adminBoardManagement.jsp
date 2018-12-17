@@ -18,19 +18,27 @@
         .first-col td:first-child{
             width: 200px;
             background-color:#f9fafb;
+            text-align:center;
         }
         .first-col td:nth-child(2){
             width: 200px;
+            text-align:center;
 
         }
+         .first-col td:nth-child(3){
+            text-align:center;
+        
+        }
         .first-col{
-            
+   
             margin-right: 500px;
 
         }
         .tablemax{
             width: 600px;
         }
+        
+        
    
     </style>
 </head>
@@ -46,8 +54,9 @@
 
         <div class="content">
         	<div class="content-box">
-        	
+        		
         		  <H2>게시판 관리</H2>
+                <br><br>
                 <H4>전체 게시물 보기</H4>
                 <div class="tablemax">
                 <table class="ui celled table first-col">

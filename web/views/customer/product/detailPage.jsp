@@ -331,6 +331,10 @@
                   </tr>
                </tbody>
             </table>
+            <div align="right">
+					<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/board/insertBoard.jsp';">작성하기</button>
+			&nbsp;
+		</div>
 
 
             <!-- 페이징 넘버 -->
@@ -399,6 +403,12 @@
                   </tr>
                </tbody>
             </table>
+            
+            <div align="right">
+					<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/board/insertBoard.jsp';">작성하기</button>
+			&nbsp;
+			</div>
+		
             <!-- 페이징 넘버 -->
             <div class="ui container center aligned">
                <div aria-label="Pagination Navigation" role="navigation"

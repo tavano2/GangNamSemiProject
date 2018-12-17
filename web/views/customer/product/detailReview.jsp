@@ -33,6 +33,9 @@
 .reviewText {
    margin-left: 200px;
 }
+
+.updateDeleteBtn{
+	margin-right:200px;
 }
 </style>
 </head>
@@ -70,9 +73,18 @@
             src="/semi/views/images/products/review.jpg" width="200px"> 
             <img src="/semi/views/images/products/review.jpg" width="200px"> 
             <br> <br>
-         <br> <br>
+         
 
+      <div class="updateDeleteBtn" align="right">
+					
+			 <button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/product/updateReview.jsp';">수정하기</button>
+			&nbsp;
+			<button class="ui brown basic mini button">삭제하기</button> 
+		</div>
+      <br> <br>
+      
       </div>
+      
    </div>
 
 
