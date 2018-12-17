@@ -29,14 +29,14 @@
 <body>
 		
 		
-	<%if(loginUser != null && !loginUser.getUserId().equals("admin")){ 
+<%-- 	<%if(loginUser != null && !loginUser.getUserId().equals("admin")){ 
 			request.setAttribute("msg", "잘못된 페이지 접근!");
 			RequestDispatcher reqDispatcher = request.getRequestDispatcher("/views/customer/common/errorPage.jsp");
 			reqDispatcher.forward(request, response);
 	%>
 	
 	
-	<%}else{ %>
+	<%}else{ %> --%>
 	
 	<!-- 사이드바 메뉴 -->
     <%@ include file = "/views/admin/common/adminSidebarBoard.jsp" %>
@@ -282,7 +282,7 @@
 </script>
 
 
-<%} %>
+<%-- <%} %> --%>
 
     
 </body>
