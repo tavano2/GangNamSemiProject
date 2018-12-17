@@ -41,7 +41,7 @@
 				</div>
 				<div class="field">
 					<div class="ui left icon input">
-						<i class="lock icon"></i> <input type="password" name="password"
+						<i class="lock icon"></i> <input type="password" name="userPwd1"
 							placeholder="비밀번호를 입력하세요">
 					</div>
 				</div>

@@ -42,9 +42,9 @@
 					<tr>
 						<th>번호</th>
 						<th>쿠폰명</th>
-						<th>쿠폰 적용 상품</th>
+						<th>쿠폰 적용 카테고리</th>
 						<th>구매 금액</th>
-						<th>구폰 혜택</th>
+						<th>쿠폰 혜택</th>
 						<th>사용 가능 기간</th>
 					</tr>
 				</thead>
@@ -52,7 +52,7 @@
 					<tr>
 						<td>1</td>
 						<td>쿠폰명</td>
-						<td>쿠폰 적용 상품 명</td>
+						<td>쿠폰 적용 카테고리명</td>
 						<td>구매 금액란</td>
 						<td>쿠폰 혜택란</td>
 						<td>사용 가능 기간</td>
@@ -81,17 +81,15 @@
 				</tr>
 			</tbody>
 		</table>
+		<hr>
 		<br>
 		<br>
 		<br>
-		
-	
-
 		
 	</div>
-		
+		<%@ include file="/views/customer/common/mainFooter.jsp"%>
   
-	<%@ include file="/views/customer/common/mainFooter.jsp"%>
+	
 
 
     <!-- J-query CDN -->
