@@ -71,12 +71,14 @@
             <a class="item" href="/semi/views/customer/product/detailPage.jsp">
                        예솔쓰 상세페이징
                 </a> 
-                <%if(loginUser != null) { %>
+  <%--               <%if(loginUser != null) { %>
                 	<%if(loginUser.getUserId().equals("admin")) { %>
             		<a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
                        	관리자 페이지로
                         <%} %>
-                 <%} %>
+                 <%} %> --%>
+                 <a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
+                       	관리자 페이지로
                 </a> <!-- 이후 삭제 -->
                 <a class="item" href="/semi/views/customer/member/memberLogin.jsp">
                     Log-In

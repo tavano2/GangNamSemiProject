@@ -97,23 +97,7 @@
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<td><b>주소</b></td>
-				<td>
-					<div class="ui input">
-						<input type="text">
-						<button class="ui brown basic mini button">검색하기</button>
-					</div> <br>
-					<div class="ui input">
-						<input type="text" style="width: 400px;">
-						<div style="margin-top: 9px;">기본 주소</div>
-					</div> <br>
-					<div class="ui input">
-						<input type="text" style="width: 400px;">
-						<div style="margin-top: 9px;">나머지 주소</div>
-					</div>
-				</td>
-			</tr>
+			
 			<tr>
 				<td><b>일반 전화</b></td>
 				<td>
