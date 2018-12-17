@@ -226,7 +226,7 @@
 	<script>
 		function addressInput(){
 			var cw = 840;
-			var ch = 400;
+			var ch = 420;
 			var sw = screen.availWidth;
 			var sh = screen.availHeight;
 
