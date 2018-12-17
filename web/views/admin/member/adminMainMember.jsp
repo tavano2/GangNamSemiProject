@@ -5,7 +5,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>adminMainMember.jsp</title>
 
 	<!-- Semantic UI CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -25,10 +25,168 @@
     	<!-- 상단 네비바 -->
         <%@ include file = "/views/admin/common/adminNavi.jsp" %>
 
-        <div class="content">
+    	 <div class="content">
         	<div class="content-box">
+        		<h2 class="ui header">회원관리</h2>
         	
-        		<!-- 내용 -->
+        			<hr>
+        	
+        		<h2 class="ui header">회원정보 조회</h2>
+
+           <table class="ui celled table first-col">
+                   
+                    <tr>
+                        <td>ID</td>
+                        <td>
+                            <div class="ui input"><input type="text"></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>회원등급</td>
+                        <td>
+                            <div class="ui input"><span id=""></span></div>
+                             <div class="ui selection dropdown">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">전체</div><!-- .default text:gray; -->
+                                <div class="menu"><!-- menu > accordion -->
+                                    <div class="item" data-value="0">Bronze</div>
+                                    <div class="item" data-value="1">Silver</div>
+                                    <div class="item" data-value="2">Gold</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>가입일 / 기념일</td>
+                        <td>
+                            <div class="ui input"><span id=""></span></div>
+                             <div class="ui selection dropdown">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">전체</div><!-- .default text:gray; -->
+                                <div class="menu"><!-- menu > accordion -->
+                                   <div class="item" data-value="0">1970-01-01</div>
+                                    <div class="item" data-value="1">1970-01-02</div>
+                                    <div class="item" data-value="2">1970-01-03</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>구매금액 / 건수</td>
+                        <td>
+                            <div class="ui input"><span id=""></span></div>
+                             <div class="ui selection dropdown">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">전체</div><!-- .default text:gray; -->
+                                <div class="menu"><!-- menu > accordion -->
+                                    <div class="item" data-value="0">Bronze</div>
+                                    <div class="item" data-value="1">Silver</div>
+                                    <div class="item" data-value="2">Gold</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>주문일 / 결제완료일</td>
+                        <td>
+                            <div class="ui input"><span id=""></span></div>
+                             <div class="ui selection dropdown">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">전체</div><!-- .default text:gray; -->
+                                <div class="menu"><!-- menu > accordion -->
+                                    <div class="item" data-value="0">1970-01-01</div>
+                                    <div class="item" data-value="1">1970-01-02</div>
+                                    <div class="item" data-value="2">1970-01-03</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>주문상품</td>
+                         <td>
+                            <div class="ui input"><input type="text"></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                    
+                        <td>적립금</td>
+                        <td>
+                            <div class="ui input"><span id=""></span></div>
+                             <div class="ui selection dropdown">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">MAX</div><!-- .default text:gray; -->
+                                <div class="menu"><!-- menu > accordion -->
+                                    <div class="item" data-value="0">MIN</div>
+                                </div>
+                            </div>
+                        </td>
+                        
+                        <td>
+                            <div class="ui input"><input type="text"></div><!-- Adjust "width" -->
+                        </td>
+                        
+                        <td>
+                            <div class="ui input"><input type="text"></div><!-- Adjust "width" -->
+                        </td>
+                        
+                    </tr>
+                    
+                     <tr>
+                        <td>이메일 수신</td>
+                        <td>
+                            <div class="ui form"><!-- ALIGN AS HR -->
+                            
+                              <div class="field4All">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="all"  checked="" tabindex="0" class="hidden">
+                                            <label>전체</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <!--  checked="" >>> Set DefaultSet as "checked".   -->
+                                     <div class="field4PC">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="pc" tabindex="0" class="hidden">
+                                            <label>PC</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                 <div class="field4Mobile">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="mobile" tabindex="0" class="hidden">
+                                            <label>Mobile</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                        </div>
+                        </td>
+                    </tr>
+                    
+                </table>
+                
+                
+                
+                <br/>
+                <br/>
+                
+                
+                
+                <hr>
+        		<h2 class="ui header">회원목록</h2>
+                
+                
+                
+                
+                <hr>
+
         	
         	</div>
         </div>
@@ -49,15 +207,22 @@
     <!-- Admin Common JS -->
     <script src="/semi/js/admin/common/adminMain.js"></script>
     
-	<!-- 각자 쓸 스크립트 -->
-    <!-- 컨텐츠 박스 JS -->
     <script>
-        $('.content-box .ui.dropdown').dropdown();  //컨텐츠 박스의 드롭다운 실행
-        $('.content-box .ui.menu .item').on('click', function () {  //컨텐츠 박스의 메뉴 아이템 클릭시 active
-            $('.content-box .pagination.menu .item').removeClass('active');
-            $(this).addClass('active');
-        });
+    $('#sticky1').sticky(); //네이바 상단 고정
+    $('#menu').click(function () {  //사이드바 오픈 버튼
+        $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
+    })
+    $('.content-box .ui.dropdown').dropdown();  //컨텐츠 박스의 드롭다운 실행
+    $('.content-box .ui.menu .item').on('click', function () {  //컨텐츠 박스의 메뉴 아이템 클릭시 active
+        $('.ui .item').removeClass('active');
+        $(this).addClass('active');
+
+    });
+    $('.ui.radio.checkbox')
+  .checkbox();
+    
     </script>
+    
 </body>
 
 </html>
