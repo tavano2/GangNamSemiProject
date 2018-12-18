@@ -15,6 +15,7 @@ public class MemberService {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	public Member selectMember(Member member) {
 		Connection con = getConnection();
 		Member loginUser = new Member();
@@ -24,6 +25,8 @@ public class MemberService {
 		return loginUser;
 	}
 
+	
+	
 	public int insertMember(Member member) {
 		int result = 0;
 		Connection con = getConnection();

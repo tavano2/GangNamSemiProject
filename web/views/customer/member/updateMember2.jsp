@@ -34,10 +34,10 @@
 					<form action="<%=request.getContextPath() %>/???" method="post" id="passwordCheck" class="ui equal width form" style="width: 200px;">
 				<div class="field">
 					<br>
-					<label>Password</label> <input type="password">
+					<label>Password</label> <input type="password" name="userPwd1">
 					<br>
 					<br>
-					<label>Password Result</label> <input type="password">
+					<label>Password Result</label> <input type="password" name="userPwd2">
 					<br>
 					<br>
 					<button type="submit" class="ui secondary button">확인</button>
