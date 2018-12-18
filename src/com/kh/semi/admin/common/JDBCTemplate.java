@@ -1,4 +1,4 @@
-package com.kh.semi.customer.common;
+package com.kh.semi.admin.common;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
