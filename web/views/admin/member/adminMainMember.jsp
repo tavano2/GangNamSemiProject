@@ -28,14 +28,10 @@
     	 <div class="content">
         	<div class="content-box">
         		<h2 class="ui header">회원관리</h2>
-        	
-        			<hr>
-        	
+        		<hr>
         		<h2 class="ui header">회원정보 조회</h2>
-
-           <table class="ui celled table first-col">
-                   
-                    <tr>
+        		 <table class="ui celled table first-col">
+        		 <tr>
                         <td>ID</td>
                         <td>
                             <div class="ui input"><input type="text"></div>
@@ -114,73 +110,90 @@
                     </tr>
                     
                     <tr>
-                    
                         <td>적립금</td>
                         <td>
                             <div class="ui input"><span id=""></span></div>
-                             <div class="ui selection dropdown">
-                                <i class="dropdown icon"></i>
-                                <div class="default text">MAX</div><!-- .default text:gray; -->
-                                <div class="menu"><!-- menu > accordion -->
-                                    <div class="item" data-value="0">MIN</div>
-                                </div>
-                            </div>
-                        </td>
-                        
-                        <td>
-                            <div class="ui input"><input type="text"></div><!-- Adjust "width" -->
-                        </td>
-                        
-                        <td>
-                            <div class="ui input"><input type="text"></div><!-- Adjust "width" -->
-                        </td>
-                        
-                    </tr>
-                    
-                     <tr>
-                        <td>이메일 수신</td>
-                        <td>
-                            <div class="ui form"><!-- ALIGN AS HR -->
-                            
-                              <div class="field4All">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="all"  checked="" tabindex="0" class="hidden">
+                             	<div class="ui selection dropdown">
+                                	<i class="dropdown icon"></i>
+                                		<div class="default text">MAX</div><!-- .default text:gray; -->
+                               			 	<div class="menu"><!-- menu > accordion -->
+                                    			<div class="item" data-value="0">MIN</div>
+                                			</div>
+                            			</div>
+                             		<div class="ui input"><input type="text"></div><!-- Adjust "width" -->
+                             	<span>~</span>
+                             <div class="ui input"><input type="text"></div><!-- Adjust "width" -->
+                          </td>
+                     </tr>
+                     
+                   <tr>
+                     <td>이메일 수신</td>
+                     	<td>
+                     		<div class="ui form"><!-- ALIGN AS HR -->
+                           		<div class="field4All">
+                           				<div class="ui radio checkbox">
+                                            <input type="radio" name="getAnEmailAs"  checked="" tabindex="0" class="hidden">
                                             <label>전체</label>
                                         </div>
-                                    </div>
-                                </div>
+                                 </div>
+                             </div>
                                     <!--  checked="" >>> Set DefaultSet as "checked".   -->
                                      <div class="field4PC">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="pc" tabindex="0" class="hidden">
+                                            <input type="radio" name="getAnEmailAs" tabindex="0" class="hidden">
                                             <label>PC</label>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                 <div class="field4Mobile">
+                                    <div class="field4Mobile">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="mobile" tabindex="0" class="hidden">
+                                            <input type="radio" name="getAnEmailAs	" tabindex="0" class="hidden">
                                             <label>Mobile</label>
                                         </div>
-                                    </div>
-                                </div>
-                                
-                        </div>
-                        </td>
+                                 </div>
+                           </td>
                     </tr>
                     
                 </table>
                 
-                
+                 <div class="searchBtn" align="center">
+                <button class="ui white button"><!-- onclick="location.href='/semi/views/admin/'" -->검색</button>
+                </div>
                 
                 <br/>
                 <br/>
-                
-                
                 
                 <hr>
-        		<h2 class="ui header">회원목록</h2>
+        		<h2 class="ui header">회원목록</h2><!--  MAKE A CELL TABLE. -->
+        						<table class="ui celled table top-table">
+        						<!-- <button class="ui white button">X 삭제</button> -->
+        						<!--  DROPDOWN IS NEE-->
+        			<thead>
+                    	 <tr class="center aligned">
+                        	<th>등록일</th>
+                        	<th>이름</th>
+                        	<th>ID</th>
+                        	<th>등급</th>
+                        	<th>이메일</th>
+                        	<th>관련 내역</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                            <td>Set A ChequeBox here</td>
+                            <td class="center aligned"><input type="text" name="todayTotal" value="10000000" readonly></td>
+                            <td class="center aligned"><input type="text" name="monthTotal" value="999900000" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Set A ChequeBox here</td>
+                            <td class="center aligned"><input type="text" name="todayPayment" value="9900000" readonly></td>
+                            <td class="center aligned"><input type="text" name="monthPayment" value="1110000000" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Set A ChequeBox here</td>
+                            <td class="center aligned"><input type="text" name="todayRefund" value="10000" readonly></td>
+                            <td class="center aligned"><input type="text" name="monthRefund" value="100000" readonly></td>
+                        </tr>
+                    </tbody>
+                </table>
                 
                 
                 
@@ -226,3 +239,7 @@
 </body>
 
 </html>
+                    
+                    
+                    
+                    
