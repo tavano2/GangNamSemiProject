@@ -58,7 +58,7 @@
             <a class="item" href="/semi/views/customer/board/FAQBoard.jsp">
                 Help
             </a>
-            <a class="item">
+            <a class="item"  href="/semi/views/customer/board/notice.jsp">
                 NOTICE
             </a>
             <a class="item" style="color : rgb(211, 84, 0)">
@@ -86,7 +86,7 @@
                 <a class="item" href="/semi/views/customer/member/InsertMember1.jsp">
                     Join Us
                 </a>
-                <a class="item">
+                <a class="item" href="/semi/views/customer/product/shoppingCart.jsp">
                     Cart
                 </a>
                 <a class="item" href="/semi/views/customer/member/userMyPage.jsp">
