@@ -30,8 +30,6 @@ public class SelectMemberServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("userPwd1");
-		System.out.println(userId);
-		System.out.println(password);
 		Member member = new Member();
 		member.setUserId(userId);
 		member.setUserPwd1(password);
