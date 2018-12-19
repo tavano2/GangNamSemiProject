@@ -13,6 +13,11 @@
     <!-- Admin Common CSS -->
     <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
     
+        <style>
+        .first-col td:first-child{
+			background-color:#f9fafb;
+           }
+    </style>
     
 </head>
 
@@ -164,12 +169,32 @@
                 
                 <hr>
         		<h2 class="ui header">회원목록</h2><!--  MAKE A CELL TABLE. -->
+        		 <!-- <br/> -->
+        		 <div align="right">
+        		 <table>
+        		   <tr>
+        		       <td>
+        		        <div class="ui input"><span id=""></span></div>
+                             <div class="ui selection dropdown">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">전체 조회</div><!-- .default text:gray; -->
+                                <div class="menu"><!-- menu > accordion -->
+                                    <div class="item" data-value="0">10개씩 조회</div>
+                                    <div class="item" data-value="1">20개씩 조회</div>
+                                    <div class="item" data-value="2">30개씩 조회</div>
+                                </div>
+                            </div>
+                            <button class="ui black basic button"> X  삭제 </button>
+                        </td>
+                      </tr>
+                   </table>
         						<table class="ui celled table top-table">
         						<!-- <button class="ui white button">X 삭제</button> -->
-        						<!--  DROPDOWN IS NEE-->
+        						<!--  DROPD	OWN IS NEE-->
         			<thead>
-                    	 <tr class="center aligned">
-                        	<th>등록일</th>
+                    	 <tr align="center">
+                    	 <th><input type="checkbox"></th>
+                        	<th> &nbsp;등록일</th>
                         	<th>이름</th>
                         	<th>ID</th>
                         	<th>등급</th>
@@ -178,23 +203,40 @@
                         </tr>
                     </thead>
                     <tr>
-                            <td>Set A ChequeBox here</td>
-                            <td class="center aligned"><input type="text" name="todayTotal" value="10000000" readonly></td>
-                            <td class="center aligned"><input type="text" name="monthTotal" value="999900000" readonly></td>
+                            <td class="center aligned"><input type="checkbox"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                    </tr>
+                        <tr>
+                             <td class="center aligned"><input type="checkbox"></td>
+                             <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
                         </tr>
                         <tr>
-                            <td>Set A ChequeBox here</td>
-                            <td class="center aligned"><input type="text" name="todayPayment" value="9900000" readonly></td>
-                            <td class="center aligned"><input type="text" name="monthPayment" value="1110000000" readonly></td>
-                        </tr>
-                        <tr>
-                            <td>Set A ChequeBox here</td>
-                            <td class="center aligned"><input type="text" name="todayRefund" value="10000" readonly></td>
-                            <td class="center aligned"><input type="text" name="monthRefund" value="100000" readonly></td>
+                            <td class="center aligned"><input type="checkbox"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
+                            <td class="center aligned"></td>
                         </tr>
                     </tbody>
                 </table>
-                
+                <button class="ui black basic button"> 쪽지 보내기 </button>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
                 
                 
                 
