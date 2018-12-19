@@ -5,7 +5,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>adminUserVerification.jsp</title>
+	<title>adminMembershipAddANewGrade.jsp</title>
 
 	<!-- Semantic UI CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -37,25 +37,32 @@
         	<div class="content-box">
         		<h2 class="ui header">회원관리</h2>
         		<hr>
-        		<h2 class="ui header">회원가입 / 탈퇴 관리</h2>
-        		<h3 class="ui header">회원가입 인증</h3>
+        		<h2 class="ui header">회원등급 관리</h2>
+        		<h3 class="ui header">회원등급추가</h3>
         		 <table class="ui celled table first-col">
         		 <tr>
-                        <td>가입일</td>
+                        <td>회원 등급명</td>
                         <td>
-                          <div class="ui input"><input type="text"></div><!-- Adjust "width" -->
-                             	<span>~</span>
-                             <div class="ui input"><input type="text"></div><!-- Adjust "width" -->
+                            <div class="ui input"><input type="text"></div>
                         </td>
                     </tr>
                     
                     <tr>
-                     <td>구분</td>
+                        <td>회원 등급 설명</td>
+                        <td>
+                            <div class="ui input"><input type="text"></div>
+                        </td>
+                    </tr>
+                    
+                    
+                    
+                    <tr>
+                     <td>혜택 결제조건</td>
                      	<td>
                      		<div class="ui form"><!-- ALIGN AS HR -->
                            		<div class="field">
                            				<div class="ui radio checkbox">
-                                            <input type="radio" name=""  checked="" tabindex="0" class="hidden">
+                                            <input type="radio" name="condition"  checked="" tabindex="0" class="hidden">
                                             <label>전체</label>
                                         </div>
                                  </div>
@@ -63,31 +70,74 @@
                                     <!--  checked="" >>> Set DefaultSet as "checked".   -->
                                      <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="" tabindex="0" class="hidden">
-                                            <label>일반</label>
+                                            <input type="radio" name="condition" tabindex="0" class="hidden">
+                                            <label>현금 결제</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="" tabindex="0" class="hidden">
-                                            <label>14세 미만</label>
+                                            <input type="radio" name="condition" tabindex="0" class="hidden">
+                                            <label>현금 외</label>
                                         </div>
                                  </div>
                            </td>
                     </tr>
                     
                     <tr>
-                        <td>이름</td>
+                        <td>구매 시 할인 / 적립 혜택</td>
+                        <td>
+                            <div class="ui form"><!-- ALIGN AS HR -->
+                           		<div class="field">
+                           				<div class="ui radio checkbox">
+                                            <input type="radio" name="condition"  checked="" tabindex="0" class="hidden">
+                                            <label>전체</label>
+                                        </div>
+                                 </div>
+                             </div>
+                                    <!--  checked="" >>> Set DefaultSet as "checked".   -->
+                                     <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="condition" tabindex="0" class="hidden">
+                                            <label>구매금액 할인</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="condition" tabindex="0" class="hidden">
+                                            <label>적립금 지급</label>
+                                        </div>
+                                 </div>
+                                 <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="condition" tabindex="0" class="hidden">
+                                            <label>중복 적용</label>
+                                        </div>
+                                 </div>
+                           </td>
+                    </tr>
+                    
+                     <tr>
+                        <td>배송비 혜택</td>
+                        <td>
+                            <div class="left aligned"><input type="checkbox"> 배송비 무료</div>
+                       </td>
+                    </tr>
+                    
+                     <tr>
+                        <td>등급 이미지</td>
                         <td>
                             <div class="ui input"><input type="text"></div>
+                            <button class="ui white button">찾아보기</button>
                         </td>
                     </tr>
                     
-                    <tr>
-                        <td>ID</td>
+                     <tr>
+                        <td>등급 아이콘</td>
                         <td>
                             <div class="ui input"><input type="text"></div>
+                            <button class="ui white button">찾아보기</button>
                         </td>
+                        
                     </tr>
                     
                     
@@ -95,69 +145,11 @@
                 </table>
                 
                  <div class="searchBtn" align="center">
-                <button class="ui white button"><!-- onclick="location.href='/semi/views/admin/'" -->검색</button>
+                <button class="ui white button">추가</button>
+                <button class="ui black button">취소</button>
                 </div>
                 
-                <br/>
-                <br/>
-                
-                
-        		<h3 class="ui header">미인증 회원 목록</h3><!--  MAKE A CELL TABLE. -->
-        		 <!-- <br/> -->
-        		 <div align="right">
-        		 <table>
-        		   <tr>
-        		       <td>
-        		        <div class="searchBtn" align="center">
-                <button class="ui black button">회원인증</button>
-                <button class="ui black basic button"> X  삭제 </button>
-                </div>
-                	</td>
-        		   </tr>
-        		 </table>
-        						<table class="ui celled table top-table">
-        						<!-- <button class="ui white button">X 삭제</button> -->
-        						<!--  DROPD	OWN IS NEE-->
-        			<thead>
-                    	 <tr align="center">
-                    	 <th><input type="checkbox"></th>
-                        	<th> &nbsp;구분</th>
-                        	<th>이름</th>
-                        	<th>ID</th>
-                        	<th>가입일 </th>
-                        </tr>
-                    </thead>
-                    <tr>
-                            <td class="center aligned"><input type="checkbox"></td>
-                            <td class="center aligned"></td>
-                            <td class="center aligned"></td>
-                            <td class="center aligned"></td>
-                            <td class="center aligned"></td>
-                            <!-- <td class="center aligned"></td>
-                            <td class="center aligned"></td> -->
-                    </tr>
-                        <tr>
-                             <td class="center aligned"><input type="checkbox"></td>
-                             <td class="center aligned"></td>
-                            <td class="center aligned"></td>
-                            <td class="center aligned"></td>
-                            <td class="center aligned"></td>
-                         <!--    <td class="center aligned"></td>
-                            <td class="center aligned"></td> -->
-                        </tr>
-                        <tr>
-                            <td class="center aligned"><input type="checkbox"></td>
-                            <td class="center aligned"></td>
-                            <td class="center aligned"></td>
-                            <td class="center aligned"></td>
-                            <td class="center aligned"></td>
-                          <!--    <td class="center aligned"></td>
-                            <td class="center aligned"></td> -->
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <br/>
+         		<br/>
                 <br/>
                 <br/>
                 <br/>
