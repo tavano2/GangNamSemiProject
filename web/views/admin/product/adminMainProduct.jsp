@@ -4,32 +4,99 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
+   <meta charset="UTF-8">
+   <title>Insert title here</title>
 
-	<!-- Semantic UI CSS -->
+   <!-- Semantic UI CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 
     <!-- Admin Common CSS -->
     <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
     
-    
+<style>
+   .productAddBtn{
+      text-align:center;
+   }
+   .overflowDiv{
+      margin-left:430px;
+      font-size:15px;   
+   }
+   .overInnerDiv{
+      border:1px solid lightgray;
+      padding:10px;
+      background:#e9e9e9;
+   }
+   .categoryBtn{
+      margin-left:90px;
+   }
+</style>
 </head>
 
 <body>
-	
-	<!-- 사이드바 메뉴 -->
+   
+   <!-- 사이드바 메뉴 -->
     <%@ include file = "/views/admin/common/adminSidebarProduct.jsp" %>
     
     <div class="wrapper">
-    	<!-- 상단 네비바 -->
+       <!-- 상단 네비바 -->
         <%@ include file = "/views/admin/common/adminNavi.jsp" %>
 
           <div class="content">
-        	<div class="content-box">
-        	<h2 class="ui header">상품분류 설정</h2>
-        	<hr>
-        		<h2 class="ui header">분류정보</h2>
+           <div class="content-box">
+           <h2 class="ui header" style="text-align:center;">상품분류 설정</h2>
+           <br><br><br><br>
+           <div class="overflowDiv">
+         <div style="overflow:scroll; width:350px; height:400px;" class="overInnerDiv">
+          <div class="ui list">
+              <div class="item">
+                <i class="window maximize icon"></i>
+                <div class="content">
+                  <div class="header">아우터</div>
+                  <div class="list">
+                    <div class="item">
+                      <i class="window restore icon"></i>
+                      <div class="content">
+                        <div class="header">자켓</div>
+                      </div>
+                    </div>
+                    <div class="item">
+                      <i class="window restore icon"></i>
+                      <div class="content">
+                        <div class="header">코트</div>
+                        <div class="list">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <i class="window maximize icon"></i>
+                <div class="content">
+                  <div class="header">상의</div>
+                  <div class="list">
+                    <div class="item">
+                      <i class="window restore icon"></i>
+                      <div class="content">
+                        <div class="header">셔츠</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+         </div>
+         <br>
+            <div class="categoryBtn">
+                 <button class="ui blue button">분류추가</button>
+                 <button class="ui white button">삭제</button>
+              </div>
+         </div>                 
+           
+         <br>
+         <br>          
+           <hr>
+              <h2 class="ui header">분류정보</h2>
 
                 <table class="ui celled table first-col">
                    
@@ -136,15 +203,38 @@
                         </div>
                         </td>
                     </tr>
+                    <tr>
+                        <td>표시상태</td>
+                        <td>
+                            <div class="ui form">
+                             <div class="inline fields">
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="categoryStatus" checked="" tabindex="0" class="hidden">
+                                            <label>표시함</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="categoryStatus" tabindex="0" class="hidden">
+                                            <label>표시안함</label>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        </td>
+                    </tr>
                 </table>
+                <div class="productAddBtn">
+               <button class="ui blue button">확인</button>
+            </div>
                 <hr>
-
-        	
-        	</div>
+           
+           </div>
         </div>
 
-		
-		<!-- Footer -->
+      
+      <!-- Footer -->
        <%@ include file = "/views/admin/common/adminFooter.jsp" %>
     </div>
 
