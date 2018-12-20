@@ -64,6 +64,10 @@
 				<td><input type="date" name="date"></td>
 			</tr>
 			<tr>
+				<td>첨부 파일 받기</td>
+				<td><div class="ui button" onclick="downButton();">첨부파일</div></td>
+			</tr>
+			<tr>
 				<td>내용</td>
 				<td>
 					<div class="ui form">

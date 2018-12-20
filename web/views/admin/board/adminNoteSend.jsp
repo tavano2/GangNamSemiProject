@@ -62,11 +62,11 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>    
+                <!--     <tr>    
                         <td>게시판 종류</td>
                         <td>
                             <div class="ui selection dropdown">
-                                <!-- <input type="hidden" name="gender"> -->
+                                <input type="hidden" name="gender">
                                 <i class="dropdown icon"></i>
                                 <div class="default text">전체목록</div>
                                 <div class="menu">
@@ -79,7 +79,7 @@
                             </div>
 
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td>내용 입력</td>
                         <td>
