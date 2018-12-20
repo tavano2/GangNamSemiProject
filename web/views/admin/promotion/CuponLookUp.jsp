@@ -56,7 +56,7 @@
 <body>
 
 	<!-- 사이드바 메뉴 -->
-	<%@ include file="/views/admin/common/adminSidebarBoard.jsp"%>
+	<%@ include file="/views/admin/common/adminSidebarMember.jsp"%>
 
 	<div class="wrapper">
 		<!-- 상단 네비바 -->
@@ -142,7 +142,8 @@
 							<td class="cuponTd" width="110px;" style="text-align: center">&nbsp;</td>
 							<td class="cuponTd" style="text-align: center"></td>
 							<td class="cuponTd" style="text-align: center">
-								<button class="ui small secondary button">발급</button>
+								<button class="ui small secondary button"
+									onclick="location.href='/semi/views/admin/promotion/CuponIssued.jsp' ">발급</button>
 							</td>
 						</tr>
 						<tr>
@@ -158,9 +159,7 @@
 	<!-- J-query CDN -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8a
-	btTE1Pi6ji
-						zo"
-		crossorigin="anonymous"></script>
+	btTE1Pi6jizo" crossorigin="anonymous"></script>
 	<!-- Semantic UI JS CDN -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>

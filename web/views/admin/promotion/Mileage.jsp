@@ -63,7 +63,7 @@ span {
 <body>
 
 	<!-- 사이드바 메뉴 -->
-	<%@ include file="/views/admin/common/adminSidebarBoard.jsp"%>
+	<%@ include file="/views/admin/common/adminSidebarMember.jsp"%>
 
 	<div class="wrapper">
 		<!-- 상단 네비바 -->

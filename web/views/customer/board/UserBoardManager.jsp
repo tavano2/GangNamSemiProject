@@ -44,7 +44,7 @@
 			<tbody>
 				<tr>
 					<td><input type="checkbox"></td>
-					<td>1</td>
+					<td><a href="/semi/views/customer/board/detailBoardPage.jsp">1</a></td>
 					<td>제목입니당</td>
 					<td>임수철</td>
 					<td>0</td>
@@ -80,7 +80,7 @@
 			<tbody>
 				<tr>
 				<td><input type="checkbox"></td>
-					<td>1</td>
+					<td><a href="/semi/views/customer/board/detailBoardPage.jsp">1</a>	</td>
 					<td>제목입니당</td>
 					<td>임수철</td>
 					<td>0</td>
