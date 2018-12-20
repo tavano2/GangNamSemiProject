@@ -63,6 +63,13 @@
 				<td><input type="date" name="date"></td>
 			</tr>
 			<tr>
+				<td>첨부파일</td>
+				<td><input type="file" name="file"></td>
+			</tr>
+			
+			
+			
+			<tr>
 				<td>내용</td>
 				<td>
 					<div class="ui form">
