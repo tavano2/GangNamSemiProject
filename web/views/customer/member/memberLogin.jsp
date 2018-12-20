@@ -60,6 +60,8 @@
 		<br>
  		<div class="ui message" style="width: 225px; margin-left: auto; margin-right: auto;">
 			<div class="ui fluid large black button" onclick="location.href='/semi/views/customer/member/InsertMember1.jsp';">회원가입</div>
+			<br>
+			<div class="ui fluid large button" onclick="location.href='/semi/views/customer/member/editMemberPassword.jsp';">비밀번호 찾기</div>
 		</div>
 		<br><br>
 		<br><br><br>
