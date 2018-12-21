@@ -100,21 +100,15 @@ th>div {
 			</div>
 			<br> <br>
 			<div class="insertButton">
-				<button type="button" class="ui secondary button" id="submitBtn">확인</button>
+				<button type="submit" class="ui secondary button" id="submitBtn" onclick="location.href='<%=request.getContextPath()%>/insertMember.me'">확인</button>
 				<button type="button" class="ui button" onclick="location.href='/semi'">취소</button>
 			</div>
 			<br> <br>
 		</form>
 	</div>
 	<script>
-	$("#submitBtn").click(function(){
-		swal("이메일을 입력해주세요");
-		if($("#userId").val()!=null){
-			$("#insertMemberForm").attr("action","<%=request.getContextPath() %>/insertMember.me");
-		}else{
-			swal("이메일을 입력해주세요");
-		}
-	})
+		
+	
 	</script>
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>

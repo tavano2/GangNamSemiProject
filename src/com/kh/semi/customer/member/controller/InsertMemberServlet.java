@@ -36,6 +36,8 @@ public class InsertMemberServlet extends HttpServlet {
 		String userId=request.getParameter("userId");
 		String userPwd1 = request.getParameter("userPwd1");
 		String userPwd2 = request.getParameter("userPwd2");
+		System.out.println(userId);
+		System.out.println(userPwd1);
 		member.setUserId(userId);
 		member.setUserPwd1(userPwd1);
 		result = new MemberService().insertMember(member);
