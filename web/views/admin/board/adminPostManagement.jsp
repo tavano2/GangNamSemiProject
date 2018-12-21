@@ -154,12 +154,6 @@
 									<div class="field">
 										<div class="ui radio checkbox">
 											<input type="radio" name="fruit" tabindex="0" class="hidden">
-											<label>답변 후</label>
-										</div>
-									</div>
-									<div class="field">
-										<div class="ui radio checkbox">
-											<input type="radio" name="fruit" tabindex="0" class="hidden">
 											<label>답변 완료</label>
 										</div>
 									</div>
