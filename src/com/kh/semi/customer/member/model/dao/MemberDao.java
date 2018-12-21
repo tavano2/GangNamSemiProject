@@ -85,7 +85,7 @@ public class MemberDao {
 				loginUser = new Member();
 				loginUser.setUserId(rset.getString("USER_ID"));
 				loginUser.setUserPwd1(rset.getString("USER_PWD"));
-				loginUser.setStatus(rset.getString("USER_STATUS"));
+				loginUser.setStatus(rset.getString("STATUS"));
 				loginUser.setEnroll_Date(rset.getDate("ENROLL_DATE"));
 			}
 		} catch (SQLException e) {

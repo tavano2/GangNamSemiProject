@@ -185,7 +185,7 @@
 				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/promotion/UserNoteCoupon.jsp'">쪽지/쿠폰함</button>
 			</div>
 			<div class="btn1">
-				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/promotion/eventPage.jsp'">이벤트</button>
+				<button class="ui grey basic button" style="font-size: 14px;" onclick="eventPage();">이벤트</button>
 			</div>
 			<div class="btn1">
 				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/board/UserBoardManager.jsp'">내 게시물
@@ -222,7 +222,15 @@
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
+	<script type="text/javascript">
 	
+	function eventPage(){
+		location.href = "<%=request.getContextPath()%>/eventPageList.bo";
+	}
+	
+	
+	
+	</script>
 
 
 

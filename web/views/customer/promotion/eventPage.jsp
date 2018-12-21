@@ -1,5 +1,19 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="com.kh.semi.customer.board.model.vo.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%
+	PageInfo pi = (PageInfo) request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) request.getAttribute("list");
+%>
+
 <!DOCTYPE html>
 <html>
 
@@ -16,6 +30,12 @@
 <!-- Common css -->
 <link href="/semi/css/customer/common/main.css" rel="stylesheet">
 
+<style>
+table tbody>tr:hover{
+	cursor: pointer;
+}
+
+</style>
 </head>
 
 <body>
@@ -40,28 +60,91 @@
 				</tr>
 			</thead>
 			<tbody>
+				<%
+					for (HashMap<String, Object> hmap : list) {
+				%>
+				<tr onclick="location.href='<%=request.getContextPath()%>/eventDetailPage.bo?board_num=<%=hmap.get("board_num")%>' ">
+					<td><%=hmap.get("board_num")%></td>
+					<td><%=hmap.get("board_title")%></td>
+					<td><%=hmap.get("user_id")%></td>
+					<td><%=hmap.get("board_count")%></td>
+					<td><%=hmap.get("board_date")%></td>
+				</tr>
+				<%
+					}
+				%>
 				<tr>
-					<td><a href="/semi/views/customer/board/detailBoardPage.jsp">1</a></td>
-					<td>제목입니당</td>
-					<td>임수철</td>
-					<td>0</td>
-					<td>2018/12/14</td>
+					<td colspan="5" height="50px;">
+						<div align="right">
+							<div class="ui action input">
+								<input type="text" placeholder="Search..."> <select>
+									<option value="title">제목</option>
+									<option value="author">작성자</option>
+									<option value="content">내용</option>
+								</select>
+								<div class="ui button">Search</div>
+							</div>
+						</div>
+					</td>
+
+				</tr>
+				<tr>
+					<td colspan="5">
+						<div align="center">
+							<div class="ui pagination menu">
+							    		<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=1' "><i class="angle double left icon"></i></a>
+								        <%if(currentPage <=1) {%>
+								         <a class="icon item"><i class="angle left icon"></i></a>
+								        <%} else{ %>
+								        	<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage-1%>' "><i class="angle left icon"></i></a>
+								        <%} %>
+								       
+								       
+								       <%for(int p = startPage; p <= endPage ; p++){ 
+								       
+								       			if(p == currentPage){
+								       %>
+								       			<a class="item"><%=p %></a>
+								       <%}else{ %>
+								       			<a class="item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=p%>' "><%=p %></a>
+								       <%} %>
+								       
+								       <%} %>
+		
+								        
+								        <%if(currentPage >= maxPage) {%>
+								        <a class="icon item"><i class="angle right icon"></i></a>
+								        <%}else{ %>
+								        	<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage+1%>' "><i class="angle right icon"></i></a>
+								        <%} %>
+								        
+								        <a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=maxPage%>' "><i class="angle double right icon"></i></a>
+							      	</div>
+
+						
+						
+						</div>
+
+					</td>
+
+
 				</tr>
 			</tbody>
 			<tfoot>
 				<th colspan="5">
 					<!--  작성하기는 관리자만 가능하다.  -->
 					<div align="right">
+					<%if(loginUser != null && loginUser.getUserId().equals("admin")){ %>
 						<button class="ui brown basic mini button"
 							onclick="location.href='/semi/views/customer/board/insertBoard.jsp';">작성하기</button>
+						<%} %>	
 					</div>
 				</th>
 			</tfoot>
 		</table>
 
 		<hr>
-		<br>
-		<br>
+		<br> <br>
 
 
 
