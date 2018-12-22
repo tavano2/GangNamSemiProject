@@ -70,7 +70,7 @@
                 EVENT
             </a>
             <div class="right menu">
-            <a class="item" href="/semi/views/customer/product/detailPage.jsp">
+            <a class="item" href="<%=request.getContextPath()%>/reviewNoticeList.no">
                        예솔쓰 상세페이징
                 </a> 
                <%if(loginUser != null && loginUser.getUserId().equals("admin")) { %>
