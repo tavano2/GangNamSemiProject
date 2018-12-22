@@ -74,4 +74,67 @@ public class BoardService {
 		return result;
 	}
 
+
+	public HashMap<String, Object> searchEventDetailPage(Board b) {
+		Connection con = getConnection();
+		
+		int count = new BoardDao().countEventDetailPage(con,b);
+		HashMap<String, Object> searchBoard = new BoardDao().searchEventDetailPage(con,b);
+		
+		if(count > 0 && searchBoard.get("board_num").equals(b.getBoardNum())) {
+			commit(con);
+		}else {
+			rollback(con);
+		}		
+		close(con);
+		return searchBoard;
+
+	}
+
+
+	public Attachment selectOneFileDownload(int num) {
+		Connection con = getConnection();
+		Attachment file = new BoardDao().selectOneFileDownload(con,num);
+		close(con);
+		return file;
+	}
+
+
+	public HashMap<String, Object> selectEventUpdatePage(int boardNum) {
+		Connection con = getConnection();
+		HashMap<String, Object> hmap = new BoardDao().selectEventUpdatePage(con,boardNum);
+		close(con);
+		return hmap;
+	}
+
+
+	public int updateEventBoard(Board b, ArrayList<Attachment> fileList) {
+		Connection con = getConnection();
+		int result = 0;
+		int result1 = new BoardDao().updateEventBoardObject(con,b);
+		
+		if(fileList != null) {
+			for(int i = 0; i < fileList.size(); i++) {
+				fileList.get(i).setBoardId(b.getBoardId());
+			}
+			
+			int result2 = new BoardDao().updateEventAttachment(con,fileList);
+			if(result1 > 0 && fileList.size() == result2) {
+				commit(con);
+				result = 1;
+			}else {
+				rollback(con);
+			}
+		}else {
+			if(result1 >0) {
+				commit(con);
+				result = 1;
+			}else {
+				rollback(con);
+			}
+		}
+		close(con);
+		return result;
+	}
+
 }
