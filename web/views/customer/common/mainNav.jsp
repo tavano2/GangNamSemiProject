@@ -64,22 +64,19 @@
             <a class="item" style="color : rgb(211, 84, 0)">
                 DAILY
             </a>
-            <a class="item" style="color : rgb(231, 76, 60)" href="/semi/views/customer/promotion/eventPage.jsp">
+            
+
+            <a class="item" style="color : rgb(231, 76, 60)" href="<%=request.getContextPath()%>/eventPageList.bo">
                 EVENT
             </a>
             <div class="right menu">
             <a class="item" href="/semi/views/customer/product/detailPage.jsp">
                        예솔쓰 상세페이징
                 </a> 
-  <%--               <%if(loginUser != null) { %>
-                	<%if(loginUser.getUserId().equals("admin")) { %>
-            		<a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
-                       	관리자 페이지로
-                        <%} %>
-                 <%} %> --%>
-                 <a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
-                       	관리자 페이지로
-                </a> <!-- 이후 삭제 -->
+               <%if(loginUser != null && loginUser.getUserId().equals("admin")) { %>
+		  		<a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
+                       	관리자 페이지로 </a>
+                 <%} %> 
                 <a class="item" href="/semi/views/customer/member/memberLogin.jsp">
                     Log-In
                 </a>

@@ -44,10 +44,10 @@ table tbody>tr:hover{
 
 
 	<div class="content">
-		<br> <br>
+		<br> <br><br>
 		<div align="center"
 			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">EVENT</div>
-		<br> <br>
+		<br> <br><br>
 		<hr>
 		<table class="ui single line table">
 			<thead>
@@ -136,7 +136,7 @@ table tbody>tr:hover{
 					<div align="right">
 					<%if(loginUser != null && loginUser.getUserId().equals("admin")){ %>
 						<button class="ui brown basic mini button"
-							onclick="location.href='/semi/views/customer/board/insertBoard.jsp';">작성하기</button>
+							onclick="location.href='/semi/views/customer/board/insertEventBoard.jsp';">작성하기</button>
 						<%} %>	
 					</div>
 				</th>
@@ -145,7 +145,7 @@ table tbody>tr:hover{
 
 		<hr>
 		<br> <br>
-
+		<br><br>
 
 
 	</div>

@@ -15,9 +15,8 @@
 
 <!-- Common css -->
 <link href="/semi/css/customer/common/main.css" rel="stylesheet">
-
-
 <style type="text/css">
+
 [type="date"] {
             background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
         }
@@ -37,24 +36,28 @@
 
 </style>
 
+
 </head>
 
 <body>
 
 	<%@ include file="/views/customer/common/mainNav.jsp"%>
-
-		<%if(loginUser != null){ %>
 	
+	<!-- 작성하기 역시 관리자만 접근 가능하다. -->
+
+	<%if(loginUser != null){ %>
+
 	<div class="content">
-		<br> <br>
+		<br> <br><br>
 		<div align="center"
-			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">UPDATE BOARD</div>
+			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">INSERT
+			BOARD</div>
 		<br> <br>
 		<hr>
 		<br>
 		<div class="ui grid">
 			<div class="twelve wide column">
-				<b>게시글 수정</b>
+				<b>게시글 작성</b>
 			</div>
 			<div class="four wide column" align="right">
 				<button class="ui brown basic mini button"
@@ -62,13 +65,16 @@
 			</div>
 		</div>
 		<br>
+		
+		<form action="<%=request.getContextPath() %>/insertEventBoard.bo" method="post" encType="multipart/form-data">
 		<table class="ui celled table first-col">
-			<tbody>
+
+		<tbody>
 			<tr>
 				<td>제목</td>
 				<td>
 					<div class="ui input">
-						<input type="text">
+						<input type="text" name="title">
 					</div>
 				</td>
 			</tr>
@@ -76,21 +82,21 @@
 				<td>작성자</td>
 				<td>
 					<div class="ui input">
-						<input type="text">
+						<input type="text" value="<%=loginUser.getUserId()%>" name="userId" readonly>
 					</div>
 				</td>
 			</tr>
 			<tr>
 				<td>작성일</td>
 				<td><input type="date" name="date"></td>
-			</tr>			
+			</tr>
 			<tr>
 				<td>내용</td>
 				<td>
 					<div class="ui form">
 						<div class="field">
 							<label>Text</label>
-							<textarea></textarea>
+							<textarea name = "content"></textarea>
 						</div>
 
 					</div>
@@ -102,19 +108,19 @@
 					<td>첨부파일</td>
 					<td><input type="file" name="file"></td>
 				</tr>
+			
 			</tfoot>
 		</table>
 
 		<div align="center">
-			<button type="submit" class="ui secondary button">수정하기</button>
+			<button type="submit" class="ui secondary button">등록하기</button>
 			<button type="reset" class="ui button">취소하기</button>
 
 		</div>
+		</form>
 		<br>
 		<hr>
-		<br>
-		<br>
-		<br>
+		<br> <br> <br>
 
 
 
@@ -122,7 +128,7 @@
 
 	</div>
 	
-		<%} else{ 
+	<%} else{ 
 		request.setAttribute("msg", "잘못된 경로로 접근하셨습니다!");
 		request.getRequestDispatcher("views/customer/common/errorPage.jsp");
 	%>
