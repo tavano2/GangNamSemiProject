@@ -121,7 +121,7 @@
 						<div class="four wide column" align="right">
 						<%if (loginUser != null && loginUser.getUserId().equals("admin")) {%>
 							<button class="ui brown basic mini button"
-								onclick="location.href=location.href='/semi/views/customer/board/eventUpdateBoardPage.jsp';">수정하기</button>
+								onclick="location.href ='<%=request.getContextPath()%>/updateEventPage.bo?board_num=<%=hmap.get("board_num")%>' ">수정하기</button>
 							<button class="ui brown basic mini button" onclick="">삭제하기</button>
 						<%} %>
 						</div>

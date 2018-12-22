@@ -184,6 +184,7 @@ public class BoardDao {
 	}
 	
 
+	//이벤트 게시판 상세 보기 페이지
 	public HashMap<String, Object> searchEventDetailPage(Connection con, Board b) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -225,7 +226,7 @@ public class BoardDao {
 		return hmap;
 	}
 
-
+	//이벤트 게시판 파일 다운로드 메소드
 	public Attachment selectOneFileDownload(Connection con, int num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -251,6 +252,74 @@ public class BoardDao {
 		return file;
 	}
 
+	//이벤트 게시판 수정 페이지 메소드
+	public HashMap<String, Object> selectEventUpdatePage(Connection con, int boardNum) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectEventUpdatePage");
+		HashMap<String, Object> hmap = null;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, boardNum);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				hmap = new HashMap<String,Object>();
+				hmap.put("board_id", rset.getInt("BOARD_ID"));
+				hmap.put("board_num",rset.getInt("BOARD_NUM"));
+				hmap.put("board_title", rset.getString("BOARD_TITLE"));
+				hmap.put("board_content", rset.getString("BOARD_CONTENT"));
+				hmap.put("user_id",rset.getString("USER_ID"));
+				hmap.put("modify_date", rset.getDate("MODIFY_DATE"));
+				hmap.put("file_id", rset.getString("FILE_ID"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return hmap;
+	}
 
 
+	public int updateEventBoardObject(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateEventBoardObject");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, b.getBoardTitle());
+			pstmt.setString(2, b.getBoardContent());
+			pstmt.setDate(3, b.getModifyDate());
+			pstmt.setInt(4, b.getBoardNum());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+	public int updateEventAttachment(Connection con, ArrayList<Attachment> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateEventAttachment");
+		try {
+			for(int i = 0 ; i < fileList.size(); i++) {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, fileList.get(i).getOriginName());
+				pstmt.setString(2, fileList.get(i).getChangeName());
+				pstmt.setString(3, fileList.get(i).getFilePath());
+				pstmt.setInt(4, fileList.get(i).getBoardId());
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 }
