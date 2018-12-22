@@ -7,10 +7,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
+import com.kh.semi.customer.board.model.vo.Attachment;
 import com.kh.semi.customer.board.model.vo.Board;
 import com.kh.semi.customer.member.model.vo.Member;
 
@@ -31,6 +33,8 @@ public class BoardDao {
 		}
 	}
 
+	
+	// 이벤트 게시판 전체 게시글 조회용 메소드
 	public int getListCount(Connection con) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -51,6 +55,7 @@ public class BoardDao {
 		return listCount;
 	}
 
+	//각 게시글을 게시판에 뿌려주는 메소드
 	public ArrayList<HashMap<String, Object>> selectEventPageList(Connection con, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -86,18 +91,75 @@ public class BoardDao {
 					list.add(hmap);
 				}
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 			close(rset);
 		}
-		
-		
-		
-		
 		return list;
 	}
 
+	
+	//이벤트 게시글 삽입
+	public int insertEventBoard(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertEvnetBoard");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, b.getBoardTitle());
+			pstmt.setString(2, b.getBoardContent());
+			pstmt.setString(3, b.getUserId());
+			pstmt.setDate(4,b.getBoardDate());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	
+	//  삽입한 게시글의 전체 아이디 번호 조회 메소드
+	public int selectCurrval(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int bid = 0;
+		String query = prop.getProperty("selectCurrval");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				bid = rset.getInt("CURRVAL");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(stmt);
+			close(rset);
+		}
+		return bid;
+	}
+
+
+	public int insertEventAttachment(Connection con, ArrayList<Attachment> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertEventAttachment");
+		try {
+			for(int i = 0; i < fileList.size(); i ++) {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, fileList.get(i).getBoardId());
+				pstmt.setString(2, fileList.get(i).getOriginName());
+				pstmt.setString(3,fileList.get(i).getChangeName());
+				pstmt.setString(4, fileList.get(i).getFilePath());
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

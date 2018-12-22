@@ -15,13 +15,37 @@
 
 <!-- Common css -->
 <link href="/semi/css/customer/common/main.css" rel="stylesheet">
+<style type="text/css">
+
+[type="date"] {
+            background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+        }
+        [type="date"]::-webkit-inner-spin-button {
+            display: none;
+        }
+        [type="date"]::-webkit-calendar-picker-indicator {
+            opacity: 0;
+        }
+        input {
+            border: 1px solid #c4c4c4;
+            border-radius: 3px;
+            background-color: #fff;
+            padding: 8px 5px;
+        }
+
+
+</style>
+
 
 </head>
 
 <body>
 
 	<%@ include file="/views/customer/common/mainNav.jsp"%>
+	
+	<!-- 작성하기 역시 관리자만 접근 가능하다. -->
 
+	<%if(loginUser != null){ %>
 
 	<div class="content">
 		<br> <br>
@@ -41,13 +65,16 @@
 			</div>
 		</div>
 		<br>
+		
+		<form action="" method="post" encType="multipart/form-data">
 		<table class="ui celled table first-col">
 
+		<tbody>
 			<tr>
 				<td>제목</td>
 				<td>
 					<div class="ui input">
-						<input type="text">
+						<input type="text" name="title">
 					</div>
 				</td>
 			</tr>
@@ -55,7 +82,7 @@
 				<td>작성자</td>
 				<td>
 					<div class="ui input">
-						<input type="text">
+						<input type="text" value="<%=loginUser.getUserId()%>" name="userId" readonly>
 					</div>
 				</td>
 			</tr>
@@ -64,21 +91,25 @@
 				<td><input type="date" name="date"></td>
 			</tr>
 			<tr>
-				<td>첨부 파일<td>
-				<td><input type="file" name="file"></td>
-			</tr>
-			<tr>
 				<td>내용</td>
 				<td>
 					<div class="ui form">
 						<div class="field">
 							<label>Text</label>
-							<textarea></textarea>
+							<textarea name = "content"></textarea>
 						</div>
 
 					</div>
 				</td>
 			</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td>첨부파일</td>
+					<td><input type="file" name="file"></td>
+				</tr>
+			
+			</tfoot>
 		</table>
 
 		<div align="center">
@@ -86,6 +117,7 @@
 			<button type="reset" class="ui button">취소하기</button>
 
 		</div>
+		</form>
 		<br>
 		<hr>
 		<br> <br> <br>
@@ -95,6 +127,13 @@
 
 
 	</div>
+	
+	<%} else{ 
+		request.setAttribute("msg", "잘못된 경로로 접근하셨습니다!");
+		request.getRequestDispatcher("views/customer/common/errorPage.jsp");
+	%>
+	
+	<%} %>
 
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
