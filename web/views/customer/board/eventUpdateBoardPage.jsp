@@ -85,7 +85,7 @@ input {
 								<input type="text" name="title"
 									value=<%=hmap.get("board_title")%>>
 								<input type="hidden" name="bno" value="<%=hmap.get("board_num") %>">
-								<input tpye="hidden" name="bid" value="<%=hmap.get("board_id") %>">
+								<input type="hidden" name="bid" value="<%=hmap.get("board_id") %>">
 							</div>
 						</td>
 					</tr>

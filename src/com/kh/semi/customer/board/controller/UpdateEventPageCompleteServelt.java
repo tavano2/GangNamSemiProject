@@ -1,5 +1,6 @@
 package com.kh.semi.customer.board.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class UpdateEventPageCompleteServelt extends HttpServlet {
 				String name = files.nextElement();
 				saveFiles.add(multiRequest.getFilesystemName(name));
 				originFiles.add(multiRequest.getOriginalFileName(name));
+				
 			}
 			
 			int multiBoardId = Integer.parseInt(multiRequest.getParameter("bid"));
@@ -105,7 +107,16 @@ public class UpdateEventPageCompleteServelt extends HttpServlet {
 				}
 			}
 			int result = new BoardService().updateEventBoard(b,fileList);
-			
+			if(result > 0) {
+				response.sendRedirect(request.getContextPath()+"/eventDetailPage.bo?board_num="+b.getBoardNum());
+			}else {
+				for(int i = 0; i < fileList.size(); i++) {
+					File failedFile = new File(filePath+saveFiles.get(i));
+					failedFile.delete();
+				}
+				request.setAttribute("msg", "이벤트 게시판 수정 확정 실패!");
+				request.getRequestDispatcher("views/customer/common/errorPage.jsp").forward(request, response);;
+			}
 			
 			
 			

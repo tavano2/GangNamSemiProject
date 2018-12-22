@@ -55,7 +55,7 @@
 
 
 	<div class="content">
-		<br> <br>
+		<br> <br><br>
 		<div align="center"
 			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">DEATIL
 			BOARD</div>
@@ -122,7 +122,7 @@
 						<%if (loginUser != null && loginUser.getUserId().equals("admin")) {%>
 							<button class="ui brown basic mini button"
 								onclick="location.href ='<%=request.getContextPath()%>/updateEventPage.bo?board_num=<%=hmap.get("board_num")%>' ">수정하기</button>
-							<button class="ui brown basic mini button" onclick="">삭제하기</button>
+							<button class="ui brown basic mini button" onclick="location.href='<%=request.getContextPath()%>/deleteEventPage.bo?board_num=<%=hmap.get("board_num")%>' ">삭제하기</button>
 						<%} %>
 						</div>
 					</div>
@@ -132,7 +132,7 @@
 
 		</table>
 
-		
+		<br>
 		<br>
 		<hr>
 		<br> <br> <br>
