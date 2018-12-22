@@ -74,4 +74,29 @@ public class BoardService {
 		return result;
 	}
 
+
+	public HashMap<String, Object> searchEventDetailPage(Board b) {
+		Connection con = getConnection();
+		
+		int count = new BoardDao().countEventDetailPage(con,b);
+		HashMap<String, Object> searchBoard = new BoardDao().searchEventDetailPage(con,b);
+		
+		if(count > 0 && searchBoard.get("board_num").equals(b.getBoardNum())) {
+			commit(con);
+		}else {
+			rollback(con);
+		}		
+		close(con);
+		return searchBoard;
+
+	}
+
+
+	public Attachment selectOneFileDownload(int num) {
+		Connection con = getConnection();
+		Attachment file = new BoardDao().selectOneFileDownload(con,num);
+		close(con);
+		return file;
+	}
+
 }

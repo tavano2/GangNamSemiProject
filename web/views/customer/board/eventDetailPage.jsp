@@ -1,5 +1,15 @@
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+
+<% HashMap<String,Object> hmap = (HashMap<String,Object>)request.getAttribute("hmap"); 
+
+%>
+	
+	
+	
+	
 <!DOCTYPE html>
 <html>
 
@@ -16,8 +26,8 @@
 <!-- Common css -->
 <link href="/semi/css/customer/common/main.css" rel="stylesheet">
 
-
 <style type="text/css">
+
 [type="date"] {
             background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
         }
@@ -43,32 +53,32 @@
 
 	<%@ include file="/views/customer/common/mainNav.jsp"%>
 
-		<%if(loginUser != null){ %>
-	
+
 	<div class="content">
 		<br> <br>
 		<div align="center"
-			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">UPDATE BOARD</div>
+			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">DEATIL
+			BOARD</div>
 		<br> <br>
 		<hr>
 		<br>
 		<div class="ui grid">
 			<div class="twelve wide column">
-				<b>게시글 수정</b>
+				<b>게시글 내용</b>
 			</div>
 			<div class="four wide column" align="right">
 				<button class="ui brown basic mini button"
-					onclick="location.href='/semi/index.jsp';">메인으로</button>
+					onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo' ">이전으로</button>
 			</div>
 		</div>
 		<br>
 		<table class="ui celled table first-col">
-			<tbody>
+
 			<tr>
 				<td>제목</td>
 				<td>
 					<div class="ui input">
-						<input type="text">
+						<input type="text" value="<%=hmap.get("board_title")%>" readonly>
 					</div>
 				</td>
 			</tr>
@@ -76,58 +86,61 @@
 				<td>작성자</td>
 				<td>
 					<div class="ui input">
-						<input type="text">
+						<input type="text" value="<%=hmap.get("user_id")%>" readonly>
 					</div>
 				</td>
 			</tr>
 			<tr>
 				<td>작성일</td>
-				<td><input type="date" name="date"></td>
-			</tr>			
+				<td><input type="date" name="date" value="<%=hmap.get("modify_date") %>" readonly></td>
+			</tr>
+			<%if(hmap.get("file_id") != null) {%>
+			<tr>
+				<td>첨부 파일 받기</td>
+				<td>
+				<%=hmap.get("origine_name") %> &nbsp;
+				<div class="ui button" onclick="location.href='<%=request.getContextPath()%>/fileDwonload.bo?num=<%=hmap.get("file_id")%>' ">첨부파일 다운받기</div></td>
+			</tr>
+			<%} %>
 			<tr>
 				<td>내용</td>
 				<td>
 					<div class="ui form">
 						<div class="field">
 							<label>Text</label>
-							<textarea></textarea>
+							<textarea><%=hmap.get("board_content")%></textarea>
 						</div>
 
 					</div>
 				</td>
 			</tr>
-			</tbody>
 			<tfoot>
-				<tr>
-					<td>첨부파일</td>
-					<td><input type="file" name="file"></td>
-				</tr>
+				<th colspan="2">
+					<div class="ui grid">
+						<div class="twelve wide column"></div>
+						<div class="four wide column" align="right">
+						<%if (loginUser != null && loginUser.getUserId().equals("admin")) {%>
+							<button class="ui brown basic mini button"
+								onclick="location.href=location.href='/semi/views/customer/board/eventUpdateBoardPage.jsp';">수정하기</button>
+							<button class="ui brown basic mini button" onclick="">삭제하기</button>
+						<%} %>
+						</div>
+					</div>
+				</th>
 			</tfoot>
+
+
 		</table>
 
-		<div align="center">
-			<button type="submit" class="ui secondary button">수정하기</button>
-			<button type="reset" class="ui button">취소하기</button>
-
-		</div>
+		
 		<br>
 		<hr>
-		<br>
-		<br>
-		<br>
+		<br> <br> <br>
+	
+	
 
-
-
-
-
+	
 	</div>
-	
-		<%} else{ 
-		request.setAttribute("msg", "잘못된 경로로 접근하셨습니다!");
-		request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
-	%>
-	
-	<%} %>
 
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>

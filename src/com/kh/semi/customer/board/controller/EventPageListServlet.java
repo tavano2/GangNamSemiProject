@@ -42,7 +42,7 @@ public class EventPageListServlet extends HttpServlet {
 		BoardService bs = new BoardService();
 		int listCount = bs.getListCount();
 		
-		maxPage = (int)((double)listCount/limit+0.9);
+		maxPage = listCount/limit +(listCount % limit == 0 ? 0 : 1);
 		startPage = ((int)((double)currentPage/limit+0.9)-1)*limit+1;
 		endPage = startPage+10-1;
 		if(maxPage<endPage) {

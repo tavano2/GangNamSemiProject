@@ -143,7 +143,7 @@ public class BoardDao {
 		return bid;
 	}
 
-
+	// 이벤트게시판 파일 첨부 메소드
 	public int insertEventAttachment(Connection con, ArrayList<Attachment> fileList) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -159,7 +159,98 @@ public class BoardDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
 		}
 		return result;
 	}
+
+	// 이벤트 게시판 조회시 조회수 증가 메소드
+	public int countEventDetailPage(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("countEventDetailPage");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, b.getBoardNum());
+			pstmt.setInt(2, b.getBoardNum());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+
+	public HashMap<String, Object> searchEventDetailPage(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		String qeury = prop.getProperty("searchEventDetailPage");
+		
+
+		try {
+			pstmt = con.prepareStatement(qeury);
+			pstmt.setInt(1, b.getBoardNum());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				hmap = new HashMap<String,Object>();
+				hmap.put("board_id", rset.getInt("BOARD_ID"));
+				hmap.put("board_num",rset.getInt("BOARD_NUM"));
+				hmap.put("board_title",rset.getString("BOARD_TITLE"));
+				hmap.put("board_content",rset.getString("BOARD_CONTENT"));
+				hmap.put("user_id",rset.getString("USER_ID"));
+				hmap.put("board_count",rset.getString("BOARD_COUNT"));
+				hmap.put("status",rset.getString("STATUS"));
+				hmap.put("file_id",rset.getString("FILE_ID"));
+				hmap.put("place_num",rset.getString("PLACE_NUM"));
+				hmap.put("origine_name",rset.getString("ORIGINE_NAME"));
+				hmap.put("change_name",rset.getString("CHANGE_NAME"));
+				hmap.put("file_path",rset.getString("FILE_PATH"));
+				hmap.put("upload_date",rset.getString("UPLOAD_DATE"));
+				hmap.put("download_count",rset.getString("DOWNLOAD_COUNT"));
+				hmap.put("modify_date", rset.getDate("MODIFY_DATE"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return hmap;
+	}
+
+
+	public Attachment selectOneFileDownload(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Attachment file = null;
+		String query = prop.getProperty("selectOneFileDownload");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				file = new Attachment();
+				file.setOriginName(rset.getString("ORIGINE_NAME"));
+				file.setChangeName(rset.getString("CHANGE_NAME"));
+				file.setFilePath(rset.getString("FILE_PATH"));			
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return file;
+	}
+
+
+
 }
