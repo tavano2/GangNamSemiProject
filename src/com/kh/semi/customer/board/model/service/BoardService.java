@@ -12,6 +12,7 @@ import com.kh.semi.customer.board.model.vo.Attachment;
 import com.kh.semi.customer.board.model.vo.Board;
 
 import oracle.net.aso.l;
+import oracle.net.aso.s;
 public class BoardService {
 
 	public BoardService() {
@@ -29,9 +30,14 @@ public class BoardService {
 
 	
 	// 이벤트 게시판 메인 페이지 조회용
-	public ArrayList<HashMap<String, Object>> selectEventPageList(int currentPage, int limit) {
+	public ArrayList<HashMap<String, Object>> selectEventPageList(int currentPage, int limit, String searchData, String searchTextData) {
 		Connection con = getConnection();
-		ArrayList<HashMap<String, Object>> list  = new BoardDao().selectEventPageList(con,currentPage,limit);
+		ArrayList<HashMap<String, Object>> list  = null;
+		if(searchData != null && searchTextData != null) {
+			list  = new BoardDao().selectEventPageList(con,currentPage,limit,searchData,searchTextData);
+		}else {
+			list  = new BoardDao().selectEventPageList(con,currentPage,limit);
+		}
 		close(con);
 		
 		return list;
@@ -156,4 +162,7 @@ public class BoardService {
 		close(con);
 		return result;
 	}
+
+
+
 }

@@ -48,8 +48,15 @@ public class EventPageListServlet extends HttpServlet {
 		if(maxPage<endPage) {
 			endPage=maxPage;
 		}
+		
+		// 검색한 조회 값 넘어올떄
+		String searchData = request.getParameter("searchData");
+		String searchTextData = request.getParameter("searchTextData");
+		System.out.println(searchData);
+		System.out.println(searchTextData);
+		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		ArrayList<HashMap<String, Object>> list = new BoardService().selectEventPageList(currentPage,limit);
+		ArrayList<HashMap<String, Object>> list = new BoardService().selectEventPageList(currentPage,limit,searchData,searchTextData);
 		
 		String page = "";
 		if(list != null) {

@@ -76,14 +76,16 @@ table tbody>tr:hover{
 				<tr>
 					<td colspan="5" height="50px;">
 						<div align="right">
+						<form action="<%=request.getContextPath() %>/eventPageList.bo" method="get">
 							<div class="ui action input">
-								<input type="text" placeholder="Search..."> <select>
-									<option value="title">제목</option>
-									<option value="author">작성자</option>
-									<option value="content">내용</option>
+								<input type="text" placeholder="검색" name="searchTextData"> <select name="searchData">
+									<option value="B.BOARD_TITLE">제목</option>
+									<option value="B.USER_ID">작성자</option>
+									<option value="B.BOARD_CONTENT">내용</option>
 								</select>
-								<div class="ui button">Search</div>
+								<button class="ui button" type="submit">Search</button>
 							</div>
+							</form>
 						</div>
 					</td>
 
@@ -168,6 +170,15 @@ table tbody>tr:hover{
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
 
+	<script type="text/javascript">
+	
+		
+	
+	
+	</script>
+
 </body>
+
+
 
 </html>
