@@ -112,7 +112,6 @@ public class BoardService {
 		Connection con = getConnection();
 		int result = 0;
 		int result1 = new BoardDao().updateEventBoardObject(con,b);
-		
 		if(fileList != null) {
 			for(int i = 0; i < fileList.size(); i++) {
 				fileList.get(i).setBoardId(b.getBoardId());
@@ -137,4 +136,24 @@ public class BoardService {
 		return result;
 	}
 
+
+	public int deleteEventPage(Board b) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		int bid = new BoardDao().selectEventBid(con,b);
+		int fidCount = new BoardDao().selectFileIdCount(con,bid);
+		int result1 = new BoardDao().deleteEventAttachment(con,bid);
+		if(fidCount == result1) {
+			int result2 = new BoardDao().deleteEventBoard(con,b);
+			if(result2 > 0) {
+				commit(con);
+				result = 1;
+			}else {
+				rollback(con);
+			}
+		}
+		close(con);
+		return result;
+	}
 }

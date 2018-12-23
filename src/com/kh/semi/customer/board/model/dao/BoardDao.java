@@ -1,5 +1,7 @@
 package com.kh.semi.customer.board.model.dao;
 
+import static com.kh.semi.customer.common.JDBCTemplate.close;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,9 +16,6 @@ import java.util.Properties;
 
 import com.kh.semi.customer.board.model.vo.Attachment;
 import com.kh.semi.customer.board.model.vo.Board;
-import com.kh.semi.customer.member.model.vo.Member;
-
-import static com.kh.semi.customer.common.JDBCTemplate.*;
 public class BoardDao {
 	
 	private Properties prop = new Properties();
@@ -281,7 +280,7 @@ public class BoardDao {
 		return hmap;
 	}
 
-
+	//이벤트 게시판 업데이트(보드 테이블)
 	public int updateEventBoardObject(Connection con, Board b) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -292,6 +291,7 @@ public class BoardDao {
 			pstmt.setString(2, b.getBoardContent());
 			pstmt.setDate(3, b.getModifyDate());
 			pstmt.setInt(4, b.getBoardNum());
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -300,7 +300,7 @@ public class BoardDao {
 		return result;
 	}
 
-
+	//이벤트 게시판 업데이트 (파일 테이블)
 	public int updateEventAttachment(Connection con, ArrayList<Attachment> fileList) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -322,4 +322,102 @@ public class BoardDao {
 		
 		return result;
 	}
+
+
+	//이벤트 게시글 삭제를 위한 게시판 아이디 조회
+	public int selectEventBid(Connection con ,Board b) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int bid = 0;
+		String query = prop.getProperty("selectEventBid");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, b.getBoardNum());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				bid = rset.getInt("BOARD_ID");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return bid;
+	}
+	
+	
+	// 첨부파일이 다수 일시 파일 테이블안의 같은 게시글 번호 파일 카운트 메소드
+	public int selectFileIdCount(Connection con, int bid) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int count = 0;
+		String query = prop.getProperty("deleteEventAttachmentList");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, bid);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				count++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	
+
+	//같은 게시글 파일 전체 삭제 메소드
+	public int deleteEventAttachment(Connection con, int bid) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		int count = 0;
+		String query = prop.getProperty("deleteEventAttachmentList");
+		String query2 = prop.getProperty("deleteEventAttachment");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, bid);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				count++;
+			}
+			for(int i = 0; i < count; i ++) {
+				pstmt = con.prepareStatement(query2);
+				pstmt.setInt(1, bid);
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	// 이벤트 게시글 삭제 메소드
+	public int deleteEventBoard(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteEventBoard");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, b.getBoardNum());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
 }
