@@ -18,7 +18,8 @@
 
 <!-- Common css -->
 <link href="/semi/css/customer/common/main.css" rel="stylesheet">
-
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"></script>
 <style type="text/css">
 </style>
 </head>
@@ -59,8 +60,25 @@
 					onclick="login();">Login</div>
 
 				<hr>
+				<div id="naverIdLogin"></div>
+				<!-- 네이버아디디로로그인 초기화 Script -->
+				<script type="text/javascript">
+					var naverLogin = new naver.LoginWithNaverId({
+						clientId : "9y7HcwG1dakGzoz9aIm5",
+						callbackUrl : "http://127.0.0.1:8008/semi/views/customer/member/naverCallback.jsp",
+						isPopup : false, /* 팝업을 통한 연동처리 여부 */
+						loginButton : {
+							color : "green",
+							type : 3,
+							height : 40
+						}
+					/* 로그인 버튼의 타입을 지정 */
+					});
 
-
+					/* 설정정보를 초기화하고 연동을 준비 */
+					naverLogin.init();
+				</script>
+				<!-- // 네이버아이디로로그인 초기화 Script -->
 
 
 

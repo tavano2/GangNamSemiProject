@@ -1,5 +1,7 @@
 package com.kh.semi.customer.member.model.dao;
 
+import static com.kh.semi.customer.common.JDBCTemplate.close;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,11 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import com.kh.semi.customer.member.controller.SelectMemberServlet;
 import com.kh.semi.customer.member.model.vo.Member;
-
-
-import static com.kh.semi.customer.common.JDBCTemplate.*;
 
 
 public class MemberDao {
@@ -33,42 +31,7 @@ public class MemberDao {
 	}
 
 	
-/*	// 로그인 유저가 있는지 확인 메소드
-	public int checkMember(Connection con, Member member) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		int result = SelectMemberServlet.ID_NOT_EXIST;
-		String query = prop.getProperty("checkMember");
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, member.getUserId());
-			rset = pstmt.executeQuery();
-			String userId = "";
-			String password = "";
-			if(rset.next()) {
-				userId = rset.getString("USER_ID");
-				password = rset.getString("USER_PWD");
-			}
-			if(member.getUserId().equals(userId) && member.getPassword().equals(password)) {
-				result = SelectMemberServlet.LOGIN_OK;
-			}else if(member.getUserId().equals(userId) && !member.getPassword().equals(password)) {
-					result = SelectMemberServlet.WORNG_PASSWORD;
-				}else {
-					result = SelectMemberServlet.ID_NOT_EXIST;
-				}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		System.out.println(result);
-		
-		
-		return result;
-	}*/
+
 
 	// 로그인 유저가 있을시 정보를 불러오는 메소드
 	public Member selectMember(Connection con, Member member) {
@@ -107,8 +70,6 @@ public class MemberDao {
 			pstmt=con.prepareStatement(query);
 			pstmt.setString(1, member.getUserId());
 			pstmt.setString(2, member.getUserPwd1());
-			System.out.println(member.getUserId());
-			System.out.println(member.getUserPwd1());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -117,6 +78,30 @@ public class MemberDao {
 			close(pstmt);
 		}			
 		return result;
+	}
+
+
+	public int chkMember(Connection con, Member member) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member result = null;
+		int chk = 0;
+		String query = prop.getProperty("checkMember");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, member.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = new Member();
+				result.setUserId(rset.getString("USER_ID"));
+				if(result.getUserId() == null) {
+					chk = 1;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return chk;
 	}
 
 }
