@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-				<form action="" method="get" id="searchBox">
+				<form action="<%=request.getContextPath() %>/adminOrderSearch.de" method="get" id="searchBox">
+					<input type="hidden" name="uri" value="<%=request.getRequestURI()%>">
 	                <table class="ui celled table order-search">
 	                    <!-- 검색 테이블 -->
 	                    <thead>
@@ -18,19 +19,19 @@
 	                                    <i class="dropdown icon"></i>
 	                                    <div class="default text">검색목록선택</div>
 	                                    <div class="menu">
-	                                        <div class="item" data-value="0">주문번호</div>
-	                                        <div class="item" data-value="1">주문자 아이디</div>
-	                                        <div class="item" data-value="2">주문자 이름</div>
-	                                        <div class="item" data-value="3">주문자 일반전화</div>
-	                                        <div class="item" data-value="4">주문자 휴대전화</div>
+	                                        <div class="item" data-value="1">주문번호</div>
+	                                        <div class="item" data-value="2">주문자 아이디</div>
+	                                        <div class="item" data-value="3">주문자 이름</div>
+	                                        <div class="item" data-value="4">주문자 일반전화</div>
+	                                        <div class="item" data-value="5">주문자 휴대전화</div>
 	                                        <div class="divider"></div>
-	                                        <div class="item" data-value="5">수령자 이름</div>
-	                                        <div class="item" data-value="6">수령자 일반전화</div>
-	                                        <div class="item" data-value="7">수령자 휴대전화</div>
-	                                        <div class="item" data-value="8">배송지 주소</div>
+	                                        <div class="item" data-value="6">수령자 이름</div>
+	                                        <div class="item" data-value="7">수령자 일반전화</div>
+	                                        <div class="item" data-value="8">수령자 휴대전화</div>
+	                                        <div class="item" data-value="9">배송지 주소</div>
 	                                        <div class="divider"></div>
-	                                        <div class="item" data-value="9">운송장번호</div>
-	                                        <div class="item" data-value="10">메모</div>
+	                                        <div class="item" data-value="10">운송장번호</div>
+	                                        <div class="item" data-value="11">메모</div>
 	                                    </div>
 	                                </div>
 	                                <div class="ui input">
@@ -73,10 +74,10 @@
 	                                    <i class="dropdown icon"></i>
 	                                    <div class="default text">검색목록선택</div>
 	                                    <div class="menu">
-	                                        <div class="item" data-value="0">상품명</div>
-	                                        <div class="item" data-value="1">상품코드</div>
-	                                        <div class="item" data-value="2">품목코드</div>
-	                                        <div class="item" data-value="3">제조사</div>
+	                                        <div class="item" data-value="1">상품명</div>
+	                                        <div class="item" data-value="2">상품코드</div>
+	                                        <div class="item" data-value="3">품목코드</div>
+	                                        <div class="item" data-value="4">제조사</div>
 	                                    </div>
 	                                </div>
 	                                <div class="ui input">
