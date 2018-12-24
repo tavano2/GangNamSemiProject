@@ -40,4 +40,20 @@ public class MemberService {
 		}
 		return result;
 	}
+
+
+	public int insertMember(Member member, int type) {
+		int result = 0;
+		Connection con = getConnection();
+		int memberChk = new MemberDao().chkMember(con,member);
+		if(memberChk > 0) {
+		result = new MemberDao().insertMember(con, member,type);
+			if(result > 0) {
+				commit(con);
+			}else {
+				rollback(con);
+			}
+		}
+		return result;
+	}
 }

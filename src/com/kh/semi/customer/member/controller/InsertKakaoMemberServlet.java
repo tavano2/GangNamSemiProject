@@ -11,31 +11,30 @@ import com.kh.semi.customer.member.model.service.MemberService;
 import com.kh.semi.customer.member.model.vo.Member;
 
 
-@WebServlet("/naverLogin.me")
-public class InsertNaverMemberServlet extends HttpServlet {
+@WebServlet("/kakaoLogin.me")
+public class InsertKakaoMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
-    public InsertNaverMemberServlet() {
+	
+    public InsertKakaoMemberServlet() {
         super();
-
     }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("emilData");
+		String kakaoId = request.getParameter("kakaoId");
 		String userPwd1 = request.getParameter("userPwd1");
 		Member m = new Member();
-		int type = 3;
-		m.setUserId(email);
+		m.setUserId(kakaoId);
 		m.setUserPwd1(userPwd1);
+		int type = 2;
 		int result = new MemberService().insertMember(m,type);
 		if( result > 0) {
-			request.setAttribute("userId", email);
+			request.setAttribute("userId", kakaoId);
 			request.setAttribute("userPwd1", userPwd1);
 			request.getRequestDispatcher("/snsSelectMember.me").forward(request, response);
 		}else {
-			request.setAttribute("userId", email);
+			request.setAttribute("userId", kakaoId);
 			request.setAttribute("userPwd1", userPwd1);
 			request.getRequestDispatcher("/snsSelectMember.me").forward(request, response);
 		}

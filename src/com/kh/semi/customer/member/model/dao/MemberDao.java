@@ -66,13 +66,11 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		String query=prop.getProperty("insertMember");
 		try {
-			System.out.println(query);
 			pstmt=con.prepareStatement(query);
 			pstmt.setString(1, member.getUserId());
 			pstmt.setString(2, member.getUserPwd1());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -85,7 +83,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Member result = null;
-		int chk = 0;
+		int chk = 1;
 		String query = prop.getProperty("checkMember");
 		try {
 			pstmt = con.prepareStatement(query);
@@ -94,14 +92,34 @@ public class MemberDao {
 			if(rset.next()) {
 				result = new Member();
 				result.setUserId(rset.getString("USER_ID"));
-				if(result.getUserId() == null) {
-					chk = 1;
-				}
+				chk = 0;
 			}
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return chk;
+	}
+
+
+
+
+	public int insertMember(Connection con, Member member, int type) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query=prop.getProperty("snsInsertMember");
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, member.getUserId());
+			pstmt.setString(2, member.getUserPwd1());
+			pstmt.setInt(3, type);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}			
+		return result;
 	}
 
 }
