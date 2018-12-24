@@ -45,4 +45,16 @@ public class ProductService {
 	}
 
 	
+	//QnA 상세 조회하깅
+	public Product SelectOneQnA(String num) {
+		Connection con = getConnection();
+		
+		Product SelectOneQnA =new ProductDao().SelectOneQnA(con,num);
+		
+		close(con);
+		
+		return SelectOneQnA;
+	}
+
+	
 }

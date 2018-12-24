@@ -185,4 +185,41 @@ public class ProductDao {
 		return listQnA;
 	}
 
+	//QnA 상세 
+	public Product SelectOneQnA(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Product SelectOneQnA = null;
+		
+		String query = prop.getProperty("SelectOneQnA");
+		
+		try {
+			pstmt= con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(num));
+			
+			rset= pstmt.executeQuery();
+			
+			if(rset.next()) {
+				SelectOneQnA= new Product();
+				
+				SelectOneQnA.setBoardContent(rset.getString("BOARD_CONTENT"));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		
+		
+		
+		
+		return SelectOneQnA;
+	}
+
 }

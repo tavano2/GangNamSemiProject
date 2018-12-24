@@ -1,5 +1,8 @@
+<%@page import="com.kh.semi.customer.product.model.vo.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+   
+<% Product SelectOneQnA = (Product)request.getAttribute("SelectOneQnA"); %>
 <!DOCTYPE html>
 <html>
 
@@ -57,8 +60,7 @@ margin-right:200px;
                <a class="avatar"> <img src="/semi/views/images/products/person.JPG">
                </a>
                <div class="content">
-                  <a class="author">옷 사이즈가 어떻게 되나요?옷 사이즈가 어떻게 되나요?옷 사이즈가 어떻게 되나요?옷 사이즈가 어떻게 되나요?옷 사이즈가 어떻게 되나요?옷 사이즈가 어떻게 되나요?<br>
-                  궁금합니당!</a>
+                  <a class="author"><%=SelectOneQnA.getBoardContent() %></a>
                   <br>
                   
                </div>
