@@ -50,8 +50,7 @@ public class AdminOrderSearchServlet extends HttpServlet {
 		/*productCondition
 		1: 상품명
         2: 상품코드
-        3: 품목코드
-        4: 제조사*/
+        3: 품목명*/
 		
 		/*orderCondition=1
 		 * &orderText=123
