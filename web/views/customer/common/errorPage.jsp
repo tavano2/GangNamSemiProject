@@ -2,7 +2,13 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<% String msg = (String)request.getAttribute("msg"); %>
+<% String msg = (String)request.getAttribute("msg"); 
+		String msg2 = null;
+		if(request.getSession().getAttribute("msg") != null){
+			msg2 = (String)request.getAttribute("msg");
+		}
+
+%>
 <html>
 
 
@@ -31,8 +37,9 @@
 		<br>
 		<br>
 		<div align = "center"><%=msg %></div>
-	
-
+		<%if(msg2!= null){ %>
+			<div align = "center"><%=msg2 %></div>
+		<%} %>
 		
 	</div>
 		
