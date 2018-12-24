@@ -3,6 +3,7 @@ package com.kh.semi.customer.product.model.service;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.kh.semi.customer.board.model.vo.Board;
 import com.kh.semi.customer.product.model.dao.ProductDao;
 import com.kh.semi.customer.product.model.vo.Product;
 
@@ -19,6 +20,7 @@ public class ProductService {
 		return listCount;
 	}
 
+	//리뷰 게시판 조회
 	public ArrayList<Product> reviewNoticeList(int currentPage, int limit) {
 		Connection con = getConnection();
 		
@@ -30,4 +32,17 @@ public class ProductService {
 		return list;
 	}
 
+	//QnA 게시판 조회
+	public ArrayList<Product> QnANoticeList(int currentPageQnA, int limitQnA) {
+		Connection con = getConnection();
+		
+		ArrayList<Product> listQnA = new ProductDao().QnANoticeList(con,currentPageQnA,limitQnA);
+		
+		close(con);
+
+		
+		return listQnA;
+	}
+
+	
 }

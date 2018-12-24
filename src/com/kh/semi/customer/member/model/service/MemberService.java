@@ -1,7 +1,6 @@
 package com.kh.semi.customer.member.model.service;
 
-import static com.kh.semi.customer.common.JDBCTemplate.close;
-import static com.kh.semi.customer.common.JDBCTemplate.getConnection;
+import static com.kh.semi.customer.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -30,24 +29,18 @@ public class MemberService {
 	public int insertMember(Member member) {
 		int result = 0;
 		Connection con = getConnection();
+		int memberChk = new MemberDao().chkMember(con,member);
+		if(memberChk > 0) {
 		result = new MemberDao().insertMember(con, member);
-		if(result>0) {
-			try {
-				con.commit();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}else {
-			try {
-				con.rollback();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(result > 0) {
+				commit(con);
+			}else {
+				rollback(con);
 			}
 		}
 		return result;
 	}
+
 
 
 	public boolean userIdCheck(String userId) {
@@ -56,5 +49,6 @@ public class MemberService {
 		close(con);
 		return check;
 	}
+
 
 }

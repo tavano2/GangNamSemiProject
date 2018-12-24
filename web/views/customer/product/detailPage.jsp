@@ -11,6 +11,14 @@
 	int maxPage = propi.getMaxPage();
 	int startPage = propi.getStartPage();
 	int endPage = propi.getEndPage();
+	
+	ArrayList<Product> listQnA = (ArrayList<Product>) request.getAttribute("listQnA");
+	PageInfo piQnA = (PageInfo) request.getAttribute("piQnA");
+	int listCountQnA = piQnA.getListCount();
+	int currentPageQnA = piQnA.getCurrentPage();
+	int maxPageQnA = piQnA.getMaxPage();
+	int startPageQnA = piQnA.getStartPage();
+	int endPageQnA = piQnA.getEndPage();
 %>
 <!DOCTYPE html>
 <html>
@@ -404,6 +412,19 @@
 						</tr>
 					</thead>
 					<tbody>
+						<%
+							for(Product pQnA:listQnA){
+								//System.out.print("상품문의 리스트 불러와랑"+pQnA);
+						%>
+						<tr>
+							<td><%=pQnA.getBoardNum()%></td>
+							<td><%=pQnA.getBoardTitle() %></td>
+							<td><%=pQnA.getUserId() %></td>
+							<td><%=pQnA.getBoardDate() %></td>
+						</tr>
+				
+					<%} %>
+					
 						<tr>
 							<td>1</td>
 							<td>문의합니다 문의해용 배송 언제 오나요?? 일주일 기다렸듭니다!!!
@@ -411,25 +432,7 @@
 							</td>
 							<td>묭묭</td>
 							<td>2018-12-44</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>문의합니다 문의해용 배송 언제 오나요?? 일주일 기다렸듭니다!!!</td>
-							<td>밍밍</td>
-							<td>2018-11-14</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>문의합니다 문의해용 배송 언제 오나요?? 일주일 기다렸듭니다!!!</td>
-							<td>밍밍</td>
-							<td>2018-11-14</td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>문의합니다 문의해용 배송 언제 오나요?? 일주일 기다렸듭니다!!!</td>
-							<td>밍밍</td>
-							<td>2018-11-14</td>
-						</tr>
+						</tr>	
 					</tbody>
 				</table>
 
@@ -439,31 +442,42 @@
 					&nbsp;
 				</div>
 
-				<!-- 페이징 넘버 -->
+					<!-- 페이징 넘버 -->
 				<div class="ui container center aligned">
 					<div aria-label="Pagination Navigation" role="navigation"
 						class="ui pagination menu">
 						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="item">«</a><a
-							aria-current="false" aria-disabled="false" tabindex="0" value="1"
-							aria-label="Previous item" type="prevItem" class="item">⟨</a><a
-							aria-current="true" aria-disabled="false" tabindex="0" value="1"
-							type="pageItem" class="active item">1</a><a aria-current="false"
-							aria-disabled="false" tabindex="0" value="2" type="pageItem"
-							class="item">2</a><a aria-current="false" aria-disabled="false"
-							tabindex="0" value="3" type="pageItem" class="item">3</a><a
-							aria-current="false" aria-disabled="false" tabindex="0" value="4"
-							type="pageItem" class="item">4</a><a aria-current="false"
-							aria-disabled="false" tabindex="0" value="5" type="pageItem"
-							class="item">5</a><a aria-current="false" aria-disabled="false"
-							tabindex="0" value="2" aria-label="Next item" type="nextItem"
-							class="item">⟩</a><a aria-current="false" aria-disabled="false"
-							tabindex="0" value="5" aria-label="Last item" type="lastItem"
-							class="item">»</a>
+							value="1" aria-label="First item" type="firstItem" class="item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=1'">«</a>
+
+
+						<a aria-current="false" aria-disabled="false" tabindex="0"
+							value="1" aria-label="First item" type="firstItem" class="item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=currentPageQnA - 1%>'"><</a>
+						<%
+							for (int p = startPageQnA; p <= endPageQnA; p++) {
+						%>
+						<a aria-current="false" aria-disabled="false" tabindex="0"
+							value="1" aria-label="First item" type="firstItem" class="item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=p%>'"><%=p%></a>
+
+						<%
+							}
+						%>
+
+						<a aria-current="false" aria-disabled="false" tabindex="0"
+							value="1" aria-label="First item" type="firstItem" class="item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=currentPageQnA + 1%>'">></a>
+
+						<a aria-current="false" aria-disabled="false" tabindex="0"
+							value="1" aria-label="First item" type="firstItem" class="item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=maxPageQnA%>'">»</a>
 					</div>
 				</div>
 				
 				
+				
+				<!-- /////////////////////////////////////////////// -->
 				 <div class="ui container center aligned search-box">
                     
 

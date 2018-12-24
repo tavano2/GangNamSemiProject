@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.kh.semi.customer.product.model.vo.Product;
+import com.sun.corba.se.impl.javax.rmi.PortableRemoteObject;
 
 import static com.kh.semi.customer.common.JDBCTemplate.*;
 
@@ -104,7 +105,7 @@ public class ProductDao {
 				//p.setStatus(rset.getString("STATUS"));
 				
 				list.add(p);
-				System.out.println("!!!"+p);
+				//System.out.println("!!!"+p);
 
 			}
 			
@@ -118,6 +119,70 @@ public class ProductDao {
 		return list;
 		
 		
+	}
+
+	
+	//QnA 리스트 조회 
+	public ArrayList<Product> QnANoticeList(Connection con, int currentPageQnA, int limitQnA) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> listQnA = null;
+		
+		String query = prop.getProperty("QnANoticeList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPageQnA - 1) * limitQnA + 1;
+			int endRow = startRow + limitQnA - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			listQnA = new ArrayList<Product>();
+			
+			
+			while(rset.next()) {
+				Product pQnA = new Product();
+				
+				pQnA.setBoardId(rset.getInt("BOARD_ID"));
+				pQnA.setBoardType(rset.getInt("BOARD_TYPE"));
+				pQnA.setBoardNum(rset.getInt("BOARD_NUM"));
+				pQnA.setBoardCate(rset.getString("BOARD_CATE"));
+				pQnA.setBoardTitle(rset.getString("BOARD_TITLE"));
+				
+				pQnA.setBoardContent(rset.getString("BOARD_CONTENT"));
+				pQnA.setUserId(rset.getString("USER_ID"));
+				pQnA.setBoardDate(rset.getDate("BOARD_DATE"));
+				pQnA.setModifyDate(rset.getDate("MODIFY_DATE"));
+				pQnA.setBoardCount(rset.getInt("BOARD_COUNT"));
+				
+				pQnA.setRefBoardId(rset.getInt("REF_BOARD_ID"));
+				pQnA.setReplyLevel(rset.getInt("REPLY_LEVEL"));
+				pQnA.setReplyStatus(rset.getString("REPLY_STATUS"));
+				//pQnA.setProductCodeQ(rset.getString("PRODUCT_CODE_Q"));
+				//pQnA.setProductCodeR(rset.getString("PRODUCT_CODE_R"));
+				
+				pQnA.setStatus(rset.getString("STATUS"));
+				
+				listQnA.add(pQnA);
+				//System.out.println("pQnA"+pQnA);
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+	
+		
+		return listQnA;
 	}
 
 }
