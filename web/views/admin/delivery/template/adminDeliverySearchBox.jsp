@@ -76,8 +76,7 @@
 	                                    <div class="menu">
 	                                        <div class="item" data-value="1">상품명</div>
 	                                        <div class="item" data-value="2">상품코드</div>
-	                                        <div class="item" data-value="3">품목코드</div>
-	                                        <div class="item" data-value="4">제조사</div>
+	                                        <div class="item" data-value="3">카테고리 이름</div>
 	                                    </div>
 	                                </div>
 	                                <div class="ui input">
