@@ -402,7 +402,7 @@
 			<br>
 			<div class="detailBottom1">
 				<h3>상품문의</h3>
-				<table class="ui brown table">
+				<table class="ui brown table" id="QnAlistArea">
 					<thead>
 						<tr>
 							<th>번호</th>
@@ -435,6 +435,8 @@
 						</tr>	
 					</tbody>
 				</table>
+				
+				
 
 				<div align="right">
 					<button class="ui brown basic mini button"
@@ -510,6 +512,8 @@
 	<br>
 	<br>
 	<br>
+	
+	
 
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
@@ -528,6 +532,7 @@
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
+	
 
 	<!-- 오더 리스트 스크립트 -->
 	<script type="text/javascript">
@@ -551,7 +556,23 @@
 
 		}
 		
+		
 	</script>
+	<!-- QnA상세보기  -->
+	<script>
+		$(function(){
+			$("#QnAlistArea td").click(function(){
+				var num = $(this).parent().children().eq(0).text();
+				
+				console.log(num);
+				
+				//글번호와 함께
+				location.href="<%=request.getContextPath()%>/SelectOneQnA.no?num="+num;
+			
+			});
+		});
+	</script>
+	
 </body>
 
 </html>
