@@ -119,4 +119,27 @@ public class MemberDao {
 		return result;
 	}
 
+
+	public boolean userIdCheck(Connection con, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		boolean check = false;
+		String query = prop.getProperty("userIdCheck");
+		try {
+			pstmt= con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				check=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return check;
+	}
+
 }

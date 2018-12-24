@@ -49,4 +49,12 @@ public class MemberService {
 		return result;
 	}
 
+
+	public boolean userIdCheck(String userId) {
+		Connection con = getConnection();
+		boolean check = new MemberDao().userIdCheck(con, userId);
+		close(con);
+		return check;
+	}
+
 }
