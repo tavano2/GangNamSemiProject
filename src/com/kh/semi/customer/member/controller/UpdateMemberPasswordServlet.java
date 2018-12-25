@@ -1,7 +1,6 @@
 package com.kh.semi.customer.member.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,35 +12,30 @@ import com.kh.semi.customer.member.model.service.MemberService;
 import com.kh.semi.customer.member.model.vo.Member;
 
 
-@WebServlet("/snsSelectMember.me")
-public class SnsNaverMemberLoginServlet extends HttpServlet {
+@WebServlet("/updateComplete.me")
+public class UpdateMemberPasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-    public SnsNaverMemberLoginServlet() {
+    public UpdateMemberPasswordServlet() {
         super();
     }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = (String)request.getAttribute("userId");
-		String userPwd1 = (String)request.getAttribute("userPwd1");
-		Member member = new Member();
-		member.setUserId(userId);
-		member.setUserPwd1(userPwd1);
-
-		Member loginUser = new MemberService().selectMember(member);
-		String view = "";
-		if(loginUser != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("loginUser", loginUser);
-			view = "index.jsp";
-			response.sendRedirect(view);
+		String userPwd1 = request.getParameter("userPwd1");
+		String userId = String.format(((Member)request.getSession().getAttribute("loginUser")).getUserId());
+		System.out.println(userPwd1);
+		Member m = new Member();
+		m.setUserId(userId);
+		m.setUserPwd1(userPwd1);
+		int result = new MemberService().updateMemberComplete(m);
+		if(result > 0) {
+			response.sendRedirect("views/customer/member/userMyPage.jsp");
 		}else {
-			view = "views/customer/common/errorPageSendRd.jsp";
-			response.sendRedirect(view);
+			response.sendRedirect("views/customer/common/errorPageSendRd.jsp");
 		}
-	
+		
 	}
 
 

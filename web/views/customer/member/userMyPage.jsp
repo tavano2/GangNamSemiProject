@@ -30,6 +30,8 @@
 <body>
 
 	<%@ include file="/views/customer/common/mainNav.jsp"%>
+	
+	<%if(loginUser != null) {%>
 
 
 	<div class="content">
@@ -171,7 +173,7 @@
 					수정</button>
 			</div>
 			<div class="btn1">
-				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/product/wishList.jsp'">
+				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='<%=request.getContextPath()%>/selectWishListPage.pd' ">
 				위시리스트</button>
 			</div>
 			<div class="btn1">
@@ -182,7 +184,7 @@
 		<br>
 		<div align="center">
 			<div class="btn1">
-				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/promotion/UserNoteCoupon.jsp'">쪽지/쿠폰함</button>
+				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='<%=request.getContextPath()%>/selectMessageAndCoupon.pm' ">쪽지/쿠폰함</button>
 			</div>
 			<div class="btn1">
 				<button class="ui grey basic button" style="font-size: 14px;" onclick="eventPage();">이벤트</button>
@@ -204,6 +206,12 @@
 		<br>
 		<br>
 	</div>
+	
+	<%}else{
+			request.setAttribute("msg", "로그인해주세요!");
+			request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
+	}	%>
+	
 
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>

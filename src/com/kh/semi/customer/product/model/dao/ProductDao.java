@@ -9,8 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
+import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.vo.Product;
 import com.sun.corba.se.impl.javax.rmi.PortableRemoteObject;
 
@@ -220,6 +222,68 @@ public class ProductDao {
 		
 		
 		return SelectOneQnA;
+	}
+
+	
+	//위시리스트 조회
+	public ArrayList<HashMap<String, Object>> selectWishListPageServlet(Connection con, Member m,int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HashMap<String, Object>> list = null;
+		HashMap<String, Object> hmap = null;
+		String query = prop.getProperty("selectWishListPageServlet");
+		try {
+			pstmt = con.prepareStatement(query);
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			pstmt.setString(1, m.getUserId());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while(rset.next()) {
+					hmap = new HashMap<String,Object>();
+					hmap.put("user_id", rset.getString("USER_ID"));
+					hmap.put("product_code", rset.getString("PRODUCT_CODE"));
+					hmap.put("change_name", rset.getString("CHANGE_NAME"));
+					hmap.put("product_name", rset.getString("PRODUCT_NAME"));
+					hmap.put("product_amount", rset.getInt("PRODUCT_AMOUNT"));
+					hmap.put("product_price", rset.getInt("PRODUCT_PRICE"));
+					hmap.put("discount",rset.getInt("DISCOUNT"));
+					hmap.put("point", rset.getInt("POINT"));
+					hmap.put("post_price", rset.getInt("POST_PRICE"));
+					hmap.put("sum_product", rset.getInt("SUM_PRODUCT"));
+					
+					
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int getListCountWishList(Connection con, Member m) {
+		int result = 0;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("getListCountWishList");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }

@@ -22,6 +22,8 @@
 
 	<%@ include file="/views/customer/common/mainNav.jsp"%>
 
+	<% if(loginUser != null) {%>
+
 
 	<div class="content">
 		<br> <br>
@@ -34,12 +36,11 @@
 			비밀번호를 재확인합니다.
 			<br>
 			<br>
-			<form action="<%=request.getContextPath() %>/???" method="post" id="passwordCheck" class="ui equal width form" style="width: 200px;">
+			<form action="<%=request.getContextPath() %>/selectMemberCheck.me" method="post" id="passwordCheck" class="ui equal width form" style="width: 200px;">
 				<div class="field">
 					<label>Password</label> <input type="password" name="userPwd1">
 					<br><br>
 					<button type="submit" class="ui secondary button">확인</button>
-					<div class="ui button" onclick="location.href='/semi/views/customer/member/updateMember2.jsp'">확인(임시)</div>
 					<div class="ui button" onclick="location.href='/semi/views/customer/member/userMyPage.jsp'">이전으로</div>
 				</div>
 			</form>
@@ -49,6 +50,11 @@
 
 	</div>
 
+	<%}else {
+			request.setAttribute("msg", "잘못된 접근입니다!"); 
+			request.getRequestDispatcher("views/customer/common/errorPage.jsp").forward(request, response);
+	}
+	%>
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
 
@@ -66,6 +72,8 @@
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
+
+
 
 </body>
 

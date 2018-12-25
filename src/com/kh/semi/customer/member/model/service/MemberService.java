@@ -40,6 +40,22 @@ public class MemberService {
 		}
 		return result;
 	}
+	
+	public int insertMember(Member member, int type) {
+		int result = 0;
+		Connection con = getConnection();
+		int memberChk = new MemberDao().chkMember(con,member);
+		if(memberChk > 0) {
+		result = new MemberDao().insertMember(con, member,type);
+			if(result > 0) {
+				commit(con);
+			}else {
+				rollback(con);
+			}
+		}
+		return result;
+	}
+	
 
 
 
@@ -51,4 +67,28 @@ public class MemberService {
 	}
 
 
+	// 회원정보 수정 이전 단계 회원 재확인 메소드
+	public int selectCheckMember(Member m) {
+		Connection con = getConnection();
+		int result = new MemberDao().selectCheckMember(con,m);
+		close(con);
+		return result;
+	}
+	
+	
+	public int updateMemberComplete(Member m) {
+		Connection con = getConnection();
+		int chk = new MemberDao().chkUpdateMember(con,m);
+		int result = 0;
+		if(chk == 0) {
+			result = new MemberDao().updateMemberComplete(con,m);
+			if(result >0) {
+				commit(con);
+			}else {
+				rollback(con);
+			}
+		}	
+		close(con);
+		return result;
+	}
 }
