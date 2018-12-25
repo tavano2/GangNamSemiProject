@@ -2,10 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<% String msg = (String)request.getAttribute("msg"); 
 
-
-%>
 <html>
 
 
@@ -33,7 +30,7 @@
 			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">ERROR!</div>
 		<br>
 		<br>
-		<div align = "center"><%=msg %></div>
+		<div align = "center">연동이 실패되었습니다.&nbsp;(회원 수정시엔 같은 비밀번호 입력한지 확인해주세요)</div>
 
 	</div>
 		

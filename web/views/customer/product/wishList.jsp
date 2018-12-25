@@ -1,6 +1,21 @@
+<%@page import="com.kh.semi.customer.board.model.vo.PageInfo"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+<%
+	PageInfo pi = (PageInfo) request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	ArrayList<HashMap<String,Object>> list = (ArrayList<HashMap<String,Object>>)request.getAttribute("list");
+
+%>
+
 <html>
 
 
@@ -47,22 +62,62 @@
 						<th>상품정보</th>
 						<th>수량</th>
 						<th>판매가</th>
+						<th>회원 할인가</th>
 						<th>적립금</th>
 						<th>배송비</th>
 						<th>합계</th>
 					</tr>
 				</thead>
 				<tbody>
+					<%for(HashMap<String,Object> hmap : list){ %>
 					<tr>
-						<td><input type="checkbox"></td>
-						<td>이미지란</td>
-						<td>상품 정보정보정보</td>
-						<td>No</td>
-						<td>35000원</td>
-						<td>적립금내용</td>
-						<td>배송비란</td>
-						<td>합계란</td>
+						<td><input type="checkbox" class="productChk"></td>
+						<td><img src = "/semi/image/customer/product/<%=hmap.get("change_name") %>" width="50px" height="50px"></td>
+						<td><%=hmap.get("product_name") %></td>
+						<td><%=hmap.get("product_amount") %>개</td>
+						<td><%=hmap.get("product_price") %>원</td>
+						<td><%=hmap.get("discount") %>원</td>
+						<td><%=hmap.get("point") %>원</td>
+						<td><%=hmap.get("post_price") %>원</td>
+						<td><%=hmap.get("sum_product") %>원</td>
 					</tr>
+					<%} %>
+					
+					<tr>
+					<td colspan="9">
+						<div align="center">
+							<div class="ui pagination menu">
+							    		<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=1' "><i class="angle double left icon"></i></a>
+								        <%if(currentPage <=1) {%>
+								         <a class="icon item"><i class="angle left icon"></i></a>
+								        <%} else{ %>
+								        	<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage-1%>' "><i class="angle left icon"></i></a>
+								        <%} %>
+								       
+								       
+								       <%for(int p = startPage; p <= endPage ; p++){ 
+								       
+								       			if(p == currentPage){
+								       %>
+								       			<a class="item"><%=p %></a>
+								       <%}else{ %>
+								       			<a class="item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=p%>' "><%=p %></a>
+								       <%} %>
+								       
+								       <%} %>
+		
+								        
+								        <%if(currentPage >= maxPage) {%>
+								        <a class="icon item"><i class="angle right icon"></i></a>
+								        <%}else{ %>
+								        	<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage+1%>' "><i class="angle right icon"></i></a>
+								        <%} %>
+								        
+								        <a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=maxPage%>' "><i class="angle double right icon"></i></a>
+							      	</div>
+						</div>
+					</td>
+				</tr> 
 				</tbody>
 			</table>
 			<br>
@@ -71,11 +126,7 @@
 		<b>선택 상품을</b>&nbsp;&nbsp;<button class="ui brown basic mini button">삭제하기</button>&nbsp;
 		<button class="ui brown basic mini button">장바구니 담기</button>
 		</div>
-	
-		
 	</div>
-		
-  
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
 
 

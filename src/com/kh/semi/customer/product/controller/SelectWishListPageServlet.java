@@ -1,4 +1,4 @@
-package com.kh.semi.customer.board.controller;
+package com.kh.semi.customer.product.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,20 +12,27 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.semi.customer.board.model.service.BoardService;
 import com.kh.semi.customer.board.model.vo.PageInfo;
+import com.kh.semi.customer.member.model.vo.Member;
+import com.kh.semi.customer.product.model.service.ProductService;
+import com.kh.semi.customer.product.model.vo.Product;
 
 
-@WebServlet("/eventPageList.bo")
-public class EventPageListServlet extends HttpServlet {
+@WebServlet("/selectWishListPage.pd")
+public class SelectWishListPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-    public EventPageListServlet() {
+    public SelectWishListPageServlet() {
         super();
     }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userId = String.format(((Member)request.getSession().getAttribute("loginUser")).getUserId());
+		Member m = new Member();
+		m.setUserId(userId);
 		
+		// 페이징
 		int currentPage;
 		int limit;
 		int maxPage;
@@ -39,8 +46,8 @@ public class EventPageListServlet extends HttpServlet {
 		}
 		
 		limit = 10;
-		BoardService bs = new BoardService();
-		int listCount = bs.getListCount();
+		ProductService service = new ProductService();
+		int listCount = service.getListCountWishList(m);
 		
 		maxPage = listCount/limit +(listCount % limit == 0 ? 0 : 1);
 		startPage = ((int)((double)currentPage/limit+0.9)-1)*limit+1;
@@ -49,21 +56,20 @@ public class EventPageListServlet extends HttpServlet {
 			endPage=maxPage;
 		}
 		
-		// 검색한 조회 값 넘어올떄
-		String searchData = request.getParameter("searchData");
-		String searchTextData = request.getParameter("searchTextData");
-		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		ArrayList<HashMap<String, Object>> list = new BoardService().selectEventPageList(currentPage,limit,searchData,searchTextData);
 		
+		
+		
+		
+		ArrayList<HashMap<String, Object>> list = new ProductService().selectWishListPageServlet(m,currentPage,limit);
 		String page = "";
 		if(list != null) {
-			page = "views/customer/promotion/eventPage.jsp";
-			request.setAttribute("pi", pi);
+			page = "views/customer/product/wishList.jsp";
 			request.setAttribute("list", list);
+			request.setAttribute("pi", pi);
 		}else {
 			page = "views/customer/common/errorPage.jsp";
-			request.setAttribute("msg", "이벤트 게시판 조회 실패!");
+			request.setAttribute("msg", "위시리스트 조회 실패!");
 		}
 		request.getRequestDispatcher(page).forward(request, response);
 		

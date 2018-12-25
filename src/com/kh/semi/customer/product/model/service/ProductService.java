@@ -2,8 +2,10 @@ package com.kh.semi.customer.product.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.semi.customer.board.model.vo.Board;
+import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.dao.ProductDao;
 import com.kh.semi.customer.product.model.vo.Product;
 
@@ -54,6 +56,22 @@ public class ProductService {
 		close(con);
 		
 		return SelectOneQnA;
+	}
+
+	
+	//위시리스트 뿌려줄 내용 조회
+	public ArrayList<HashMap<String, Object>> selectWishListPageServlet(Member m,int currentPage, int limit) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> list = new ProductDao().selectWishListPageServlet(con,m,currentPage,limit);
+		close(con);
+		return list;
+	}
+
+	public int getListCountWishList(Member m) {
+		Connection con = getConnection();
+		int result = new ProductDao().getListCountWishList(con,m);
+		close(con);
+		return result;
 	}
 
 	
