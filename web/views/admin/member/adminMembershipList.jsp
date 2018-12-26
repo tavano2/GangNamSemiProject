@@ -46,11 +46,10 @@
                       </tr>
                    </table>
         						<table class="ui celled table top-table">
-        						<!-- <button class="ui white button">X 삭제</button> -->
-        						<!--  DROPD	OWN IS NEE-->
+        						<!-- <button class="ui white button">X 삭제</button> -->	
         			<thead>
                     	 <tr align="center">
-                    	 <th><input type="checkbox"></th>
+                    	 <th><input type="radio" name="Membership" value=""><br/></th>
                         	<th> &nbsp;회원등급</th>
                         	<th>결제조건</th>
                         	<th>* 적립 * 구매금액</th>
@@ -61,7 +60,7 @@
                         </tr>
                     </thead>
                     <tr>
-                            <td class="center aligned"><input type="checkbox"></td>
+                            <td class="center aligned"><input type="radio" name="Membership" value=""><br/></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
@@ -71,7 +70,7 @@
                             <td class="center aligned"></td>
                     </tr>
                         <tr>
-                             <td class="center aligned"><input type="checkbox"></td>
+                             <td class="center aligned"><input type="radio" name="Membership" value=""><br/></td>
                              <td class="center aligned"></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
@@ -81,7 +80,7 @@
                             <td class="center aligned"></td>
                         </tr>
                         <tr>
-                            <td class="center aligned"><input type="checkbox"></td>
+                            <td class="center aligned"><input type="radio" name="Membership" value=""></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
@@ -91,7 +90,8 @@
                             <td class="center aligned"></td>
                         </tr>
                     </tbody>
-                </table>
+                    
+                    </table>
                 <button class="ui black basic button">등급추가</button>
                 <!-- /GangnamSemiProjectV2/web/views/admin/member/adminMembershipAddANewGrade.jsp -->
                 <br/>
