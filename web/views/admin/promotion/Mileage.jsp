@@ -1,5 +1,10 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 
@@ -13,6 +18,18 @@
 
 <!-- Admin Common CSS -->
 <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
+
+<!-- J-query CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Semantic UI JS CDN -->
+<script
+	src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!-- jQuery Custom Scroller CDN -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<!-- Admin Common JS -->
+<script src="/semi/js/admin/common/adminMain.js"></script>
 
 
 <style>
@@ -57,10 +74,16 @@
 span {
 	font-weight: 2px;
 }
+
+#dataRange{
+	display: inline-block;
+}
 </style>
 </head>
 
 <body>
+	<!-- DatePicker CSS -->
+    <link rel="stylesheet" href="/semi/css/common/datePicker.css">
 
 	<!-- 사이드바 메뉴 -->
 	<%@ include file="/views/admin/common/adminSidebarMember.jsp"%>
@@ -78,59 +101,66 @@ span {
 						<h1>적립금 관리</h1>
 					</div>
 					<br> <br>
-					<div>
-						<table class="ui celled table" id="mileageTable">
-							<tbody>
-								<tr>
-									<td class="mileageTd" width="200px;">등급</td>
-									<td><div class="ui selection dropdown">
-											<input type="hidden" name="gender" id="select"> <i
-												class="dropdown icon"></i>
-											<div class="default text">전체</div>
-											<div class="menu">
-												<div class="item" data-value="1">다이아</div>
-												<div class="item" data-value="0">플레티넘</div>
+					<form action="<%=request.getContextPath()%>/selectUser.me"
+						method="post" id="selectForm">
+						<div>
+							<table class="ui celled table" id="mileageTable">
+								<tbody>
+									<tr>
+										<td class="mileageTd" width="200px;">등급</td>
+										<td><div class="ui selection dropdown">
+												<input type="hidden" name="gender" id="select"> <i
+													class="dropdown icon"></i>
+												<div class="default text" name="allUserClass">전체</div>
+												<div class="menu" id="menubar">
+													<%
+														for (int i = 0; i < list.size(); i++) {
+													%>
+													<div class="item"><%=list.get(i).get("userClass")%></div>
+													<%
+														}
+													%>
+												</div>
+											</div></td>
+
+									</tr>
+									<tr>
+										<td class="mileageTd">아이디</td>
+										<td><div class="ui input focus mileageInput">
+												<input type="text" placeholder="아이디를 입력하세요"
+													id="selectUserId">
+											</div></td>
+
+									</tr>
+									<tr>
+										<td class="mileageTd">기간</td>
+										<td>
+											<div class="ui buttons" id="selectBtnTest">
+												<button class="ui button" type="button" id="selectToday">오늘</button>
+												<button class="ui button" type="button" id="selectWeek">7일</button>
+												<button class="ui button" type="button" id="selectMonth">1개월</button>
+												<button class="ui button" type="button" id="selectYear">1년</button>
+											</div> 
+											<div class="date-range" id="dataRange">
+												<div class="ui input">
+													<input type="date" id="startDate" name="startDate">
+												</div>
+												<span>~</span>
+												<div class="ui input">
+													<input type="date" id="endDate" name="endDate">
+												</div>
 											</div>
-										</div></td>
-
-								</tr>
-								<tr>
-									<td class="mileageTd">아이디</td>
-									<td><div class="ui input focus mileageInput">
-											<input type="text" placeholder="아이디를 입력하세요">
-										</div></td>
-
-								</tr>
-								<tr>
-									<td class="mileageTd">기간</td>
-									<td>
-										<div class="ui buttons">
-											<button class="ui button">오늘</button>
-											<button class="ui button">7일</button>
-											<button class="ui button">1개월</button>
-											<button class="ui button">1년</button>
-										</div> &nbsp; &nbsp;
-										<div class="ui input focus mileageInput">
-											<input type="text" placeholder="Search...">
-										</div>
-										<div class="mileageInput">
-											<i class=" th icon"></i>
-										</div>&nbsp; <span> ~ </span>&nbsp;
-										<div class="ui input focus mileageInput">
-											<input type="text" placeholder="Search...">
-										</div>
-										<div class="mileageInput">
-											<i class=" th icon"></i>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<br>
-					<div class="mileageSearch">
-						<button class="big ui secondary button">검 &nbsp;색</button>
-					</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<br>
+						<div class="mileageSearch">
+							<button class="big ui secondary button" type="button"
+								id="selectBtn">검 &nbsp;색</button>
+						</div>
+					</form>
 					<br> <br>
 
 					<!-- 두번째 테이블 -->
@@ -185,9 +215,12 @@ span {
 									<tr>
 										<td class="mileageTd" width="100px" style="text-align: center">일자</td>
 										<td class="mileageTd" width="100px" style="text-align: center">아이디</td>
-										<td class="mileageTd" width="130px" style="text-align: center">가용 적립금 증가</td>
-										<td class="mileageTd" width="130px" style="text-align: center">가용 적립금 차감</td>
-										<td class="mileageTd" width="130px" style="text-align: center">가용 적립금 잔액</td>
+										<td class="mileageTd" width="130px" style="text-align: center">가용
+											적립금 증가</td>
+										<td class="mileageTd" width="130px" style="text-align: center">가용
+											적립금 차감</td>
+										<td class="mileageTd" width="130px" style="text-align: center">가용
+											적립금 잔액</td>
 										<td class="mileageTd" width="150px" style="text-align: center">관련주문/추천인</td>
 										<td class="mileageTd" style="text-align: center">내용</td>
 										<td class="mileageTd" width="100px" style="text-align: center">처리자</td>
@@ -239,20 +272,6 @@ span {
 		<%@ include file="/views/admin/common/adminFooter.jsp"%>
 	</div>
 
-	<!-- J-query CDN -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<!-- Semantic UI JS CDN -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-	<!-- jQuery Custom Scroller CDN -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
-	<!-- Admin Common JS -->
-	<script src="/semi/js/admin/common/adminMain.js"></script>
-
 	<script>
 		$('#sticky1').sticky(); //네이바 상단 고정
 		$('#menu').click(
@@ -265,6 +284,29 @@ span {
 		$('.content-box .ui.menu .item').on('click', function() { //컨텐츠 박스의 메뉴 아이템 클릭시 active
 			$('.ui .item').removeClass('active');
 			$(this).addClass('active');
+		});
+		$(function() {
+			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+			if(dd<10) {
+			    dd='0'+dd
+			} 
+			if(mm<10) {
+			    mm='0'+mm
+			} 
+			today = yyyy+'-' + mm+'-'+dd;
+			$("#selectToday").focus();
+			$("#startDate").val(today);
+			$("#endDate").val(today);
+			$("#selectBtn").click(function() {
+				console.log($("#selectToday"));
+				console.log($("#selectWeek"));
+				//console.log($("#selectUserId").val()=="");
+				//console.log($("#select").val());
+				//$("#selectForm").submit();
+			})
 		});
 	</script>
 </body>
