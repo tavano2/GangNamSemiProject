@@ -76,12 +76,7 @@ public class PromotionDao {
 					hmap.put("msg_num", rset.getString("MSG_NUM"));
 					hmap.put("msg_title", rset.getString("MSG_TITLE"));
 					hmap.put("user_id", rset.getString("USER_ID"));
-					hmap.put("coupon_code", rset.getString("COUPON_CODE"));
-					hmap.put("end_date",rset.getDate("END_DATE"));
-					hmap.put("coupon_rdiscount", rset.getDouble("COUPON_RDISCOUNT"));
-					hmap.put("use_status", rset.getString("USE_STATUS"));
-					hmap.put("cate_code", rset.getString("CATE_CODE"));
-					hmap.put("cate_name", rset.getString("CATE_NAME"));
+					hmap.put("msg_date", rset.getDate("MSG_DATE"));
 					list.add(hmap);
 				}
 			}

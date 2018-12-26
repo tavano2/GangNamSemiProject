@@ -287,6 +287,7 @@ public class ProductDao {
 		return result;
 	}
 
+
 	//댓글 등록하기
 	public int insertQnAReply(Connection con, Product pReply) {
 		
@@ -301,17 +302,16 @@ public class ProductDao {
 			pstmt.setInt(2, pReply.getBoardId());
 			System.out.println("insertReply성공쓰");
 			//System.out.println(pReply);
-			
-			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
-		}
-		
-		
-		return result;
+			close(rset);
+    }
+		return list;
 	}
+      
+
 
 	//게시물 번호 넘겨받아 해당 게시물에 있는 댓글 조회
 	public ArrayList<Product> selectQnAReply(Connection con, int boardId) {
@@ -342,18 +342,32 @@ public class ProductDao {
 				
 				list.add(pselectReply);
 			}
-			
-			
+		return result;
+	}
+
+
+
+  
+  	public int deleteWishList(Connection con, String msg, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteWishList");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, msg);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
-			close(rset);
 		}
+
 		
 		
-		return list;
+		return result;
 	}
+  
 
 }
 

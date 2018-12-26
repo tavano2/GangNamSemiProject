@@ -23,6 +23,14 @@ public class MemberService {
 		close(con);
 		return loginUser;
 	}
+	
+	
+	public Member selectKakaoMember(Member m) {
+		Connection con = getConnection();
+		Member kakaoMember = new Member();
+		kakaoMember = new MemberDao().selectKakaoMember(con,m);
+		return kakaoMember;
+	}
 
 	
 	
@@ -46,12 +54,16 @@ public class MemberService {
 		Connection con = getConnection();
 		int memberChk = new MemberDao().chkMember(con,member);
 		if(memberChk > 0) {
-		result = new MemberDao().insertMember(con, member,type);
-			if(result > 0) {
-				commit(con);
+			if(type == 2) {
+				result = new MemberDao().insertKakaoMember(con,member,type);
 			}else {
-				rollback(con);
+				result = new MemberDao().insertMember(con, member,type);
 			}
+				if(result > 0) {
+					commit(con);
+				}else {
+					rollback(con);
+				}
 		}
 		return result;
 	}
@@ -91,4 +103,50 @@ public class MemberService {
 		close(con);
 		return result;
 	}
+
+
+	public int checkKakaoMember(Member m) {
+		Connection  con = getConnection();
+		int result = new MemberDao().checkKakaoMember(con,m);
+		close(con);
+		
+		return result;
+	}
+
+
+	public Member chkMemberType(Member m) {
+		Connection con = getConnection();
+		Member member = new MemberDao().chkMemberType(con,m);
+		close(con);
+		return member;
+	}
+
+
+	public int deleteNomalMember(Member chkMemberType) {
+		Connection con = getConnection();
+		int result = new MemberDao().deleteNomalMember(con,chkMemberType);
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		return result;
+	}
+
+
+	public int deleteSnsMember(Member chkMemberType) {
+		Connection con = getConnection();
+		int result = new MemberDao().deleteSnsMember(con,chkMemberType);
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		return result;
+	}
+
+
+
 }

@@ -74,6 +74,7 @@ public class ProductService {
 		return result;
 	}
 
+
 	//QnA댓글 등록하기
 	public ArrayList<Product> insertQnAReply(Product pReply) {
 		Connection con = getConnection();
@@ -95,6 +96,26 @@ public class ProductService {
 	}
 
 	
+
+	public int deleteWishList(String[] product_code, String userId) {
+		Connection con = getConnection();
+		int result = 0;
+		int count = 0;
+		for(String msg : product_code) {
+			count += new ProductDao().deleteWishList(con,msg,userId);
+		}
+		if(product_code.length == count) {
+			commit(con);
+			result = 1;
+		}else {
+			rollback(con);
+		}
+		close(con);
+		return result;
+	}
+
+
+
 
 	
 }

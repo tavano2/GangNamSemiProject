@@ -57,7 +57,7 @@
 					<table class="ui single line table">
 				<thead>
 					<tr>
-						<th><input type="checkbox"></th>
+						<th><input type="checkbox" id="chkBoxLeader"></th>
 						<th>이미지</th>
 						<th>상품정보</th>
 						<th>수량</th>
@@ -71,7 +71,7 @@
 				<tbody>
 					<%for(HashMap<String,Object> hmap : list){ %>
 					<tr>
-						<td><input type="checkbox" class="productChk"></td>
+						<td><input type="checkbox" class="productChk" name="chkList" value="<%=hmap.get("product_code")%>"></td>
 						<td><img src = "/semi/image/customer/product/<%=hmap.get("change_name") %>" width="50px" height="50px"></td>
 						<td><%=hmap.get("product_name") %></td>
 						<td><%=hmap.get("product_amount") %>개</td>
@@ -123,8 +123,7 @@
 			<br>
 		<hr>
 		<div align="right">
-		<b>선택 상품을</b>&nbsp;&nbsp;<button class="ui brown basic mini button">삭제하기</button>&nbsp;
-		<button class="ui brown basic mini button">장바구니 담기</button>
+		<b>선택 상품을</b>&nbsp;&nbsp;<button class="ui brown basic mini button" id="deleteWishListItem">삭제하기</button>
 		</div>
 	</div>
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
@@ -139,6 +138,30 @@
 	
 	<!-- Common js -->
     <script src="/semi/js/customer/common/main.js"></script>
+    
+    <script type="text/javascript">
+    
+    	$(function(){
+    			
+    		$("#chkBoxLeader").click(function(){
+    			var chk = $(this).is(":checked");
+    			if(chk){
+    				$(".productChk").prop('checked',true);
+    			}else{
+    				$(".productChk").prop('checked',false);
+    			}
+    		});
+    		
+    		$("#deleteWishListItem").click(function(){
+    			var items = [];
+	    		$(".productChk:checked").each(function(){
+	    			items.push($(this).val());
+	    		});
+    			location.href = '<%=request.getContextPath()%>/deleteWishList.pd?chkValue='+items;
+    		}); 
+    		
+    	});  
+    </script>
     
 </body>
 

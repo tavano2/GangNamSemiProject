@@ -137,7 +137,7 @@
                      		<div class="ui form"><!-- ALIGN AS HR -->
                            		<div class="field4All">
                            				<div class="ui radio checkbox">
-                                            <input type="radio" name="getAnEmailAs"  checked="" tabindex="0" class="hidden">
+                                            <input type="radio" name="getAnEmailAs" value="" tabindex="0" class="hidden">
                                             <label>전체</label>
                                         </div>
                                  </div>
@@ -145,13 +145,13 @@
                                     <!--  checked="" >>> Set DefaultSet as "checked".   -->
                                      <div class="field4PC">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="getAnEmailAs" tabindex="0" class="hidden">
+                                            <input type="radio" name="getAnEmailAs" value="" tabindex="0" class="hidden">
                                             <label>PC</label>
                                         </div>
                                     </div>
                                     <div class="field4Mobile">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="getAnEmailAs	" tabindex="0" class="hidden">
+                                            <input type="radio" name="getAnEmailAs" value="" tabindex="0" class="hidden">
                                             <label>Mobile</label>
                                         </div>
                                  </div>
@@ -193,7 +193,7 @@
         						<!--  DROPD	OWN IS NEE-->
         			<thead>
                     	 <tr align="center">
-                    	 <th><input type="checkbox"></th>
+                    	 <th><input type="radio" name="MemberList" value=""></br></th>
                         	<th> &nbsp;등록일</th>
                         	<th>이름</th>
                         	<th>ID</th>
@@ -203,7 +203,7 @@
                         </tr>
                     </thead>
                     <tr>
-                            <td class="center aligned"><input type="checkbox"></td>
+                            <td class="center aligned"><input type="radio" name="MemberList" value=""></br></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
@@ -212,7 +212,7 @@
                             <td class="center aligned"></td>
                     </tr>
                         <tr>
-                             <td class="center aligned"><input type="checkbox"></td>
+                             <td class="center aligned"><input type="radio" name="MemberList" value=""></br></td>
                              <td class="center aligned"></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
@@ -221,7 +221,7 @@
                             <td class="center aligned"></td>
                         </tr>
                         <tr>
-                            <td class="center aligned"><input type="checkbox"></td>
+                            <td class="center aligned"><input type="radio" name="MemberList" value=""></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
@@ -231,7 +231,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <button class="ui black basic button"> 쪽지 보내기 </button>
                 <br/>
                 <br/>
                 <br/>
