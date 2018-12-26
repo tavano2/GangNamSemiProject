@@ -43,9 +43,15 @@
         		 <tr>
                         <td>가입일</td>
                         <td>
-                          <div class="ui input"><input type="text"></div><!-- Adjust "width" -->
-                             	<span>~</span>
-                             <div class="ui input"><input type="text"></div><!-- Adjust "width" -->
+                           <div class="date-range">
+	                                <div class="ui input">
+		                                	<input type="date" id="startDate" name="startDate">
+		                            </div>
+		                                <span>~</span>
+		                            <div class="ui input">
+		                                	<input type="date" id="endDate" name="endDate">
+		                            </div>
+                           </div>
                         </td>
                     </tr>
                     
@@ -55,7 +61,7 @@
                      		<div class="ui form"><!-- ALIGN AS HR -->
                            		<div class="field">
                            				<div class="ui radio checkbox">
-                                            <input type="radio" name=""  checked="" tabindex="0" class="hidden">
+                                            <input type="radio" name="Verification" value="" tabindex="0" class="hidden">
                                             <label>전체</label>
                                         </div>
                                  </div>
@@ -63,13 +69,13 @@
                                     <!--  checked="" >>> Set DefaultSet as "checked".   -->
                                      <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="" tabindex="0" class="hidden">
+                                            <input type="radio" name="Verification" value="" tabindex="0" class="hidden">
                                             <label>일반</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="" tabindex="0" class="hidden">
+                                            <input type="radio" name="Verification" value="" tabindex="0" class="hidden">
                                             <label>14세 미만</label>
                                         </div>
                                  </div>
@@ -120,7 +126,7 @@
         						<!--  DROPD	OWN IS NEE-->
         			<thead>
                     	 <tr align="center">
-                    	 <th><input type="checkbox"></th>
+                    	 <th><input type="radio" name="NonVerification" value=""></th>
                         	<th> &nbsp;구분</th>
                         	<th>이름</th>
                         	<th>ID</th>
@@ -128,7 +134,7 @@
                         </tr>
                     </thead>
                     <tr>
-                            <td class="center aligned"><input type="checkbox"></td>
+                            <td class="center aligned"><input type="radio" name="NonVerification" value=""></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
@@ -137,7 +143,7 @@
                             <td class="center aligned"></td> -->
                     </tr>
                         <tr>
-                             <td class="center aligned"><input type="checkbox"></td>
+                             <td class="center aligned"><input type="radio" name="NonVerification" value=""></td>
                              <td class="center aligned"></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
@@ -146,7 +152,7 @@
                             <td class="center aligned"></td> -->
                         </tr>
                         <tr>
-                            <td class="center aligned"><input type="checkbox"></td>
+                            <td class="center aligned"><input type="radio" name="NonVerification" value=""></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
