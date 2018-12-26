@@ -205,6 +205,7 @@ public class ProductDao {
 				SelectOneQnA= new Product();
 				
 				SelectOneQnA.setBoardContent(rset.getString("BOARD_CONTENT"));
+				SelectOneQnA.setBoardId(rset.getInt("BOARD_ID"));
 				
 			}
 			
@@ -286,7 +287,68 @@ public class ProductDao {
 		return result;
 	}
 
-	public int deleteWishList(Connection con, String msg, String userId) {
+
+	//댓글 등록하기
+	public int insertQnAReply(Connection con, Product pReply) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertReply");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, pReply.getBoardContent());
+			pstmt.setInt(2, pReply.getBoardId());
+			System.out.println("insertReply성공쓰");
+			//System.out.println(pReply);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+    }
+		return list;
+	}
+      
+
+
+	//게시물 번호 넘겨받아 해당 게시물에 있는 댓글 조회
+	public ArrayList<Product> selectQnAReply(Connection con, int boardId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> list = null;
+		
+		String query = prop.getProperty("selectQnArepltyList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, boardId);
+			
+			rset= pstmt.executeQuery();
+			
+			list = new ArrayList<Product>();
+			
+			while(rset.next()) {
+				Product pselectReply = new Product();
+				pselectReply.setBoardId(rset.getInt("BOARD_ID"));
+				pselectReply.setBoardType(rset.getInt("BOARD_TYPE"));
+				pselectReply.setBoardContent(rset.getString("BOARD_CONTENT"));
+				pselectReply.setUserId(rset.getString("USER_ID"));
+				pselectReply.setBoardDate(rset.getDate("BOARD_DATE"));
+				pselectReply.setRefBoardId(rset.getInt("REF_BOARD_ID"));
+				pselectReply.setReplyLevel(rset.getInt("REPLY_LEVEL"));
+				pselectReply.setStatus(rset.getString("STATUS"));
+				
+				list.add(pselectReply);
+			}
+		return result;
+	}
+
+
+
+  
+  	public int deleteWishList(Connection con, String msg, String userId) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("deleteWishList");
@@ -300,9 +362,34 @@ public class ProductDao {
 		}finally {
 			close(pstmt);
 		}
+
+		
+		
 		return result;
 	}
-
-
+  
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
