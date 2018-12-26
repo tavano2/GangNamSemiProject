@@ -114,10 +114,18 @@ public class ProductService {
 		return result;
 	}
 
+	// 장바구니 | Shopping Cart 조회
+	public ArrayList<ShoppingCart> selectListCart(int currentShoppingCart, int limitShoppingCart) {
+		Connection con = getConnection();
+		
+		ArrayList<ShoppingCart> cart  = new ProductDao().selectListCart(con, currentShoppingCart, limitShoppingCart);
+		
+		close(con);
+		
+		return cart;
+	}
+  
 
-
-
-	
 }
 
 

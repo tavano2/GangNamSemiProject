@@ -48,7 +48,7 @@
             <li><a href="/semi/index.jsp">홈</a></li>
             <li><a href="/semi/views/customer/board/notice.jsp">공지사항</a></li>
             <li><a href="/semi/views/customer/member/userMyPage.jsp">마이페이지</a></li>
-            <li><a href="#">장바구니</a></li>
+            <li><a href="/semi/views/customer/product/shoppingCart.jsp">장바구니</a></li>
             <li><a href="/semi/views/customer/delivery/orderList.jsp">주문내역</a></li>
             <li><a href="/semi/views/customer/promotion/UserNoteCoupon.jsp">쪽지/쿠폰함</a></li>
         </ul>
@@ -86,7 +86,7 @@
                 <a class="item" href="/semi/views/customer/member/InsertMember1.jsp">
                     Join Us
                 </a>
-                <a class="item" href="/semi/views/customer/product/shoppingCart.jsp">
+                <a class="item" href="<%=request.getContextPath()%>/shoppingCart.pd">
                     Cart
                 </a>
                 <a class="item" href="/semi/views/customer/member/userMyPage.jsp">
@@ -138,7 +138,7 @@
                     <a class="item">TEE</a>
                     <a class="item">STRIPE</a>
                     <a class="item">SWEATSHIRT&</a>
-                    <a class="item">HODDY</a>
+                    <a class="item">HOODY</a>
                 </div>
             </div>
             <div class="ui dropdown item">
