@@ -74,5 +74,49 @@ public class ProductService {
 		return result;
 	}
 
+	//QnA댓글 등록하기
+	public ArrayList<Product> insertQnAReply(Product pReply) {
+		Connection con = getConnection();
+		ArrayList<Product> replyList = null;
+		
+		int result = new ProductDao().insertQnAReply(con,pReply);
+		
+		if(result>0) {
+			commit(con);
+			replyList = new ProductDao().selectQnAReply(con,pReply.getBoardId());
+	
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return replyList;
+	}
+
+	
+
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
