@@ -1,6 +1,8 @@
 package com.kh.semi.admin.product.model.vo;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements Serializable{
 	String cateCode;
 	String cateName;
 	String cateUrl;
