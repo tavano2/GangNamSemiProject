@@ -253,10 +253,7 @@ public class ProductDao {
 					hmap.put("product_price", rset.getInt("PRODUCT_PRICE"));
 					hmap.put("discount",rset.getInt("DISCOUNT"));
 					hmap.put("point", rset.getInt("POINT"));
-					hmap.put("post_price", rset.getInt("POST_PRICE"));
-					hmap.put("sum_product", rset.getInt("SUM_PRODUCT"));
-					
-					
+					hmap.put("class_name", rset.getString("CLASS_NAME"));
 					list.add(hmap);
 				}
 			}
@@ -300,15 +297,13 @@ public class ProductDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, pReply.getBoardContent());
 			pstmt.setInt(2, pReply.getBoardId());
-			System.out.println("insertReply성공쓰");
-			//System.out.println(pReply);
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
-			close(rset);
-    }
-		return list;
+		}
+			return result;
 	}
       
 
@@ -321,14 +316,13 @@ public class ProductDao {
 		
 		String query = prop.getProperty("selectQnArepltyList");
 		
+		
 		try {
+			
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, boardId);
-			
 			rset= pstmt.executeQuery();
-			
 			list = new ArrayList<Product>();
-			
 			while(rset.next()) {
 				Product pselectReply = new Product();
 				pselectReply.setBoardId(rset.getInt("BOARD_ID"));
@@ -338,11 +332,16 @@ public class ProductDao {
 				pselectReply.setBoardDate(rset.getDate("BOARD_DATE"));
 				pselectReply.setRefBoardId(rset.getInt("REF_BOARD_ID"));
 				pselectReply.setReplyLevel(rset.getInt("REPLY_LEVEL"));
-				pselectReply.setStatus(rset.getString("STATUS"));
-				
+				pselectReply.setStatus(rset.getString("STATUS"));		
 				list.add(pselectReply);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
 			}
-		return result;
+		return list;
 	}
 
 
@@ -362,9 +361,6 @@ public class ProductDao {
 		}finally {
 			close(pstmt);
 		}
-
-		
-		
 		return result;
 	}
   

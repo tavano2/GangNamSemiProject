@@ -80,12 +80,18 @@
 		  		<a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
                        	관리자 페이지로 </a>
                  <%} %> 
+                 <%if(loginUser == null) {%>
                 <a class="item" href="/semi/views/customer/member/memberLogin.jsp">
                     Log-In
                 </a>
                 <a class="item" href="/semi/views/customer/member/InsertMember1.jsp">
                     Join Us
                 </a>
+                <%}else{ %>
+                <a class="item" href="<%=request.getContextPath()%>/logout.me">
+                    LogOut
+                </a>
+                <%} %>
                 <a class="item" href="/semi/views/customer/product/shoppingCart.jsp">
                     Cart
                 </a>
@@ -95,7 +101,7 @@
                 <a class="item" href="/semi/views/customer/delivery/orderList.jsp">
                     ORDER
                 </a>
-                <a class="item" href="/semi/views/customer/promotion/UserNoteCoupon.jsp">
+                <a class="item" href="<%=request.getContextPath()%>/selectMessageAndCoupon.pm">
                     Message
                 </a>
             </div>

@@ -1,4 +1,4 @@
-package com.kh.semi.customer.member.controller;
+package com.kh.semi.customer.promotion.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -6,34 +6,37 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.kh.semi.customer.member.model.service.MemberService;
 import com.kh.semi.customer.member.model.vo.Member;
+import com.kh.semi.customer.promotion.model.service.PromotionService;
+import com.kh.semi.customer.promotion.model.vo.Message;
 
 
-@WebServlet("/updateComplete.me")
-public class UpdateMemberPasswordServlet extends HttpServlet {
+@WebServlet("/selectDetailMsgAndCouponPage.pm")
+public class SelectOneMessage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-    public UpdateMemberPasswordServlet() {
+    public SelectOneMessage() {
         super();
     }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userPwd1 = request.getParameter("userPwd1");
+		String num = request.getParameter("msgCouponNum");
 		String userId = String.format(((Member)request.getSession().getAttribute("loginUser")).getUserId());
 		Member m = new Member();
 		m.setUserId(userId);
-		m.setUserPwd1(userPwd1);
-		int result = new MemberService().updateMemberComplete(m);
-		if(result > 0) {
-			response.sendRedirect("views/customer/member/userMyPage.jsp");
+		Message msg = new PromotionService().selectMessageOne(m,num);
+		String page = "";
+		if(msg != null) {
+			page = "views/customer/promotion/userNoteCouponDetailPage.jsp";
+			request.setAttribute("message", msg);
 		}else {
-			response.sendRedirect("views/customer/common/errorPageSendRd.jsp");
+			page = "views/customer/common/errorPage.jsp";
+			request.setAttribute("msg", "쪽지 상세보기 실패!");
 		}
+		request.getRequestDispatcher(page).forward(request, response);
 		
 	}
 

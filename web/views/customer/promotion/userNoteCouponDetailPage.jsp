@@ -1,6 +1,17 @@
+<%@page import="com.kh.semi.customer.promotion.model.vo.Message"%>
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%
+
+	Message msg = (Message)request.getAttribute("message");
+	
+
+
+
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -46,11 +57,12 @@
 	<%@ include file="/views/customer/common/mainNav.jsp"%>
 
 
+	<%if(loginUser != null){ %>
+	
 	<div class="content">
 		<br> <br><br>
 		<div align="center"
-			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">DEATIL
-			BOARD</div>
+			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">DEATIL MSG</div>
 		<br> <br>
 		<hr>
 		<br>
@@ -60,7 +72,7 @@
 			</div>
 			<div class="four wide column" align="right">
 				<button class="ui brown basic mini button"
-					onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo' ">이전으로</button>
+					onclick="location.href='<%=request.getContextPath()%>/selectMessageAndCoupon.pm' ">이전으로</button>
 			</div>
 		</div>
 		<br>
@@ -70,21 +82,13 @@
 				<td>제목</td>
 				<td>
 					<div class="ui input">
-						<input type="text" value="" readonly>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>작성자</td>
-				<td>
-					<div class="ui input">
-						<input type="text" value="" readonly>
+						<input type="text" value="<%=msg.getMsg_title() %>" readonly>
 					</div>
 				</td>
 			</tr>
 			<tr>
 				<td>작성일</td>
-				<td><input type="date" name="date" value="" readonly></td>
+				<td><input type="date" name="date" value="<%=msg.getMsg_date() %>" readonly></td>
 			</tr>
 			<tr>
 				<td>내용</td>
@@ -92,7 +96,7 @@
 					<div class="ui form">
 						<div class="field">
 							<label>Text</label>
-							<textarea></textarea>
+							<textarea><%=msg.getMsg_content() %></textarea>
 						</div>
 
 					</div>
@@ -103,7 +107,7 @@
 					<div class="ui grid">
 						<div class="twelve wide column"></div>
 						<div class="four wide column" align="right">
-							<button class="ui brown basic mini button" onclick="location.href='' ">삭제하기</button>
+							<button class="ui brown basic mini button" onclick="location.href='<%=request.getContextPath()%>/deleteMessage.pm?msg_num=<%=msg.getMsg_num()%>' ">삭제하기</button>
 						</div>
 					</div>
 				</th>
@@ -118,7 +122,12 @@
 
 	
 	</div>
-
+	
+	<%}else{
+		
+		request.setAttribute("msg", "잘못된 접근입니다!"); 
+		request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
+	} %>
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
 

@@ -13,7 +13,9 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	ArrayList<HashMap<String,Object>> list = (ArrayList<HashMap<String,Object>>)request.getAttribute("list");
-
+	
+	
+	
 %>
 
 <html>
@@ -69,7 +71,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<%for(HashMap<String,Object> hmap : list){ %>
+					<%for(HashMap<String,Object> hmap : list){ 
+						int price = (int)(hmap.get("product_price"));
+						int post_price = 2500;
+					
+					%>
 					<tr>
 						<td><input type="checkbox" class="productChk" name="chkList" value="<%=hmap.get("product_code")%>"></td>
 						<td><img src = "/semi/image/customer/product/<%=hmap.get("change_name") %>" width="50px" height="50px"></td>
@@ -78,8 +84,17 @@
 						<td><%=hmap.get("product_price") %>원</td>
 						<td><%=hmap.get("discount") %>원</td>
 						<td><%=hmap.get("point") %>원</td>
-						<td><%=hmap.get("post_price") %>원</td>
-						<td><%=hmap.get("sum_product") %>원</td>
+						<%if(!hmap.get("class_name").equals("GOLD")) {%>
+						<td>2500원</td>
+						<%} else{ %>
+							<td>0원</td>
+						<%  }%>
+						
+						<%if(!hmap.get("class_name").equals("GOLD")){ %>
+						<td><%=price+post_price %>원</td>
+						<%}else{ %>
+						<td><%=price %>원</td>
+						<%} %>
 					</tr>
 					<%} %>
 					
@@ -87,11 +102,11 @@
 					<td colspan="9">
 						<div align="center">
 							<div class="ui pagination menu">
-							    		<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=1' "><i class="angle double left icon"></i></a>
+							    		<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/selectWishListPage.pd?currentPage=1' "><i class="angle double left icon"></i></a>
 								        <%if(currentPage <=1) {%>
 								         <a class="icon item"><i class="angle left icon"></i></a>
 								        <%} else{ %>
-								        	<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage-1%>' "><i class="angle left icon"></i></a>
+								        	<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/selectWishListPage.pd?currentPage=<%=currentPage-1%>' "><i class="angle left icon"></i></a>
 								        <%} %>
 								       
 								       
@@ -101,7 +116,7 @@
 								       %>
 								       			<a class="item"><%=p %></a>
 								       <%}else{ %>
-								       			<a class="item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=p%>' "><%=p %></a>
+								       			<a class="item" onclick="location.href='<%=request.getContextPath()%>/selectWishListPage.pd?currentPage=<%=p%>' "><%=p %></a>
 								       <%} %>
 								       
 								       <%} %>
@@ -110,10 +125,10 @@
 								        <%if(currentPage >= maxPage) {%>
 								        <a class="icon item"><i class="angle right icon"></i></a>
 								        <%}else{ %>
-								        	<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage+1%>' "><i class="angle right icon"></i></a>
+								        	<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/selectWishListPage.pd?currentPage=<%=currentPage+1%>' "><i class="angle right icon"></i></a>
 								        <%} %>
 								        
-								        <a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=maxPage%>' "><i class="angle double right icon"></i></a>
+								        <a class="icon item" onclick="location.href='<%=request.getContextPath()%>/selectWishListPage.pd?currentPage=<%=maxPage%>' "><i class="angle double right icon"></i></a>
 							      	</div>
 						</div>
 					</td>

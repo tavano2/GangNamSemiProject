@@ -81,7 +81,7 @@ public class ProductService {
 		ArrayList<Product> replyList = null;
 		
 		int result = new ProductDao().insertQnAReply(con,pReply);
-		
+		System.out.println("service result : " + result);
 		if(result>0) {
 			commit(con);
 			replyList = new ProductDao().selectQnAReply(con,pReply.getBoardId());
