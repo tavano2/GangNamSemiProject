@@ -1,14 +1,15 @@
 package com.kh.semi.customer.product.model.service;
 
-import static com.kh.semi.customer.common.JDBCTemplate.close;
-import static com.kh.semi.customer.common.JDBCTemplate.getConnection;
-
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.kh.semi.customer.board.model.vo.Board;
+import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.dao.ProductDao;
 import com.kh.semi.customer.product.model.vo.Product;
-import com.kh.semi.customer.product.model.vo.ShoppingCart;
+
+import static com.kh.semi.customer.common.JDBCTemplate.*;
 
 public class ProductService {
 
@@ -44,7 +45,75 @@ public class ProductService {
 		
 		return listQnA;
 	}
+
 	
+	//QnA 상세 조회하깅
+	public Product SelectOneQnA(String num) {
+		Connection con = getConnection();
+		
+		Product SelectOneQnA =new ProductDao().SelectOneQnA(con,num);
+		
+		close(con);
+		
+		return SelectOneQnA;
+	}
+
+	
+	//위시리스트 뿌려줄 내용 조회
+	public ArrayList<HashMap<String, Object>> selectWishListPageServlet(Member m,int currentPage, int limit) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> list = new ProductDao().selectWishListPageServlet(con,m,currentPage,limit);
+		close(con);
+		return list;
+	}
+
+	public int getListCountWishList(Member m) {
+		Connection con = getConnection();
+		int result = new ProductDao().getListCountWishList(con,m);
+		close(con);
+		return result;
+	}
+
+
+	//QnA댓글 등록하기
+	public ArrayList<Product> insertQnAReply(Product pReply) {
+		Connection con = getConnection();
+		ArrayList<Product> replyList = null;
+		
+		int result = new ProductDao().insertQnAReply(con,pReply);
+		
+		if(result>0) {
+			commit(con);
+			replyList = new ProductDao().selectQnAReply(con,pReply.getBoardId());
+	
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return replyList;
+	}
+
+	
+
+	public int deleteWishList(String[] product_code, String userId) {
+		Connection con = getConnection();
+		int result = 0;
+		int count = 0;
+		for(String msg : product_code) {
+			count += new ProductDao().deleteWishList(con,msg,userId);
+		}
+		if(product_code.length == count) {
+			commit(con);
+			result = 1;
+		}else {
+			rollback(con);
+		}
+		close(con);
+		return result;
+	}
+
 	// 장바구니 | Shopping Cart 조회
 	public ArrayList<ShoppingCart> selectListCart(int currentShoppingCart, int limitShoppingCart) {
 		Connection con = getConnection();
@@ -55,6 +124,28 @@ public class ProductService {
 		
 		return cart;
 	}
+  
 
-	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

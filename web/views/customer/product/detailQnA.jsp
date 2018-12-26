@@ -1,5 +1,8 @@
+<%@page import="com.kh.semi.customer.product.model.vo.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+   
+<% Product SelectOneQnA = (Product)request.getAttribute("SelectOneQnA"); %>
 <!DOCTYPE html>
 <html>
 
@@ -32,6 +35,12 @@ text-align:center;
 .updateDeleteBtn{
 margin-right:200px;
 }
+.replyBtn{
+width:80px;
+height:50px;
+}
+
+
 
 </style>
 </head>
@@ -57,10 +66,9 @@ margin-right:200px;
                <a class="avatar"> <img src="/semi/views/images/products/person.JPG">
                </a>
                <div class="content">
-                  <a class="author">옷 사이즈가 어떻게 되나요?옷 사이즈가 어떻게 되나요?옷 사이즈가 어떻게 되나요?옷 사이즈가 어떻게 되나요?옷 사이즈가 어떻게 되나요?옷 사이즈가 어떻게 되나요?<br>
-                  궁금합니당!</a>
+                  <a class="author"><%=SelectOneQnA.getBoardContent() %></a>
                   <br>
-                  
+                 <input type="hidden" id="replyhiddenId" value="<%=SelectOneQnA.getBoardId() %>">
                </div>
             </div>
          </div>
@@ -69,22 +77,38 @@ margin-right:200px;
       
       <br><br>
       
+      <%
+      	if(loginUser !=null && loginUser.getUserId().equals("admin")){
+      %>
+      
+      
       <div class="detailQnAText">
          <div class="ui comments">
             <div class="comment">
                <a class="avatar"> <img src="/semi/views/images/products/person1.JPG">
                </a>
                <div class="content">
-                  <a class="author">s사이즈 입니당</a>
-                  <br>
-                  
+               <tabel>
+               <tr>
+               	
+               </tr>
+               <tr></tr>
+                  <textarea rows="3" cols="80" id="replyContent"></textarea>
+                   <button class="ui grey basic button replyBtn"
+									id="replyBtn">등록</button>
+								
                </div>
             </div>
          </div>
-         
-         
-
       </div>
+      
+      <%
+      	}
+      %>
+      
+        <div id="replySelectArea">
+					<table id="rereply" border="1" align=""></table>
+		</div>
       
       <br><br>
       <hr>
@@ -106,9 +130,7 @@ margin-right:200px;
 
 
    <!-- J-query CDN -->
-   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    <!-- Semantic UI JS CDN -->
    <script
       src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
@@ -118,6 +140,49 @@ margin-right:200px;
 
    <!-- Common js -->
    <script src="/semi/js/customer/common/main.js"></script>
+   
+   <script>
+   		$(function(){
+   			$("#replyBtn").click(function(){
+   				var replyContent = $("#replyContent").val();
+   				var replyhiddenId= $("#replyhiddenId").val();
+   				console.log(replyContent);
+   				console.log(replyhiddenId);
+   				
+   			 	$.ajax({
+   					url:"/semi/insertReply.re",
+   					data:{replyContent:replyContent,replyhiddenId:replyhiddenId},
+   					type:"post",
+   					success:function(data){
+   						console.log(data)
+   						
+   						var $rereply=$("#rereply");
+   						$rereply.html('');
+   						
+   						for(var key in data){
+   							var $tr = $("<tr>");
+   							var $replyContentTd = $("<td>").text(data[key].boardContent).css("width","400px");
+   							var $replyhiddenId = $("<td>").text(data[key].boardDate).css("width","100px");
+   							var $rr = $("<td>").text("dfdf").css("width","100px");
+   							
+   							$tr.append($rr);
+   							$tr.append($replyContentTd);
+   							$tr.append($replyhiddenId);
+   							
+   							$rereply.append($tr);
+   						}
+   						
+   					},error:function(){
+						console.log('실패');
+					}
+   				}) 
+   				
+   				
+   			});
+   		});
+   
+   
+   </script>
 
 </body>
 

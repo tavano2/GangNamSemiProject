@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import com.kh.semi.customer.member.model.vo.Member;
+import com.sun.prism.Presentable;
+
+import oracle.net.aso.p;
 
 
 public class MemberDao {
@@ -66,26 +69,63 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		String query=prop.getProperty("insertMember");
 		try {
-			System.out.println(query);
 			pstmt=con.prepareStatement(query);
 			pstmt.setString(1, member.getUserId());
 			pstmt.setString(2, member.getUserPwd1());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
 		}			
 		return result;
 	}
-
-
+	
+	public int insertMember(Connection con, Member member, int type) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query=prop.getProperty("snsInsertMember");
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, member.getUserId());
+			pstmt.setString(2, member.getUserPwd1());
+			pstmt.setInt(3, type);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}			
+		return result;
+	}
+	
+	public int insertKakaoMember(Connection con, Member member, int type) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query=prop.getProperty("kakaoInsertMember");
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, member.getUserId());
+			pstmt.setString(2, member.getUserPwd1());
+			pstmt.setInt(3, type);
+			pstmt.setString(4, member.getKakao_id());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}			
+		return result;
+	}
+	
+	
+	
+	
 	public int chkMember(Connection con, Member member) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Member result = null;
-		int chk = 0;
+		int chk = 1;
 		String query = prop.getProperty("checkMember");
 		try {
 			pstmt = con.prepareStatement(query);
@@ -94,14 +134,235 @@ public class MemberDao {
 			if(rset.next()) {
 				result = new Member();
 				result.setUserId(rset.getString("USER_ID"));
-				if(result.getUserId() == null) {
-					chk = 1;
-				}
+				chk = 0;
 			}
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return chk;
 	}
+	
+	
+
+
+	public boolean userIdCheck(Connection con, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		boolean check = false;
+		String query = prop.getProperty("userIdCheck");
+		try {
+			pstmt= con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				check=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return check;
+	}
+
+
+
+
+	public int selectCheckMember(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member chkMember = null;
+		int result = 0;
+		String query = prop.getProperty("selectCheckMember");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			pstmt.setString(2, m.getUserPwd1());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				chkMember = new Member();
+				chkMember.setUserId(rset.getString("USER_ID"));
+				chkMember.setUserPwd1(rset.getString("USER_PWD"));
+				if(m.getUserId().equals(chkMember.getUserId())) {
+					result = 1;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+	public int chkUpdateMember(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		Member chkMember = null;
+		String query =prop.getProperty("chkUpdateMember");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			pstmt.setString(2, m.getUserPwd1());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				chkMember = new Member();
+				chkMember.setUserPwd1(rset.getString("USER_PWD"));
+				if(chkMember.getUserPwd1().equals(m.getUserPwd1())) {
+					result = 1;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateMemberComplete(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateMemberComplete");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserPwd1());
+			pstmt.setString(2, m.getUserId());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+
+	public int checkKakaoMember(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		Member chkMember = null;
+		String query = prop.getProperty("checkKakaoMember");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getKakao_id());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				chkMember = new Member();
+				chkMember.setKakao_id(rset.getString("KAKAO_ID"));
+				if(m.getKakao_id().equals(chkMember.getKakao_id())) {
+					result = 1;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+
+	public Member selectKakaoMember(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member kakaoMember = null;
+		String query = prop.getProperty("selectKakaoMember");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getKakao_id());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				kakaoMember = new Member();
+				kakaoMember.setUserId(rset.getString("USER_ID"));
+				kakaoMember.setUserPwd1(rset.getString("USER_PWD"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kakaoMember;
+	}
+
+
+
+
+	public Member chkMemberType(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member member = null;
+		String query = prop.getProperty("chkMemberType");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				member = new Member();
+				member.setJoin_Type(rset.getInt("JOIN_TYPE"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return member;
+	}
+
+
+
+
+	public int deleteNomalMember(Connection con, Member chkMemberType) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("deleteNomalMember");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, chkMemberType.getJoin_Type());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+
+	public int deleteSnsMember(Connection con, Member chkMemberType) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("deleteSnsMember");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, chkMemberType.getJoin_Type());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+
 
 }
+

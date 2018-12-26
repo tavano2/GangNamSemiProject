@@ -2,7 +2,10 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<% String msg = (String)request.getAttribute("msg"); %>
+<% String msg = (String)request.getAttribute("msg"); 
+
+
+%>
 <html>
 
 
@@ -31,9 +34,7 @@
 		<br>
 		<br>
 		<div align = "center"><%=msg %></div>
-	
 
-		
 	</div>
 		
   

@@ -24,16 +24,19 @@ public class InsertNaverMemberServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("emilData");
-		String password1 = request.getParameter("password1");
+		String userPwd1 = request.getParameter("userPwd1");
 		Member m = new Member();
+		int type = 3;
 		m.setUserId(email);
-		m.setUserPwd1(password1);
-		int result = new MemberService().insertMember(m);
+		m.setUserPwd1(userPwd1);
+		int result = new MemberService().insertMember(m,type);
 		if( result > 0) {
-			response.sendRedirect("index.jsp");
+			request.setAttribute("userId", email);
+			request.setAttribute("userPwd1", userPwd1);
+			request.getRequestDispatcher("/snsSelectMember.me").forward(request, response);
 		}else {
-			request.setAttribute(email, "userId");
-			request.setAttribute("password1", password1);
+			request.setAttribute("userId", email);
+			request.setAttribute("userPwd1", userPwd1);
 			request.getRequestDispatcher("/snsSelectMember.me").forward(request, response);
 		}
 	}

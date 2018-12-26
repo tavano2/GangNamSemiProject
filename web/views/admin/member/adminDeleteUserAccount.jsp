@@ -23,7 +23,7 @@
     
     
 </head>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
 	
 	<!-- 사이드바 메뉴 -->
@@ -71,10 +71,16 @@
                             <button class="ui white button">7일</button>
                             <button class="ui white button">1개월</button>
                             <button class="ui white button">1년</button>
-                            <div class="ui input"><input type="text"></div><!-- Adjust "width" -->
-                             	<span>~</span>
-                             <div class="ui input"><input type="text"></div><!-- Adjust "width" -->
-                             
+                           
+                            <div class="date-range">
+	                                <div class="ui input">
+		                                	<input type="date" id="startDate" name="startDate">
+		                            </div>
+		                                <span>~</span>
+		                            <div class="ui input">
+		                                	<input type="date" id="endDate" name="endDate">
+		                            </div>
+                           </div>
                         </td>
                     </tr>
                     
@@ -124,7 +130,15 @@
         						
         			<thead>
                     	 <tr align="center">
-                    	 <th><input type="checkbox"></th>
+                    	 <th><input type="radio" name="DeletionList" id="DeletionListId" value=""><br/></th>
+                    	 <%-- <%
+                    	 if(document.getElementById('DeletionList').checked){
+                    	 
+                    		 
+                    	 }else if(document.getElementById('DeletionList').checked){
+                    		 
+                    	  }
+                    	 %> --%>
                         	<th> &nbsp;ID</th>
                         	<th>회원탈퇴일</th>
                         	<th>구분</th>
@@ -132,7 +146,7 @@
                         </tr>
                     </thead>
                     <tr>
-                            <td class="center aligned"><input type="checkbox"></td>
+                            <td class="center aligned"><input type="radio" name="DeletionList" id="DeletionListId" value=""><br/></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
@@ -141,7 +155,7 @@
                             <td class="center aligned"></td> -->
                     </tr>
                         <tr>
-                             <td class="center aligned"><input type="checkbox"></td>
+                             <td class="center aligned"><input type="radio" name="DeletionList" id="DeletionListId" value=""><br/></td>
                              <td class="center aligned"></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
@@ -150,7 +164,7 @@
                             <td class="center aligned"></td> -->
                         </tr>
                         <tr>
-                            <td class="center aligned"><input type="checkbox"></td>
+                            <td class="center aligned"><input type="radio" name="DeletionList" id="DeletionListId" value=""></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>
                             <td class="center aligned"></td>

@@ -2,8 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%Member loginUser = (Member)session.getAttribute("loginUser");
-    	 
-    
+    	String[] arry = null;
+    	if(loginUser != null){
+    	 String userId = loginUser.getUserId();
+    	 	arry = userId.split("@");
+    	}
     %>
 
     <!-- 사이드바 오픈시 오버레이 -->
@@ -27,7 +30,7 @@
                 </table>
                 
                 <%} else{%>
-               	<div align = "center"> <%= loginUser.getUserId() %>님 환영합니다! </div> 
+               	<div align = "center"> <%= arry[0] %>님 환영합니다! </div> 
                 <br>
                 <table>
                     <tr>

@@ -18,8 +18,12 @@
 
 <!-- Common css -->
 <link href="/semi/css/customer/common/main.css" rel="stylesheet">
+<!-- 네이버  -->
 <script type="text/javascript"
 	src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"></script>
+<!--  카카오 -->
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 <style type="text/css">
 </style>
 </head>
@@ -43,7 +47,7 @@
 		<form action="<%=request.getContextPath()%>/selectMember.me;"
 			method="post" class="ui large form" id="loginForm">
 			<div class="ui stacked secondary  segment"
-				style="width: 443px; margin-left: auto; margin-right: auto;">
+				style="width: 450px; margin-left: auto; margin-right: auto;">
 				<div class="field">
 					<div class="ui left icon input">
 						<i class="user icon"></i> <input type="text" name="userId"
@@ -58,14 +62,43 @@
 				</div>
 				<div class="ui fluid large black submit button" id="userLoginBtn"
 					onclick="login();">Login</div>
-
 				<hr>
-				<div id="naverIdLogin"></div>
+				<a id="custom-login-btn" href="javascript:loginWithKakao()"> <img
+					src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg"
+					width="230" />
+				</a>
+				<!-- 카카오 로그인 -->
+				<script>
+					Kakao.init('키값이오');
+					function loginWithKakao() {
+						Kakao.Auth.login({
+							success : function(authObj) {
+								
+								Kakao.API.request({
+									url: '/v1/user/me',
+								 	success : function(res){
+								 		/* console.log(res.id);
+								 		console.log(res.kaccount_email);
+								 		console.log(res.properties['nickname']); */
+								 		location.href="<%=request.getContextPath()%>/checkKakaoMember.me?kakaoId="+res.id;
+								 	}
+									
+								})
+								
+							},
+							fail : function(err) {
+								alert(JSON.stringify(err));
+							}
+						});
+					};
+				</script>
+
+				<span id="naverIdLogin"></span>
 				<!-- 네이버아디디로로그인 초기화 Script -->
 				<script type="text/javascript">
 					var naverLogin = new naver.LoginWithNaverId({
-						clientId : "9y7HcwG1dakGzoz9aIm5",
-						callbackUrl : "http://127.0.0.1:8008/semi/views/customer/member/naverCallback.jsp",
+						clientId : "키값",
+						callbackUrl : "콜백",
 						isPopup : false, /* 팝업을 통한 연동처리 여부 */
 						loginButton : {
 							color : "green",

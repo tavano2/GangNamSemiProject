@@ -12,7 +12,7 @@
         <a class="item" href="/semi/views/admin/member/adminMembershipList.jsp">등급목록</a>
         <a class="item" href="/semi/views/admin/member/adminUserVerification.jsp">인증</a>
         <a class="item" href="/semi/views/admin/member/adminDeleteUserAccount.jsp">탈퇴</a>
-        <a class="item" href="/semi/views/admin/promotion/Mileage.jsp">적립금</a>
+        <a class="item" href="<%=request.getContextPath()%>/userClassDropBox.me">적립금</a>
          <a class="item" href="/semi/views/admin/promotion/CuponCreate.jsp">쿠폰 만들기</a>
           <a class="item" href="/semi/views/admin/promotion/CuponLookUp.jsp">쿠폰 조회/발급</a>
         </div>

@@ -2,7 +2,6 @@ package com.kh.semi.customer.member.controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,24 +25,23 @@ public class SnsNaverMemberLoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = (String)request.getAttribute("userId");
-		String password1 = (String)request.getAttribute("password1");
+		String userPwd1 = (String)request.getAttribute("userPwd1");
 		Member member = new Member();
 		member.setUserId(userId);
-		member.setUserPwd1(password1);
+		member.setUserPwd1(userPwd1);
+
 		Member loginUser = new MemberService().selectMember(member);
 		String view = "";
-		String msg = "";
 		if(loginUser != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
 			view = "index.jsp";
+			response.sendRedirect(view);
 		}else {
-			msg = "로그인 실패!";
-			view = "views/customer/common/errorPage.jsp";
+			view = "views/customer/common/errorPageSendRd.jsp";
+			response.sendRedirect(view);
 		}
-		request.setAttribute("msg", msg);
-		RequestDispatcher reqDispatcher = request.getRequestDispatcher(view);
-		reqDispatcher.forward(request, response);
+	
 	}
 
 
