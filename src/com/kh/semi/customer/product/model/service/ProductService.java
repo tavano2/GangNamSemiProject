@@ -1,13 +1,14 @@
 package com.kh.semi.customer.product.model.service;
 
+import static com.kh.semi.customer.common.JDBCTemplate.close;
+import static com.kh.semi.customer.common.JDBCTemplate.getConnection;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import com.kh.semi.customer.board.model.vo.Board;
 import com.kh.semi.customer.product.model.dao.ProductDao;
 import com.kh.semi.customer.product.model.vo.Product;
-
-import static com.kh.semi.customer.common.JDBCTemplate.*;
+import com.kh.semi.customer.product.model.vo.ShoppingCart;
 
 public class ProductService {
 
@@ -42,6 +43,17 @@ public class ProductService {
 
 		
 		return listQnA;
+	}
+	
+	// 장바구니 | Shopping Cart 조회
+	public ArrayList<ShoppingCart> selectListCart(int currentShoppingCart, int limitShoppingCart) {
+		Connection con = getConnection();
+		
+		ArrayList<ShoppingCart> cart  = new ProductDao().selectListCart(con, currentShoppingCart, limitShoppingCart);
+		
+		close(con);
+		
+		return cart;
 	}
 
 	

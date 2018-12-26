@@ -17,7 +17,7 @@ public class Product {
 	private int refBoardId;			//상위 게시물
 	private int replyLevel;			//게시물 단계
 	private String replyStatus;		//답변상태
-	private String productCodeQ;	//상ㅍ품코드
+	private String productCodeQ;	//상품코드
 	private String productCodeR;	//상품코드
 	private String status;			//상태
 	

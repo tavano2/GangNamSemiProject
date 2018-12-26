@@ -3,7 +3,6 @@ package com.kh.semi.customer.product.model.dao;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +11,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.kh.semi.customer.product.model.vo.Product;
-import com.sun.corba.se.impl.javax.rmi.PortableRemoteObject;
-
+import com.kh.semi.customer.product.model.vo.ShoppingCart;
 import static com.kh.semi.customer.common.JDBCTemplate.*;
 
 public class ProductDao {
@@ -183,6 +181,46 @@ public class ProductDao {
 	
 		
 		return listQnA;
+	}
+
+	// 장바구니 | Shopping Cart 조회 // DAO : Data Access Object : Get a request and Return the result.
+	public ArrayList<ShoppingCart> selectListCart(Connection con, int currentPage, int limit) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<ShoppingCart> cart = null;
+		
+		String query = prop.getProperty("ShoppingCart");		// NOT YET.
+		
+		try {
+			pstmt = (PreparedStatement) con.createStatement();
+			
+			rset = pstmt.executeQuery(query);
+			
+			cart = new ArrayList<ShoppingCart>();
+			
+			while(rset.next()) {
+				ShoppingCart c = new ShoppingCart();
+				
+				c.setProductCode(rset.getInt("PRODUCT_CODE"));
+				c.setUserId(rset.getInt("USER_ID"));
+				c.setOptionNum(rset.getInt("OPTION_NUM"));
+				c.setAmount(rset.getInt("AMOUNT"));
+				
+				
+				cart.add(c);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		
+		
+		return cart;
 	}
 
 }
