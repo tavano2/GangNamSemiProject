@@ -29,8 +29,6 @@ public class InsertReplyServlet extends HttpServlet {
 		String replyContent = request.getParameter("replyContent");
 		String replyhiddenId = request.getParameter("replyhiddenId");
 		
-		System.out.println("댓글 내용"+replyContent);
-		System.out.println("id번호"+replyhiddenId);
 		
 		Product pReply = new Product();
 		

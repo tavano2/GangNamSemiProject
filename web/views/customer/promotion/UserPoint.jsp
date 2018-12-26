@@ -55,18 +55,16 @@
 							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">?원
 						</td>
 						<td
-							style="text-align: left; border-top: white; border-bottom: white; border-right: white;">미가용
-							적립금</td>
+							style="text-align: left; border-top: white; border-bottom: white; border-right: white;">회원 등급</td>
 						<td
 							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">
-							?원</td>
+							?</td>
 					</tr>
 					<tr>
 						<td
-							style="text-align: left; border-top: white; border-bottom: white; border-right: white;">환불
-							예정 적립금</td>
+							style="text-align: left; border-top: white; border-bottom: white; border-right: white;"></td>
 						<td
-							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">?원</td>
+							style="text-align: right; border-top: white; border-bottom: white; border-left: white;"></td>
 						<td
 							style="text-align: left; border-top: white; border-bottom: white; border-right: white;"></td>
 						<td

@@ -49,7 +49,7 @@ public class SelectWishListPageServlet extends HttpServlet {
 		ProductService service = new ProductService();
 		int listCount = service.getListCountWishList(m);
 		
-		maxPage = listCount/limit +(listCount % limit == 0 ? 0 : 1);
+		maxPage = (int)((double)listCount/limit + 0.9);
 		startPage = ((int)((double)currentPage/limit+0.9)-1)*limit+1;
 		endPage = startPage+10-1;
 		if(maxPage<endPage) {

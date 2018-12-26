@@ -76,7 +76,7 @@ table tbody>tr:hover {
 				<%
 					for (HashMap<String, Object> hmap : list) {
 				%>
-				<tr onclick="location.href='<%=request.getContextPath()%>/selectDetailMsgAndCouponPage.pm?msgCouponNum=?<%=hmap.get("msg_num")%>' ">
+				<tr onclick="location.href='<%=request.getContextPath()%>/selectDetailMsgAndCouponPage.pm?msgCouponNum=<%=hmap.get("msg_num")%>' ">
 					<td><%=hmap.get("msg_num")%></td>
 					<td><%=hmap.get("msg_title")%></td>
 					<td><%=arry[0]%>님</td>
@@ -90,7 +90,7 @@ table tbody>tr:hover {
 						<div align="center">
 							<div class="ui pagination menu">
 								<a class="icon item"
-									onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=1' "><i
+									onclick="location.href='<%=request.getContextPath()%>/selectMessageAndCoupon.pm?currentPage=1' "><i
 									class="angle double left icon"></i></a>
 								<%
 									if (currentPage <= 1) {
@@ -100,7 +100,7 @@ table tbody>tr:hover {
 									} else {
 								%>
 								<a class="icon item"
-									onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage - 1%>' "><i
+									onclick="location.href='<%=request.getContextPath()%>/selectMessageAndCoupon.pm?currentPage=<%=currentPage - 1%>' "><i
 									class="angle left icon"></i></a>
 								<%
 									}
@@ -117,7 +117,7 @@ table tbody>tr:hover {
 									} else {
 								%>
 								<a class="item"
-									onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=p%>' "><%=p%></a>
+									onclick="location.href='<%=request.getContextPath()%>/selectMessageAndCoupon.pm?currentPage=<%=p%>' "><%=p%></a>
 								<%
 									}
 								%>
@@ -135,14 +135,14 @@ table tbody>tr:hover {
 									} else {
 								%>
 								<a class="icon item"
-									onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage + 1%>' "><i
+									onclick="location.href='<%=request.getContextPath()%>/selectMessageAndCoupon.pm?currentPage=<%=currentPage + 1%>' "><i
 									class="angle right icon"></i></a>
 								<%
 									}
 								%>
 
 								<a class="icon item"
-									onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=maxPage%>' "><i
+									onclick="location.href='<%=request.getContextPath()%>/selectMessageAndCoupon.pm?currentPage=<%=maxPage%>' "><i
 									class="angle double right icon"></i></a>
 							</div>
 						</div>

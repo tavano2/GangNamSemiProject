@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import com.kh.semi.customer.member.model.vo.Member;
+import com.kh.semi.customer.promotion.model.vo.Message;
+
+import oracle.net.aso.p;
 
 public class PromotionDao {
 
@@ -87,6 +90,57 @@ public class PromotionDao {
 			close(pstmt);
 		}
 		return list;
+	}
+
+
+
+
+	public Message selectMessageOne(Connection con, Member m, String num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Message msg = null;
+		String query = prop.getProperty("selectMessageOne");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, num);
+			pstmt.setString(2, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				msg = new Message();
+				msg.setMsg_num(rset.getString("MSG_NUM"));
+				msg.setUser_id(rset.getString("USER_ID"));
+				msg.setMsg_title(rset.getString("MSG_TITLE"));
+				msg.setMsg_content(rset.getString("MSG_CONTENT"));
+				msg.setMsg_date(rset.getDate("MSG_DATE"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return msg;
+	}
+
+
+
+
+	public int deleteMessage(Connection con, String msgNum) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteMessage");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, msgNum);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
 	}
 
 	
