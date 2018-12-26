@@ -286,4 +286,23 @@ public class ProductDao {
 		return result;
 	}
 
+	public int deleteWishList(Connection con, String msg, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteWishList");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, msg);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
 }

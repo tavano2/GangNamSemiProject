@@ -80,12 +80,11 @@
 								 		/* console.log(res.id);
 								 		console.log(res.kaccount_email);
 								 		console.log(res.properties['nickname']); */
-								 		location.href="<%=request.getContextPath()%>/kakaoLogin.me?kakaoId="+res.id+"&userPwd1=0505";
+								 		location.href="<%=request.getContextPath()%>/checkKakaoMember.me?kakaoId="+res.id;
 								 	}
 									
 								})
 								
-
 							},
 							fail : function(err) {
 								alert(JSON.stringify(err));

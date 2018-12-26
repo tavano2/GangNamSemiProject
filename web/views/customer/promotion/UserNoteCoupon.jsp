@@ -13,6 +13,9 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
+	
+
+	
 %>
 
 <head>
@@ -63,12 +66,10 @@ table tbody>tr:hover {
 		<table class="ui single line table">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th>쪽지 번호</th>
 					<th>쪽지제목</th>
-					<th>쿠폰 적용 카테고리</th>
-					<th>사용 여부</th>
-					<th>쿠폰 혜택</th>
-					<th>사용 가능 기간</th>
+					<th>쪽지 수신자</th>
+					<th>쪽지 수신 날짜</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -78,10 +79,8 @@ table tbody>tr:hover {
 				<tr onclick="location.href='<%=request.getContextPath()%>/selectDetailMsgAndCouponPage.pm?msgCouponNum=?<%=hmap.get("msg_num")%>' ">
 					<td><%=hmap.get("msg_num")%></td>
 					<td><%=hmap.get("msg_title")%></td>
-					<td><%=hmap.get("cate_name")%></td>
-					<td><%=hmap.get("use_status")%>&nbsp;(E : 사용가능)</td>
-					<td><%=hmap.get("coupon_rdiscount")%>%</td>
-					<td><%=hmap.get("end_date")%></td>
+					<td><%=arry[0]%>님</td>
+					<td><%=hmap.get("msg_date")%></td>
 				</tr>
 				<%
 					}
