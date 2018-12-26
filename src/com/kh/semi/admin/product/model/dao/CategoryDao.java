@@ -5,9 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Properties;
 
 import com.kh.semi.admin.product.model.vo.Category;
@@ -46,41 +44,6 @@ public class CategoryDao {
 		}
 		
 		return result;
-	}
-
-	public ArrayList<Category> selectCategory(Connection con) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Category> list = null;
-		Category cate = null;
-		String query = prop.getProperty("selectCategory");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			rset = pstmt.executeQuery();
-			if(rset != null) {
-				list = new ArrayList<Category>();
-				while(rset.next()) {
-					cate = new Category();
-					cate.setCateCode(rset.getString("CATE_CODE"));
-					cate.setCateName(rset.getString("CATE_NAME"));
-					cate.setCateUrl(rset.getString("CATE_URL"));
-					cate.setCateMemo(rset.getString("CATE_MEMO"));
-					cate.setCateLevel(rset.getInt("CATE_LEVEL"));
-					cate.setCateRefCode(rset.getString("CATE_REF_CODE"));
-					cate.setStatus(rset.getString("STATUS"));
-					
-					list.add(cate);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-			close(rset);
-		}
-		
-		return list;
 	}
 	
 }
