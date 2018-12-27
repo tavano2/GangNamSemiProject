@@ -1,5 +1,10 @@
+<%@page import="com.kh.semi.admin.product.model.vo.Category"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 
@@ -49,11 +54,10 @@
            <div class="content-box">
            <h2 class="ui header" style="text-align:center;">상품분류 설정</h2>
            <br><br><br><br>
-           <form action="<%=request.getContextPath()%>/insertCate.product" method="post" id="insertForm">
            <div class="overflowDiv">
          <div style="overflow:scroll; width:350px; height:400px;" class="overInnerDiv">
           <div class="ui list" id="divList">
-              <div class="item">
+              <!--  <div class="item">
                 <i class="window maximize icon"></i>
                 <div class="content">
                   <div class="header1"><span class="cateNames">아우터</span></div>
@@ -68,36 +72,46 @@
                       <i class="window restore icon"></i>
                       <div class="content">
                         <div class="header2"><span class="cateNames">코트</span></div>
-                        <div class="list">
-                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>  -->
+          <% for (Category c : list){ %>
+              <% if(c.getCateLevel() == 0) {%>
               <div class="item">
                 <i class="window maximize icon"></i>
                 <div class="content">
-                  <div class="header1"><span class="cateNames">상의</span></div>
+                  <div class="header1"><span class="cateNames"><%=c.getCateName() %></span></div>
                   <div class="list">
+                  <% }else{ %>
+                  <% for(Category ca : list){ %>
+                  <% if(c.getCateRefCode().equals(ca.getCateCode())){ %>
                     <div class="item">
                       <i class="window restore icon"></i>
                       <div class="content">
-                        <div class="header2"><span class="cateNames">셔츠</span></div>
+                        <div class="header2"><span class="cateNames"><%=c.getCateName() %></span></div>
                       </div>
                     </div>
+                    <% } %>
+                    <% } %>
+                    <% } %>
+                    <% if(c.getCateLevel() == 0) {%>
                   </div>
                 </div>
               </div>
+              <% } %>
+              <% } %>
             </div>
          </div>
          <br>
+           <form action="<%=request.getContextPath()%>/insertCate.product" method="post" id="insertForm">
             <div class="categoryBtn">
                  <button class="ui blue button" type="submit" id="cateAdd">분류추가</button>
                  <button class="ui white button" id="cateDelete">삭제</button>
               </div>
-         </div>
          </form>
+         </div>
            
          <br>
          <br>          
@@ -122,50 +136,26 @@
                     <tr>
                         <td>분류URL</td>
                         <td>
-                            <div class="ui input"><input type="text" name="cateUrl"></div>
+                            <div class="ui input"><input type="text" name="cateUrl" size="100"></div>
                         </td>
                     </tr>
                     <tr>
                         <td>분류명</td>
                         <td>
-                            <div class="ui input"><input type="text" name="cateName"></div>
+                            <div class="ui input"><input type="text" name="cateName" size="100"></div>
                         </td>
                     </tr>
                     <tr>
                         <td>분류설명</td>
                         <td>
-                            <div class="ui input"><input type="text" name="cateMemo"></div>
+                            <div class="ui input"><input type="text" name="cateMemo" size="100"></div>
                         </td>
                     </tr>
                     <tr>
                         <td>상품진열</td>
                         <td>
-                        <div class="ui form">
-                             <div class="inline fields">
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="productOrderby" checked="" tabindex="0" class="hidden">
-                                            <label>전체</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="productOrderby" tabindex="0" class="hidden">
-                                            <label>영역별</label>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                        <div class="ui selection dropdown">
-                                <!-- <input type="hidden" name="gender"> -->
-                                <i class="dropdown icon"></i>
-                                <div class="default text">자동정렬</div>
-                                <div class="menu">
-                                    <div class="item autoOrderby" data-value="0">자동정렬</div>
-                                    <div class="item autoOrderby" data-value="1">사용자지정</div>
-                                    <div class="item autoOrderby" data-value="2">자동정렬+사용자지정</div>
-                                </div>
-                            </div>
+                        
+                       
                             <div class="ui selection dropdown">
                                 <!-- <input type="hidden" name="gender"> -->
                                 <i class="dropdown icon"></i>
@@ -195,27 +185,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>하위분류 상품진열</td>
-                        <td>
-                            <div class="ui form">
-                             <div class="inline fields">
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="lowCategoryProductOrderby" checked="" tabindex="0" class="hidden">
-                                            <label>전체</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="lowCategoryProductOrderby" tabindex="0" class="hidden">
-                                            <label>영역별</label>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                        </td>
-                    </tr>
+                    
                     <tr>
                         <td>표시상태</td>
                         <td>
