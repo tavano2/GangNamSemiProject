@@ -1,3 +1,4 @@
+<%@page import="com.kh.semi.admin.promotion.model.vo.SelectUserVo"%>
 <%@page import="com.kh.semi.admin.promotion.model.vo.PageInfo"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
@@ -5,6 +6,15 @@
 	pageEncoding="UTF-8"%>
 <%
 	ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) session.getAttribute("list");
+	ArrayList<HashMap<String, Object>> selectUserList = (ArrayList<HashMap<String, Object>>) request
+			.getAttribute("selectUserList");
+	SelectUserVo suv = (SelectUserVo) session.getAttribute("suv");
+	PageInfo pi = (PageInfo) request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
 %>
 <!DOCTYPE html>
 <html>
@@ -182,9 +192,29 @@ span {
 										<td>차감</td>
 										<td>합계</td>
 									</tr>
-									<tr align="center">
-										<td colspan="3">검색 결과가 표시됩니다.</td>
+									<%
+										if (selectUserList.size() != 0) {
+											int plusPoint = 0;
+											int minusPoint = 0;
+											for (int i = 0; i < selectUserList.size(); i++) {
+												plusPoint += Integer.parseInt((String) selectUserList.get(i).get("plusP"));
+												minusPoint += Integer.parseInt((String) selectUserList.get(i).get("minusP"));
+											}
+									%>
+									<tr>
+										<td><%=plusPoint%></td>
+										<td><%=minusPoint%></td>
+										<td><%=(plusPoint - minusPoint)%></td>
 									</tr>
+									<%
+										} else {
+									%>
+									<tr align="center">
+										<td colspan="3">검색 결과가 없습니다.</td>
+									</tr>
+									<%
+										}
+									%>
 								</tbody>
 							</table>
 						</div>
@@ -225,15 +255,101 @@ span {
 										<td class="mileageTd" style="text-align: center">내용</td>
 										<td class="mileageTd" width="100px" style="text-align: center">처리자</td>
 									</tr>
-							
-									<tr align="center">
-										<td colspan="8">검색 결과가 표시됩니다.</td>
+									<%
+										if (selectUserList.size() != 0) {
+											for (HashMap<String, Object> map : selectUserList) {
+									%>
+									<tr>
+										<td><%=map.get("date")%></td>
+										<td><%=map.get("userId")%></td>
+										<td><%=map.get("plusP")%></td>
+										<td><%=map.get("minusP")%></td>
+										<td></td>
+										<td><%=map.get("orderDNum")%></td>
+										<td></td>
+										<td>admin</td>
 									</tr>
-			
+									<%
+										}
+										} else {
+									%>
+									<tr align="center">
+										<td colspan="8">검색결과가 없습니다.</td>
+									</tr>
+									<%
+										}
+									%>
+									<tr>
+										<td colspan="8">
+											<div align="center">
+												<div class="ui pagination menu">
+													<a class="icon item"
+														onclick="location.href='<%=request.getContextPath()%>/selectUser.pm' "><i
+														class="angle double left icon"></i></a>
+													<%
+														if (currentPage <= 1) {
+													%>
+													<a class="icon item"><i class="angle left icon"></i></a>
+													<%
+														} else {
+													%>
+													<a class="icon item"
+														onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage - 1%>' "><i
+														class="angle left icon"></i></a>
+													<%
+														}
+													%>
+
+
+													<%
+														for (int p = startPage; p <= endPage; p++) {
+
+															if (p == currentPage) {
+													%>
+													<a class="item"><%=p%></a>
+													<%
+														} else {
+													%>
+													<a class="item"
+														onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=p%>' "><%=p%></a>
+													<%
+														}
+													%>
+
+													<%
+														}
+													%>
+
+
+													<%
+														if (currentPage >= maxPage) {
+													%>
+													<a class="icon item"><i class="angle right icon"></i></a>
+													<%
+														} else {
+													%>
+													<a class="icon item"
+														onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage + 1%>' "><i
+														class="angle right icon"></i></a>
+													<%
+														}
+													%>
+
+													<a class="icon item"
+														onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=maxPage%>' "><i
+														class="angle double right icon"></i></a>
+												</div>
+
+
+
+											</div>
+										</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
+					<div class="pagingArea" align="center"></div>
 					<br> <br>
 					<!-- 내용의끝 -->
 				</div>
@@ -274,6 +390,7 @@ span {
 		};
 
 		$(function() {
+
 			var today = new Date();
 			today = dateFunction(today);
 

@@ -62,11 +62,11 @@ public class PromotionDao {
 		return list;
 	}
 
-	public ArrayList<HashMap<String, String>> selectUser(Connection con, SelectUserVo suv) {
-		ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+	public ArrayList<HashMap<String, Object>> selectUser(Connection con, SelectUserVo suv, int currentPage, int limit) {
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		HashMap<String,String> map = null;
+		HashMap<String,Object> map = null;
 		String query= prop.getProperty("selectUser");
 		System.out.println(query);
 		System.out.println(suv.getUserId());
@@ -77,20 +77,24 @@ public class PromotionDao {
 			pstmt.setString(2, suv.getUserClass().toUpperCase());	
 			pstmt.setDate(3, suv.getStartDate());
 			pstmt.setDate(4, suv.getEndDate());	
-			pstmt.setString(5, suv.getUserId());
-			pstmt.setString(6, suv.getUserClass().toUpperCase());	
-			pstmt.setDate(7, suv.getStartDate());
-			pstmt.setDate(8, suv.getEndDate());	
+			pstmt.setInt(5, currentPage);
+			pstmt.setInt(6, limit);
+			pstmt.setString(7, suv.getUserId());
+			pstmt.setString(8, suv.getUserClass().toUpperCase());	
+			pstmt.setDate(9, suv.getStartDate());
+			pstmt.setDate(10, suv.getEndDate());	
+			pstmt.setInt(11, currentPage);
+			pstmt.setInt(12, limit);
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
-				map = new HashMap<String, String>();
+				map = new HashMap<String, Object>();
 				map.put("userClass", rset.getString("USER_CLASS"));
-				map.put("userId	",rset.getString("USER_ID"));
 				map.put("orderLNum",rset.getString("ORDER_LNUM"));
 				map.put("orderDNum", rset.getString("ORDER_DNUM"));
 				map.put("plusP", rset.getString("PLUS_P"));
 				map.put("minusP", rset.getString("MINUS_P"));
-				map.put("date",rset.getString("ORDER_DATE"));
+				map.put("date",rset.getDate("ORDER_DATE"));
+				map.put("userId",rset.getString("USER_ID"));
 				list.add(map);	
 				System.out.println(map);
 			}
@@ -103,5 +107,25 @@ public class PromotionDao {
 		}
 		
 		return list;
+	}
+
+	public int getListCount(Connection con) {
+		Statement stmt = null;
+		int listCount = 0;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("listCount");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				listCount=rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listCount;
 	}
 }
