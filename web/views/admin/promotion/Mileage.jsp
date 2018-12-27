@@ -20,7 +20,8 @@
 <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
 
 <!-- J-query CDN -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- Semantic UI JS CDN -->
 <script
 	src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
@@ -75,7 +76,7 @@ span {
 	font-weight: 2px;
 }
 
-#dataRange{
+#dataRange {
 	display: inline-block;
 }
 </style>
@@ -83,7 +84,7 @@ span {
 
 <body>
 	<!-- DatePicker CSS -->
-    <link rel="stylesheet" href="/semi/css/common/datePicker.css">
+	<link rel="stylesheet" href="/semi/css/common/datePicker.css">
 
 	<!-- 사이드바 메뉴 -->
 	<%@ include file="/views/admin/common/adminSidebarMember.jsp"%>
@@ -101,7 +102,7 @@ span {
 						<h1>적립금 관리</h1>
 					</div>
 					<br> <br>
-					<form action="<%=request.getContextPath()%>/selectUser.me"
+					<form action="<%=request.getContextPath()%>/selectUser.pm"
 						method="post" id="selectForm">
 						<div>
 							<table class="ui celled table" id="mileageTable">
@@ -109,7 +110,7 @@ span {
 									<tr>
 										<td class="mileageTd" width="200px;">등급</td>
 										<td><div class="ui selection dropdown">
-												<input type="hidden" name="gender" id="select"> <i
+												<input type="hidden" id="userClass" name="userClass"> <i
 													class="dropdown icon"></i>
 												<div class="default text" name="allUserClass">전체</div>
 												<div class="menu" id="menubar">
@@ -128,7 +129,7 @@ span {
 										<td class="mileageTd">아이디</td>
 										<td><div class="ui input focus mileageInput">
 												<input type="text" placeholder="아이디를 입력하세요"
-													id="selectUserId">
+													id="selectUserId" name="selectUserId">
 											</div></td>
 
 									</tr>
@@ -140,7 +141,7 @@ span {
 												<button class="ui button" type="button" id="selectWeek">7일</button>
 												<button class="ui button" type="button" id="selectMonth">1개월</button>
 												<button class="ui button" type="button" id="selectYear">1년</button>
-											</div> 
+											</div>
 											<div class="date-range" id="dataRange">
 												<div class="ui input">
 													<input type="date" id="startDate" name="startDate">
@@ -285,27 +286,63 @@ span {
 			$('.ui .item').removeClass('active');
 			$(this).addClass('active');
 		});
+
+		function dateFunction(today) {
+			var dd = today.getDate();
+			var mm = today.getMonth() + 1; //January is 0!
+			var yyyy = today.getFullYear();
+			if (dd < 10) {
+				dd = '0' + dd
+			}
+			if (mm < 10) {
+				mm = '0' + mm
+			}
+			today = yyyy + '-' + mm + '-' + dd;
+			return today;
+		};
+
 		$(function() {
 			var today = new Date();
-			var dd = today.getDate();
-			var mm = today.getMonth()+1; //January is 0!
-			var yyyy = today.getFullYear();
-			if(dd<10) {
-			    dd='0'+dd
-			} 
-			if(mm<10) {
-			    mm='0'+mm
-			} 
-			today = yyyy+'-' + mm+'-'+dd;
+			today = dateFunction(today);
+
 			$("#selectToday").focus();
 			$("#startDate").val(today);
 			$("#endDate").val(today);
+
+			$("#selectToday").click(function() {
+				today = new Date();
+				today =  dateFunction(today);
+				$("#startDate").val(today);
+			});
+			$("#selectWeek").click(function() {
+				var currentDate = new Date();
+				var date = currentDate.getTime();
+				var dateResult = date - (1000 * 60 * 60 * 24 * 7);
+				today = new Date(dateResult);
+				today = dateFunction(today);
+				console.log(today);
+				$("#startDate").val(today);
+			});
+			$("#selectMonth").click(function() {
+				var currentDate = new Date();
+				var date = currentDate.getTime();
+				var dateResult = date - (1000 * 60 * 60 * 24 * 30);
+				today = new Date(dateResult);
+				today = dateFunction(today);
+				console.log(today);
+				$("#startDate").val(today);
+			});
+			$("#selectYear").click(function() {
+				var currentDate = new Date();
+				var date = currentDate.getTime();
+				var dateResult = date - (1000 * 60 * 60 * 24 * 365);
+				today = new Date(dateResult);
+				today = dateFunction(today);
+				console.log(today);
+				$("#startDate").val(today);
+			});
 			$("#selectBtn").click(function() {
-				console.log($("#selectToday"));
-				console.log($("#selectWeek"));
-				//console.log($("#selectUserId").val()=="");
-				//console.log($("#select").val());
-				//$("#selectForm").submit();
+				$("#selectForm").submit();
 			})
 		});
 	</script>
