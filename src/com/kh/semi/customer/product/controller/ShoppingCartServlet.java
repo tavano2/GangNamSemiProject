@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.semi.customer.board.model.vo.PageInfo;
-import com.kh.semi.customer.product.model.service.CartService;
 import com.kh.semi.customer.product.model.service.ProductService;
 import com.kh.semi.customer.product.model.vo.ShoppingCart;
 
@@ -43,7 +42,7 @@ public class ShoppingCartServlet extends HttpServlet {
 		
 		/* Pagination*/
 		
-		CartService cs = new CartService();
+		ProductService cs = new ProductService();
 		int listCount = cs.getListCount();
 		maxPage=(int)((double)listCount/limit+0.9);
 		startPage=(((int)((double)currentPage/limit+0.9))-1)*limit+1;
@@ -54,7 +53,7 @@ public class ShoppingCartServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
-		ArrayList<ShoppingCart> list = new ProductService().selectListCart(currentPage, limit);
+		ArrayList<ShoppingCart> list = new ProductService().selectCartList(currentPage, limit);
 		
 		String page = ""; // Void...
 		if(list != null) {
