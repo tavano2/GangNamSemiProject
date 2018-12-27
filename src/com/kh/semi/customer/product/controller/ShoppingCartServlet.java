@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.semi.customer.board.model.vo.PageInfo;
+import com.kh.semi.customer.product.model.service.CartService;
 import com.kh.semi.customer.product.model.service.ProductService;
 import com.kh.semi.customer.product.model.vo.ShoppingCart;
 
@@ -39,15 +41,26 @@ public class ShoppingCartServlet extends HttpServlet {
 		
 		limit = 10;
 		
-		/* START FROM HERE.*/
+		/* Pagination*/
 		
+		CartService cs = new CartService();
+		int listCount = cs.getListCount();
+		maxPage=(int)((double)listCount/limit+0.9);
+		startPage=(((int)((double)currentPage/limit+0.9))-1)*limit+1;
+		endPage=startPage+10-1;
+		if(maxPage<endPage) {
+			endPage=maxPage;	
+		}
 		
-		ArrayList<ShoppingCart> list = new ProductService().selectListCart(0, 0);
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		
+		ArrayList<ShoppingCart> list = new ProductService().selectListCart(currentPage, limit);
 		
 		String page = ""; // Void...
 		if(list != null) {
 			page = "/semi/views/customer/product/shoppingCart.jsp";
 			request.setAttribute("list", list);
+			request.setAttribute("pi", pi);
 		}else {
 			page = "/semi/views/customer/common/errorPage.jsp";
 			request.setAttribute("msg", "쇼핑카트 조회 실패!");
