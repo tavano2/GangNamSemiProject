@@ -436,14 +436,7 @@
 					<%
 							} %>
 					
-						<tr>
-							<td>1</td>
-							<td>문의합니다 문의해용 배송 언제 오나요?? 일주일 기다렸듭니다!!!
-								<button onclick="detailQnA();">클릭쓰</button>
-							</td>
-							<td>묭묭</td>
-							<td>2018-12-44</td>
-						</tr>	
+						
 					</tbody>
 				</table>
 				

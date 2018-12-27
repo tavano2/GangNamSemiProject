@@ -126,9 +126,12 @@
 		 <!-- 상품 -->
 		<div class="ui grid">
 		  <div class="four wide column">
+		  <div id="movedetailPage">
 		  	<a href="#">
 		  	<img class="ui medium image" src="/semi/views/images/products/product1.jpg">
-		  	</a><br>
+		  	</a>
+		  	</div>
+		  	<br>
 			<a class="ui brown label">BEST</a><br>
 			<hr class="productHr">
 			<span class="productTitle">리뇽 짱짱맨(Good boy)</span><br>
@@ -185,6 +188,16 @@
 	
 	<!-- Common js -->
     <script src="/semi/js/customer/common/main.js"></script>
+    
+    <script>
+    	$(function(){
+    		$("#movedetailPage").click(function(){
+    			location.href="<%=request.getContextPath()%>/selectOneDetailPage.pd?code=PD000003";
+    		})
+    	})
+    
+    </script>
+    
     
 </body>
 
