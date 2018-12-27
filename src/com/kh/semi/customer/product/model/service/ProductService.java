@@ -114,6 +114,7 @@ public class ProductService {
 		return result;
 	}
 
+	
 /*	public ArrayList<Product> SelectReplyList(String pQnABoardId) {
 		Connection con = getConnection();
 		ArrayList<Product> SelectReplyList =null;
@@ -136,6 +137,17 @@ public class ProductService {
 	}
   */
 
+	
+	public int getListCountPointAndClassMember(Member m) {
+		Connection con = getConnection();
+		int result = new ProductDao().getListCountPointAndClassMember(con,m);
+		close(con);
+		return result;
+	}
+	
+	
+	
+	
 }
 
 

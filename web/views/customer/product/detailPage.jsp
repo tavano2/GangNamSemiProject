@@ -416,13 +416,14 @@
 							for(Product pQnA:listQnA){
 								//System.out.print("상품문의 리스트 불러와랑"+pQnA);
 						%>
+							
 						<tr>
 							<td><%=pQnA.getBoardNum()%></td>
 							<td><%=pQnA.getBoardTitle() %></td>
 							<td><%=pQnA.getUserId() %></td>
 							<td><%=pQnA.getBoardDate() %></td>
 							<%-- <td><%=pQnA.getBoardId() %></td> --%>
-							<input type="hidden" name="pQnABoardId" id="pQnABoardId" value="<%=pQnA.getBoardId() %>">
+					
 						</tr>
 						
 						
@@ -440,8 +441,7 @@
 					</tbody>
 				</table>
 				
-				
-
+			
 				<div align="right">
 					<button class="ui brown basic mini button"
 						onclick="location.href='/semi/views/customer/product/reviewInsertBoard.jsp';">작성하기</button>
