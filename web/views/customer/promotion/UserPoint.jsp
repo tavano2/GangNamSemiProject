@@ -81,9 +81,8 @@
 
 
 		<div class="ui top attached tabular menu">
-			<a class="active item" data-tab="first"> 적립 내역 보기 </a> <a
-				class="item" data-tab="second"> 미가용 적립 내역 보기 </a> <a class="item"
-				data-tab="three">회원 등급 내역</a>
+			<a class="active item" data-tab="first"> 적립 내역 보기 </a>
+			<a class="item" data-tab="second">회원 등급 내역</a>
 		</div>
 		<div class="ui bottom attached active tab segment" data-tab="first"
 			id="secondary">
@@ -114,37 +113,7 @@
 
 
 		</div>
-
-
 		<div class="ui bottom attached tab segment" data-tab="second">
-			<!-- 테이블 -->
-			<table class="ui single line table">
-				<thead>
-					<tr>
-						<th>주문날짜</th>
-						<th>미가용 적립금</th>
-						<th>관련 번호 주문</th>
-						<th>사용 가능 예정일</th>
-						<th>내용</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>2018-05-06</td>
-						<td>?원</td>
-						<td>관련 주문 번호란</td>
-						<td>사용 가능 예정일 란</td>
-						<td>내용내용내용</td>
-					</tr>
-				</tbody>
-			</table>
-
-
-
-
-
-		</div>
-		<div class="ui bottom attached tab segment" data-tab="three">
 
 			<!-- 테이블 -->
 			<table class="ui single line table">

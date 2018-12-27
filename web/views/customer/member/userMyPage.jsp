@@ -177,7 +177,7 @@
 				위시리스트</button>
 			</div>
 			<div class="btn1">
-				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/promotion/UserPoint.jsp'">적립금</button>
+				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='<%=request.getContextPath()%>/selectPointAndMemberClassList.pd' ">적립금</button>
 			</div>
 
 		</div>

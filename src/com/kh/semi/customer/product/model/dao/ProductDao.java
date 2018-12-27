@@ -149,7 +149,6 @@ public class ProductDao {
 			
 			while(rset.next()) {
 				Product pQnA = new Product();
-				
 				pQnA.setBoardId(rset.getInt("BOARD_ID"));
 				pQnA.setBoardType(rset.getInt("BOARD_TYPE"));
 				pQnA.setBoardNum(rset.getInt("BOARD_NUM"));
@@ -364,7 +363,7 @@ public class ProductDao {
 		return result;
 	}
 
-  	//페이지 들어갔을때부터 댓글 조회
+
 	public ArrayList<Product> SelectReplyList(Connection con, String pQnABoardId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -404,6 +403,7 @@ public class ProductDao {
 		return SelectReplyList;
 	}
   
+
 
     	// 장바구니 | Shopping Cart 조회 // DAO : Data Access Object : Get a request and Return the result.
 	/*public ArrayList<ShoppingCart> selectListCart(Connection con, int currentPage, int limit) {
@@ -448,6 +448,25 @@ public class ProductDao {
     
     
     
+	public int getListCountPointAndClassMember(Connection con, Member m) {
+		int result = 0;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("getListCountPointAndClassMember");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+  	
+  	
     
 }
 
