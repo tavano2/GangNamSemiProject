@@ -44,13 +44,14 @@ public class AdminOrderSearchServlet extends HttpServlet {
         7: 수령자 일반전화
         8: 수령자 휴대전화
         9: 배송지 주소
-        10: 운송장번호
-        11: 메모*/
+        10: 배송 메세지
+        11: 운송장번호
+        12: 메모*/
 		
 		/*productCondition
-		1: 상품명
-        2: 상품코드
-        3: 품목명*/
+		1: 상품코드
+		2: 상품명
+        3: 카테고리 이름*/
 		
 		/*orderCondition=1
 		 * &orderText=123
