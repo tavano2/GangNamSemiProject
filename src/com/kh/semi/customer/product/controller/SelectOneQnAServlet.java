@@ -37,18 +37,18 @@ public class SelectOneQnAServlet extends HttpServlet {
 		//상세페이징 뿌려주깅
 		Product SelectOneQnA = new ProductService().SelectOneQnA(num);
 		
-		//상세페이지 댓글쓰
-		//ArrayList<Product> SelectReplyList = new ProductService().SelectReplyList(pQnABoardId);
+		//QnA상세페이지 댓글쓰
+		ArrayList<Product> SelectReplyList = new ProductService().SelectReplyList(pQnABoardId);
 		
 		
-		System.out.println(SelectOneQnA);
+		//System.out.println(SelectOneQnA);
 		//System.out.println("SelectReplyList"+SelectReplyList);
 		
 		String page="";
 		if(SelectOneQnA!=null) {
 			page="views/customer/product/detailQnA.jsp";
 			request.setAttribute("SelectOneQnA", SelectOneQnA);
-		//	request.setAttribute("SelectReplyList", SelectReplyList);
+			request.setAttribute("SelectReplyList", SelectReplyList);
 		}else {
 			page="views/customer/common/errorPage.jsp";
 			request.setAttribute("msg", "QnA상세보기 실행");

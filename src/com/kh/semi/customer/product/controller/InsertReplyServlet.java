@@ -26,6 +26,7 @@ public class InsertReplyServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		//댓글 내용 
 		String replyContent = request.getParameter("replyContent");
 		String replyhiddenId = request.getParameter("replyhiddenId");
 		
