@@ -147,6 +147,16 @@ public class ProductService {
 		close(con);
 		return result;
 	}
+
+	//상품코드 : PD1에있는값의 DB정보 불러오깅
+	public HashMap<String, Object> selectOneDetailPage(String code) {
+
+		Connection con = getConnection();
+		HashMap<String , Object> hmap = new ProductDao().selectOneDetailPage(con,code);
+		
+		close(con);
+		return hmap;
+	}
 	
 	
 	
