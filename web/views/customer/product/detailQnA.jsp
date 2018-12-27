@@ -1,8 +1,11 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.kh.semi.customer.product.model.vo.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
    
-<% Product SelectOneQnA = (Product)request.getAttribute("SelectOneQnA"); %>
+<% Product SelectOneQnA = (Product)request.getAttribute("SelectOneQnA"); 
+ArrayList<Product> SelectReplyList =(ArrayList<Product>) request.getAttribute("SelectReplyList");
+%>
 <!DOCTYPE html>
 <html>
 
@@ -163,9 +166,9 @@ height:50px;
    							var $tr = $("<tr>");
    							var $replyContentTd = $("<td>").text(data[key].boardContent).css("width","400px");
    							var $replyhiddenId = $("<td>").text(data[key].boardDate).css("width","100px");
-   							var $rr = $("<td>").text("dfdf").css("width","100px");
+   							//var $rr = $("<td>").text("dfdf").css("width","100px");
    							
-   							$tr.append($rr);
+   							//$tr.append($rr);
    							$tr.append($replyContentTd);
    							$tr.append($replyhiddenId);
    							

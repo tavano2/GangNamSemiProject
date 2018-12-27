@@ -363,10 +363,49 @@ public class ProductDao {
 		}
 		return result;
 	}
-  
+/*
+	public ArrayList<Product> SelectReplyList(Connection con, String pQnABoardId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> SelectReplyList = null;
+		
+		String query = prop.getProperty("selectQnArepltyList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(pQnABoardId));
+			rset=pstmt.executeQuery();
+			
+			SelectReplyList= new ArrayList<Product>();
+			while(rset.next()) {
+				Product pselectReply = new Product();
+				pselectReply.setBoardId(rset.getInt("BOARD_ID"));
+				pselectReply.setBoardType(rset.getInt("BOARD_TYPE"));
+				pselectReply.setBoardContent(rset.getString("BOARD_CONTENT"));
+				pselectReply.setUserId(rset.getString("USER_ID"));
+				pselectReply.setBoardDate(rset.getDate("BOARD_DATE"));
+				pselectReply.setRefBoardId(rset.getInt("REF_BOARD_ID"));
+				pselectReply.setReplyLevel(rset.getInt("REPLY_LEVEL"));
+				pselectReply.setStatus(rset.getString("STATUS"));		
+				SelectReplyList.add(pselectReply);
+				
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return SelectReplyList;
+	}
+  */
 
     	// 장바구니 | Shopping Cart 조회 // DAO : Data Access Object : Get a request and Return the result.
-	public ArrayList<ShoppingCart> selectListCart(Connection con, int currentPage, int limit) {
+	/*public ArrayList<ShoppingCart> selectListCart(Connection con, int currentPage, int limit) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -404,7 +443,7 @@ public class ProductDao {
 		
 		return cart;
 	}
-    
+    */
     
     
     

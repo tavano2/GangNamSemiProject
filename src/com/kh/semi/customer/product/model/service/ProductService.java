@@ -114,8 +114,18 @@ public class ProductService {
 		return result;
 	}
 
+/*	public ArrayList<Product> SelectReplyList(String pQnABoardId) {
+		Connection con = getConnection();
+		ArrayList<Product> SelectReplyList =null;
+		
+		SelectReplyList = new ProductDao().SelectReplyList(con,pQnABoardId);
+		
+		close(con);
+		return SelectReplyList;
+	}*/
+
 	// 장바구니 | Shopping Cart 조회
-	public ArrayList<ShoppingCart> selectListCart(int currentShoppingCart, int limitShoppingCart) {
+/*	public ArrayList<ShoppingCart> selectListCart(int currentShoppingCart, int limitShoppingCart) {
 		Connection con = getConnection();
 		
 		ArrayList<ShoppingCart> cart  = new ProductDao().selectListCart(con, currentShoppingCart, limitShoppingCart);
@@ -124,7 +134,7 @@ public class ProductService {
 		
 		return cart;
 	}
-  
+  */
 
 }
 
