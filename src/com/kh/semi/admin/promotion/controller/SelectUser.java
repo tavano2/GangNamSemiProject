@@ -2,6 +2,7 @@ package com.kh.semi.admin.promotion.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.semi.admin.promotion.model.service.PromotionService;
 import com.kh.semi.admin.promotion.model.vo.SelectUserVo;
 
 /**
@@ -40,8 +42,17 @@ public class SelectUser extends HttpServlet {
 		Date convertStart = calDate(Integer.parseInt(sd[0]),Integer.parseInt(sd[1]),Integer.parseInt(sd[2]));
 		sd = endDate.split("-");
 		Date convertEnd = calDate(Integer.parseInt(sd[0]),Integer.parseInt(sd[1]),Integer.parseInt(sd[2]));
-		
 		SelectUserVo suv = new SelectUserVo(userClass,userId,convertStart,convertEnd);
+		ArrayList<HashMap<String,String>> list = new PromotionService().selectUser(suv);
+		String page="";
+		if(list!=null) {
+			page="/views/admin/promotion/Mileage.jsp";
+			request.setAttribute("selectUserList", list);
+		}else {
+			page="/views/admin/promotion/Mileage.jsp";
+			request.setAttribute("msg", "검색결과가 없습니다.");
+		}
+		request.getRequestDispatcher(page).forward(request, response);
 		
 	}
 

@@ -3,7 +3,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) request.getAttribute("list");
+	ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) session.getAttribute("list");
+	ArrayList<HashMap<String, String>> selectUserList = (ArrayList<HashMap<String, String>>)request.getAttribute("selectUserList");
 %>
 <!DOCTYPE html>
 <html>
@@ -181,11 +182,24 @@ span {
 										<td>차감</td>
 										<td>합계</td>
 									</tr>
+									<%if(selectUserList!=null){ 
+										int plusPoint = 0;
+										int minusPoint = 0;
+										for(int i = 0; i < selectUserList.size() ; i++){
+											plusPoint += Integer.parseInt(selectUserList.get(i).get("plusP"));
+											minusPoint += Integer.parseInt(selectUserList.get(i).get("minusP"));
+										}	
+									%>								
 									<tr>
-										<td>0</td>
-										<td>0</td>
-										<td>0</td>
+										<td><%=plusPoint %></td>
+										<td><%=minusPoint %></td>
+										<td><%=(plusPoint - minusPoint) %></td>
 									</tr>
+									<%}else{ %>
+										<tr align="center">
+											<td colspan="3">검색 결과가 없습니다.</td>
+										</tr>
+									<%} %>
 								</tbody>
 							</table>
 						</div>
@@ -343,7 +357,7 @@ span {
 			});
 			$("#selectBtn").click(function() {
 				$("#selectForm").submit();
-			})
+			});
 		});
 	</script>
 </body>
