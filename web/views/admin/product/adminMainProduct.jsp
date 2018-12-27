@@ -57,32 +57,13 @@
            <div class="overflowDiv">
          <div style="overflow:scroll; width:350px; height:400px;" class="overInnerDiv">
           <div class="ui list" id="divList">
-              <!--  <div class="item">
-                <i class="window maximize icon"></i>
-                <div class="content">
-                  <div class="header1"><span class="cateNames">아우터</span></div>
-                  <div class="list">
-                    <div class="item">
-                      <i class="window restore icon"></i>
-                      <div class="content">
-                        <div class="header2"><span class="cateNames">자켓</span></div>
-                      </div>
-                    </div>
-                    <div class="item">
-                      <i class="window restore icon"></i>
-                      <div class="content">
-                        <div class="header2"><span class="cateNames">코트</span></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>  -->
-          <% for (Category c : list){ %>
+            
+          <%-- <% for (Category c : list){ %>
               <% if(c.getCateLevel() == 0) {%>
               <div class="item">
                 <i class="window maximize icon"></i>
                 <div class="content">
-                  <div class="header1"><span class="cateNames"><%=c.getCateName() %></span></div>
+                  <div class="header1"><span class="cateNames"><input type="hidden" class="ccode" value="<%=c.getCateCode() %>"><input type="hidden" class="clevel" value="<%=c.getCateLevel() %>"><%=c.getCateName() %></span></div>
                   <div class="list">
                   <% }else{ %>
                   <% for(Category ca : list){ %>
@@ -90,7 +71,7 @@
                     <div class="item">
                       <i class="window restore icon"></i>
                       <div class="content">
-                        <div class="header2"><span class="cateNames"><%=c.getCateName() %></span></div>
+                        <div class="header2"><span class="cateNames"><input type="hidden" class="ccode" value="<%=c.getCateCode() %>"><input type="hidden" class="clevel" value="<%=c.getCateLevel() %>"><%=c.getCateName() %></span></div>
                       </div>
                     </div>
                     <% } %>
@@ -101,23 +82,68 @@
                 </div>
               </div>
               <% } %>
+              <% } %> --%>
+              
+              
+              <% for (Category c : list){ %>
+              <% if(c.getCateLevel() == 0) {%>
+              <div class="item">
+                <i class="window maximize icon"></i>
+                <div class="content">
+                  <div class="header1">
+                  <span class="cateNames">
+                  <%=c.getCateName() %>
+                  	<input type="hidden" value="<%=c.getCateCode() %>">
+                  	<input type="hidden" value="<%=c.getCateName() %>">
+                  	<input type="hidden" value="<%=c.getCateUrl() %>">
+                  	<input type="hidden" value="<%=c.getCateMemo() %>">
+                  	<input type="hidden" value="대분류">
+                  	<input type="hidden" value="<%=c.getCateRefCode() %>">
+                  	<input type="hidden" value="<%=c.getStatus() %>">
+                  </span>
+                  </div>
+                  <div class="list">
+                  <% }else{ continue;}%>
+                  <% for(Category ca : list){ %>
+                  <% if(ca.getCateLevel() == 1 && ca.getCateRefCode().equals(c.getCateCode())){ %>
+                    <div class="item">
+                      <i class="window restore icon"></i>
+                      <div class="content">
+                        <div class="header2">
+                        	<span class="cateNames">
+                        	<%=ca.getCateName() %>
+                        		<input type="hidden" value="<%=ca.getCateCode() %>">
+                        		<input type="hidden" value="<%=ca.getCateName() %>">
+                        		<input type="hidden" value="<%=ca.getCateUrl() %>">
+                        		<input type="hidden" value="<%=ca.getCateMemo() %>">
+                        		<input type="hidden" value="중분류">
+                        		<input type="hidden" value="<%=ca.getCateRefCode() %>">
+                        		<input type="hidden" value="<%=ca.getStatus() %>">
+                        	</span>
+                        </div>
+                      </div>
+                    </div>
+                    <% } else{ continue;} %>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
               <% } %>
+              
+              
             </div>
          </div>
          <br>
-           <form action="<%=request.getContextPath()%>/insertCate.product" method="post" id="insertForm">
             <div class="categoryBtn">
-                 <button class="ui blue button" type="submit" id="cateAdd">분류추가</button>
-                 <button class="ui white button" id="cateDelete">삭제</button>
+                 <button class="ui blue button" type="submit" onclick="cateAdd();">분류추가</button>
+                 <button class="ui white button" onclick="cateDelete();">삭제</button>
               </div>
-         </form>
          </div>
            
          <br>
          <br>          
            <hr>
               <h2 class="ui header">분류정보</h2>
-				<form action="<%=request.getContextPath()%>/updateCate.product" method="post" id="updateForm">
 				<div class="divBox">
                 <table class="ui celled table first-col">
                    
@@ -209,10 +235,9 @@
                     </tr>
                 </table>
                 <div class="productAddBtn">
-               <button class="ui blue button" id="okBtn">확인</button>
+               <button class="ui blue button" onclick="cateUpdate();">확인</button>
             </div>
                 </div>
-                </form>
                 <hr>
            
            </div>
@@ -251,34 +276,42 @@
     </script>
     
     <script>
+    var level = "";
+    var code = "";
+    
     $(function(){
 		$(".cateNames").click(function(){
-			$(".cateNames").parent().css({"background":"#e9e9e9"});
+			$(this).parent().css({"background":"#e9e9e9"});
 			$(this).parent().css({"background":"darkgray"});
+		}).click(function(){
+			code = $(this).children("input:nth-of-type(1)").val();
+			name = $(this).children("input:nth-of-type(2)").val();
+			url = $(this).children("input:nth-of-type(3)").val();
+			memo = $(this).children("input:nth-of-type(4)").val();
+			level = $(this).children("input:nth-of-type(5)").val();
+			rcode = $(this).children("input:nth-of-type(6)").val();
+			status = $(this).children("input:nth-of-type(7)").val();
+
+			$("#currentCategory").html(level);
+			$("input[name=cateCode]").val(code);
+			$("input[name=cateUrl]").val(url);
+			$("input[name=cateName]").val(name);
+			$("input[name=cateMemo]").val(memo);
 		});
 	});
-    
-	$("#cateAdd").click(function(){
-		/* if($(".header1").click()){
-			console.log("d");
-		} else{ */
-			 var cateDiv = "<div class='item'> <i class='window maximize icon'></i> <div class='content'> <div class='header1'><span class='cateName'>대분류</span></div> <div class='list'> </div> </div> </div>";
-			
-			$("#divList").append(cateDiv);
-		/* } */
-	});
 	
-	$("#okBtn").click(function(){
-		$("#updateForm").submit();
-	});
+	function cateUpdate(){
+		location.href="<%=request.getContextPath()%>/updateCate.product";
+	}
 	
-	$("#cateAdd").click(function(){
-		$("#insertForm").submit();
-	});
+	function cateAdd(){
+		location.href="<%=request.getContextPath()%>/insertCate.product?level="+level+"&code="+code;
+	}
 	
-	$("#cateDelete").click(function(){
-		
-	});
+	function cateDelete(){
+		location.href="<%=request.getContextPath()%>/deleteCate.product?code="+code;
+	}
+	
     </script>
     
     

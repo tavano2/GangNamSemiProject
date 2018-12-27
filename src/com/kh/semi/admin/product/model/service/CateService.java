@@ -30,4 +30,18 @@ public class CateService {
 		
 		return list;
 	}
+
+	public int deleteCate(Category cate) {
+		Connection con = getConnection();
+		CategoryDao cd = new CategoryDao();
+		int result = cd.deleteCate(con, cate);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		return result;
+	}
 }
