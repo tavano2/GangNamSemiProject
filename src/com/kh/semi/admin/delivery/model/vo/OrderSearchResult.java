@@ -16,9 +16,9 @@ public class OrderSearchResult implements Serializable {
 	private String optionName; 
 	private String productName;
 	private int productPrice;
+	private String categName;
 	private String categName1;
 	private String categName2;
-	private String categName3;
 	private String postnum;
 	private int postPrice;
 	private int couponType;
@@ -37,7 +37,7 @@ public class OrderSearchResult implements Serializable {
 
 	public OrderSearchResult(String orderLnum, String orderDnum, String userId, Date orderDate, String orderSname,
 			String productCode, String couponCode, int orderAmount, String memo, String optionName, String productName,
-			int productPrice, String categName1, String categName2, String categName3, String postnum, int postPrice,
+			int productPrice, String categName, String categName1, String categName2, String postnum, int postPrice,
 			int couponType, int couponPdiscount, double couponRdiscount, String buyerName, String buyerTel1,
 			String buyerTel2, String receiverName, String receiverTel1, String receiverTel2, String receiverAddr,
 			String receiverMsg) {
@@ -54,9 +54,9 @@ public class OrderSearchResult implements Serializable {
 		this.optionName = optionName;
 		this.productName = productName;
 		this.productPrice = productPrice;
+		this.categName = categName;
 		this.categName1 = categName1;
 		this.categName2 = categName2;
-		this.categName3 = categName3;
 		this.postnum = postnum;
 		this.postPrice = postPrice;
 		this.couponType = couponType;
@@ -168,6 +168,14 @@ public class OrderSearchResult implements Serializable {
 		this.productPrice = productPrice;
 	}
 
+	public String getCategName() {
+		return categName;
+	}
+
+	public void setCategName(String categName) {
+		this.categName = categName;
+	}
+
 	public String getCategName1() {
 		return categName1;
 	}
@@ -182,14 +190,6 @@ public class OrderSearchResult implements Serializable {
 
 	public void setCategName2(String categName2) {
 		this.categName2 = categName2;
-	}
-
-	public String getCategName3() {
-		return categName3;
-	}
-
-	public void setCategName3(String categName3) {
-		this.categName3 = categName3;
 	}
 
 	public String getPostnum() {
@@ -301,14 +301,13 @@ public class OrderSearchResult implements Serializable {
 		return "OrderSearchResult [orderLnum=" + orderLnum + ", orderDnum=" + orderDnum + ", userId=" + userId
 				+ ", orderDate=" + orderDate + ", orderSname=" + orderSname + ", productCode=" + productCode
 				+ ", couponCode=" + couponCode + ", orderAmount=" + orderAmount + ", memo=" + memo + ", optionName="
-				+ optionName + ", productName=" + productName + ", productPrice=" + productPrice + ", categName1="
-				+ categName1 + ", categName2=" + categName2 + ", categName3=" + categName3 + ", postnum=" + postnum
+				+ optionName + ", productName=" + productName + ", productPrice=" + productPrice + ", categName="
+				+ categName + ", categName1=" + categName1 + ", categName2=" + categName2 + ", postnum=" + postnum
 				+ ", postPrice=" + postPrice + ", couponType=" + couponType + ", couponPdiscount=" + couponPdiscount
 				+ ", couponRdiscount=" + couponRdiscount + ", buyerName=" + buyerName + ", buyerTel1=" + buyerTel1
 				+ ", buyerTel2=" + buyerTel2 + ", receiverName=" + receiverName + ", receiverTel1=" + receiverTel1
 				+ ", receiverTel2=" + receiverTel2 + ", receiverAddr=" + receiverAddr + ", receiverMsg=" + receiverMsg
 				+ "]";
 	}
-	
-	
+
 }

@@ -279,7 +279,43 @@ public class AdminDeliveryDao {
 			
 			rset = pstmt.executeQuery();
 			
+			searchResult = new ArrayList<OrderSearchResult>();
+			
 			while(rset.next()) {
+				
+				OrderSearchResult search = new OrderSearchResult();
+				
+				search.setOrderLnum(rset.getString("ORDER_LNUM"));
+				
+				/*private String orderLnum;	ORDER_LNUM
+				private String orderDnum;	ORDER_DNUM
+				private String userId;	USER_ID
+				private Date orderDate;	ORDER_DATE
+				private String orderSname;	ORDER_SNAME
+				private String productCode;	PRODUCT_CODE
+				private String couponCode;	COUPON_CODE
+				private int orderAmount;	ORDER_AMOUNT
+				private String memo;	MEMO
+				private String optionName;	OPTION_NAME
+				private String productName;	PRODUCT_NAME
+				private int productPrice;	PRODUCT_PRICE
+				private String categName1;	CATEG_NAME
+				private String categName2;	CATEG_NAME_1
+				private String categName3;	CATEG_NAME_2
+				private String postnum;	POSTNUM
+				private int postPrice;	POST_PRICE
+				private int couponType;	COUPON_TYPE
+				private int couponPdiscount;	COUPON_PDISCOUNT
+				private double couponRdiscount;	COUPON_RDISCOUNT
+				private String buyerName;	BUYER_NAME
+				private String buyerTel1;	BUYER_TEL1
+				private String buyerTel2;	BUYER_TEL2
+				private String receiverName;	RECEIVER_NAME
+				private String receiverTel1;	RECEIVER_TEL1
+				private String receiverTel2;	RECEIVER_TEL2
+				private String receiverAddr;	RECEIVER_ADDR
+				private String receiverMsg;	RECEIVER_MSG*/
+				
 				
 			}
 			
