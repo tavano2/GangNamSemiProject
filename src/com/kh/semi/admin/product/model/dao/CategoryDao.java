@@ -62,12 +62,12 @@ public class CategoryDao {
 				list = new ArrayList<Category>();
 				while(rset.next()) {
 					cate = new Category();
-					cate.setCateCode(rset.getString("CATE_CODE"));
-					cate.setCateName(rset.getString("CATE_NAME"));
-					cate.setCateUrl(rset.getString("CATE_URL"));
-					cate.setCateMemo(rset.getString("CATE_MEMO"));
-					cate.setCateLevel(rset.getInt("CATE_LEVEL"));
-					cate.setCateRefCode(rset.getString("CATE_REF_CODE"));
+					cate.setCateCode(rset.getString("CATEG_CODE"));
+					cate.setCateName(rset.getString("CATEG_NAME"));
+					cate.setCateUrl(rset.getString("CATEG_URL"));
+					cate.setCateMemo(rset.getString("CATEG_MEMO"));
+					cate.setCateLevel(rset.getInt("CATEG_LEVEL"));
+					cate.setCateRefCode(rset.getString("CATEG_REF_CODE"));
 					cate.setStatus(rset.getString("STATUS"));
 					
 					list.add(cate);
