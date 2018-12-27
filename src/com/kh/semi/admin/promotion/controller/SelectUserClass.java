@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kh.semi.admin.promotion.model.service.PromotionService;
-import com.kh.semi.admin.promotion.model.vo.PageInfo;
 
 /**
  * Servlet implementation class SelectUserClass
@@ -35,36 +34,7 @@ public class SelectUserClass extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int currentPage;
-		int limit;
-		int maxPage;
-		int startPage;
-		int endPage;
-
-		currentPage = 1;
-		if (request.getParameter("currentPage") != null) {
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
-
-		limit = 10;
-
-		// 전체 게시글 수 조회
-		int listCount = new PromotionService().getListCount();
-		// 총 페이지 수 계산
-		// 예를 들어 목록 수가 123개면 페이지수는 13페이지가 필요하다.
-		maxPage = (int) ((double) listCount / limit + 0.9);
-		// 현재 페이지에 보여줄 시작페이지 수
-		startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
-		
-		endPage = startPage + 10 - 1;
-		
-		if(maxPage < endPage) {
-			endPage = maxPage;
-		}
-		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		
-		
-		
+	
 		ArrayList<HashMap<String, String>> list = null;
 		list = new PromotionService().selectUserClass();
 		System.out.println(list);
