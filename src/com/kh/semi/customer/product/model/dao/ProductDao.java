@@ -466,6 +466,138 @@ public class ProductDao {
 		}
 		return result;
 	}
+
+	public ArrayList<HashMap<String, Object>> selectPointListBoard(Connection con, Member m, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HashMap<String, Object>> list = null;
+		HashMap<String, Object> hmap = null;
+		String query = prop.getProperty("selectPointListBoard");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			pstmt.setString(1, m.getUserId());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while(rset.next()) {
+					hmap = new HashMap<String,Object>();
+					hmap.put("order_lnum", rset.getString("ORDER_LNUM"));
+					hmap.put("user_id", rset.getString("USER_ID"));
+					hmap.put("order_date", rset.getDate("ORDER_DATE"));
+					hmap.put("plus_p", rset.getInt("PLUS_P"));
+					hmap.put("class_name", rset.getString("CLASS_NAME"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<HashMap<String, Object>> selectContentList(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HashMap<String, Object>> list = null;
+		HashMap<String, Object> hmap = null;
+		String query = prop.getProperty("selectContentList");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while(rset.next()) {
+					hmap = new HashMap<String,Object>();
+					hmap.put("order_lnum", rset.getString("ORDER_LNUM"));
+					hmap.put("user_id", rset.getString("USER_ID"));
+					hmap.put("order_date", rset.getDate("ORDER_DATE"));
+					hmap.put("plus_p", rset.getInt("PLUS_P"));
+					hmap.put("minus_p", rset.getInt("MINUS_P"));
+					hmap.put("class_name", rset.getString("CLASS_NAME"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	
+	public int selectTotalByPrice(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = prop.getProperty("selectTotalByPrice");
+		ArrayList<HashMap<String, Object>> list =  null;
+		HashMap<String, Object> hmap = null;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while(rset.next()) {
+					hmap = new HashMap<String,Object>();
+					hmap.put("price", rset.getInt("PRODUCT_PRICE"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		
+		for(HashMap<String, Object> selectPrice : list) {
+			result += (int)selectPrice.get("price");
+		}
+		return result;
+	}
+	
+	
+	public HashMap<String, Object> classNameAndByPrice(Connection con, int totalPirce) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		String query = prop.getProperty("resultClassNameAndStandardPrice");
+		//String query = "SELECT CLASS_CODE,STANDARD_PRICE FROM USER_CLASS WHERE STANDARD_PRICE > "+totalPirce;
+		try {
+			pstmt = con.prepareStatement(query);
+			//pstmt.setInt(1, totalPirce);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				System.out.println("진입중");
+				hmap = new HashMap<String,Object>();
+				hmap.put("class_name2", rset.getString("CLASS_NAME"));
+				hmap.put("standard2", rset.getInt("STANDARD_PRICE"));
+				hmap.put("totalByPrice",totalPirce);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println(hmap);
+		return hmap;
+	}
+
+
   	
   	
     

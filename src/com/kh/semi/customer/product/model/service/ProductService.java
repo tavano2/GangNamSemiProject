@@ -147,6 +147,30 @@ public class ProductService {
 		close(con);
 		return result;
 	}
+
+	// 적립금 내역 리스트
+	public ArrayList<HashMap<String, Object>> selectPointListBoard(Member m, int currentPage, int limit) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> list = new ProductDao().selectPointListBoard(con,m,currentPage,limit);
+		close(con);
+		return list;
+	}
+
+	//적립금 게시판 총 데이터
+	public ArrayList<HashMap<String, Object>> selectContentList(Member m) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> list = new ProductDao().selectContentList(con,m);
+		close(con);
+		return list;
+	}
+
+	public HashMap<String, Object> classNameAndByPrice(Member m) {
+		Connection con = getConnection();
+		int totalPirce = new ProductDao().selectTotalByPrice(con,m);
+		HashMap<String, Object> hmap = new ProductDao().classNameAndByPrice(con,totalPirce);
+		close(con);
+		return hmap;
+	}
 	
 	
 	
