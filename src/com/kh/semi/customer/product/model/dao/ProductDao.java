@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.vo.Product;
+import com.kh.semi.customer.product.model.vo.ShoppingCart;
 import com.sun.corba.se.impl.javax.rmi.PortableRemoteObject;
 
 import static com.kh.semi.customer.common.JDBCTemplate.*;
@@ -406,7 +407,7 @@ public class ProductDao {
 
 
     	// 장바구니 | Shopping Cart 조회 // DAO : Data Access Object : Get a request and Return the result.
-	/*public ArrayList<ShoppingCart> selectListCart(Connection con, int currentPage, int limit) {
+	public ArrayList<ShoppingCart> selectListCart(Connection con, int currentPage, int limit) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -444,7 +445,7 @@ public class ProductDao {
 		
 		return cart;
 	}
-    */
+    
     
     
     

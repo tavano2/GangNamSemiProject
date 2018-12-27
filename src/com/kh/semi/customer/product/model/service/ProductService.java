@@ -8,6 +8,7 @@ import com.kh.semi.customer.board.model.vo.Board;
 import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.dao.ProductDao;
 import com.kh.semi.customer.product.model.vo.Product;
+import com.kh.semi.customer.product.model.vo.ShoppingCart;
 
 import static com.kh.semi.customer.common.JDBCTemplate.*;
 
@@ -128,7 +129,7 @@ public class ProductService {
 	}
 
 	// 장바구니 | Shopping Cart 조회
-/*	public ArrayList<ShoppingCart> selectListCart(int currentShoppingCart, int limitShoppingCart) {
+	public ArrayList<ShoppingCart> selectListCart(int currentShoppingCart, int limitShoppingCart) {
 		Connection con = getConnection();
 		
 		ArrayList<ShoppingCart> cart  = new ProductDao().selectListCart(con, currentShoppingCart, limitShoppingCart);
@@ -137,7 +138,7 @@ public class ProductService {
 		
 		return cart;
 	}
-  */
+
 
 	
 	public int getListCountPointAndClassMember(Member m) {
