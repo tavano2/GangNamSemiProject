@@ -13,7 +13,9 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import com.kh.semi.customer.member.model.vo.Member;
+import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Product;
+import com.kh.semi.customer.product.model.vo.ReallyProduct;
 import com.kh.semi.customer.product.model.vo.ShoppingCart;
 import com.sun.corba.se.impl.javax.rmi.PortableRemoteObject;
 
@@ -465,6 +467,37 @@ public class ProductDao {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	
+	//상품코드 : PD1에있는값의 DB정보 불러오깅
+	public HashMap<String, Object> selectOneDetailPage(Connection con, String code) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		String productCode="PD000003";
+		
+		//키-맵
+		//product - p
+		//Attachment - list1234
+		
+		ReallyProduct pro = null;	//
+		Attachment at = null;		//
+		ArrayList<Attachment> detailProductList = null;	//
+		
+		String query = prop.getProperty("selectOneDetailPage");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, productCode);
+			rset = pstmt.executeQuery();
+			//list = new ArrayList<>()
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return hmap;
 	}
   	
   	
