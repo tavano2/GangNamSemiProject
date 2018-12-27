@@ -131,6 +131,12 @@
 	width: 200px;
 	background-color: #f9fafb;
 }
+.productName{
+	color:lightgray;
+	font-size:30px;
+	font-weight:bold;
+	font-famaily:Sans-Serif;
+}
 </style>
 
 </head>
@@ -161,24 +167,21 @@
                                   <%=info.getColor()%><br> 
                                   작성
                              %> --> --%>
-							Color
-							<br> oatmeal / gray / cream / black
-							<br>
-							<br> Fabric
-							<br> cotton 100%
-							<br>
-							<br> Size
-							<br> hood/어깨65.5 가슴58 암홀21.5 팔단면20.5 팔길이53 총장 앞60 뒤61
-							<br> sk/허리30(전체밴딩) 엉덩이41 밑단45.5 총장77 트임20
-							<br>
-							<br> Info
-							<br> 비침없음/ 신축성좋음/ 촉감보드라움/ 두께두꺼움/ 안감있음(양기모)
-							<br>
+                             
+						<br><br><br>
+                        	<p class="productName">기본 무지티</p>  
 						</tr>
 						<hr>
 						<tr>
-							판매가 39,500 won
-							<br> 색상 :
+							판매가 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								39,500 won<br><br>
+							적립금 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+							350 won<br>
+						<hr>
+							색상  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<div class="ui selection dropdown">
 								<!-- <input type="hidden" name="gender"> -->
 								<i class="dropdown icon"></i>
@@ -189,7 +192,8 @@
 									<div class="item" data-value="2">랜덤</div>
 								</div>
 							</div>
-							<br> 크기 :
+							<br> 크기  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<div class="ui selection dropdown">
 								<!-- <input type="hidden" name="gender"> -->
 								<i class="dropdown icon"></i>
@@ -201,8 +205,8 @@
 								</div>
 							</div>
 							<br>
-							<hr>
-							총 상품 금액(수량):200원
+							<hr><br>
+							<p align="center">총 상품 금액:200원</p> &nbsp;&nbsp;&nbsp;&nbsp;<br>
 							<div class="buyBtnDiv">
 								<button class="ui brown button buyBtn">By it Now</button>
 							</div>
