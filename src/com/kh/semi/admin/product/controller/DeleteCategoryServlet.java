@@ -10,51 +10,24 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.semi.admin.product.model.service.CateService;
 import com.kh.semi.admin.product.model.vo.Category;
 
-@WebServlet("/insertCate.product")
-public class InsertProductCategoryServlet extends HttpServlet {
+@WebServlet("/deleteCate.product")
+public class DeleteCategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public InsertProductCategoryServlet() {
+    public DeleteCategoryServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String cateName = "";
-		String cateRCode="";
-		int cateLevel = 0;
-		
-		if(request.getParameter("level").equals("")) {
-			cateName = "대분류";
-			cateRCode = "";
-		}else {
-			int cateLevel1 = Integer.parseInt(request.getParameter("level"));
-			String cateCode = request.getParameter("code");
-			
-			if(cateLevel1 == 0) {
-				cateRCode = cateCode;
-				cateName = "중분류";
-				cateLevel = 1;
-			}else {
-				cateName = "대분류";
-				cateRCode = "";
-			}
-		}
-		
-		/*String cateName = "대분류";
-		int cateLevel = 0;
-		String cateRCode = "";*/
+		String code = request.getParameter("code");
 		
 		Category cate = new Category();
-		cate.setCateName(cateName);
-		cate.setCateLevel(cateLevel);
-		cate.setCateRefCode(cateRCode);
+		cate.setCateCode(code);
 		
-		int result = new CateService().insertCategory(cate);
+		int result = new CateService().deleteCate(cate);
 		
-		if(result > 0) {
 			response.sendRedirect(request.getContextPath()+"/selectCategory.product");
-		}
-		
+	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

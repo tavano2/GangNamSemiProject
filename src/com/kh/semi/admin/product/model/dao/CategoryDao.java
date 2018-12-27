@@ -82,5 +82,24 @@ public class CategoryDao {
 		
 		return list;
 	}
+
+	public int deleteCate(Connection con, Category cate) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteCategory");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, cate.getCateCode());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 }
