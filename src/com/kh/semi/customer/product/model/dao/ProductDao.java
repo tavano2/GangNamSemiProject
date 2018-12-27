@@ -308,7 +308,7 @@ public class ProductDao {
       
 
 
-	//게시물 번호 넘겨받아 해당 게시물에 있는 댓글 조회
+	//게시물 번호 넘겨받아 해당 게시물에 있는 댓글 조회(자둉)
 	public ArrayList<Product> selectQnAReply(Connection con, int boardId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -363,7 +363,8 @@ public class ProductDao {
 		}
 		return result;
 	}
-/*
+
+  	//페이지 들어갔을때부터 댓글 조회
 	public ArrayList<Product> SelectReplyList(Connection con, String pQnABoardId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -402,7 +403,7 @@ public class ProductDao {
 		
 		return SelectReplyList;
 	}
-  */
+  
 
     	// 장바구니 | Shopping Cart 조회 // DAO : Data Access Object : Get a request and Return the result.
 	/*public ArrayList<ShoppingCart> selectListCart(Connection con, int currentPage, int limit) {

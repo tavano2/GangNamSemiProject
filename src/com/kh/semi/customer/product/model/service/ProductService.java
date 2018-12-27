@@ -114,7 +114,7 @@ public class ProductService {
 		return result;
 	}
 
-/*	public ArrayList<Product> SelectReplyList(String pQnABoardId) {
+	public ArrayList<Product> SelectReplyList(String pQnABoardId) {
 		Connection con = getConnection();
 		ArrayList<Product> SelectReplyList =null;
 		
@@ -122,7 +122,7 @@ public class ProductService {
 		
 		close(con);
 		return SelectReplyList;
-	}*/
+	}
 
 	// 장바구니 | Shopping Cart 조회
 /*	public ArrayList<ShoppingCart> selectListCart(int currentShoppingCart, int limitShoppingCart) {

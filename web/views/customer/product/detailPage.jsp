@@ -422,7 +422,7 @@
 							<td><%=pQnA.getUserId() %></td>
 							<td><%=pQnA.getBoardDate() %></td>
 							<%-- <td><%=pQnA.getBoardId() %></td> --%>
-							<input type="hidden" name="pQnABoardId" id="pQnABoardId" value="<%=pQnA.getBoardId() %>">
+							<input type="hidden" value="<%=pQnA.getBoardId() %>">
 						</tr>
 						
 						
@@ -567,13 +567,13 @@
 		$(function(){
 			$("#QnAlistArea td").click(function(){
 				var num = $(this).parent().children().eq(0).text();
-				var pQnABoardId = $(this)
+				var pQnABoardId = $(this).parent().find("input").val();
 
 				//console.log(num);
 				console.log(pQnABoardId);
 				
 				//글번호와 함께
-				location.href="<%=request.getContextPath()%>/SelectOneQnA.no?num="+num;
+				location.href="<%=request.getContextPath()%>/SelectOneQnA.no?num="+num+"&pQnABoardId="+pQnABoardId;
 				
 				
 			

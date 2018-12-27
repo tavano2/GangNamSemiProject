@@ -78,6 +78,34 @@ height:50px;
 
       </div>
       
+      
+      <!--//////////////////////////해당 게시물에 댓글 불러오기////////////////////////////////////  -->
+      
+      <div id="testtest">
+      <% for (Product p : SelectReplyList){%>
+      
+      <div class="detailQnAText" id="detailQnAText">
+         <div class="ui comments">
+            <div class="comment">
+               <a class="avatar"> <img src="/semi/views/images/products/person1.JPG">
+               </a>
+               <div class="content">
+                  <a class="author" id="author"><%=p.getBoardContent() %></a>
+                  <br>
+                 <input type="hidden" id="replyhiddenId" value="<%=SelectOneQnA.getBoardId() %>">
+               </div>
+            </div>
+         </div>
+
+      </div>
+      
+      <%} %>
+      
+      </div>
+            <!--//////////////////////////////////////////////////////////////  -->
+      
+      
+      
       <br><br>
       
       <%
@@ -159,20 +187,40 @@ height:50px;
    					success:function(data){
    						console.log(data)
    						
-   						var $rereply=$("#rereply");
-   						$rereply.html('');
+   						//var $rereply=$("#rereply");
+   						//$rereply.html('');
+   						
+   						var $testtest = $("#testtest");
+   						var $replyContent = $("#replyContent");
+   						$testtest.html('');
+   						$replyContent.val('');
    						
    						for(var key in data){
-   							var $tr = $("<tr>");
-   							var $replyContentTd = $("<td>").text(data[key].boardContent).css("width","400px");
-   							var $replyhiddenId = $("<td>").text(data[key].boardDate).css("width","100px");
-   							//var $rr = $("<td>").text("dfdf").css("width","100px");
    							
-   							//$tr.append($rr);
-   							$tr.append($replyContentTd);
-   							$tr.append($replyhiddenId);
+   							var $avatar = $(".avatar");
    							
-   							$rereply.append($tr);
+   							var $detailQnAText = $("<div>").addClass("detailQnAText");
+   							var $uicomments = $("<div>").addClass("ui comments");
+   							var $comment = $("<div>").addClass("comment");
+   							var $avatar = $("<a>").addClass("avatar");
+   							var $imgTag = $("<img>").attr("src","/semi/views/images/products/person1.JPG");
+   							var $content = $("<div>").addClass("content");
+   							var $author = $("<a>").addClass("author").text(data[key].boardContent);
+   							
+   							$content.append($author);
+   							$content.append($("<br>"));
+   							
+   							$avatar.append($imgTag);
+   							
+   							$comment.append($avatar);
+   							$comment.append($content);
+   							
+   							$uicomments.append($comment);
+   							
+   							$detailQnAText.append($uicomments);
+   							
+   							 $testtest.append($detailQnAText);
+
    						}
    						
    					},error:function(){
