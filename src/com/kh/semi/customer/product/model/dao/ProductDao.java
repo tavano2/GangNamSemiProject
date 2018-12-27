@@ -13,7 +13,9 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import com.kh.semi.customer.member.model.vo.Member;
+import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Product;
+import com.kh.semi.customer.product.model.vo.ReallyProduct;
 import com.kh.semi.customer.product.model.vo.ShoppingCart;
 import com.sun.corba.se.impl.javax.rmi.PortableRemoteObject;
 
@@ -370,7 +372,7 @@ public class ProductDao {
 		ResultSet rset = null;
 		ArrayList<Product> SelectReplyList = null;
 		
-		String query = prop.getProperty("selectQnArepltyList");
+		String query = prop.getProperty("selectQnAreplyList");
 		
 		try {
 			pstmt = con.prepareStatement(query);
@@ -406,14 +408,17 @@ public class ProductDao {
   
 
 
-    	// 장바구니 | Shopping Cart 조회 // DAO : Data Access Object : Get a request and Return the result.
+    	// 장바구니 | Shopping Cart > 조회
+	// DAO : Data Access Object : Get a request and Return the result. / DAO access to DataBase *directly*. (and Return the result.)
+	// VO : Value Object. = Its' an Object Class. It exists for exchanging data between classes.
+	// VO = DTO (Data Transfer Object) = Domain Object = Bean = Entity
 	public ArrayList<ShoppingCart> selectListCart(Connection con, int currentPage, int limit) {
 		
-		PreparedStatement pstmt = null;
+		PreparedStatement pstmt = null;// PreparedStatement : An object that represents a pre-compiled SQL statement. 
 		ResultSet rset = null;
 		ArrayList<ShoppingCart> cart = null;
 		
-		String query = prop.getProperty("ShoppingCart");		// NOT YET.
+		String query = prop.getProperty("ShoppingCart");//"ShoppingCart" = VO
 		
 		try {
 			pstmt = (PreparedStatement) con.createStatement();
@@ -426,7 +431,7 @@ public class ProductDao {
 				ShoppingCart c = new ShoppingCart();
 				
 				c.setProductCode(rset.getInt("PRODUCT_CODE"));
-				c.setUserId(rset.getInt("USER_ID"));
+				c.setUserId(rset.getString("USER_ID"));
 				c.setOptionNum(rset.getInt("OPTION_NUM"));
 				c.setAmount(rset.getInt("AMOUNT"));
 				
@@ -446,9 +451,36 @@ public class ProductDao {
 		return cart;
 	}
     
+	// deleteCartList
+	public int deleteCartList(Connection con, String msg, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteCartList");
+		
+		return 0;
+	}
     
-    
-    
+    /*
+     * 
+     * public int deleteWishList(Connection con, String msg, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteWishList");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, msg);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	*/
+	
+	
 	public int getListCountPointAndClassMember(Connection con, Member m) {
 		int result = 0;
 		ResultSet rset = null;
@@ -466,6 +498,7 @@ public class ProductDao {
 		}
 		return result;
 	}
+
 
 	public ArrayList<HashMap<String, Object>> selectPointListBoard(Connection con, Member m, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
@@ -594,6 +627,40 @@ public class ProductDao {
 			close(pstmt);
 		}
 		System.out.println(hmap);
+		return hmap;
+	}
+
+
+
+
+	
+	//상품코드 : PD1에있는값의 DB정보 불러오깅
+	public HashMap<String, Object> selectOneDetailPage(Connection con, String code) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		String productCode="PD000003";
+		
+		//키-맵
+		//product - p
+		//Attachment - list1234
+		
+		ReallyProduct pro = null;	//
+		Attachment at = null;		//
+		ArrayList<Attachment> detailProductList = null;	//
+		
+		String query = prop.getProperty("selectOneDetailPage");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, productCode);
+			rset = pstmt.executeQuery();
+			//list = new ArrayList<>()
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return hmap;
 	}
 

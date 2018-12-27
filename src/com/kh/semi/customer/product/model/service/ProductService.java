@@ -128,8 +128,11 @@ public class ProductService {
 		return SelectReplyList;
 	}
 
-	// 장바구니 | Shopping Cart 조회
-	public ArrayList<ShoppingCart> selectListCart(int currentShoppingCart, int limitShoppingCart) {
+	// ----------------------------------------------------------------------------------------------------------------------------
+
+	
+	// 장바구니 | Shopping Cart : 조회
+	public ArrayList<ShoppingCart> selectCartList(int currentShoppingCart, int limitShoppingCart) {
 		Connection con = getConnection();
 		
 		ArrayList<ShoppingCart> cart  = new ProductDao().selectListCart(con, currentShoppingCart, limitShoppingCart);
@@ -138,15 +141,34 @@ public class ProductService {
 		
 		return cart;
 	}
-
-
 	
+	// 장바구니 | Shopping Cart : Deletion
+	public int deleteCartList(String[] product_code, String userId) {
+		Connection con = getConnection();
+		int result = 0;
+		int count = 0;
+		for(String msg : product_code) {
+			count += new ProductDao().deleteCartList(con,msg,userId);
+		}
+		if(product_code.length == count) {
+			commit(con);
+			result = 1;
+		}else {
+			rollback(con);
+		}
+		close(con);
+		return result;
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------------------
+
 	public int getListCountPointAndClassMember(Member m) {
 		Connection con = getConnection();
 		int result = new ProductDao().getListCountPointAndClassMember(con,m);
 		close(con);
 		return result;
 	}
+
 
 	// 적립금 내역 리스트
 	public ArrayList<HashMap<String, Object>> selectPointListBoard(Member m, int currentPage, int limit) {
@@ -168,6 +190,14 @@ public class ProductService {
 		Connection con = getConnection();
 		int totalPirce = new ProductDao().selectTotalByPrice(con,m);
 		HashMap<String, Object> hmap = new ProductDao().classNameAndByPrice(con,totalPirce);
+
+	//상품코드 : PD1에있는값의 DB정보 불러오깅
+	public HashMap<String, Object> selectOneDetailPage(String code) {
+
+		Connection con = getConnection();
+		HashMap<String , Object> hmap = new ProductDao().selectOneDetailPage(con,code);
+		
+
 		close(con);
 		return hmap;
 	}
