@@ -29,9 +29,10 @@
 	                                        <div class="item" data-value="7">수령자 일반전화</div>
 	                                        <div class="item" data-value="8">수령자 휴대전화</div>
 	                                        <div class="item" data-value="9">배송지 주소</div>
+	                                        <div class="item" data-value="10">배송 메세지</div>
 	                                        <div class="divider"></div>
-	                                        <div class="item" data-value="10">운송장번호</div>
-	                                        <div class="item" data-value="11">메모</div>
+	                                        <div class="item" data-value="11">운송장번호</div>
+	                                        <div class="item" data-value="12">메모</div>
 	                                    </div>
 	                                </div>
 	                                <div class="ui input">
@@ -74,8 +75,8 @@
 	                                    <i class="dropdown icon"></i>
 	                                    <div class="default text">검색목록선택</div>
 	                                    <div class="menu">
-	                                        <div class="item" data-value="1">상품명</div>
-	                                        <div class="item" data-value="2">상품코드</div>
+	                                        <div class="item" data-value="1">상품코드</div>
+	                                        <div class="item" data-value="2">상품명</div>
 	                                        <div class="item" data-value="3">카테고리 이름</div>
 	                                    </div>
 	                                </div>
