@@ -93,9 +93,7 @@
                     LogOut
                 </a>
                 <%} %>
-
                 <a class="item" href="<%=request.getContextPath()%>/shoppingCart.pd">
-
                     Cart
                 </a>
                 <a class="item" href="/semi/views/customer/member/userMyPage.jsp">
