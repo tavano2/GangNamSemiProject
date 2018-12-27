@@ -1,6 +1,7 @@
 package com.kh.semi.admin.product.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import com.kh.semi.admin.product.model.dao.CategoryDao;
 import com.kh.semi.admin.product.model.vo.Category;
@@ -22,4 +23,11 @@ public class CateService {
 		return result;
 	}
 
+	public ArrayList<Category> selectCategory() {
+		Connection con = getConnection();
+		ArrayList<Category> list = new CategoryDao().selectCategory(con);
+		close(con);
+		
+		return list;
+	}
 }

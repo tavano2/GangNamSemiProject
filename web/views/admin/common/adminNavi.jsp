@@ -11,7 +11,7 @@
             <a class="item" href="/semi/views/admin/member/adminMainMember.jsp">
                 <i class="address book icon"></i> 회원관리
             </a>
-            <a class="item" href="/semi/views/admin/product/adminMainProduct.jsp">
+            <a class="item" href="<%=request.getContextPath()%>/selectCategory.product">
                 <i class="grid layout icon"></i> 상품관리
             </a>
             <a class="item" href="/semi/views/admin/board/adminBoardManagement.jsp">
