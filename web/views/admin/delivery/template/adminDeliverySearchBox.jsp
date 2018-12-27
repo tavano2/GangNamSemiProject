@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-				<form action="<%=request.getContextPath() %>/adminOrderSearch.de" method="get" id="searchBox">
+				<form action="<%=request.getContextPath() %>/adminOrderSearch.de" method="post" id="searchBox">
 					<input type="hidden" name="uri" value="<%=request.getRequestURI()%>">
 	                <table class="ui celled table order-search">
 	                    <!-- 검색 테이블 -->
