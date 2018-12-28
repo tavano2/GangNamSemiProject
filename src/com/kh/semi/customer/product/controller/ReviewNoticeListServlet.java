@@ -2,8 +2,8 @@ package com.kh.semi.customer.product.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import javax.print.attribute.standard.RequestingUserName;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,13 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.semi.customer.board.model.service.BoardService;
-import com.kh.semi.customer.board.model.vo.Board;
 import com.kh.semi.customer.board.model.vo.PageInfo;
 import com.kh.semi.customer.product.model.service.ProductService;
+import com.kh.semi.customer.product.model.vo.Attachment;
+import com.kh.semi.customer.product.model.vo.Option;
 import com.kh.semi.customer.product.model.vo.Product;
+import com.kh.semi.customer.product.model.vo.ReallyProduct;
 
 
-@WebServlet("/reviewNoticeList.no")
+@WebServlet("/productDetailPage.pd")
 public class ReviewNoticeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -70,7 +72,7 @@ public class ReviewNoticeListServlet extends HttpServlet {
 		 */
 	
 		
-		/////////////////////////QnA 리스트 조회///////////////////////////////////
+		/////////////////////////////////////QnA 리스트 조회//////////////////////////////////////////////////
 		int currentPageQnA;	
 		int limitQnA;			
 		int maxPageQnA;		
@@ -111,6 +113,26 @@ public class ReviewNoticeListServlet extends HttpServlet {
 		//System.out.println("ListQnA"+listQnA);
 		
 		
+		////////////////////////////////////상품상세페이지 이름,가격 이미지 /////////////////////////////////////////////////
+		String code = request.getParameter("code");
+		//System.out.println("상품코드:"+code);
+		
+		//상품코드 : PD1에있는값의 DB정보 불러오깅
+		HashMap<String, Object> hmap = new ProductService().selectOneDetailPage(code);
+		
+
+		//map에서 꺼내주기
+		ReallyProduct pro = (ReallyProduct)hmap.get("pro");
+		ArrayList<Attachment> detailAttachmentList = (ArrayList<Attachment>)hmap.get("detailAttachmentList");
+		ArrayList<Option> detailOptionList =(ArrayList<Option>)hmap.get("detailOptionList");
+		
+		//System.out.println(detailAttachmentList.get(0)); 	//사진1
+		//System.out.println(detailAttachmentList.get(1));	//사진2
+		//System.out.println(detailAttachmentList.get(2));	//사진3
+		//System.out.println(detailAttachmentList.get(3));	//사진4
+		//System.out.println(detailAttachmentList.get(0).getChangeName());
+		//System.out.println(detailAttachmentList.get(0).getFilePath());
+
 		/////////////페이지 넘기기/////////////////
 		String page="";
 		if(list!=null && listQnA!=null) {
@@ -119,6 +141,9 @@ public class ReviewNoticeListServlet extends HttpServlet {
 			request.setAttribute("listQnA", listQnA);
 			request.setAttribute("propi", propi);
 			request.setAttribute("piQnA", piQnA);
+			request.setAttribute("pro", pro);
+			request.setAttribute("detailAttachmentList", detailAttachmentList);
+			request.setAttribute("detailOptionList", detailOptionList);
 		}else {
 			page="views/customer/common/errorPage.jsp";
 			request.setAttribute("msg", "리뷰게시판,상품문의 게시판 조회 실팽 ㅠㅠㅠㅠㅠㅠ");

@@ -154,6 +154,7 @@ public class ProductService {
 		Connection con = getConnection();
 		HashMap<String , Object> hmap = new ProductDao().selectOneDetailPage(con,code);
 		
+
 		close(con);
 		return hmap;
 	}
