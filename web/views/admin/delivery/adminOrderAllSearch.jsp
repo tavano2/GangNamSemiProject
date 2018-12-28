@@ -1,5 +1,9 @@
+<%@page import="com.kh.semi.customer.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	Member loginUser = (Member)session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 
@@ -21,6 +25,8 @@
 
 <body>
 	
+	<%if(loginUser != null && loginUser.getUserId().equals("admin")) {%>
+	
 	<!-- 사이드바 메뉴 -->
     <%@ include file = "/views/admin/common/adminSidebarDelivery.jsp" %>
     
@@ -40,24 +46,25 @@
 				<!-- result-box -->
                 <h3 class="ui header">검색 결과</h3>
 				<form action="" method="post" id="resultBox" name="resultBox">
-	                	<table class="ui celled table order-result">
+	                <table class="ui celled table order-result">
 	                    <!-- 검색 결과 테이블 -->
 	                    <thead>
 	                        <tr><th colspan="12">
                             	<div class="ui grid">
+                            		<input type="hidden" name="changeState" id="changeState">
 		                            <div class="ten wide column">
-		                                <button class="ui grey button" type="button" onclick="deliveryCompleteTo();">배송완료</button>
+		                                <button class="ui grey button" type="button" onclick="changeStateBtn(this);">배송완료</button>
 		                            </div>
 		                            
 	                                <div class="six wide column right aligned">
-	                                	<button class="ui black basic button" type="button" id="resultReset">초기화</button>
+	                                	<button class="ui black basic button" type="button" onclick="resultReset();">초기화</button>
 		                                <div class="ui selection dropdown">
-		                                    <input type="hidden" name="resultOrderBy">
+		                                    <input type="hidden" name="resultOrderBy" id="resultOrderBy">
 		                                    <i class="dropdown icon"></i>
 		                                    <div class="default text">정렬선택</div>
 		                                    <div class="menu">
-		                                        <div class="item" data-value="0">주문일순</div>
-		                                        <div class="item" data-value="1">주문일역순</div>
+		                                        <div class="item" data-value="1">주문일순</div>
+		                                        <div class="item" data-value="2">주문일역순</div>
 		                                    </div>
 		                                </div>
 	                                </div>
@@ -81,7 +88,7 @@
 	                    </thead>
 	                    
 	                    <tbody class="center aligned">
-	                    	
+	                    	<!-- 데이터 드가욧! -->
 	                    </tbody>
 	                    
 	                    <tfoot>
@@ -122,19 +129,38 @@
 	
 	<script>
 		var searchResult = null;
-		var limit = 1;
+		var limit = 10;
 		var currentPage = 1;
 		var maxPage = 0;
 		
-		function deliveryCompleteTo(){
-			resultBox.action = '';
-			resultBox.submit();
+		function changeStateBtn(btn){
+			var statusChk = true;
+			
+			var chkList = $(".order-result input[type='checkbox']:checked");
+			
+			for(var i=0; i<chkList.length; i++){
+				var status = $(chkList[i]).parents("tr").children().eq(10).text();
+				
+				if(status != "구매확정"){
+					statusChk = false;
+					alert("구매확정인 주문만 상태를 변경할 수 있습니다.");
+					break;
+				}
+			}
+			
+			if(chkList.length > 0 && statusChk){
+				$("#changeState").val(btn.innerText);
+				resultBox.action = '<%=request.getContextPath()%>/adminStatusChange.de';
+				resultBox.submit();
+			}
 		}
 		
 		$(function(){
 			$('#orderState').show();
 		});
 		
+		
+		//검색 버튼
 		function searchBtn(){
 			var searchCondition = $("#searchBox").serialize();
 			
@@ -143,16 +169,21 @@
 				type: 'post',
 				data: searchCondition,
 				success: function(data){
+					//결과 초기화
+					resultReset();
+					
+					//전역변수에 데이터 담기
 					searchResult = data;
 					
+					//각 변수 초기화
 					currentPage = 1;
 					var listCount = searchResult.length;
-					maxPage = Math.floor((listCount - 1) / limit);
+					maxPage = Math.floor((listCount - 1) / limit) + 1;
 					
 					var startIdx = limit * (currentPage - 1);
 					var endIdx = startIdx + limit;
 					
-					//리스트 뿌리기
+					//결과 목록 뿌리기
 					showList(startIdx, endIdx);
 					
 					//페이지 버튼 생성
@@ -162,27 +193,28 @@
 					
 					$("#paging .item:nth-last-child(2)").before($pageNum1);
 					
-					for(var i=0; i<9; i++){
-						if (i < maxPage){
-							$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(i+2));
+					for(var i=2; i<=10; i++){
+						if (i <= maxPage){
+							$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(i));
 						} else break;
 					}
-					//페이지 버튼 온 클릭 활성화
+					
+					//페이지 버튼 온클릭 활성화(새로 생성했으므로 버튼 온클릭 메서드를 재생성해줘야 함)
 					pagingActive();
 					
 					
 					//1페이지로
 					$('#paging .angle.double.left.icon').parent().click(function(){
-						if ($('#paging .item:first-child').text() != "1") {
+						if ($('#paging .item.active').text() != "1") {
 							$("#paging").find(".item:not(.icon.item)").remove();
 							
 							var $pageNum1 = $("<a class='item active'>").text("1");
 							
 							$("#paging .item:nth-last-child(2)").before($pageNum1);
 							
-							for(var i=0; i<9; i++){
-								if (i < maxPage){
-									$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(i+2));
+							for(var i=2; i<=10; i++){
+								if (i <= maxPage){
+									$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(i));
 								} else break;
 							}
 							
@@ -198,19 +230,16 @@
 					
 					//왼쪽 10칸 이동
 					$('#paging .angle.left.icon').parent().click(function(){
-						var startPage = Math.floor((currentPage-1) / 10);
+						var currStartPage = $("#paging .item:nth-child(3)").text();
 						
-						if (startPage > 0) {
+						if (currStartPage > 10) {
 							$("#paging").find(".item:not(.icon.item)").remove();
 							
-							currentPage = currentPage - 10;
-							startPage = Math.floor((currentPage-1) / 10);
-							var startIdx = limit * (currentPage - 1);
-							var endIdx = startIdx + limit;
+							startPage = Math.floor((currStartPage - 10) / 10);
 							
-							for(var i=0; i<10; i++){
-								if (startPage*10 + i - 1 < maxPage){
-									$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(startPage*10 + i + 1));
+							for(var i=1; i<=10; i++){
+								if (startPage*10 + i <= maxPage){
+									$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(startPage*10 + i));
 								} else break;
 							}
 							
@@ -225,13 +254,11 @@
 						if (currMaxPage < maxPage) {
 							$("#paging").find(".item:not(.icon.item)").remove();
 							
-							startPage = Math.floor((currMaxPage) / 10);
-							var startIdx = limit * (currMaxPage);
-							var endIdx = startIdx + limit;
+							startPage = Math.floor(currMaxPage / 10);
 							
-							for(var i=0; i<10; i++){
-								if (startPage*10 + i - 1 < maxPage){
-									$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(startPage*10 + i + 1));
+							for(var i=1; i<=10; i++){
+								if (startPage*10 + i <= maxPage){
+									$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(startPage*10 + i));
 								} else break;
 							}
 							
@@ -240,18 +267,80 @@
 					});
 					
 					//맨 끝으로
-					$('#paging .angle.right.icon').parent().click(function(){
-						currentPage = maxPage;
-						
-						
+					$('#paging .angle.double.right.icon').parent().click(function(){
+						if ($('#paging .item.active').text() != maxPage) {
+							$("#paging").find(".item:not(.icon.item)").remove();
+							
+							startPage = Math.floor((maxPage) / 10);
+							
+							for(var i=1; i<=9; i++){
+								if (startPage*10 + i < maxPage){
+									$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(startPage*10 + i));
+								} else break;
+							}
+							
+							var $pageEnd = $("<a class='item active'>").text(maxPage);
+							
+							$("#paging .item:nth-last-child(2)").before($pageEnd);
+							
+							pagingActive();
+							
+							currentPage = maxPage;
+							var startIdx = limit * (currentPage - 1);
+							var endIdx = startIdx + limit;
+							
+							showList(startIdx, endIdx);
+						}
+					});
+					
+					//정렬순서 이벤트
+					$("#resultOrderBy").val(2);
+					$("#resultOrderBy").change(function(){
+						if ($("#resultOrderBy").val() == 1) {
+							//주문일순
+							searchResult.reverse();
+							console.log("1");
+							var startIdx = limit * (currentPage - 1);
+							var endIdx = startIdx + limit;
+							
+							showList(startIdx, endIdx);
+						} else if ($("#resultOrderBy").val() == 2) {
+							//주문일역순
+							searchResult.reverse();
+							console.log("2");
+							var startIdx = limit * (currentPage - 1);
+							var endIdx = startIdx + limit;
+							
+							showList(startIdx, endIdx);
+						}
 					});
 					
 				}, error: function(){
-					console.log("실패ㅠㅠ");
+					console.log("검색 실패ㅠㅠ");
 				}
 			});
 		}
 		
+		//페이징넘버 클릭시
+		function pagingActive() {
+			$('#paging .item:not(.icon.item)').click(function(){
+				$('#paging .item').removeClass('active');
+				$(this).addClass('active');
+				
+				currentPage = $(this).text();
+				var listCount = searchResult.length;
+				
+				var startIdx = limit * (currentPage - 1);
+				var endIdx = startIdx + limit;
+				
+				var $tbody = $('.order-result tbody');
+				$tbody.html('');
+				
+				showList(startIdx, endIdx);
+			});
+		}
+		
+		//테이블 행 생성
 		function showList(startIdx, endIdx){
 			var $tbody = $('.order-result tbody');
 			$tbody.html('');
@@ -268,7 +357,7 @@
 					$td1.append($chkDiv);
 					var $td2 = $("<td>").text(searchResult[i].orderDate);
 					var $td3 = $("<td>");
-					var $a = $("<a href='/semi/views/admin/delivery/adminOrderDetail.jsp'>").text(searchResult[i].orderLnum);
+					var $a = $("<a href='/semi/orderDetail.de?orderLnum=" + searchResult[i].orderLnum + "'>").text(searchResult[i].orderLnum);
 					$td3.append($a);
 					var $td4 = $("<td>").text(searchResult[i].userId);
 					var $td5 = $("<td>").text(searchResult[i].product);
@@ -298,26 +387,31 @@
 			}
 		}
 		
-		//페이징넘버 클릭시 active
-		function pagingActive() {
-			$('#paging .item:not(.icon.item)').click(function(){
-				$('#paging .item').removeClass('active');
-				$(this).addClass('active');
-				
-				currentPage = $(this).text();
-				var listCount = searchResult.length;
-				
-				var startIdx = limit * (currentPage - 1);
-				var endIdx = startIdx + limit;
-				
-				var $tbody = $('.order-result tbody');
-				$tbody.html('');
-				
-				showList(startIdx, endIdx);
-			});
+		//검색결과 리셋
+		function resultReset(){
+			searchResult = null;
+			
+			resultBox.reset();
+			
+			$('#resultBox .ui.dropdown').dropdown('restore defaults');
+			$('#resultBox tbody').text("");
+
+			$("#paging").find(".item:not(.icon.item)").remove();
+			var $pageNum1 = $("<a class='item active'>").text("1");
+			$("#paging .item:nth-last-child(2)").before($pageNum1);
+			
+			$('#paging .angle.double.left.icon').parent().off();
+			$('#paging .angle.left.icon').parent().off();
+			$('#paging .angle.right.icon').parent().off();
+			$('#paging .angle.double.right.icon').parent().off();
+			$("#resultOrderBy").off();
 		}
-		
 	</script>
+	
+	<%} else {
+		request.setAttribute("msg", "잘못된 페이지 접근!");
+		request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
+	} %>
 	
 </body>
 

@@ -1,7 +1,7 @@
 //컨텐츠 박스의 드롭다운 실행
 $('.content-box .ui.dropdown').dropdown();
 
-// 페이지 로드시 날짜를 오늘로 초기화
+/*// 페이지 로드시 날짜를 오늘로 초기화
 $(function() {
 	var today = new Date();	//오늘 날짜로 Date 객체 생성
 	var todayStr = today.getFullYear() + '-'
@@ -9,7 +9,7 @@ $(function() {
 			+ ('0' + today.getDate()).slice(-2);	//Date 객체를 'yyyy-mm-dd' 스트링 객체로 변환
 	$('#startDate').prop('defaultValue', todayStr);	//defaultValue에 넣으면 reset버튼을 클릭하면 defaultValue로 초기화됨
 	$('#endDate').prop('defaultValue', todayStr);
-});
+});*/
 
 //검색 조건 리셋
 function activeReset() {
@@ -163,11 +163,4 @@ $('#orderState .chk-list .child.checkbox').checkbox({
 			$parentCheckbox.checkbox('set indeterminate');
 		}
 	}
-});
-
-//검색결과 리셋
-$('#resultReset').click(function(){
-	resultBox.reset();
-	$('#resultBox .ui.dropdown').dropdown('restore defaults');
-	$('#resultBox tbody').text("");
 });

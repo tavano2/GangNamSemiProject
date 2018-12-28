@@ -356,5 +356,28 @@ public class AdminDeliveryDao {
 		
 		return searchResult;
 	}
+	public int changeOrderStatus(Connection con, String orderLnum, String changeState) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("changeOrderStatus");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, changeState);
+			pstmt.setString(2, orderLnum);
+			
+			result = pstmt.executeUpdate();
+			
+			if(result > 0) result = 1;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
 }
