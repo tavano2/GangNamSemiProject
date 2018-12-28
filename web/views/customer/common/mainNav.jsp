@@ -47,10 +47,10 @@
             <!-- <p>소제목</p> -->
             <li><a href="/semi/index.jsp">홈</a></li>
             <li><a href="/semi/views/customer/board/notice.jsp">공지사항</a></li>
-            <li><a href="/semi/views/customer/member/userMyPage.jsp">마이페이지</a></li>
+            <li><a href="<%=request.getContextPath()%>/selectMyPage.me">마이페이지</a></li>
             <li><a href="/semi/views/customer/product/shoppingCart.jsp">장바구니</a></li>
             <li><a href="/semi/views/customer/delivery/orderList.jsp">주문내역</a></li>
-            <li><a href="/semi/views/customer/promotion/UserNoteCoupon.jsp">쪽지/쿠폰함</a></li>
+            <li><a href="<%=request.getContextPath()%>/selectMessageAndCoupon.pm">쪽지/쿠폰함</a></li>
         </ul>
     </nav>
 
@@ -96,7 +96,7 @@
                 <a class="item" href="<%=request.getContextPath()%>/shoppingCart.pd">
                     Cart
                 </a>
-                <a class="item" href="/semi/views/customer/member/userMyPage.jsp">
+                <a class="item" href="<%=request.getContextPath()%>/selectMyPage.me">
                     My Page
                 </a>
                 <a class="item" href="/semi/views/customer/delivery/orderList.jsp">

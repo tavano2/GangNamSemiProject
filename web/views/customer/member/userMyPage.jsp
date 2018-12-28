@@ -1,5 +1,82 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%
+	HashMap<String,Object> userMap = null;
+	
+	if(request.getAttribute("userMap") != null){
+		userMap = (HashMap<String,Object>)request.getAttribute("userMap");
+	}
+	
+	HashMap<String,Object> nextClass = null;
+	int currentPrice = 0;
+	int nextPirce = 0;
+	int resultPirce = 0;
+	if(request.getAttribute("nextClass") != null){
+		nextClass = (HashMap<String,Object>)request.getAttribute("nextClass");
+		currentPrice = (int)nextClass.get("totalPirce");
+		nextPirce = (int)nextClass.get("standard_price");
+		resultPirce = nextPirce - currentPrice;
+	}
+	HashMap<String,Object> beforePrice = null;
+	if(request.getAttribute("beforePrice") != null){
+		beforePrice = (HashMap<String,Object>)request.getAttribute("beforePrice");
+	}
+	ArrayList<HashMap<String,Object>> pointGroupList = null;
+	int currentPoint = 0;
+	int minusPoint = 0;
+	int totalPoint = 0;
+	if(request.getAttribute("pointGroupList") != null){
+		pointGroupList = (ArrayList<HashMap<String,Object>>)request.getAttribute("pointGroupList");
+		if(pointGroupList.size() > 0){
+			for(HashMap<String,Object> pointHmap : pointGroupList){
+				totalPoint += (int)pointHmap.get("plus_p");
+				minusPoint += (int)pointHmap.get("minus_p");
+			}
+			currentPoint = totalPoint - minusPoint;
+		}
+	}
+	
+	
+	int countCoupon = (int)request.getAttribute("countCoupon");
+	int totalByCount = (int)request.getAttribute("totalByCount");
+	
+	
+	ArrayList<HashMap<String,Object>> myDeliveryStatus = null;
+	int deliveryStay = 0;
+	int delivering = 0;
+	int deliveryComplete = 0;
+	int byComplete = 0;
+	int cancleComplete = 0;
+	int exchangeComplete = 0;
+	int returnComplete = 0;
+	if(request.getAttribute("myDeliveryStatus") != null){
+		myDeliveryStatus = (ArrayList<HashMap<String,Object>>)request.getAttribute("myDeliveryStatus");
+		if(myDeliveryStatus.size() > 0){
+			for(HashMap<String,Object> delHmap : myDeliveryStatus){
+				switch(delHmap.get("order_sname")+""){
+					case "배송준비중" : deliveryStay++;
+						break;
+					case "배송중" : delivering++;
+						break;
+					case "배송완료" : deliveryComplete++;
+						break;
+					case "구매확정" : byComplete++;
+						break;
+					case "취소완료" : cancleComplete++;
+						break;
+					case "교환완료" : exchangeComplete++;
+						break;
+					case "반품완료" : returnComplete++;
+						break;
+				}
+			}
+		}
+	}
+	
+	
+	%>
 <!DOCTYPE html>
 <html>
 
@@ -48,13 +125,22 @@
 					<tr>
 						<td style="width: 250px; border-right: white;" rowspan="3">이미지</td>
 						<td style="border-bottom: white;">
-							<p>저희 쇼핑몰을 이용해 주셔서 감사합니다. ?? 님은 ?? 회원이십니다.</p>
+							<p>저희 쇼핑몰을 이용해 주셔서 감사합니다. <%=arry[0] %> 님은 <%=userMap.get("class_name") %> 회원이십니다.</p>
 						</td>
 					</tr>
 					<tr>
 
 						<td style="border-bottom: white; border-top: white;">
-							<p>?? 까지 남은 구매금액은 ?? 입니다. (최근 12개월 동안 구매금액 : ?? )</p>
+							<%if(nextClass.size() > 0) {%>
+							<p><%=nextClass.get("class_name") %> 까지 남은 구매금액은 <%=resultPirce %>원입니다.</p>
+							<%} else {%>
+							<p>축하합니다! 마지막 등급입니다.</p>
+							<%} %>
+							<%if(beforePrice.size() > 0) {%>
+							<p> (최근 12개월 동안 구매금액 : <%=beforePrice.get("oneYearTotalPrice") %>원 )</p>
+							<%}else{ %>
+								<p>(최근 12개월 동안 구매금액 : 0원 )</p>
+							<%} %>
 						</td>
 					</tr>
 					<tr>
@@ -76,8 +162,8 @@
 						<td
 							style="text-align: left; border-bottom: white; border-right: white;">가용적립금</td>
 						<td
-							style="text-align: right; border-bottom: white; border-left: white;">?원&nbsp;
-							<button class="ui grey basic mini button">
+							style="text-align: right; border-bottom: white; border-left: white;"><%=currentPoint %>원&nbsp;
+							<button class="ui grey basic mini button" onclick="location.href='<%=request.getContextPath()%>/selectPointAndMemberClassList.pd' ">
 								<i class="chevron left icon"></i> 조회
 							</button>
 						</td>
@@ -86,23 +172,24 @@
 							적립금</td>
 						<td
 							style="text-align: right; border-bottom: white; border-left: white;">
-							<p>?원</p>
+							<p><%=totalPoint %>원</p>
 						</td>
 					</tr>
 					<tr>
 						<td
 							style="text-align: left; border-top: white; border-bottom: white; border-right: white;">사용적립금</td>
 						<td
-							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">?원
+							style="text-align: right; border-top: white; border-bottom: white; border-left: white;"><%=minusPoint %>원
 						</td>
 						<td
 							style="text-align: left; border-top: white; border-bottom: white; border-right: white;">쿠폰</td>
 						<td
 							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">
-							?개&nbsp;
-							<button class="ui grey basic mini button">
-								<i class="chevron left icon"></i> 조회
-							</button>
+							<%if(countCoupon != 0) {%>
+							<%=countCoupon %>개&nbsp;
+							<%}else{ %>
+							0개&nbsp;
+							<%} %>
 						</td>
 					</tr>
 					<tr>
@@ -110,7 +197,19 @@
 							style="text-align: left; border-top: white; border-bottom: white; border-right: white;">총
 							주문</td>
 						<td
-							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">?원(?회)</td>
+							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">
+							
+							<%if(nextClass.size() > 0 ){ %>
+							<%=currentPrice %>원
+							<%}else{ %>
+								0원
+							<%} %>
+							<%if(totalByCount > 0) {%>
+							(<%=totalByCount %>회)
+							<%}else{ %>
+							(0회)
+							<%} %>
+							</td>
 						<td
 							style="text-align: left; border-top: white; border-bottom: white; border-right: white;"></td>
 						<td
@@ -133,31 +232,68 @@
 				</div>
 				<div class="item">
 					<div class="content" style="font-size: 15px; width: 100px;">
-						<br> 입금 전 <br>
-						<br> <b>0</b>
-					</div>
-				</div>
-				<div class="item">
-					<div class="content" style="font-size: 15px; width: 100px;">
 						<br> 배송준비중 <br>
-						<br> <b>0</b>
+						<br> 
+						<%if(deliveryStay  > 0) {%>
+						<b><%=deliveryStay %></b>
+						<%} else { %>
+						<b>0</b>
+						<%} %>
 					</div>
 				</div>
 				<div class="item">
 					<div class="content" style="font-size: 15px; width: 100px;">
 						<br> 배송중 <br>
-						<br> <b>0</b>
+						<br> 
+							<%if(deliveryStay  > 0) {%>
+						<b><%=deliveryStay %></b>
+						<%} else { %>
+						<b>0</b>
+						<%} %>
 					</div>
 				</div>
 				<div class="item">
 					<div class="content" style="font-size: 15px; width: 100px;">
 						<br> 배송완료 <br>
-						<br> <b>0</b>
+						<br> 
+							<%if(deliveryComplete > 0) {%>
+						<b><%=deliveryComplete %></b>
+						<%} else { %>
+						<b>0</b>
+						<%} %>
 					</div>
 				</div>
 				<div class="item">
 					<div class="content" style="font-size: 15px; width: 100px;">
-						<br> 취소 : <b>0</b><br> 교환 : <b>0</b><br> 반품 : <b>0</b>
+						<br> 구매확정 <br>
+						<br> 
+							<%if(byComplete > 0) {%>
+						<b><%=byComplete  %></b>
+						<%} else { %>
+						<b>0</b>
+						<%} %>
+					</div>
+				</div>
+				<div class="item">
+					<div class="content" style="font-size: 15px; width: 100px;">
+						<br> 취소 완료 : 
+							<%if(cancleComplete > 0) {%>
+						<b><%=cancleComplete  %></b>
+						<%} else { %>
+						<b>0</b>
+						<%} %>
+						<br> 교환 완료 : 
+							<%if(exchangeComplete > 0) {%>
+						<b><%=exchangeComplete %></b>
+						<%} else { %>
+						<b>0</b>
+						<%} %>
+						<br> 반품 완료 : 
+							<%if(returnComplete > 0) {%>
+						<b><%=returnComplete  %></b>
+						<%} else { %>
+						<b>0</b>
+						<%} %>
 					</div>
 				</div>
 			</div>

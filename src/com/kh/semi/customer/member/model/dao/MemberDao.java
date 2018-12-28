@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import com.kh.semi.customer.member.model.vo.Member;
@@ -358,6 +360,215 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+
+
+
+	public HashMap<String, Object> selectUserIdAndCurrentClassName(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		HashMap<String, Object> hmap = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectUserIdAndCurrentClassName");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				hmap = new HashMap<String,Object>();
+				hmap.put("user_id", rset.getString("USER_ID"));
+				hmap.put("class_name", rset.getString("CLASS_NAME"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return hmap;
+	}
+
+
+
+
+	public int selectTotalPirce(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = "SELECT SUM(DISTINCT(P.PRODUCT_PRICE)) AS TOTAL_PRICE FROM PRODUCT P JOIN ORDER_DETAIL OD ON (P.PRODUCT_CODE = OD.PRODUCT_CODE) JOIN ORDER_LIST OL ON (OD.ORDER_DNUM = OL.ORDER_DNUM) JOIN ORDER_STATUS OS ON (OL.ORDER_SCODE = OS.ORDER_SCODE) JOIN MEMBER M ON(OD.USER_ID = M.USER_ID) WHERE OD.USER_ID = ? AND OS.ORDER_SNAME IN ('구매확정','상품준비중', '배송준비중','배송대기중','배송중','배송완료') ORDER BY OD.ORDER_DNUM";
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt("TOTAL_PRICE");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+
+
+	public HashMap<String, Object> selectNextClassAndPrice(Connection con, Member m, int totalPrice) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		String query = prop.getProperty("selectNextClassAndPrice");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, totalPrice);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				hmap = new HashMap<String,Object>();
+				hmap.put("class_name", rset.getString("CLASS_NAME"));
+				hmap.put("standard_price", rset.getInt("STANDARD_PRICE"));
+				hmap.put("totalPirce", totalPrice);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return hmap;
+	}
+
+
+
+
+	public HashMap<String, Object> selectBeforePirceYear(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		String query = "SELECT SUM(DISTINCT(P.PRODUCT_PRICE)) AS TOTAL_PRICE FROM PRODUCT P JOIN ORDER_DETAIL OD ON (P.PRODUCT_CODE = OD.PRODUCT_CODE) JOIN ORDER_LIST OL ON (OD.ORDER_DNUM = OL.ORDER_DNUM) JOIN ORDER_STATUS OS ON (OL.ORDER_SCODE = OS.ORDER_SCODE) JOIN MEMBER M ON(OD.USER_ID = M.USER_ID) WHERE OD.USER_ID =  ? AND OS.ORDER_SNAME IN ('구매확정','상품준비중', '배송준비중','배송대기중','배송중','배송완료') AND OL.ORDER_DATE BETWEEN SYSDATE-365 AND SYSDATE ORDER BY OD.ORDER_DNUM";
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				hmap = new HashMap<String,Object>();
+				hmap.put("oneYearTotalPrice", rset.getInt("TOTAL_PRICE"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return hmap;
+	}
+
+
+
+
+	public ArrayList<HashMap<String, Object>> selectPointGroup(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HashMap<String, Object>> list = null;
+		HashMap<String, Object> hmap = null;
+		String query = prop.getProperty("selectPointGroup");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			pstmt.setString(2, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while(rset.next()) {
+					hmap = new HashMap<String,Object>();
+					hmap.put("plus_p", rset.getInt("PLUS_P"));
+					hmap.put("minus_p", rset.getInt("MINUS_P"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+
+
+
+	public int countCoupon(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		int result = 0;
+		String query = prop.getProperty("countCoupon");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+
+	public int totalByCount(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = "SELECT COUNT(DISTINCT(ol.order_lnum)) AS TOTAL_ORDER FROM PRODUCT P JOIN ORDER_DETAIL OD ON (P.PRODUCT_CODE = OD.PRODUCT_CODE) JOIN ORDER_LIST OL ON (OD.ORDER_DNUM = OL.ORDER_DNUM) JOIN ORDER_STATUS OS ON (OL.ORDER_SCODE = OS.ORDER_SCODE) JOIN MEMBER M ON(OD.USER_ID = M.USER_ID) WHERE OD.USER_ID = ? AND OS.ORDER_SNAME IN ('구매확정','상품준비중', '배송준비중','배송대기중','배송중','배송완료') ORDER BY OL.ORDER_LNUM";
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+
+	public ArrayList<HashMap<String, String>> myDeliveryStatus(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HashMap<String, String>> list = null;
+		HashMap<String, String> hmap = null;
+		String query = prop.getProperty("myDeliveryStatus");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<HashMap<String, String>>();
+				while(rset.next()) {
+					hmap = new HashMap<String,String>();
+					hmap.put("order_sname", rset.getString("ORDER_SNAME"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 
