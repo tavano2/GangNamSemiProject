@@ -136,7 +136,7 @@ public class ProductService {
 	public ArrayList<ShoppingCartPd> selectCartList(int currentShoppingCart, int limitShoppingCart) {
 		Connection con = getConnection();
 		
-		ArrayList<ShoppingCartPd> cart  = new ProductDao().selectListCart(con, currentShoppingCart, limitShoppingCart);
+		ArrayList<ShoppingCartPd> cart  = new ProductDao().selectCartList(con, currentShoppingCart, limitShoppingCart);
 		
 		close(con);
 		
@@ -149,7 +149,7 @@ public class ProductService {
 		int result = 0;
 		int count = 0;
 		for(String msg : product_code) {
-			count += new ProductDao().deleteListCart(con,msg,userId);
+			count += new ProductDao().deleteCartList(con,msg,userId);
 		}
 		if(product_code.length == count) {
 			commit(con);
