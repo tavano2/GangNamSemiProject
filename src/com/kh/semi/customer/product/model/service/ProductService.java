@@ -132,24 +132,37 @@ public class ProductService {
 	// ----------------------------------------------------------------------------------------------------------------------------
 
 	
-	// 장바구니 | Shopping Cart : 조회
+	// 장바구니 | Shopping Cart : 조회 | selectCartList  | model/service/ProductService.java
 	public ArrayList<ShoppingCartPd> selectCartList(int currentShoppingCart, int limitShoppingCart) {
 		Connection con = getConnection();
 		
-		ArrayList<ShoppingCartPd> cart  = new ProductDao().selectListCart(con, currentShoppingCart, limitShoppingCart);
+		ArrayList<ShoppingCartPd> cart  = new ProductDao().selectCartList(con, currentShoppingCart, limitShoppingCart);
 		
 		close(con);
 		
 		return cart;
 	}
 	
-	// 장바구니 | Shopping Cart : Deletion
+	/*수정중*/ // 장바구니 | Shopping Cart > 품목 추가 | insertCartList  | model/service/ProductService.java
+	
+	public ShoppingCartPd insertCartList(){
+		Connection con = getConnection();
+		
+		ShoppingCartPd cart  = new ProductDao().insertCartList(con, null);
+		
+		close(con);
+		
+		return cart;
+		
+	}
+	
+	// 장바구니 | Shopping Cart : Deletion | deleteCartList  | model/service/ProductService.java
 	public int deleteCartList(String[] product_code, String userId) {
 		Connection con = getConnection();
 		int result = 0;
 		int count = 0;
 		for(String msg : product_code) {
-			count += new ProductDao().deleteListCart(con,msg,userId);
+			count += new ProductDao().deleteCartList(con,msg,userId);
 		}
 		if(product_code.length == count) {
 			commit(con);

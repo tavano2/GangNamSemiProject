@@ -456,9 +456,9 @@ public class ProductDao {
 	}
 	
 	
-	   // 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO)
+	   /*수정중*/ // 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO)
     
-		public int insertCartList(Connection con, ShoppingCartPd cart) {
+		public ShoppingCartPd  insertCartList(Connection con, ShoppingCartPd cart) {
 		
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -477,7 +477,7 @@ public class ProductDao {
 		}finally {
 			close(pstmt);
 		}
-			return result;
+			return cart;
 	}
 	
 	   // 장바구니 | Shopping Cart > 삭제 | deleteCartList (named in DAO)
@@ -757,6 +757,7 @@ public class ProductDao {
 		}
 		return hmap;
 	}
+
 
 
   	
