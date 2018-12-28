@@ -8,7 +8,9 @@
 	ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) session.getAttribute("list");
 	ArrayList<HashMap<String, Object>> selectUserList = (ArrayList<HashMap<String, Object>>) request
 			.getAttribute("selectUserList");
-	SelectUserVo suv = (SelectUserVo) session.getAttribute("suv");
+	ArrayList<HashMap<String, Object>> selectAllUserList = (ArrayList<HashMap<String, Object>>) request
+			.getAttribute("selectAllUserList");
+	SelectUserVo suv = (SelectUserVo) request.getAttribute("suv");
 	PageInfo pi = (PageInfo) request.getAttribute("pi");
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
@@ -127,9 +129,15 @@ span {
 												<div class="menu" id="menubar">
 													<%
 														for (int i = 0; i < list.size(); i++) {
+															if (list.get(i).get("userClass").toUpperCase().equals(suv.getUserClass().toUpperCase())) {
+													%>
+															<div class="item active selected"><%=list.get(i).get("userClass")%></div>
+													<%
+														} else {
 													%>
 													<div class="item"><%=list.get(i).get("userClass")%></div>
 													<%
+														}
 														}
 													%>
 												</div>
@@ -193,12 +201,12 @@ span {
 										<td>합계</td>
 									</tr>
 									<%
-										if (selectUserList.size() != 0) {
+										if (selectAllUserList.size() != 0) {
 											int plusPoint = 0;
 											int minusPoint = 0;
-											for (int i = 0; i < selectUserList.size(); i++) {
-												plusPoint += Integer.parseInt((String) selectUserList.get(i).get("plusP"));
-												minusPoint += Integer.parseInt((String) selectUserList.get(i).get("minusP"));
+											for (int i = 0; i < selectAllUserList.size(); i++) {
+												plusPoint += Integer.parseInt((String) selectAllUserList.get(i).get("plusP"));
+												minusPoint += Integer.parseInt((String) selectAllUserList.get(i).get("minusP"));
 											}
 									%>
 									<tr>
@@ -231,10 +239,9 @@ span {
 							<div class="ui selection dropdown">
 								<input type="hidden" name="gender" id="select"> <i
 									class="dropdown icon"></i>
-								<div class="default text">조회결과표시</div>
+								<div class="default text" name="selectResult3">조회결과표시</div>
 								<div class="menu">
-									<div class="item" data-value="1">20개씩 보기</div>
-									<div class="item" data-value="0">10개씩 보기</div>
+									<div class="item" data-value="0">증가 3 / 차감 3 씩 보기</div>
 								</div>
 							</div>
 						</div>
@@ -284,7 +291,7 @@ span {
 											<div align="center">
 												<div class="ui pagination menu">
 													<a class="icon item"
-														onclick="location.href='<%=request.getContextPath()%>/selectUser.pm' "><i
+														onclick="location.href='<%=request.getContextPath()%>/selectUser.pm?userClass=<%=suv.getUserClass()%>&selectUserId=<%=suv.getUserId()%>&startDate=<%=suv.getStartDate()%>&endDate=<%=suv.getEndDate()%>'"><i
 														class="angle double left icon"></i></a>
 													<%
 														if (currentPage <= 1) {
@@ -294,7 +301,7 @@ span {
 														} else {
 													%>
 													<a class="icon item"
-														onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage - 1%>' "><i
+														onclick="location.href='<%=request.getContextPath()%>/selectUser.pm?currentPage=<%=currentPage - 1%>&userClass=<%=suv.getUserClass()%>&selectUserId=<%=suv.getUserId()%>&startDate=<%=suv.getStartDate()%>&endDate=<%=suv.getEndDate()%>' "><i
 														class="angle left icon"></i></a>
 													<%
 														}
@@ -311,7 +318,7 @@ span {
 														} else {
 													%>
 													<a class="item"
-														onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=p%>' "><%=p%></a>
+														onclick="location.href='<%=request.getContextPath()%>/selectUser.pm?currentPage=<%=p%>&userClass=<%=suv.getUserClass()%>&selectUserId=<%=suv.getUserId()%>&startDate=<%=suv.getStartDate()%>&endDate=<%=suv.getEndDate()%>' "><%=p%></a>
 													<%
 														}
 													%>
@@ -329,14 +336,14 @@ span {
 														} else {
 													%>
 													<a class="icon item"
-														onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage + 1%>' "><i
+														onclick="location.href='<%=request.getContextPath()%>/selectUser.pm?currentPage=<%=currentPage + 1%>&&userClass=<%=suv.getUserClass()%>&selectUserId=<%=suv.getUserId()%>&startDate=<%=suv.getStartDate()%>&endDate=<%=suv.getEndDate()%>' "><i
 														class="angle right icon"></i></a>
 													<%
 														}
 													%>
 
 													<a class="icon item"
-														onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=maxPage%>' "><i
+														onclick="location.href='<%=request.getContextPath()%>/selectUser.pm?currentPage=<%=maxPage%>&&userClass=<%=suv.getUserClass()%>&selectUserId=<%=suv.getUserId()%>&startDate=<%=suv.getStartDate()%>&endDate=<%=suv.getEndDate()%>' "><i
 														class="angle double right icon"></i></a>
 												</div>
 
@@ -389,14 +396,18 @@ span {
 			return today;
 		};
 
-		$(function() {
-
+		$(function() {		
+			$("#userClass").val("<%=suv.getUserClass()%>");
+			$("div[name=allUserClass]").html("<%=suv.getUserClass().toUpperCase()%>").css("color","black");
+			$("div[name=selectResult3]").html("증가 3 / 차감 3 씩 보기").css("color","black");
+			
+			$("#selectUserId").val("<%=suv.getUserId()%>");
+			$("#startDate").val("<%=suv.getStartDate()%>");
+			$("#endDate").val("<%=suv.getEndDate()%>");
+		
 			var today = new Date();
 			today = dateFunction(today);
 
-			$("#selectToday").focus();
-			$("#startDate").val(today);
-			$("#endDate").val(today);
 
 			$("#selectToday").click(function() {
 				today = new Date();
@@ -409,7 +420,6 @@ span {
 				var dateResult = date - (1000 * 60 * 60 * 24 * 7);
 				today = new Date(dateResult);
 				today = dateFunction(today);
-				console.log(today);
 				$("#startDate").val(today);
 			});
 			$("#selectMonth").click(function() {
@@ -430,6 +440,7 @@ span {
 				console.log(today);
 				$("#startDate").val(today);
 			});
+			
 			$("#selectBtn").click(function() {
 				$("#selectForm").submit();
 			});
