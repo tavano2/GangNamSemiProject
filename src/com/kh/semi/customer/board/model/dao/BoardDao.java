@@ -52,6 +52,30 @@ public class BoardDao {
 		}
 		return listCount;
 	}
+	
+	public int getTextSearchListCount(Connection con, String searchData, String searchTextData) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		String query = "SELECT COUNT(*) FROM BOARD WHERE BOARD_TYPE = 3 AND " + searchData  + " LIKE " +" '%'||"+searchTextData+"||'%' ";
+		System.out.println(query);
+		try {
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println("이벤트 리스트 카운트 : " + listCount);
+		return listCount;
+	}
+	
+	
 
 	// 각 게시글을 게시판에 뿌려주는 메소드
 	public ArrayList<HashMap<String, Object>> selectEventPageList(Connection con, int currentPage, int limit) {
@@ -451,5 +475,7 @@ public class BoardDao {
 		}
 		return result;
 	}
+
+
 
 }

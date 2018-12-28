@@ -12,6 +12,9 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) request.getAttribute("list");
+	
+	String searchData = (String)request.getAttribute("searchData");
+	String searchTextData = (String)request.getAttribute("searchTextData");
 %>
 
 <!DOCTYPE html>
@@ -75,10 +78,11 @@ table tbody>tr:hover{
 						}
 					}else{
 				%>
-					<tr>
-					<td colspan="5">게시한 게시글이 없습니다.</td>
+				<tr>
+				
+				<td colspan="5">검색된 결과가 없습니다.</td>
+				</tr>
 					
-					</tr>
 				
 				<%} %>
 				<tr>
@@ -102,11 +106,11 @@ table tbody>tr:hover{
 					<td colspan="5">
 						<div align="center">
 							<div class="ui pagination menu">
-							    		<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=1' "><i class="angle double left icon"></i></a>
+							    		<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventTextSearchPageList.bo?currentPage=1&searchData=<%=searchData%>&searchTextData=<%=searchTextData%>' "><i class="angle double left icon"></i></a>
 								        <%if(currentPage <=1) {%>
 								         <a class="icon item"><i class="angle left icon"></i></a>
 								        <%} else{ %>
-								        	<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage-1%>' "><i class="angle left icon"></i></a>
+								        	<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventTextSearchPageList.bo?currentPage=<%=currentPage-1%>&searchData=<%=searchData%>&searchTextData=<%=searchTextData%>' "><i class="angle left icon"></i></a>
 								        <%} %>
 								       
 								       
@@ -116,7 +120,7 @@ table tbody>tr:hover{
 								       %>
 								       			<a class="item"><%=p %></a>
 								       <%}else{ %>
-								       			<a class="item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=p%>' "><%=p %></a>
+								       			<a class="item" onclick="location.href='<%=request.getContextPath()%>/eventTextSearchPageList.bo?currentPage=<%=p%>&searchData=<%=searchData%>&searchTextData=<%=searchTextData%>' "><%=p %></a>
 								       <%} %>
 								       
 								       <%} %>
@@ -125,10 +129,10 @@ table tbody>tr:hover{
 								        <%if(currentPage >= maxPage) {%>
 								        <a class="icon item"><i class="angle right icon"></i></a>
 								        <%}else{ %>
-								        	<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=currentPage+1%>' "><i class="angle right icon"></i></a>
+								        	<a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventTextSearchPageList.bo?currentPage=<%=currentPage+1%>&searchData=<%=searchData%>&searchTextData=<%=searchTextData%>' "><i class="angle right icon"></i></a>
 								        <%} %>
 								        
-								        <a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventPageList.bo?currentPage=<%=maxPage%>' "><i class="angle double right icon"></i></a>
+								        <a class="icon item" onclick="location.href='<%=request.getContextPath()%>/eventTextSearchPageList.bo?currentPage=<%=maxPage%>&searchData=<%=searchData%>&searchTextData=<%=searchTextData%>' "><i class="angle double right icon"></i></a>
 							      	</div>
 
 						

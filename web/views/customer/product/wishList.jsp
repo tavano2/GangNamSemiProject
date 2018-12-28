@@ -71,7 +71,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<%for(HashMap<String,Object> hmap : list){ 
+					<%
+						if(list != null){
+					
+						for(HashMap<String,Object> hmap : list){ 
 						int price = (int)(hmap.get("product_price"));
 						int post_price = 2500;
 					
@@ -96,8 +99,12 @@
 						<td><%=price %>원</td>
 						<%} %>
 					</tr>
+					<%	} %>
+					<%}else{ %>		
+					 <tr>
+					 	<td colspan="9">위시리스트 상품이 없습니다.</td>
+					 </tr>
 					<%} %>
-					
 					<tr>
 					<td colspan="9">
 						<div align="center">

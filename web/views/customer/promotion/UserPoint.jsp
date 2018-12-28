@@ -1,5 +1,59 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.kh.semi.customer.board.model.vo.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%
+	PageInfo pi = null;
+	int listCount = 0;
+	int currentPage = 0;
+	int maxPage = 0;
+	int startPage = 0;
+	int endPage = 0;
+	if (request.getAttribute("pi") != null) {
+		pi = (PageInfo) request.getAttribute("pi");
+		listCount = pi.getListCount();
+		currentPage = pi.getCurrentPage();
+		maxPage = pi.getMaxPage();
+		startPage = pi.getStartPage();
+		endPage = pi.getEndPage();
+	}
+
+	ArrayList<HashMap<String, Object>> contentList = null;
+	ArrayList<HashMap<String, Object>> pointList = null;
+	HashMap<String,Object> classNameAndPrice = null;
+	HashMap<String,Object> firstClassName = (HashMap<String,Object>)request.getAttribute("firstClassName");
+ 	int totalPoint = 0;
+	int minusPoint = 0;
+	int currentPoint = 0;
+	int nextPrice = 0;
+	if (request.getAttribute("contentList") != null) {
+		contentList = (ArrayList<HashMap<String, Object>>) request.getAttribute("contentList");
+		if(contentList != null){
+			for (HashMap<String, Object> count : contentList) {
+				totalPoint += (int) count.get("plus_p");
+				minusPoint += (int) count.get("minus_p");
+			}
+		}
+		currentPoint = totalPoint - minusPoint;
+
+	}
+
+	if (request.getAttribute("pointList") != null) {
+		pointList = (ArrayList<HashMap<String, Object>>) request.getAttribute("pointList");
+	}
+	
+	if(request.getAttribute("classNameAndPrice") != null){
+		classNameAndPrice = (HashMap<String,Object>)request.getAttribute("classNameAndPrice");
+		nextPrice = ((int)classNameAndPrice.get("standard2"))-((int)classNameAndPrice.get("totalByPrice"));
+		
+	}
+	
+
+	
+%>
+
 <!DOCTYPE html>
 <html>
 
@@ -36,29 +90,76 @@
 						<td
 							style="text-align: left; border-bottom: white; border-right: white;">총
 							적립금</td>
-						<td
-							style="text-align: right; border-bottom: white; border-left: white;">?원
-						</td>
-						<td
-							style="text-align: left; border-bottom: white; border-right: white;">사용
-							가능 적립금</td>
+
+						<%
+							if (contentList != null) {
+						%>
 						<td
 							style="text-align: right; border-bottom: white; border-left: white;">
-							<p>?원</p>
+
+							<%=totalPoint%>원
 						</td>
+						<%
+							} else {
+						%>
+						<td
+							style="text-align: right; border-bottom: white; border-left: white;">0원</td>
+						<%
+							}
+						%>
+						<td
+							style="text-align: left; border-bottom: white; border-right: white;">사용가능
+							적립금</td>
+						<%
+							if (contentList != null) {
+						%>
+						<td
+							style="text-align: right; border-bottom: white; border-left: white;"><p><%=currentPoint%>원
+							</p></td>
+						<%
+							} else {
+						%>
+						<td
+							style="text-align: right; border-bottom: white; border-left: white;"><p>0원</p></td>
+						<%
+							}
+						%>
 					</tr>
 					<tr>
 						<td
-							style="text-align: left; border-top: white; border-bottom: white; border-right: white;">사용된
-							적립금</td>
+							style="text-align: left; border-top: white; border-bottom: white; border-right: white;">사용된적립금</td>
+						<%
+							if (contentList != null) {
+						%>
 						<td
-							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">?원
-						</td>
+							style="text-align: right; border-top: white; border-bottom: white; border-left: white;"><%=minusPoint%>원</td>
+						<%
+							} else {
+						%>
 						<td
-							style="text-align: left; border-top: white; border-bottom: white; border-right: white;">회원 등급</td>
+							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">0원</td>
+						<%
+							}
+						%>
+						<td
+							style="text-align: left; border-top: white; border-bottom: white; border-right: white;">회원
+							등급</td>
+						<%
+							if (contentList != null) {
+						%>
 						<td
 							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">
-							?</td>
+							<%=contentList.get(0).get("class_name")%>
+						</td>
+						<%
+							} else {
+						%>
+						<td style="text-align: right; border-top: white; border-bottom: white; border-left: white;">
+							<%=firstClassName.get("firstUserClass") %>
+						</td>
+						<%
+							}
+						%>
 					</tr>
 					<tr>
 						<td
@@ -81,8 +182,8 @@
 
 
 		<div class="ui top attached tabular menu">
-			<a class="active item" data-tab="first"> 적립 내역 보기 </a>
-			<a class="item" data-tab="second">회원 등급 내역</a>
+			<a class="active item" data-tab="first"> 적립 내역 보기 </a> <a
+				class="item" data-tab="second">회원 등급 내역</a>
 		</div>
 		<div class="ui bottom attached active tab segment" data-tab="first"
 			id="secondary">
@@ -95,17 +196,104 @@
 						<th>주문 날짜</th>
 						<th>적립금</th>
 						<th>관련 주문 번호</th>
-						<th>내용</th>
+						<th>주문자 명</th>
 					</tr>
 				</thead>
 				<tbody>
+					<%
+						if (pointList != null) {
+							for (HashMap<String, Object> pointMap : pointList) {
+					%>
+
 					<tr>
-						<td>2018-05-06</td>
-						<td>적립금 란</td>
-						<td>관련 주문 번호란</td>
-						<td>내용 내용 내용 내용</td>
+						<td><%=pointMap.get("order_date")%></td>
+						<td><%=pointMap.get("plus_p")%></td>
+						<td><%=pointMap.get("order_lnum")%></td>
+						<td><%=pointMap.get("user_id")%></td>
 					</tr>
+					<%
+						}
+					%>
+					<%
+						} else {
+					%>
+					<tr>
+						<td colspan="4"><div align="center">적립 내역이 없습니다.</div></td>
+					</tr>
+					<%
+						}
+					%>
 				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="4">
+							<%if(pi!= null) {%>
+							<div align="center">
+								<div class="ui pagination menu">
+									<a class="icon item"
+										onclick="location.href='<%=request.getContextPath()%>/selectPointAndMemberClassList.pd?currentPage=1' "><i
+										class="angle double left icon"></i></a>
+									<%
+										if (currentPage <= 1) {
+									%>
+									<a class="icon item"><i class="angle left icon"></i></a>
+									<%
+										} else {
+									%>
+									<a class="icon item"
+										onclick="location.href='<%=request.getContextPath()%>/selectPointAndMemberClassList.pd?currentPage=<%=currentPage - 1%>' "><i
+										class="angle left icon"></i></a>
+									<%
+										}
+									%>
+
+
+									<%
+										for (int p = startPage; p <= endPage; p++) {
+
+											if (p == currentPage) {
+									%>
+									<a class="item"><%=p%></a>
+									<%
+										} else {
+									%>
+									<a class="item"
+										onclick="location.href='<%=request.getContextPath()%>/selectPointAndMemberClassList.pd?currentPage=<%=p%>' "><%=p%></a>
+									<%
+										}
+									%>
+
+									<%
+										}
+									%>
+
+
+									<%
+										if (currentPage >= maxPage) {
+									%>
+									<a class="icon item"><i class="angle right icon"></i></a>
+									<%
+										} else {
+									%>
+									<a class="icon item"
+										onclick="location.href='<%=request.getContextPath()%>/selectPointAndMemberClassList.pd?currentPage=<%=currentPage + 1%>' "><i
+										class="angle right icon"></i></a>
+									<%
+										}
+									%>
+
+									<a class="icon item"
+										onclick="location.href='<%=request.getContextPath()%>/selectPointAndMemberClassList.pd?currentPage=<%=maxPage%>' "><i
+										class="angle double right icon"></i></a>
+								</div>
+							</div>
+							<%} %>
+						</td>
+
+					</tr>
+
+
+				</tfoot>
 			</table>
 
 
@@ -126,9 +314,17 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>user01</td>
-						<td>?등급</td>
-						<td>?원</td>
+						<td><%=arry[0] %></td>
+						<%if(classNameAndPrice != null) {%>
+						<td><%=classNameAndPrice.get("class_name2") %>등급</td>
+						<%} else {%>
+						<td>다음 등급이 없습니다.</td>
+						<%} %>
+						<%if(classNameAndPrice != null){ %>
+						<td><%=nextPrice %>원</td>
+						<%}else{ %>
+						<td>0원</td>
+						<%} %>
 					</tr>
 				</tbody>
 			</table>
@@ -159,8 +355,7 @@
 			</tbody>
 		</table>
 
-		<br>
-		<br>
+		<br> <br>
 
 	</div>
 

@@ -191,8 +191,10 @@ public class ProductService {
 		Connection con = getConnection();
 		int totalPirce = new ProductDao().selectTotalByPrice(con,m);
 		HashMap<String, Object> hmap = new ProductDao().classNameAndByPrice(con,totalPirce);
-		
+		close(con);
+		return hmap;
 	}
+		
 
 	//상품코드 : PD1에있는값의 DB정보 불러오깅
 	public HashMap<String, Object> selectOneDetailPage(String code) {
@@ -201,6 +203,14 @@ public class ProductService {
 		HashMap<String , Object> hmap = new ProductDao().selectOneDetailPage(con,code);
 		
 
+		close(con);
+		return hmap;
+	}
+
+	// 적립금 게시판에서 적립금이 없을시 보여줄 회원 등급
+	public HashMap<String, Object> firstClassName(Member m) {
+		Connection con = getConnection();
+		HashMap<String, Object> hmap = new ProductDao().firstClassName(con,m);
 		close(con);
 		return hmap;
 	}
