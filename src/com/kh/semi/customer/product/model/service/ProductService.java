@@ -9,6 +9,7 @@ import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.dao.ProductDao;
 import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ShoppingCart;
+import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 
 import static com.kh.semi.customer.common.JDBCTemplate.*;
 
@@ -132,10 +133,10 @@ public class ProductService {
 
 	
 	// 장바구니 | Shopping Cart : 조회
-	public ArrayList<ShoppingCart> selectCartList(int currentShoppingCart, int limitShoppingCart) {
+	public ArrayList<ShoppingCartPd> selectCartList(int currentShoppingCart, int limitShoppingCart) {
 		Connection con = getConnection();
 		
-		ArrayList<ShoppingCart> cart  = new ProductDao().selectListCart(con, currentShoppingCart, limitShoppingCart);
+		ArrayList<ShoppingCartPd> cart  = new ProductDao().selectListCart(con, currentShoppingCart, limitShoppingCart);
 		
 		close(con);
 		
@@ -148,7 +149,7 @@ public class ProductService {
 		int result = 0;
 		int count = 0;
 		for(String msg : product_code) {
-			count += new ProductDao().deleteCartList(con,msg,userId);
+			count += new ProductDao().deleteListCart(con,msg,userId);
 		}
 		if(product_code.length == count) {
 			commit(con);
@@ -190,6 +191,8 @@ public class ProductService {
 		Connection con = getConnection();
 		int totalPirce = new ProductDao().selectTotalByPrice(con,m);
 		HashMap<String, Object> hmap = new ProductDao().classNameAndByPrice(con,totalPirce);
+		
+	}
 
 	//상품코드 : PD1에있는값의 DB정보 불러오깅
 	public HashMap<String, Object> selectOneDetailPage(String code) {
