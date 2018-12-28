@@ -1,15 +1,5 @@
-<%@page import="com.kh.semi.admin.delivery.model.vo.OrderSearchResultTable"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	ArrayList<OrderSearchResultTable> searchResultList = null;
-	if(request.getAttribute("searchResultList") != null){
-		searchResultList = (ArrayList<OrderSearchResultTable>)request.getAttribute("searchResultList");
-	} else {
-		searchResultList = new ArrayList<OrderSearchResultTable>();
-	}
-%>
 <!DOCTYPE html>
 <html>
 
@@ -91,44 +81,16 @@
 	                    </thead>
 	                    
 	                    <tbody class="center aligned">
-	                    	<% for(OrderSearchResultTable searchResult : searchResultList) {%>
 	                    	
-	                    	<tr>
-	                            <td><div class="ui fitted checkbox">
-	                                <input type="checkbox" name="resultChk" value="<%= searchResult.getOrderLnum() %>"><label></label>
-	                            </div></td>
-	                            <td><%= searchResult.getOrderDate() %></td>
-	                            <td><a href="/semi/views/admin/delivery/adminOrderDetail.jsp"><%= searchResult.getOrderLnum() %></a></td>
-	                            <td><%= searchResult.getUserId() %></td>
-	                            <td><%= searchResult.getProduct() %></td>
-	                            <td><%= searchResult.getAmount() %></td>
-	                            <td><%= searchResult.getPostnum() %></td>
-	                            <td><%= searchResult.getProductPrice() %></td>
-	                            <td><%= searchResult.getDeliveryPrice() %></td>
-	                            <td><%= searchResult.getPayment() %></td>
-	                            <td><%= searchResult.getOrderSname() %></td>
-	                            <td><%= searchResult.getMemo() %></td>
-	                        </tr>
-	                    	
-	                    	<%} %>
 	                    </tbody>
 	                    
 	                    <tfoot>
 							<tr>
 								<th colspan="12" class="center aligned">
-							    	<div class="ui pagination menu">
+							    	<div class="ui pagination menu" id="paging">
 							    		<a class="icon item"><i class="angle double left icon"></i></a>
 								        <a class="icon item"><i class="angle left icon"></i></a>
 								        <a class="item active">1</a>
-								        <a class="item">2</a>
-								        <a class="item">3</a>
-								        <a class="item">4</a>
-								        <a class="item">5</a>
-								        <a class="item">6</a>
-								        <a class="item">7</a>
-								        <a class="item">8</a>
-								        <a class="item">9</a>
-								        <a class="item">10</a>
 								        <a class="icon item"><i class="angle right icon"></i></a>
 								        <a class="icon item"><i class="angle double right icon"></i></a>
 							      	</div>
@@ -147,7 +109,7 @@
     </div>
 
     <!-- J-query CDN -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <!-- jQuery Custom Scroller CDN -->
@@ -159,6 +121,11 @@
 	<script src="/semi/js/admin/delivery/adminDelivery.js"></script>
 	
 	<script>
+		var searchResult = null;
+		var limit = 1;
+		var currentPage = 1;
+		var maxPage = 0;
+		
 		function deliveryCompleteTo(){
 			resultBox.action = '';
 			resultBox.submit();
@@ -167,6 +134,189 @@
 		$(function(){
 			$('#orderState').show();
 		});
+		
+		function searchBtn(){
+			var searchCondition = $("#searchBox").serialize();
+			
+			$.ajax({
+				url: '<%=request.getContextPath() %>/adminOrderSearch.de',
+				type: 'post',
+				data: searchCondition,
+				success: function(data){
+					searchResult = data;
+					
+					currentPage = 1;
+					var listCount = searchResult.length;
+					maxPage = Math.floor((listCount - 1) / limit);
+					
+					var startIdx = limit * (currentPage - 1);
+					var endIdx = startIdx + limit;
+					
+					//리스트 뿌리기
+					showList(startIdx, endIdx);
+					
+					//페이지 버튼 생성
+					$("#paging").find(".item:not(.icon.item)").remove();
+					
+					var $pageNum1 = $("<a class='item active'>").text("1");
+					
+					$("#paging .item:nth-last-child(2)").before($pageNum1);
+					
+					for(var i=0; i<9; i++){
+						if (i < maxPage){
+							$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(i+2));
+						} else break;
+					}
+					//페이지 버튼 온 클릭 활성화
+					pagingActive();
+					
+					
+					//1페이지로
+					$('#paging .angle.double.left.icon').parent().click(function(){
+						if ($('#paging .item:first-child').text() != "1") {
+							$("#paging").find(".item:not(.icon.item)").remove();
+							
+							var $pageNum1 = $("<a class='item active'>").text("1");
+							
+							$("#paging .item:nth-last-child(2)").before($pageNum1);
+							
+							for(var i=0; i<9; i++){
+								if (i < maxPage){
+									$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(i+2));
+								} else break;
+							}
+							
+							pagingActive();
+							
+							currentPage = 1;
+							var startIdx = limit * (currentPage - 1);
+							var endIdx = startIdx + limit;
+							
+							showList(startIdx, endIdx);
+						}
+					});
+					
+					//왼쪽 10칸 이동
+					$('#paging .angle.left.icon').parent().click(function(){
+						var startPage = Math.floor((currentPage-1) / 10);
+						
+						if (startPage > 0) {
+							$("#paging").find(".item:not(.icon.item)").remove();
+							
+							currentPage = currentPage - 10;
+							startPage = Math.floor((currentPage-1) / 10);
+							var startIdx = limit * (currentPage - 1);
+							var endIdx = startIdx + limit;
+							
+							for(var i=0; i<10; i++){
+								if (startPage*10 + i - 1 < maxPage){
+									$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(startPage*10 + i + 1));
+								} else break;
+							}
+							
+							pagingActive();
+						}
+					});
+					
+					//오른쪽 10칸 이동
+					$('#paging .angle.right.icon').parent().click(function(){
+						var currMaxPage = $("#paging .item:nth-last-child(3)").text();
+						
+						if (currMaxPage < maxPage) {
+							$("#paging").find(".item:not(.icon.item)").remove();
+							
+							startPage = Math.floor((currMaxPage) / 10);
+							var startIdx = limit * (currMaxPage);
+							var endIdx = startIdx + limit;
+							
+							for(var i=0; i<10; i++){
+								if (startPage*10 + i - 1 < maxPage){
+									$("#paging .item:nth-last-child(2)").before($("<a class='item'>").text(startPage*10 + i + 1));
+								} else break;
+							}
+							
+							pagingActive();
+						}
+					});
+					
+					//맨 끝으로
+					$('#paging .angle.right.icon').parent().click(function(){
+						currentPage = maxPage;
+						
+						
+					});
+					
+				}, error: function(){
+					console.log("실패ㅠㅠ");
+				}
+			});
+		}
+		
+		function showList(startIdx, endIdx){
+			var $tbody = $('.order-result tbody');
+			$tbody.html('');
+			
+			for(var i=startIdx; i<endIdx; i++){
+				if(i < searchResult.length){
+					var $tr = $("<tr>");
+					var $td1 = $("<td>");
+					var $chkDiv = $("<div>").addClass("ui fitted checkbox");
+					var $chk = $("<input type='checkbox' name='resultChk'>").val(searchResult[i].orderLnum);
+					var $label = $("<label>");
+					$chkDiv.append($chk);
+					$chkDiv.append($label);
+					$td1.append($chkDiv);
+					var $td2 = $("<td>").text(searchResult[i].orderDate);
+					var $td3 = $("<td>");
+					var $a = $("<a href='/semi/views/admin/delivery/adminOrderDetail.jsp'>").text(searchResult[i].orderLnum);
+					$td3.append($a);
+					var $td4 = $("<td>").text(searchResult[i].userId);
+					var $td5 = $("<td>").text(searchResult[i].product);
+					var $td6 = $("<td>").text(searchResult[i].amount);
+					var $td7 = $("<td>").text(searchResult[i].postnum);
+					var $td8 = $("<td>").text(searchResult[i].productPrice);
+					var $td9 = $("<td>").text(searchResult[i].deliveryPrice);
+					var $td10 = $("<td>").text(searchResult[i].payment);
+					var $td11 = $("<td>").text(searchResult[i].orderSname);
+					var $td12 = $("<td>").text(searchResult[i].memo);
+					
+					$tr.append($td1);
+					$tr.append($td2);
+					$tr.append($td3);
+					$tr.append($td4);
+					$tr.append($td5);
+					$tr.append($td6);
+					$tr.append($td7);
+					$tr.append($td8);
+					$tr.append($td9);
+					$tr.append($td10);
+					$tr.append($td11);
+					$tr.append($td12);
+					
+					$tbody.append($tr);
+				} else break;
+			}
+		}
+		
+		//페이징넘버 클릭시 active
+		function pagingActive() {
+			$('#paging .item:not(.icon.item)').click(function(){
+				$('#paging .item').removeClass('active');
+				$(this).addClass('active');
+				
+				currentPage = $(this).text();
+				var listCount = searchResult.length;
+				
+				var startIdx = limit * (currentPage - 1);
+				var endIdx = startIdx + limit;
+				
+				var $tbody = $('.order-result tbody');
+				$tbody.html('');
+				
+				showList(startIdx, endIdx);
+			});
+		}
+		
 	</script>
 	
 </body>

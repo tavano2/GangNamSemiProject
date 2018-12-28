@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-				<form action="<%=request.getContextPath() %>/adminOrderSearch.de" method="post" id="searchBox">
+				<form method="post" id="searchBox">
 					<input type="hidden" name="uri" value="<%=request.getRequestURI()%>">
 	                <table class="ui celled table order-search">
 	                    <!-- 검색 테이블 -->
@@ -142,7 +142,7 @@
 	                </table>
 
 	                <div class="ui container center aligned search-btn">
-	                    <button class="ui black button" type="submit">검색</button>
+	                    <button class="ui black button" onclick="searchBtn(); return false;">검색</button>
 	                    <button class="ui black basic button" type="reset" onclick="activeReset();">초기화</button>
 	                </div>
                 </form>
