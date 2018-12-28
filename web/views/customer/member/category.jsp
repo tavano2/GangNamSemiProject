@@ -192,7 +192,7 @@
     <script>
     	$(function(){
     		$("#movedetailPage").click(function(){
-    			location.href="<%=request.getContextPath()%>/productDetailPage.pd?code=PD000003";
+    			location.href="<%=request.getContextPath()%>/reviewNoticeList.no?code=PD000003";
     		})
     	})
     

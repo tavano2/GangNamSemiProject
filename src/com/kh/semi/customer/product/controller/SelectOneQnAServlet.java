@@ -41,8 +41,10 @@ public class SelectOneQnAServlet extends HttpServlet {
 		ArrayList<Product> SelectReplyList = new ProductService().SelectReplyList(pQnABoardId);
 		
 		
+		
+		
 		//System.out.println(SelectOneQnA);
-		//System.out.println("SelectReplyList"+SelectReplyList);
+		System.out.println("SelectReplyList"+SelectReplyList);
 		
 		String page="";
 		if(SelectOneQnA!=null) {

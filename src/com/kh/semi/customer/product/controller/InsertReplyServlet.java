@@ -38,6 +38,8 @@ public class InsertReplyServlet extends HttpServlet {
 		
 		ArrayList<Product> replyList  = new ProductService().insertQnAReply(pReply);
 		
+		System.out.println(replyList);
+		
 		response.setContentType("application/json");
 		new Gson().toJson(replyList,response.getWriter());
 		

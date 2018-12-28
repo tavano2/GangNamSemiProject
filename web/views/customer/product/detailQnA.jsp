@@ -82,6 +82,7 @@ height:50px;
       <!--//////////////////////////해당 게시물에 댓글 불러오기////////////////////////////////////  -->
       
       <div id="testtest">
+      <%if(SelectReplyList !=null ){ %>
       <% for (Product p : SelectReplyList){%>
       
       <div class="detailQnAText" id="detailQnAText">
@@ -98,9 +99,12 @@ height:50px;
          </div>
 
       </div>
-      
       <%} %>
       
+      <%}else{ %>
+      
+      
+      <%} %>
       </div>
             <!--//////////////////////////////////////////////////////////////  -->
       
