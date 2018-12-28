@@ -19,4 +19,23 @@ public class AdminDeliveryService {
 		return searchResult;
 	}
 
+	public int changeOrderStatus(String[] checkedLnum, String changeState) {
+		Connection con = getConnection();
+		
+		int result = 0;
+		
+		for(String orderLnum : checkedLnum) {
+			result += new AdminDeliveryDao().changeOrderStatus(con, orderLnum, changeState);
+		}
+		
+		if(result == checkedLnum.length) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
 }
