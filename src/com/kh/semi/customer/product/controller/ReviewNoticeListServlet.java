@@ -137,14 +137,31 @@ public class ReviewNoticeListServlet extends HttpServlet {
 		ArrayList<Option> detailOptionList =(ArrayList<Option>)hmap.get("detailOptionList");
 
 		//System.out.println(detailOptionList);
-		/*
-		System.out.println(detailOptionList.get(0));
-		System.out.println(detailOptionList.get(1));
-		System.out.println(detailOptionList.get(2));
-		System.out.println(detailOptionList.get(3));
+		
+		//System.out.println(detailOptionList.get(0).getOptionName());//옵션1
+		//System.out.println(detailOptionList.get(1).getOptionName());//옵션2
+		//System.out.println(detailOptionList.get(2).getOptionName());//옵션3
+		//System.out.println(detailOptionList.get(3).getOptionName());//옵션4
+		
+		//System.out.println();
+	
+	/*
+	 * 	for(Option opp : detailOptionList) {
+			if(		opp.getOptionNum().equals("OP000021")||opp.getOptionNum().equals("OP000022")||
+					opp.getOptionNum().equals("OP000023")||opp.getOptionNum().equals("OP000024")||
+					opp.getOptionNum().equals("OP000025")||opp.getOptionNum().equals("OP000026")||
+					opp.getOptionNum().equals("OP000027")||opp.getOptionNum().equals("OP000028")) {
+				
+				System.out.println("사이즈 : " + opp.getOptionName());
+			}else {
+				System.out.println("색상 : " + opp.getOptionName());
+			}
+		}
+		
 		*/
+	
 		
-		
+
 		
 		/////////////페이지 넘기기/////////////////
 		String page="";
@@ -178,3 +195,7 @@ public class ReviewNoticeListServlet extends HttpServlet {
 	}
 
 }
+
+
+
+
