@@ -407,7 +407,7 @@ public class ProductDao {
 		return SelectReplyList;
 	}
   
-
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     	// 장바구니 | Shopping Cart > 조회 | selectCartList (named in DAO)
 	
@@ -454,6 +454,7 @@ public class ProductDao {
 		return cart;
 	}
 	
+	
 	   // 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO)
     
 		public int insertCartList(Connection con, ShoppingCartPd cart) {
@@ -486,6 +487,9 @@ public class ProductDao {
 		
 		return 0;
 	}
+	
+	
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
     
     /*
      * 
