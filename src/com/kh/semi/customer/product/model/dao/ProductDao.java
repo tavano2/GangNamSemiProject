@@ -409,19 +409,19 @@ public class ProductDao {
   
 
 
-    	// 장바구니 | Shopping Cart > 조회 | selectListCart (named in DAO)
+    	// 장바구니 | Shopping Cart > 조회 | selectCartList (named in DAO)
 	
 // DAO : Data Access Object : Get a request and Return the result. / DAO access to DataBase *directly*. (and Return the result.)
 // VO : Value Object. = Its' an Object Class. It exists for exchanging data between classes.
 // VO = DTO (Data Transfer Object) = Domain Object = Bean = Entity
 	
-	public ArrayList<ShoppingCartPd> selectListCart(Connection con, int currentPage, int limit) {
+	public ArrayList<ShoppingCartPd> selectCartList(Connection con, int currentPage, int limit) {
 		
 		PreparedStatement pstmt = null;// PreparedStatement : An object that represents a pre-compiled SQL statement. 
 		ResultSet rset = null;
 		ArrayList<ShoppingCartPd> cart = null;
 		
-		String query = prop.getProperty("selectListCart");// "selectListCart" > text.properties (sql-product-QUERY)
+		String query = prop.getProperty("selectCartList");// "selectCartList" > text.properties (sql-product-QUERY)
 		
 		try {
 			pstmt = (PreparedStatement) con.createStatement();
@@ -454,14 +454,14 @@ public class ProductDao {
 		return cart;
 	}
 	
-	   // 장바구니 | Shopping Cart > 품목 추가 | insertListCart (named in DAO)
+	   // 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO)
     
-		public int insertListCart(Connection con, ShoppingCartPd cart) {
+		public int insertCartList(Connection con, ShoppingCartPd cart) {
 		
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = prop.getProperty("insertListCart");
+		String query = prop.getProperty("insertCartList");
 		
 		try {
 			pstmt = con.prepareStatement(query);
@@ -479,10 +479,10 @@ public class ProductDao {
 	}
 	
 	   // 장바구니 | Shopping Cart > 삭제 | deleteCartList (named in DAO)
-	public int deleteListCart(Connection con, String msg, String userId) {
+	public int deleteCartList(Connection con, String msg, String userId) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String query = prop.getProperty("deleteListCart");
+		String query = prop.getProperty("deleteCartList");
 		
 		return 0;
 	}
