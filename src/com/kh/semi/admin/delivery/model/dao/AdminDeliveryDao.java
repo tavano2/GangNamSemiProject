@@ -286,42 +286,66 @@ public class AdminDeliveryDao {
 				OrderSearchResult search = new OrderSearchResult();
 				
 				search.setOrderLnum(rset.getString("ORDER_LNUM"));
+				search.setOrderDnum(rset.getString("ORDER_DNUM"));
+				search.setUserId(rset.getString("USER_ID"));
+				search.setOrderDate(rset.getDate("ORDER_DATE"));
+				search.setOrderSname(rset.getString("ORDER_SNAME"));
+				search.setProductCode(rset.getString("PRODUCT_CODE"));
+				search.setCouponCode(rset.getString("COUPON_CODE"));
+				search.setOrderAmount(rset.getInt("ORDER_AMOUNT"));
+				search.setMemo(rset.getString("MEMO"));
+				search.setOptionName(rset.getString("OPTION_NAME"));
+				search.setProductName(rset.getString("PRODUCT_NAME"));
+				search.setProductPrice(rset.getInt("PRODUCT_PRICE"));
+				search.setCategName1(rset.getString("CATEG_NAME1"));
+				search.setCategName2(rset.getString("CATEG_NAME2"));
+				search.setCategName3(rset.getString("CATEG_NAME3"));
+				search.setPostnum(rset.getString("POSTNUM"));
+				search.setPostPrice(rset.getInt("POST_PRICE"));
+				search.setCouponType(rset.getInt("COUPON_TYPE"));
+				search.setCouponPdiscount(rset.getInt("COUPON_PDISCOUNT"));
+				search.setCouponRdiscount(rset.getDouble("COUPON_RDISCOUNT"));
+				search.setBuyerName(rset.getString("BUYER_NAME"));
+				search.setBuyerTel1(rset.getString("BUYER_TEL1"));
+				search.setBuyerTel2(rset.getString("BUYER_TEL2"));
+				search.setReceiverName(rset.getString("RECEIVER_NAME"));
+				search.setReceiverTel1(rset.getString("RECEIVER_TEL1"));
+				search.setReceiverTel2(rset.getString("RECEIVER_TEL2"));
+				search.setReceiverAddr(rset.getString("RECEIVER_ADDR"));
+				search.setReceiverMsg(rset.getString("RECEIVER_MSG"));
 				
-				/*private String orderLnum;	ORDER_LNUM
-				private String orderDnum;	ORDER_DNUM
-				private String userId;	USER_ID
-				private Date orderDate;	ORDER_DATE
-				private String orderSname;	ORDER_SNAME
-				private String productCode;	PRODUCT_CODE
-				private String couponCode;	COUPON_CODE
-				private int orderAmount;	ORDER_AMOUNT
-				private String memo;	MEMO
-				private String optionName;	OPTION_NAME
-				private String productName;	PRODUCT_NAME
-				private int productPrice;	PRODUCT_PRICE
-				private String categName1;	CATEG_NAME
-				private String categName2;	CATEG_NAME_1
-				private String categName3;	CATEG_NAME_2
-				private String postnum;	POSTNUM
-				private int postPrice;	POST_PRICE
-				private int couponType;	COUPON_TYPE
-				private int couponPdiscount;	COUPON_PDISCOUNT
-				private double couponRdiscount;	COUPON_RDISCOUNT
-				private String buyerName;	BUYER_NAME
-				private String buyerTel1;	BUYER_TEL1
-				private String buyerTel2;	BUYER_TEL2
-				private String receiverName;	RECEIVER_NAME
-				private String receiverTel1;	RECEIVER_TEL1
-				private String receiverTel2;	RECEIVER_TEL2
-				private String receiverAddr;	RECEIVER_ADDR
-				private String receiverMsg;	RECEIVER_MSG*/
+				searchResult.add(search);
 				
+				/*private String orderLnum;	ORDER_LNUM	1
+				private String orderDnum;	ORDER_DNUM	1
+				private String userId;	USER_ID	1
+				private Date orderDate;	ORDER_DATE	1
+				private String orderSname;	ORDER_SNAME	1
+				private String productCode;	PRODUCT_CODE	1
+				private String couponCode;	COUPON_CODE	1
+				private int orderAmount;	ORDER_AMOUNT	1
+				private String memo;	MEMO	1
+				private String optionName;	OPTION_NAME	1
+				private String productName;	PRODUCT_NAME	1
+				private int productPrice;	PRODUCT_PRICE	1
+				private String categName;	CATEG_NAME	1
+				private String categName1;	CATEG_NAME_1	1
+				private String categName2;	CATEG_NAME_2	1
+				private String postnum;	POSTNUM	1
+				private int postPrice;	POST_PRICE	1
+				private int couponType;	COUPON_TYPE	1
+				private int couponPdiscount;	COUPON_PDISCOUNT	1
+				private double couponRdiscount;	COUPON_RDISCOUNT	1
+				private String buyerName;	BUYER_NAME	1
+				private String buyerTel1;	BUYER_TEL1	1
+				private String buyerTel2;	BUYER_TEL2	1
+				private String receiverName;	RECEIVER_NAME	1
+				private String receiverTel1;	RECEIVER_TEL1	1
+				private String receiverTel2;	RECEIVER_TEL2	1
+				private String receiverAddr;	RECEIVER_ADDR	1
+				private String receiverMsg;	RECEIVER_MSG	1*/
 				
 			}
-			
-			
-			
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -1,5 +1,8 @@
 package com.kh.semi.customer.product.controller;
 
+// Controller is the Servlet. | Controller = Serlvet | Controller != JSP
+//  The controller is usually a servlet, because it does NOT generate any HTML. 
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -11,23 +14,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.semi.customer.board.model.vo.PageInfo;
-import com.kh.semi.customer.product.model.service.CartService;
 import com.kh.semi.customer.product.model.service.ProductService;
-import com.kh.semi.customer.product.model.vo.ShoppingCart;
+import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 
 /**
  * Servlet implementation class ShoppingCartServlet
  */
-@WebServlet("/shoppingCart.pd")
-public class ShoppingCartServlet extends HttpServlet {
+@WebServlet("/shoppingCart.pd") // The @WebServletannotation is used to declare a servlet.
+public class SelectShoppingCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public ShoppingCartServlet() {
+    public SelectShoppingCartServlet() {
         super();
         
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		/* Pagination*/
+		
 		int currentPage;
 		int limit;
 		int maxPage;
@@ -41,9 +46,8 @@ public class ShoppingCartServlet extends HttpServlet {
 		
 		limit = 10;
 		
-		/* Pagination*/
 		
-		CartService cs = new CartService();
+		ProductService cs = new ProductService();
 		int listCount = cs.getListCount();
 		maxPage=(int)((double)listCount/limit+0.9);
 		startPage=(((int)((double)currentPage/limit+0.9))-1)*limit+1;
@@ -54,7 +58,7 @@ public class ShoppingCartServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
-		ArrayList<ShoppingCart> list = new ProductService().selectListCart(currentPage, limit);
+		ArrayList<ShoppingCartPd> list = new ProductService().selectCartList(currentPage, limit);
 		
 		String page = ""; // Void...
 		if(list != null) {

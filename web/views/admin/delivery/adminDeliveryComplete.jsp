@@ -1,5 +1,15 @@
+<%@page import="com.kh.semi.admin.delivery.model.vo.OrderSearchResultTable"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	ArrayList<OrderSearchResultTable> searchResultList = null;
+	if(request.getAttribute("searchResultList") != null){
+		searchResultList = (ArrayList<OrderSearchResultTable>)request.getAttribute("searchResultList");
+	} else {
+		searchResultList = new ArrayList<OrderSearchResultTable>();
+	}
+%>
 <!DOCTYPE html>
 <html>
 
@@ -83,36 +93,25 @@
 	                    </thead>
 	                    
 	                    <tbody class="center aligned">
-	                        <tr>
+	                    	<% for(OrderSearchResultTable searchResult : searchResultList) {%>
+	                    	
+	                    	<tr>
 	                            <td><div class="ui fitted checkbox">
-	                                <input type="checkbox" name="resultChk" value="2018090900001"><label></label>
+	                                <input type="checkbox" name="resultChk" value="<%= searchResult.getOrderLnum() %>"><label></label>
 	                            </div></td>
-	                            <td>2018-09-09</td>
-	                            <td><a href="#">2018090900001</a></td>
-	                            <td>사람</td>
-	                            <td>바지 (블랙, 라지)</td>
-	                            <td>1</td>
-	                            <td>101-101-101</td>
-	                            <td>50000</td>
-	                            <td>2500</td>
-	                            <td>45000</td>
-	                            <td>간단한 메시지를 남겨 주십시오</td>
+	                            <td><%= searchResult.getOrderDate() %></td>
+	                            <td><a href="/semi/views/admin/delivery/adminOrderDetail.jsp"><%= searchResult.getOrderLnum() %></a></td>
+	                            <td><%= searchResult.getUserId() %></td>
+	                            <td><%= searchResult.getProduct() %></td>
+	                            <td><%= searchResult.getAmount() %></td>
+	                            <td><%= searchResult.getPostnum() %></td>
+	                            <td><%= searchResult.getProductPrice() %></td>
+	                            <td><%= searchResult.getDeliveryPrice() %></td>
+	                            <td><%= searchResult.getPayment() %></td>
+	                            <td><%= searchResult.getMemo() %></td>
 	                        </tr>
-	                        <tr>
-	                            <td><div class="ui fitted checkbox">
-	                                <input type="checkbox" name="resultChk" value="2018090900002"><label></label>
-	                            </div></td>
-	                            <td>2018-09-09</td>
-	                            <td><a href="#">2018090900002</a></td>
-	                            <td>괴물</td>
-	                            <td>늑대의 송곳니 (윗니)</td>
-	                            <td>1</td>
-	                            <td>102-101-103</td>
-	                            <td>60000</td>
-	                            <td>2500</td>
-	                            <td>54000</td>
-	                            <td>어흥</td>
-	                        </tr>
+	                    	
+	                    	<%} %>
 	                    </tbody>
 	                    
 	                    <tfoot>

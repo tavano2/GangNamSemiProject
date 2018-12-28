@@ -18,6 +18,7 @@ import com.kh.semi.customer.product.model.vo.Option;
 import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ReallyProduct;
 import com.kh.semi.customer.product.model.vo.ShoppingCart;
+import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 import com.sun.corba.se.impl.javax.rmi.PortableRemoteObject;
 
 import static com.kh.semi.customer.common.JDBCTemplate.*;
@@ -373,7 +374,7 @@ public class ProductDao {
 		ResultSet rset = null;
 		ArrayList<Product> SelectReplyList = null;
 		
-		String query = prop.getProperty("selectQnArepltyList");
+		String query = prop.getProperty("selectQnAreplyList");
 		
 		try {
 			pstmt = con.prepareStatement(query);
@@ -407,34 +408,39 @@ public class ProductDao {
 		return SelectReplyList;
 	}
   
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-    	// 장바구니 | Shopping Cart 조회 // DAO : Data Access Object : Get a request and Return the result.
-	public ArrayList<ShoppingCart> selectListCart(Connection con, int currentPage, int limit) {
+    	// 장바구니 | Shopping Cart > 조회 | selectCartList (named in DAO)
+	
+// DAO : Data Access Object : Get a request and Return the result. / DAO access to DataBase *directly*. (and Return the result.)
+// VO : Value Object. = Its' an Object Class. It exists for exchanging data between classes.
+// VO = DTO (Data Transfer Object) = Domain Object = Bean = Entity
+	
+	public ArrayList<ShoppingCartPd> selectCartList(Connection con, int currentPage, int limit) {
 		
-		PreparedStatement pstmt = null;
+		PreparedStatement pstmt = null;// PreparedStatement : An object that represents a pre-compiled SQL statement. 
 		ResultSet rset = null;
-		ArrayList<ShoppingCart> cart = null;
+		ArrayList<ShoppingCartPd> cart = null;
 		
-		String query = prop.getProperty("ShoppingCart");		// NOT YET.
+		String query = prop.getProperty("selectCartList");// "selectCartList" > text.properties (sql-product-QUERY)
 		
 		try {
 			pstmt = (PreparedStatement) con.createStatement();
 			
 			rset = pstmt.executeQuery(query);
 			
-			cart = new ArrayList<ShoppingCart>();
+			cart = new ArrayList<ShoppingCartPd>();
 			
 			while(rset.next()) {
-				ShoppingCart c = new ShoppingCart();
+				ShoppingCartPd cartPd = new ShoppingCartPd();
 				
-				c.setProductCode(rset.getInt("PRODUCT_CODE"));
-				c.setUserId(rset.getInt("USER_ID"));
-				c.setOptionNum(rset.getInt("OPTION_NUM"));
-				c.setAmount(rset.getInt("AMOUNT"));
+				cartPd.setProductCode(rset.getInt("PRODUCT_CODE"));
+				cartPd.setUserId(rset.getString("USER_ID"));
+				cartPd.setOptionNum(rset.getInt("OPTION_NUM"));
+				cartPd.setAmount(rset.getInt("AMOUNT"));
 				
 				
-				cart.add(c);
+				cart.add(cartPd);
 			}
 			
 			
@@ -448,10 +454,65 @@ public class ProductDao {
 		
 		return cart;
 	}
+	
+	
+	   // 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO)
     
+		public int insertCartList(Connection con, ShoppingCartPd cart) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertCartList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, cart.getProductCode());
+			pstmt.setString(2, cart.getUserId());
+			pstmt.setInt(3, cart.getOptionNum());
+			pstmt.setInt(4, cart.getAmount());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+			return result;
+	}
+	
+	   // 장바구니 | Shopping Cart > 삭제 | deleteCartList (named in DAO)
+	public int deleteCartList(Connection con, String msg, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteCartList");
+		
+		return 0;
+	}
+	
+	
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
     
-    
-    
+    /*
+     * 
+     * public int deleteWishList(Connection con, String msg, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteWishList");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, msg);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	*/
+	
+	
 	public int getListCountPointAndClassMember(Connection con, Member m) {
 		int result = 0;
 		ResultSet rset = null;
@@ -469,6 +530,140 @@ public class ProductDao {
 		}
 		return result;
 	}
+
+
+	public ArrayList<HashMap<String, Object>> selectPointListBoard(Connection con, Member m, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HashMap<String, Object>> list = null;
+		HashMap<String, Object> hmap = null;
+		String query = prop.getProperty("selectPointListBoard");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			pstmt.setString(1, m.getUserId());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while(rset.next()) {
+					hmap = new HashMap<String,Object>();
+					hmap.put("order_lnum", rset.getString("ORDER_LNUM"));
+					hmap.put("user_id", rset.getString("USER_ID"));
+					hmap.put("order_date", rset.getDate("ORDER_DATE"));
+					hmap.put("plus_p", rset.getInt("PLUS_P"));
+					hmap.put("class_name", rset.getString("CLASS_NAME"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<HashMap<String, Object>> selectContentList(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HashMap<String, Object>> list = null;
+		HashMap<String, Object> hmap = null;
+		String query = prop.getProperty("selectContentList");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while(rset.next()) {
+					hmap = new HashMap<String,Object>();
+					hmap.put("order_lnum", rset.getString("ORDER_LNUM"));
+					hmap.put("user_id", rset.getString("USER_ID"));
+					hmap.put("order_date", rset.getDate("ORDER_DATE"));
+					hmap.put("plus_p", rset.getInt("PLUS_P"));
+					hmap.put("minus_p", rset.getInt("MINUS_P"));
+					hmap.put("class_name", rset.getString("CLASS_NAME"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	
+	public int selectTotalByPrice(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = prop.getProperty("selectTotalByPrice");
+		ArrayList<HashMap<String, Object>> list =  null;
+		HashMap<String, Object> hmap = null;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while(rset.next()) {
+					hmap = new HashMap<String,Object>();
+					hmap.put("price", rset.getInt("PRODUCT_PRICE"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		
+		for(HashMap<String, Object> selectPrice : list) {
+			result += (int)selectPrice.get("price");
+		}
+		return result;
+	}
+	
+	
+	public HashMap<String, Object> classNameAndByPrice(Connection con, int totalPirce) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		String query = prop.getProperty("resultClassNameAndStandardPrice");
+		//String query = "SELECT CLASS_CODE,STANDARD_PRICE FROM USER_CLASS WHERE STANDARD_PRICE > "+totalPirce;
+		try {
+			pstmt = con.prepareStatement(query);
+			//pstmt.setInt(1, totalPirce);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				System.out.println("진입중");
+				hmap = new HashMap<String,Object>();
+				hmap.put("class_name2", rset.getString("CLASS_NAME"));
+				hmap.put("standard2", rset.getInt("STANDARD_PRICE"));
+				hmap.put("totalByPrice",totalPirce);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println(hmap);
+		return hmap;
+	}
+
+
+
 
 	
 	//상품코드 : PD1에있는값의 DB정보 불러오깅
@@ -544,6 +739,8 @@ public class ProductDao {
 		
 		return hmap;
 	}
+
+
   	
   	
     

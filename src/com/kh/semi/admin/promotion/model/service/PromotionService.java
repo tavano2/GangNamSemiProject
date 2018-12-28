@@ -23,17 +23,19 @@ public class PromotionService {
 		return list;
 	}
 
-	public ArrayList<HashMap<String, String>> selectUser(SelectUserVo suv) {
+	public ArrayList<HashMap<String, Object>> selectUser(SelectUserVo suv, int currentPage, int limit) {
 		Connection con = getConnection();
-		ArrayList<HashMap<String,String>> list = null;
-		list = new PromotionDao().selectUser(con, suv);
+		ArrayList<HashMap<String,Object>> list = null;
+		list = new PromotionDao().selectUser(con, suv, currentPage, limit);
 		close(con);
 		return list;
 	}
 
 	public int getListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = getConnection();
+		int listCount = new PromotionDao().getListCount(con);
+		close(con);
+		return listCount;
 	}
 	
 	

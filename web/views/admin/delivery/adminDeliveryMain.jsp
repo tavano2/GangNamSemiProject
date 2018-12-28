@@ -1,5 +1,15 @@
+<%@page import="com.kh.semi.admin.delivery.model.vo.OrderSearchResultTable"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	ArrayList<OrderSearchResultTable> searchResultList = null;
+	if(request.getAttribute("searchResultList") != null){
+		searchResultList = (ArrayList<OrderSearchResultTable>)request.getAttribute("searchResultList");
+	} else {
+		searchResultList = new ArrayList<OrderSearchResultTable>();
+	}
+%>
 <!DOCTYPE html>
 <html>
 
