@@ -27,21 +27,40 @@ public class BoardService {
 		close(con);
 		return listCount;
 	}
+	
+	
+	//이벤트 게시판 검색 결과 게시글 조회
+	public int getTextSearchListCount(String searchData, String searchTextData) {
+		Connection con = getConnection();
+		int listCount = new BoardDao().getTextSearchListCount(con,searchData,searchTextData);
+		close(con);
+		return listCount;
+	}
+	
 
 	
 	// 이벤트 게시판 메인 페이지 조회용
-	public ArrayList<HashMap<String, Object>> selectEventPageList(int currentPage, int limit, String searchData, String searchTextData) {
+	public ArrayList<HashMap<String, Object>> selectEventPageList(int currentPage, int limit) {
 		Connection con = getConnection();
 		ArrayList<HashMap<String, Object>> list  = null;
-		if(searchData != null && searchTextData != null) {
-			list  = new BoardDao().selectEventPageList(con,currentPage,limit,searchData,searchTextData);
-		}else {
-			list  = new BoardDao().selectEventPageList(con,currentPage,limit);
-		}
+		list  = new BoardDao().selectEventPageList(con,currentPage,limit);
 		close(con);
-		
 		return list;
 	}
+	
+	
+	// 이벤트 검색용 게시판 페이지 조회
+	public ArrayList<HashMap<String, Object>> selectSeachEventPageList(int currentPage, int limit, String searchData, String searchTextData) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> list  = null;
+		list  = new BoardDao().selectEventPageList(con,currentPage,limit,searchData,searchTextData);
+		close(con);
+		return list;
+	}
+	
+
+	
+	
 
 	
 	//이벤트 게시판 작성 메소드
@@ -85,7 +104,9 @@ public class BoardService {
 		Connection con = getConnection();
 		
 		int count = new BoardDao().countEventDetailPage(con,b);
+		System.out.println("이벤트 디테일 카운트 : " + count);
 		HashMap<String, Object> searchBoard = new BoardDao().searchEventDetailPage(con,b);
+		System.out.println("이벤트 디테일 해쉬맵 : " + searchBoard);
 		
 		if(count > 0 && searchBoard.get("board_num").equals(b.getBoardNum())) {
 			commit(con);
@@ -162,6 +183,11 @@ public class BoardService {
 		close(con);
 		return result;
 	}
+
+
+
+
+
 
 
 

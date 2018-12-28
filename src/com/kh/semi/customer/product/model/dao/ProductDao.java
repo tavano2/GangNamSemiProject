@@ -545,6 +545,7 @@ public class ProductDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, m.getUserId());
+			pstmt.setString(2, m.getUserId());
 			rset = pstmt.executeQuery();
 			if(rset != null) {
 				list = new ArrayList<HashMap<String, Object>>();
@@ -607,14 +608,13 @@ public class ProductDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		HashMap<String, Object> hmap = null;
-		String query = prop.getProperty("resultClassNameAndStandardPrice");
-		//String query = "SELECT CLASS_CODE,STANDARD_PRICE FROM USER_CLASS WHERE STANDARD_PRICE > "+totalPirce;
+		/*String query = prop.getProperty("resultClassNameAndStandardPrice");*/
+		String query = "SELECT CLASS_NAME,STANDARD_PRICE FROM USER_CLASS WHERE STANDARD_PRICE > "+totalPirce;
 		try {
 			pstmt = con.prepareStatement(query);
 			//pstmt.setInt(1, totalPirce);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
-				System.out.println("진입중");
 				hmap = new HashMap<String,Object>();
 				hmap.put("class_name2", rset.getString("CLASS_NAME"));
 				hmap.put("standard2", rset.getInt("STANDARD_PRICE"));
@@ -626,7 +626,6 @@ public class ProductDao {
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println(hmap);
 		return hmap;
 	}
 
@@ -661,6 +660,25 @@ public class ProductDao {
 			e.printStackTrace();
 		}
 		
+		return hmap;
+	}
+
+	public HashMap<String, Object> firstClassName(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("firstClassName");
+		HashMap<String, Object> hmap = null;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				hmap = new HashMap<String,Object>();
+				hmap.put("firstUserClass", rset.getString("CLASS_NAME"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return hmap;
 	}
 

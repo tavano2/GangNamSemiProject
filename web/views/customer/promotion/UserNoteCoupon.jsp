@@ -74,6 +74,8 @@ table tbody>tr:hover {
 			</thead>
 			<tbody>
 				<%
+					if(list != null){
+
 					for (HashMap<String, Object> hmap : list) {
 				%>
 				<tr onclick="location.href='<%=request.getContextPath()%>/selectDetailMsgAndCouponPage.pm?msgCouponNum=<%=hmap.get("msg_num")%>' ">
@@ -83,10 +85,16 @@ table tbody>tr:hover {
 					<td><%=hmap.get("msg_date")%></td>
 				</tr>
 				<%
-					}
+						}
+					}else{
 				%>
 				<tr>
-					<td colspan="6">
+					<td colspan="4">쪽지가 없습니다.</td>
+				
+				</tr>
+				<%} %>
+				<tr>
+					<td colspan="4">
 						<div align="center">
 							<div class="ui pagination menu">
 								<a class="icon item"

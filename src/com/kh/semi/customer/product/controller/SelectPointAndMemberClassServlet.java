@@ -64,20 +64,29 @@ public class SelectPointAndMemberClassServlet extends HttpServlet {
 		//회원 다음 등급 이름, 총 구매금액 , 다음 등급까지 남은 금액
 		HashMap<String, Object> classNameAndPrice = new ProductService().classNameAndByPrice(m);
 		
+		//초기 회원시 보여줄 회원 등급 이름 해쉬맵
+		HashMap<String, Object> firstClassName = new ProductService().firstClassName(m);
 		
 		
-		if(contentList != null) {
+		
+		if(firstClassName == null) {
+			request.setAttribute("msg", "적립금 페이지 요청 실패!");
+			request.getRequestDispatcher("views/customer/common/errorPage.jsp").forward(request, response);;
+		}
+		
+
+		if(contentList.size() > 0 && pointList.size() > 0) {
+			request.setAttribute("firstClassName", firstClassName);
 			request.setAttribute("pi", pi);
 			request.setAttribute("pointList", pointList);
 			request.setAttribute("contentList", contentList);
 			request.setAttribute("classNameAndPrice", classNameAndPrice);
 			request.getRequestDispatcher("views/customer/promotion/UserPoint.jsp").forward(request, response);
 		}else {
-			request.setAttribute("msg", "적립금 페이지 요청 실패!");
-			request.getRequestDispatcher("views/customer/common/errorPage.jsp").forward(request, response);;
+			request.setAttribute("firstClassName", firstClassName);
+			request.setAttribute("classNameAndPrice", classNameAndPrice);
+			request.getRequestDispatcher("views/customer/promotion/UserPoint.jsp").forward(request, response);
 		}
-		
-		
 	}
 
 
