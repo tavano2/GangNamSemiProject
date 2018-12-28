@@ -203,8 +203,7 @@ span {
 									class="dropdown icon"></i>
 								<div class="default text">조회결과표시</div>
 								<div class="menu">
-									<div class="item" data-value="1">20개씩 보기</div>
-									<div class="item" data-value="0">10개씩 보기</div>
+									<div class="item" data-value="0" name="selectResult3">증가 3 / 차감 3 씩 보기</div>
 								</div>
 							</div>
 						</div>
@@ -274,6 +273,7 @@ span {
 		};
 
 		$(function() {
+			$("div[name=selectResult3]").html("증가 3 / 차감 3 씩 보기").css("color","black");
 			var today = new Date();
 			today = dateFunction(today);
 

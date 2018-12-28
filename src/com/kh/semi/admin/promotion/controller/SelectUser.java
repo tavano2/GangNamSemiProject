@@ -57,7 +57,7 @@ public class SelectUser extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
-		limit = 5;
+		limit = 1;
 
 		// 전체 게시글 수 조회
 		int listCount = new PromotionService().getListCount();
@@ -65,7 +65,7 @@ public class SelectUser extends HttpServlet {
 		// 예를 들어 목록 수가 123개면 페이지수는 13페이지가 필요하다.
 		maxPage = (int) ((double) listCount / limit + 0.9);
 		// 현재 페이지에 보여줄 시작페이지 수
-		startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
+		startPage = (((int) ((double) currentPage / (limit+9) + 0.9)) - 1) * limit + 1;
 		
 		endPage = startPage + 10 - 1;
 		
@@ -75,14 +75,17 @@ public class SelectUser extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		System.out.println(pi);
 		ArrayList<HashMap<String,Object>> list = new PromotionService().selectUser(suv, currentPage, limit);
+		
+		ArrayList<HashMap<String,Object>> Alllist = new PromotionService().selectAllUser(suv);
 			
 		String page="";
 		if(list!=null) {
 			page="/views/admin/promotion/MileageSelectResult.jsp";
 			HttpSession session = request.getSession();
-			session.setAttribute("suv", suv);
+			request.setAttribute("suv", suv);
 			request.setAttribute("selectUserList", list);
 			request.setAttribute("pi", pi);
+			request.setAttribute("selectAllUserList", Alllist);
 		}else {
 			page="/views/admin/promotion/Mileage.jsp";
 			request.setAttribute("msg", "검색결과가 없습니다.");
