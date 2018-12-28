@@ -1,9 +1,11 @@
+<%@page import="com.kh.semi.customer.member.model.vo.Member"%>
 <%@page import="com.kh.semi.admin.promotion.model.vo.PageInfo"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+	Member loginUser = (Member) session.getAttribute("loginUser");
 	ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) session.getAttribute("list");
 %>
 <!DOCTYPE html>
@@ -203,7 +205,8 @@ span {
 									class="dropdown icon"></i>
 								<div class="default text">조회결과표시</div>
 								<div class="menu">
-									<div class="item" data-value="0" name="selectResult3">증가 3 / 차감 3 씩 보기</div>
+									<div class="item" data-value="0" name="selectResult3">증가
+										3 / 차감 3 씩 보기</div>
 								</div>
 							</div>
 						</div>
@@ -224,11 +227,11 @@ span {
 										<td class="mileageTd" style="text-align: center">내용</td>
 										<td class="mileageTd" width="100px" style="text-align: center">처리자</td>
 									</tr>
-							
+
 									<tr align="center">
 										<td colspan="8">검색 결과가 표시됩니다.</td>
 									</tr>
-			
+
 								</tbody>
 							</table>
 						</div>
@@ -273,7 +276,18 @@ span {
 		};
 
 		$(function() {
-			$("div[name=selectResult3]").html("증가 3 / 차감 3 씩 보기").css("color","black");
+	<%if (loginUser == null) {
+				request.setAttribute("msg", "잘못된 경로로 접근했습니다.");
+				request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
+			} else {
+				if (loginUser.getUserId().equals("admin")) {
+				} else {
+					request.setAttribute("msg", "잘못된 경로로 접근했습니다.");
+					request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
+				}
+			}%>
+		$("div[name=selectResult3]").html("증가 3 / 차감 3 씩 보기").css("color",
+					"black");
 			var today = new Date();
 			today = dateFunction(today);
 

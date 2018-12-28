@@ -1,3 +1,4 @@
+<%@page import="com.kh.semi.customer.member.model.vo.Member"%>
 <%@page import="com.kh.semi.admin.promotion.model.vo.SelectUserVo"%>
 <%@page import="com.kh.semi.admin.promotion.model.vo.PageInfo"%>
 <%@page import="java.util.HashMap"%>
@@ -17,6 +18,7 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
+	Member loginUser = (Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
@@ -256,8 +258,7 @@ span {
 											적립금 증가</td>
 										<td class="mileageTd" width="130px" style="text-align: center">가용
 											적립금 차감</td>
-										<td class="mileageTd" width="130px" style="text-align: center">가용
-											적립금 잔액</td>
+
 										<td class="mileageTd" width="150px" style="text-align: center">관련주문/추천인</td>
 										<td class="mileageTd" style="text-align: center">내용</td>
 										<td class="mileageTd" width="100px" style="text-align: center">처리자</td>
@@ -271,9 +272,9 @@ span {
 										<td><%=map.get("userId")%></td>
 										<td><%=map.get("plusP")%></td>
 										<td><%=map.get("minusP")%></td>
-										<td></td>
+
 										<td><%=map.get("orderDNum")%></td>
-										<td></td>
+										<td> 내용없음</td>
 										<td>admin</td>
 									</tr>
 									<%
@@ -397,6 +398,16 @@ span {
 		};
 
 		$(function() {		
+			<%if (loginUser == null) {
+				request.setAttribute("msg", "잘못된 경로로 접근했습니다.");
+				request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
+			} else {
+				if (loginUser.getUserId().equals("admin")) {
+				} else {
+					request.setAttribute("msg", "잘못된 경로로 접근했습니다.");
+					request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
+				}
+			}%>
 			$("#userClass").val("<%=suv.getUserClass()%>");
 			$("div[name=allUserClass]").html("<%=suv.getUserClass().toUpperCase()%>").css("color","black");
 			$("div[name=selectResult3]").html("증가 3 / 차감 3 씩 보기").css("color","black");

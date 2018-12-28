@@ -173,7 +173,7 @@ th>div {
 					var userId = $("#userId").val();
 					var userPwd1 = $("#userPwd1").val();
 					var userPwd2 = $("#userPwd2").val();
-					var userPwdCheck = /[a-zA-z0-9]{10,15}/g;
+					var userPwdCheck = /[a-zA-Z0-9]{10,15}/g;
 					userPwdResult = userPwdCheck.test(userPwd1);
 					
 					if (($("#userId").val() == "")) {
