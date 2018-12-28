@@ -421,7 +421,7 @@ public class ProductDao {
 		ResultSet rset = null;
 		ArrayList<ShoppingCartPd> cart = null;
 		
-		String query = prop.getProperty("selectListCart");//"ShoppingCartPd" = VO
+		String query = prop.getProperty("selectListCart");// "selectListCart" > text.properties (sql-product-QUERY)
 		
 		try {
 			pstmt = (PreparedStatement) con.createStatement();
