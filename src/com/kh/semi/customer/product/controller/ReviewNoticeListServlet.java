@@ -124,7 +124,6 @@ public class ReviewNoticeListServlet extends HttpServlet {
 		//map에서 꺼내주기
 		ReallyProduct pro = (ReallyProduct)hmap.get("pro");
 		ArrayList<Attachment> detailAttachmentList = (ArrayList<Attachment>)hmap.get("detailAttachmentList");
-		ArrayList<Option> detailOptionList =(ArrayList<Option>)hmap.get("detailOptionList");
 		
 		//System.out.println(detailAttachmentList.get(0)); 	//사진1
 		//System.out.println(detailAttachmentList.get(1));	//사진2
@@ -132,7 +131,21 @@ public class ReviewNoticeListServlet extends HttpServlet {
 		//System.out.println(detailAttachmentList.get(3));	//사진4
 		//System.out.println(detailAttachmentList.get(0).getChangeName());
 		//System.out.println(detailAttachmentList.get(0).getFilePath());
+		
+		
+		////////////////////////////////////옵션/////////////////////////////////////////////////
+		ArrayList<Option> detailOptionList =(ArrayList<Option>)hmap.get("detailOptionList");
 
+		//System.out.println(detailOptionList);
+		/*
+		System.out.println(detailOptionList.get(0));
+		System.out.println(detailOptionList.get(1));
+		System.out.println(detailOptionList.get(2));
+		System.out.println(detailOptionList.get(3));
+		*/
+		
+		
+		
 		/////////////페이지 넘기기/////////////////
 		String page="";
 		if(list!=null && listQnA!=null) {

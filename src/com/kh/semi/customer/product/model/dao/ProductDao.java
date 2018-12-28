@@ -679,19 +679,20 @@ public class ProductDao {
 		
 		ReallyProduct pro = null;	//가격,상품
 		Attachment at = null;		//사진4장
-		Option op = null;			//옵션
+		
 		
 		ArrayList<Attachment> detailAttachmentList = null;	//사진 4개 리스트
-		ArrayList<Option> detailOptionList = null;			//옵션 리스트
+		
 		
 		String query = prop.getProperty("selectOneDetailPage");
 		
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, productCode);
+			pstmt.setString(2, productCode);
 			rset = pstmt.executeQuery();
 			detailAttachmentList = new ArrayList<Attachment>();
-			detailOptionList = new ArrayList<Option>();
+			
 			
 			while(rset.next()) {
 				pro = new ReallyProduct();
@@ -710,14 +711,9 @@ public class ProductDao {
 				at.setFilePath(rset.getString("FILE_PATH"));
 				
 				
-				op = new Option();
-				op.setOptionSnum(rset.getString("OPTION_SNUM"));
-				op.setOptionMemo(rset.getString("OPTION_MEMO"));
-				op.setOptionNum(rset.getString("OPTION_NUM"));
-				op.setOptionName(rset.getString("OPTION_NAME"));
-				
+
 				detailAttachmentList.add(at);
-				detailOptionList.add(op);
+				
 				
 			}
 			
@@ -725,7 +721,7 @@ public class ProductDao {
 			
 			hmap.put("pro", pro);
 			hmap.put("detailAttachmentList", detailAttachmentList);
-			hmap.put("detailOptionList", detailOptionList);
+			
 			
 			
 			
@@ -738,6 +734,49 @@ public class ProductDao {
 		}
 		
 		return hmap;
+	}
+	
+	//상품 상세보기에서 옵션쓰
+	public ArrayList<Option> detailOptionList(Connection con, String code) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Option> detailOptionList = null;			//옵션 리스트
+		String productCode="PD000003";
+		
+		Option op = null;			//옵션
+		
+		String query = prop.getProperty("detailOptionList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, productCode);
+			pstmt.setString(2, productCode);
+			
+			rset=pstmt.executeQuery();
+			detailOptionList = new ArrayList<Option>();
+			
+			while(rset.next()) {
+				op = new Option();
+				op.setOptionSnum(rset.getString("OPTION_SNUM"));
+				op.setOptionMemo(rset.getString("OPTION_MEMO"));
+				op.setOptionNum(rset.getString("OPTION_NUM"));
+				op.setOptionName(rset.getString("OPTION_NAME"));
+				
+				detailOptionList.add(op);
+			
+			}
+			//System.out.println(detailOptionList);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+
+		
+		return detailOptionList;
 	}
 
 	public HashMap<String, Object> firstClassName(Connection con, Member m) {
@@ -758,6 +797,7 @@ public class ProductDao {
 		}
 		return hmap;
 	}
+
 
 
 

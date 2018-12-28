@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.dao.ProductDao;
+import com.kh.semi.customer.product.model.vo.Option;
 import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 
@@ -215,7 +216,9 @@ public class ProductService {
 
 		Connection con = getConnection();
 		HashMap<String , Object> hmap = new ProductDao().selectOneDetailPage(con,code);
+		ArrayList<Option> detailOptionList = new ProductDao().detailOptionList(con,code);
 		
+		hmap.put("detailOptionList", detailOptionList);
 
 		close(con);
 		return hmap;
