@@ -4,6 +4,8 @@ import static com.kh.semi.customer.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.semi.customer.member.model.dao.MemberDao;
 import com.kh.semi.customer.member.model.vo.Member;
@@ -145,6 +147,63 @@ public class MemberService {
 		}
 		close(con);
 		return result;
+	}
+
+
+	public HashMap<String, Object> selectUserIdAndCurrentClassName(Member m) {
+		Connection con = getConnection();
+		HashMap<String, Object> hmap = new MemberDao().selectUserIdAndCurrentClassName(con,m);
+		close(con);
+		return hmap;
+	}
+
+
+	public HashMap<String, Object> selectNextClassAndPrice(Member m) {
+		Connection con = getConnection();
+		int totalPrice = new MemberDao().selectTotalPirce(con,m);
+		HashMap<String, Object> hmap = new MemberDao().selectNextClassAndPrice(con,m,totalPrice);
+		close(con);
+		return hmap;
+	}
+
+
+	public HashMap<String, Object> selectBeforePirceYear(Member m) {
+		Connection con = getConnection();
+		HashMap<String, Object> hmap = new MemberDao().selectBeforePirceYear(con,m);
+		close(con);
+		return hmap;
+	}
+
+
+	public ArrayList<HashMap<String, Object>> selectPointGroup(Member m) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> list = new MemberDao().selectPointGroup(con,m);
+		close(con);
+		return list;
+	}
+
+
+	public int countCoupon(Member m) {
+		Connection con = getConnection();
+		int result = new MemberDao().countCoupon(con,m);
+		close(con);
+		return result;
+	}
+
+
+	public int totalByCount(Member m) {
+		Connection con = getConnection();
+		int result = new MemberDao().totalByCount(con,m);
+		close(con);
+		return result;
+	}
+
+
+	public ArrayList<HashMap<String, String>> myDeliveryStatus(Member m) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, String>> list = new MemberDao().myDeliveryStatus(con,m);
+		close(con);
+		return list;
 	}
 
 
