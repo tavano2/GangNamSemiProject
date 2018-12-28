@@ -2,6 +2,7 @@ package com.kh.semi.admin.delivery.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.kh.semi.admin.delivery.model.service.AdminDeliveryService;
 import com.kh.semi.admin.delivery.model.vo.OrderSearchResult;
 import com.kh.semi.admin.delivery.model.vo.OrderSearchResultTable;
@@ -105,7 +107,8 @@ public class AdminOrderSearchServlet extends HttpServlet {
 			}
 			if(i < orderStateArr.length - 1) orderState += ",";
 		}
-		System.out.println(uri);
+		
+		//System.out.println(uri);
 		switch(uri) {
 			case "adminProductReady.jsp": orderState = "상품준비중"; break;
 			case "adminDeliveryReady.jsp": orderState = "배송준비중"; break;
@@ -164,7 +167,7 @@ public class AdminOrderSearchServlet extends HttpServlet {
 			for(int i=0; i<searchResultOpt.size(); i++) {			
 				OrderSearchResultTable item = new OrderSearchResultTable();
 				
-				item.setOrderDate(searchResultOpt.get(i).getOrderDate());
+				item.setOrderDate(new SimpleDateFormat("yyyy-MM-dd").format(searchResultOpt.get(i).getOrderDate()));
 				item.setOrderLnum(searchResultOpt.get(i).getOrderLnum());
 				item.setUserId(searchResultOpt.get(i).getUserId());
 				
@@ -237,8 +240,13 @@ public class AdminOrderSearchServlet extends HttpServlet {
 			
 			//for(OrderSearchResultTable o : searchResultList) System.out.println(o);
 			
-			request.setAttribute("searchResultList", searchResultList);
-			request.getRequestDispatcher("/views/admin/delivery/" + uri).forward(request, response);;
+			//request.setAttribute("searchResultList", searchResultList);
+			//request.getRequestDispatcher("/views/admin/delivery/" + uri).forward(request, response);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			
+			new Gson().toJson(searchResultList, response.getWriter());
 		} else {
 			request.setAttribute("msg", "주문 검색 실패!");
 			request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);

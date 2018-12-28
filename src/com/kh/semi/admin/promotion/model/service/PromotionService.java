@@ -37,6 +37,14 @@ public class PromotionService {
 		close(con);
 		return listCount;
 	}
+
+	public ArrayList<HashMap<String, Object>> selectAllUser(SelectUserVo suv) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String,Object>> list = null;
+		list = new PromotionDao().selectAllUser(con, suv);
+		close(con);
+		return list;
+	}
 	
 	
 }

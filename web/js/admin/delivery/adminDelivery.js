@@ -165,16 +165,6 @@ $('#orderState .chk-list .child.checkbox').checkbox({
 	}
 });
 
-
-
-
-
-//페이징넘버 클릭시 active
-$('.order-result .pagination.menu .item:not(.icon.item)').click(function(){
-	$('.order-result .pagination.menu .item').removeClass('active');
-	$(this).addClass('active');
-});
-
 //검색결과 리셋
 $('#resultReset').click(function(){
 	resultBox.reset();

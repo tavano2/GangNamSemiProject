@@ -68,23 +68,30 @@ public class PromotionDao {
 		ResultSet rset = null;
 		HashMap<String,Object> map = null;
 		String query= prop.getProperty("selectUser");
-		System.out.println(query);
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		System.out.println("---------------------------------------");
+		System.out.println("검색 실행");
 		System.out.println(suv.getUserId());
 		System.out.println(suv.getUserClass().toUpperCase());
+		System.out.println(suv.getStartDate());
+		System.out.println(suv.getEndDate());
+		System.out.println(currentPage);
+		System.out.println(limit);
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, suv.getUserId());
 			pstmt.setString(2, suv.getUserClass().toUpperCase());	
 			pstmt.setDate(3, suv.getStartDate());
 			pstmt.setDate(4, suv.getEndDate());	
-			pstmt.setInt(5, currentPage);
-			pstmt.setInt(6, limit);
+			pstmt.setInt(5, startRow);
+			pstmt.setInt(6, endRow);
 			pstmt.setString(7, suv.getUserId());
 			pstmt.setString(8, suv.getUserClass().toUpperCase());	
 			pstmt.setDate(9, suv.getStartDate());
 			pstmt.setDate(10, suv.getEndDate());	
-			pstmt.setInt(11, currentPage);
-			pstmt.setInt(12, limit);
+			pstmt.setInt(11, startRow);
+			pstmt.setInt(12, endRow);
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				map = new HashMap<String, Object>();
@@ -96,7 +103,10 @@ public class PromotionDao {
 				map.put("date",rset.getDate("ORDER_DATE"));
 				map.put("userId",rset.getString("USER_ID"));
 				list.add(map);	
+				System.out.println("---------------------------------------");
+				System.out.println("검색결과");
 				System.out.println(map);
+				System.out.println("---------------------------------------");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -127,5 +137,46 @@ public class PromotionDao {
 			e.printStackTrace();
 		}
 		return listCount;
+	}
+
+	public ArrayList<HashMap<String, Object>> selectAllUser(Connection con, SelectUserVo suv) {
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String,Object> map = null;
+		String query= prop.getProperty("selectAllUser");
+		System.out.println("---------------------------------------");
+		System.out.println("검색 실행");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, suv.getUserId());
+			pstmt.setString(2, suv.getUserClass().toUpperCase());	
+			pstmt.setDate(3, suv.getStartDate());
+			pstmt.setDate(4, suv.getEndDate());	
+			pstmt.setString(5, suv.getUserId());
+			pstmt.setString(6, suv.getUserClass().toUpperCase());	
+			pstmt.setDate(7, suv.getStartDate());
+			pstmt.setDate(8, suv.getEndDate());	
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				map = new HashMap<String, Object>();
+				map.put("userClass", rset.getString("USER_CLASS"));
+				map.put("orderLNum",rset.getString("ORDER_LNUM"));
+				map.put("orderDNum", rset.getString("ORDER_DNUM"));
+				map.put("plusP", rset.getString("PLUS_P"));
+				map.put("minusP", rset.getString("MINUS_P"));
+				map.put("date",rset.getDate("ORDER_DATE"));
+				map.put("userId",rset.getString("USER_ID"));
+				list.add(map);	
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 }

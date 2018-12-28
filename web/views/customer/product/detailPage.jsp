@@ -1,3 +1,6 @@
+<%@page import="com.kh.semi.customer.product.model.vo.ReallyProduct"%>
+<%@page import="com.kh.semi.customer.product.model.vo.Option"%>
+<%@page import="com.kh.semi.customer.product.model.vo.Attachment"%>
 <%@page import="com.kh.semi.customer.product.model.vo.Product"%>
 <%@page import="com.kh.semi.customer.board.model.vo.PageInfo"%>
 <%@page import="java.util.ArrayList"%>
@@ -19,6 +22,22 @@
 	int maxPageQnA = piQnA.getMaxPage();
 	int startPageQnA = piQnA.getStartPage();
 	int endPageQnA = piQnA.getEndPage();
+	
+	//상품 상세 페이지
+ 	ReallyProduct pro = (ReallyProduct)request.getAttribute("pro");
+	ArrayList<Attachment> detailAttachmentList = (ArrayList<Attachment>)request.getAttribute("detailAttachmentList");
+	ArrayList<Option> detailOptionList = (ArrayList<Option>)request.getAttribute("detailOptionList");
+	 
+	//상품이름, 판매가,상품상세글, 옵션12, 상품이미지1메인,2상품이미지 34
+	Attachment titleImg = detailAttachmentList.get(0);
+	Attachment detailImg1 = detailAttachmentList.get(1);
+	Attachment detailImg2 = detailAttachmentList.get(2);
+	Attachment detailImg3 = detailAttachmentList.get(3);
+	
+	//Option option1 = detailOptionList.get(0);
+	//Option option2 = detailOptionList.get(1);
+	
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -152,33 +171,25 @@
 			<div class="ui equal width grid">
 
 				<div class="nine wide column">
-					<img src="/semi/views/images/products/detailTop.gif"
+					<img src="<%=titleImg.getFilePath() %><%=titleImg.getChangeName() %>"
 						class="detailTopImgsize" width="400" height="500">
+
 
 				</div>
 
 				<div class="seven wide column">
 					<table class="ui celled table">
 						<tr>
-							<%--   <!-- //상품등록 할때 정보 가져오기 - 맨위에 작성 
-                            <%
-                                 Info info = (Info)request.getAttribute("inFo");
-                                 정보를 다가져온후 여기엔 
-                                  <%=info.getColor()%><br> 
-                                  작성
-                             %> --> --%>
+							
                              
 						<br><br><br>
-                        	<p class="productName">기본 무지티</p>  
+                        	<p class="productName"><%=pro.getProductName() %></p>  
 						</tr>
 						<hr>
 						<tr>
-							판매가 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								39,500 won<br><br>
-							적립금 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-							350 won<br>
+							
+								상품 간단 설명쓰 : <%=pro.getProductMemo() %> <br><br>
+							
 						<hr>
 							색상  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -206,10 +217,10 @@
 							</div>
 							<br>
 							<hr><br>
-							<p align="center">총 상품 금액:200원</p> &nbsp;&nbsp;&nbsp;&nbsp;<br>
-							<div class="buyBtnDiv">
+							<p align="center">퐁 금액 : <%=pro.getProductPrice() %>  won</p> &nbsp;&nbsp;&nbsp;&nbsp;<br>
+							<!-- <div class="buyBtnDiv">
 								<button class="ui brown button buyBtn">By it Now</button>
-							</div>
+							</div> -->
 							<div class="cartBtnDiv">
 								<button class="ui grey basic button cartBtn">CART</button>
 								&nbsp;&nbsp;
@@ -225,24 +236,17 @@
 			<hr>
 			<div class="contextTop">
 
-				comment !<br> 체온을 따뜻하게 유지해주는 양털 안감의 라운드 무스탕 보여드릴게요.<br> <br>
-				겉소재는 부드러운 스웨이드 느낌의 원단을 사용해 포근함을 느끼실 수 있고<br> <br> 뽀글뽀글한 양털
-				안감으로 따뜻하게 착용할 수 있는 무스탕이에요.<br> <br> <br> 라운드 넥 디자인의
-				무스탕이여서 머플러나 폴라랑 같이 코디하셔도 귀여운 스타일링 가능하고<br> <br> 골반을 덮는 숏한
-				기장으로 간편하게 착용할 수 있는 겨울 아우터에요.<br> <br> 적당한 두께감의 니트와 함께 착용해도
-				암홀이나 팔통 부분이 불편하지 않는<br> <br> <br> 여유있는 사이즈로 제작되었으며
-				색상마다 안감 털 색상이 달른점이 만족스러워요.<br> <br> 캐주얼하면서 걸리쉬한 느낌으로 포인트
-				주기 좋은 무스탕과 함께해보세요!<br> <br>
+				상품상세 :  <%=pro.getProductDmemo() %> 
 			</div>
 
 
 			<div class="detailImg">
-				<img src="/semi/views/images/products/detailModel.jpg"
+				<img src="<%=detailImg1.getFilePath() %><%=detailImg1.getChangeName() %>"
 					class="detailTopImgsize" width="700px">
 			</div>
 
 			<div class="sizeChart">
-				<img src="/semi/views/images/products/sizeChart.jpg"
+				<img src="<%=detailImg2.getFilePath() %><%=detailImg2.getChangeName() %>"
 					class="detailTopImgsize" width="700px">
 				<table class="ui celled table first-col">
 
@@ -326,7 +330,7 @@
 					</tr>
 
 				</table>
-				<img src="/semi/views/images/products/modelsize.jpg" width="100%">
+				<img src="<%=detailImg3.getFilePath() %><%=detailImg3.getChangeName() %>" width="100%">
 
 			</div>
 			<div class="detailBottom1">
@@ -343,7 +347,7 @@
 					<tbody>
 						<%
 							for (Product ppp : list) {
-								System.out.print("다 불러와라 ㅠㅠ" + ppp);
+								//System.out.print("다 불러와라 ㅠㅠ" + ppp);
 						%>
 						<tr>
 							<td><%=ppp.getBoardNum()%></td>
