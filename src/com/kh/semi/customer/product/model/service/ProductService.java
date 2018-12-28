@@ -149,7 +149,7 @@ public class ProductService {
 		int result = 0;
 		int count = 0;
 		for(String msg : product_code) {
-			count += new ProductDao().deleteCartList(con,msg,userId);
+			count += new ProductDao().deleteListCart(con,msg,userId);
 		}
 		if(product_code.length == count) {
 			commit(con);
