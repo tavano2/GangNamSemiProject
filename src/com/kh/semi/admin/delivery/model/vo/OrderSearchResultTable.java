@@ -1,10 +1,9 @@
 package com.kh.semi.admin.delivery.model.vo;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 public class OrderSearchResultTable implements Serializable {
-	private Date orderDate;
+	private String orderDate;
 	private String orderLnum;
 	private String userId;
 	private String product;
@@ -18,7 +17,7 @@ public class OrderSearchResultTable implements Serializable {
 	
 	public OrderSearchResultTable() {}
 
-	public OrderSearchResultTable(Date orderDate, String orderLnum, String userId, String product, int amount,
+	public OrderSearchResultTable(String orderDate, String orderLnum, String userId, String product, int amount,
 			String postnum, int productPrice, int deliveryPrice, int payment, String orderSname, String memo) {
 		super();
 		this.orderDate = orderDate;
@@ -34,11 +33,11 @@ public class OrderSearchResultTable implements Serializable {
 		this.memo = memo;
 	}
 
-	public Date getOrderDate() {
+	public String getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
 
