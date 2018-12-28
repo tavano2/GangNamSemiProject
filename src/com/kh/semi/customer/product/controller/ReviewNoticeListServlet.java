@@ -20,7 +20,7 @@ import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ReallyProduct;
 
 
-@WebServlet("/productDetailPage.pd")
+@WebServlet("/reviewNoticeList.no")
 public class ReviewNoticeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -1,17 +1,18 @@
 package com.kh.semi.customer.product.model.service;
 
+import static com.kh.semi.customer.common.JDBCTemplate.close;
+import static com.kh.semi.customer.common.JDBCTemplate.commit;
+import static com.kh.semi.customer.common.JDBCTemplate.getConnection;
+import static com.kh.semi.customer.common.JDBCTemplate.rollback;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.kh.semi.customer.board.model.vo.Board;
 import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.dao.ProductDao;
 import com.kh.semi.customer.product.model.vo.Product;
-import com.kh.semi.customer.product.model.vo.ShoppingCart;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
-
-import static com.kh.semi.customer.common.JDBCTemplate.*;
 
 public class ProductService {
 
@@ -87,7 +88,7 @@ public class ProductService {
 		if(result>0) {
 			commit(con);
 			replyList = new ProductDao().selectQnAReply(con,pReply.getBoardId());
-	
+			
 		}else {
 			rollback(con);
 		}
@@ -123,7 +124,7 @@ public class ProductService {
 		Connection con = getConnection();
 		ArrayList<Product> SelectReplyList =null;
 		
-		SelectReplyList = new ProductDao().SelectReplyList(con,pQnABoardId);
+		SelectReplyList = new ProductDao().selectQnAReply(con,Integer.parseInt(pQnABoardId));
 		
 		close(con);
 		return SelectReplyList;

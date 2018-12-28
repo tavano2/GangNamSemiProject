@@ -1,9 +1,10 @@
 package com.kh.semi.customer.product.model.dao;
 
+import static com.kh.semi.customer.common.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,11 +18,7 @@ import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Option;
 import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ReallyProduct;
-import com.kh.semi.customer.product.model.vo.ShoppingCart;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
-import com.sun.corba.se.impl.javax.rmi.PortableRemoteObject;
-
-import static com.kh.semi.customer.common.JDBCTemplate.*;
 
 public class ProductDao {
 	
@@ -338,7 +335,10 @@ public class ProductDao {
 				pselectReply.setReplyLevel(rset.getInt("REPLY_LEVEL"));
 				pselectReply.setStatus(rset.getString("STATUS"));		
 				list.add(pselectReply);
+			
 				}
+			
+				System.out.println("가져왕"+list);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}finally {
@@ -369,7 +369,8 @@ public class ProductDao {
 	}
 
 
-	public ArrayList<Product> SelectReplyList(Connection con, String pQnABoardId) {
+  	
+/*	public ArrayList<Product> SelectReplyList(Connection con, String pQnABoardId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Product> SelectReplyList = null;
@@ -406,7 +407,7 @@ public class ProductDao {
 		}
 		
 		return SelectReplyList;
-	}
+	}*/
   
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -757,6 +758,8 @@ public class ProductDao {
 		}
 		return hmap;
 	}
+
+
 
 
 
