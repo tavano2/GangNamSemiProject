@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.vo.Attachment;
+import com.kh.semi.customer.product.model.vo.Option;
 import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ReallyProduct;
 import com.kh.semi.customer.product.model.vo.ShoppingCart;
@@ -669,16 +670,19 @@ public class ProductDao {
 	public HashMap<String, Object> selectOneDetailPage(Connection con, String code) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		HashMap<String, Object> hmap = null;
+		HashMap<String, Object> hmap = null;	//전체 담아줄 것
 		String productCode="PD000003";
 		
 		//키-맵
 		//product - p
 		//Attachment - list1234
 		
-		ReallyProduct pro = null;	//
-		Attachment at = null;		//
-		ArrayList<Attachment> detailProductList = null;	//
+		ReallyProduct pro = null;	//가격,상품
+		Attachment at = null;		//사진4장
+		Option op = null;			//옵션
+		
+		ArrayList<Attachment> detailAttachmentList = null;	//사진 4개 리스트
+		ArrayList<Option> detailOptionList = null;			//옵션 리스트
 		
 		String query = prop.getProperty("selectOneDetailPage");
 		
@@ -686,10 +690,51 @@ public class ProductDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, productCode);
 			rset = pstmt.executeQuery();
-			//list = new ArrayList<>()
+			detailAttachmentList = new ArrayList<Attachment>();
+			detailOptionList = new ArrayList<Option>();
+			
+			while(rset.next()) {
+				pro = new ReallyProduct();
+				pro.setProductMemo(rset.getString("PRODUCT_MEMO"));
+				pro.setProductDmemo(rset.getString("PRODUCT_DMEMO"));
+				pro.setProductPrice(rset.getInt("PRODUCT_PRICE"));
+				pro.setDisplayStatus(rset.getString("DISPLAY_STATUS"));
+				pro.setProductName(rset.getString("PRODUCT_NAME"));
+				
+				at = new Attachment();
+				at.setFileId(rset.getString("FILE_ID"));
+				at.setPlaceNum(rset.getInt("PLACE_NUM"));
+				at.setOriginName(rset.getString("ORIGIN_NAME"));
+				at.setChangeName(rset.getString("CHANGE_NAME"));
+				at.setFileLevel(rset.getInt("FILE_LEVEL"));
+				at.setFilePath(rset.getString("FILE_PATH"));
+				
+				
+				op = new Option();
+				op.setOptionSnum(rset.getString("OPTION_SNUM"));
+				op.setOptionMemo(rset.getString("OPTION_MEMO"));
+				op.setOptionNum(rset.getString("OPTION_NUM"));
+				op.setOptionName(rset.getString("OPTION_NAME"));
+				
+				detailAttachmentList.add(at);
+				detailOptionList.add(op);
+				
+			}
+			
+			hmap = new HashMap<String,Object>();
+			
+			hmap.put("pro", pro);
+			hmap.put("detailAttachmentList", detailAttachmentList);
+			hmap.put("detailOptionList", detailOptionList);
+			
+			
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
 		}
 		
 		return hmap;
