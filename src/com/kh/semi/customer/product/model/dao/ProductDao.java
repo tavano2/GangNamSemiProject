@@ -17,6 +17,7 @@ import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ReallyProduct;
 import com.kh.semi.customer.product.model.vo.ShoppingCart;
+import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 import com.sun.corba.se.impl.javax.rmi.PortableRemoteObject;
 
 import static com.kh.semi.customer.common.JDBCTemplate.*;
@@ -408,35 +409,37 @@ public class ProductDao {
   
 
 
-    	// 장바구니 | Shopping Cart > 조회
-	// DAO : Data Access Object : Get a request and Return the result. / DAO access to DataBase *directly*. (and Return the result.)
-	// VO : Value Object. = Its' an Object Class. It exists for exchanging data between classes.
-	// VO = DTO (Data Transfer Object) = Domain Object = Bean = Entity
-	public ArrayList<ShoppingCart> selectListCart(Connection con, int currentPage, int limit) {
+    	// 장바구니 | Shopping Cart > 조회 | selectListCart (named in DAO)
+	
+// DAO : Data Access Object : Get a request and Return the result. / DAO access to DataBase *directly*. (and Return the result.)
+// VO : Value Object. = Its' an Object Class. It exists for exchanging data between classes.
+// VO = DTO (Data Transfer Object) = Domain Object = Bean = Entity
+	
+	public ArrayList<ShoppingCartPd> selectListCart(Connection con, int currentPage, int limit) {
 		
 		PreparedStatement pstmt = null;// PreparedStatement : An object that represents a pre-compiled SQL statement. 
 		ResultSet rset = null;
-		ArrayList<ShoppingCart> cart = null;
+		ArrayList<ShoppingCartPd> cart = null;
 		
-		String query = prop.getProperty("ShoppingCart");//"ShoppingCart" = VO
+		String query = prop.getProperty("selectListCart");//"ShoppingCartPd" = VO
 		
 		try {
 			pstmt = (PreparedStatement) con.createStatement();
 			
 			rset = pstmt.executeQuery(query);
 			
-			cart = new ArrayList<ShoppingCart>();
+			cart = new ArrayList<ShoppingCartPd>();
 			
 			while(rset.next()) {
-				ShoppingCart c = new ShoppingCart();
+				ShoppingCartPd cartPd = new ShoppingCartPd();
 				
-				c.setProductCode(rset.getInt("PRODUCT_CODE"));
-				c.setUserId(rset.getString("USER_ID"));
-				c.setOptionNum(rset.getInt("OPTION_NUM"));
-				c.setAmount(rset.getInt("AMOUNT"));
+				cartPd.setProductCode(rset.getInt("PRODUCT_CODE"));
+				cartPd.setUserId(rset.getString("USER_ID"));
+				cartPd.setOptionNum(rset.getInt("OPTION_NUM"));
+				cartPd.setAmount(rset.getInt("AMOUNT"));
 				
 				
-				cart.add(c);
+				cart.add(cartPd);
 			}
 			
 			
@@ -450,12 +453,36 @@ public class ProductDao {
 		
 		return cart;
 	}
+	
+	   // 장바구니 | Shopping Cart > 품목 추가 | insertListCart (named in DAO)
     
-	// deleteCartList
-	public int deleteCartList(Connection con, String msg, String userId) {
+		public int insertListCart(Connection con, ShoppingCartPd cart) {
+		
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String query = prop.getProperty("deleteCartList");
+		
+		String query = prop.getProperty("insertListCart");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, cart.getProductCode());
+			pstmt.setString(2, cart.getUserId());
+			pstmt.setInt(3, cart.getOptionNum());
+			pstmt.setInt(4, cart.getAmount());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+			return result;
+	}
+	
+	   // 장바구니 | Shopping Cart > 삭제 | deleteCartList (named in DAO)
+	public int deleteListCart(Connection con, String msg, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteListCart");
 		
 		return 0;
 	}

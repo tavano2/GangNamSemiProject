@@ -3,7 +3,7 @@ package com.kh.semi.customer.product.model.vo; // "Model" deals with "Business L
 // Service : Service calls several DAO out. Do serve...
 // Service send the result >to> Controller.
 
-public class ShoppingCart/*  implements java.io.Serializable*/{
+public class ShoppingCartPd{
 
 
 	private int ProductCode; // ProductCode
@@ -20,10 +20,10 @@ public class ShoppingCart/*  implements java.io.Serializable*/{
 	 *  
 	 * */
 	
-	public ShoppingCart() {}
+	public ShoppingCartPd() {}
 	
 	
-	public ShoppingCart(int ProductCode, String UserId, int OptionNum, int Amount) {
+	public ShoppingCartPd(int ProductCode, String UserId, int OptionNum, int Amount) {
 		super();
 		this.ProductCode = ProductCode;
 		this.UserId = UserId;
