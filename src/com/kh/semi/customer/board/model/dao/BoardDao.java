@@ -269,7 +269,7 @@ public class BoardDao {
 				hmap.put("status", rset.getString("STATUS"));
 				hmap.put("file_id", rset.getString("FILE_ID"));
 				hmap.put("place_num", rset.getString("PLACE_NUM"));
-				hmap.put("origine_name", rset.getString("ORIGINE_NAME"));
+				hmap.put("origine_name", rset.getString("ORIGIN_NAME"));
 				hmap.put("change_name", rset.getString("CHANGE_NAME"));
 				hmap.put("file_path", rset.getString("FILE_PATH"));
 				hmap.put("upload_date", rset.getString("UPLOAD_DATE"));
@@ -474,6 +474,69 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int getListCount(Connection con, int pageType) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		String query = prop.getProperty("eventPageTypeListCount");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, pageType);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+
+	public ArrayList<HashMap<String, Object>> selectEventPageList(Connection con, int currentPage, int limit,
+			int pageType,String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		ArrayList<HashMap<String, Object>> list = null;
+
+		String query = prop.getProperty("selectMyPageReviewList");
+		try {
+			pstmt = con.prepareStatement(query);
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, pageType);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			rset = pstmt.executeQuery();
+			if (rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while (rset.next()) {
+					hmap = new HashMap<String, Object>();
+					hmap.put("board_id", rset.getInt("BOARD_ID"));
+					hmap.put("board_num", rset.getInt("BOARD_NUM"));
+					hmap.put("board_title", rset.getString("BOARD_TITLE"));
+					hmap.put("board_content", rset.getString("BOARD_CONTENT"));
+					hmap.put("user_id", rset.getString("USER_ID"));
+					hmap.put("board_date", rset.getDate("BOARD_DATE"));
+					hmap.put("board_count", rset.getInt("BOARD_COUNT"));
+					hmap.put("status", rset.getString("STATUS"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
 	}
 
 
