@@ -191,28 +191,68 @@
 								상품 간단 설명쓰 : <%=pro.getProductMemo() %> <br><br>
 							
 						<hr>
-							색상  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							사이즈  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<div class="ui selection dropdown">
 								<!-- <input type="hidden" name="gender"> -->
 								<i class="dropdown icon"></i>
 								<div class="default text">[필수]옵션을 선택해 주세요</div>
 								<div class="menu">
-									<div class="item" data-value="0">블랙</div>
-									<div class="item" data-value="1">화이트</div>
-									<div class="item" data-value="2">랜덤</div>
+								
+								
+								<!-- <%-- <% for(Option opp : detailOptionList){
+								int i=0;
+								if(		opp.getOptionNum().equals("OP000021")||opp.getOptionNum().equals("OP000022")||
+										opp.getOptionNum().equals("OP000023")||opp.getOptionNum().equals("OP000024")||
+										opp.getOptionNum().equals("OP000025")||opp.getOptionNum().equals("OP000026")||
+										opp.getOptionNum().equals("OP000027")||opp.getOptionNum().equals("OP000028")){ 
+								%>
+									
+
+									<div class="item" data-value="i"><%=opp.getOptionName() %></div>
+								<!-- 	<div class="item" data-value="1">화이트</div>
+									<div class="item" data-value="2">랜덤</div> -->
+										
+									<% i++;}%>   --%>-->
+								
+						<% for(Option opp : detailOptionList) {%>
+								<% int i=0; %>
+								<% if(opp.getOptionNum().equals("OP000021")||opp.getOptionNum().equals("OP000022")||
+										opp.getOptionNum().equals("OP000023")||opp.getOptionNum().equals("OP000024")||
+										opp.getOptionNum().equals("OP000025")||opp.getOptionNum().equals("OP000026")||
+										opp.getOptionNum().equals("OP000027")||opp.getOptionNum().equals("OP000028")){ %>
+								
+									<div class="item" data-value="i"><%=opp.getOptionName() %></div>
+								
+									
+									<%}} %>
+									
 								</div>
 							</div>
-							<br> 크기  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<br> 색상  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<div class="ui selection dropdown">
 								<!-- <input type="hidden" name="gender"> -->
 								<i class="dropdown icon"></i>
 								<div class="default text">[필수]옵션을 선택해 주세요</div>
 								<div class="menu">
-									<div class="item" data-value="0">S</div>
-									<div class="item" data-value="1">M</div>
-									<div class="item" data-value="2">L</div>
+								<% for(Option opp2 : detailOptionList) {%>
+								<% int j=0; %>
+								<% if(opp2.getOptionNum().equals("OP000001")||opp2.getOptionNum().equals("OP000002")||
+										opp2.getOptionNum().equals("OP000003")||opp2.getOptionNum().equals("OP000004")||
+										opp2.getOptionNum().equals("OP000005")||opp2.getOptionNum().equals("OP000006")||
+										opp2.getOptionNum().equals("OP000007")||opp2.getOptionNum().equals("OP000008")||
+										opp2.getOptionNum().equals("OP000009")||opp2.getOptionNum().equals("OP000010")||
+										opp2.getOptionNum().equals("OP000011")||opp2.getOptionNum().equals("OP000012")||
+										opp2.getOptionNum().equals("OP000013")||opp2.getOptionNum().equals("OP000014")||
+										opp2.getOptionNum().equals("OP000015")||opp2.getOptionNum().equals("OP000016")||
+										opp2.getOptionNum().equals("OP000017")||opp2.getOptionNum().equals("OP000018")||
+										opp2.getOptionNum().equals("OP000019")||opp2.getOptionNum().equals("OP000020")
+										){ %>
+								
+									<div class="item" data-value="j"><%=opp2.getOptionName() %></div>
+									<%}} %>
+									
 								</div>
 							</div>
 							<br>
