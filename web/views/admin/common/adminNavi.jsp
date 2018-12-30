@@ -17,7 +17,7 @@
             <a class="item" href="/semi/views/admin/board/adminBoardManagement.jsp">
                 <i class="table icon"></i> 게시판관리
             </a>
-            <a class="item" href="/semi/views/admin/delivery/adminDeliveryMain.jsp">
+            <a class="item" href="<%=request.getContextPath()%>/adminDeliveryMain.de">
                 <i class="mail icon"></i> 주문관리
             </a>
         </div>

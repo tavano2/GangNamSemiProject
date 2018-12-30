@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.kh.semi.admin.delivery.model.dao.AdminDeliveryDao;
+import com.kh.semi.admin.delivery.model.vo.OrderDeliveryInfo;
 import com.kh.semi.admin.delivery.model.vo.OrderDetail;
 import com.kh.semi.admin.delivery.model.vo.OrderSearchResult;
 
@@ -48,6 +49,75 @@ public class AdminDeliveryService {
 		
 		close(con);
 		return hmap;
+	}
+
+	public int insertDeliveryInfo(OrderDeliveryInfo de, String[] orderDnums) {
+		Connection con = getConnection();
+		int result = 0;
+		int result2 = 0;
+		
+		String deliveryNum = new AdminDeliveryDao().getDeliveryNum(con);
+		
+		if(deliveryNum != null) {
+			result = new AdminDeliveryDao().insertDeliveryInfo(con, deliveryNum, de);
+			
+			if(result > 0) {
+				for(String orderDnum : orderDnums) {
+					result2 += new AdminDeliveryDao().insertOLDeliveryNum(con, deliveryNum, orderDnum);
+				}
+			}
+			
+			if(result > 0 && result2 == orderDnums.length) {
+				commit(con);
+			} else {
+				result = 0;
+				rollback(con);
+			}
+		}
+		
+		close(con);
+		return result;
+	}
+
+	public OrderDeliveryInfo selectDeliveryInfo(String deliveryNum) {
+		Connection con = getConnection();
+		OrderDeliveryInfo de = new AdminDeliveryDao().selectDeliveryInfo(con, deliveryNum);
+		
+		close(con);
+		return de;
+	}
+
+	public int updateDeliveryInfo(OrderDeliveryInfo de) {
+		Connection con = getConnection();
+		int result = new AdminDeliveryDao().updateDeliveryInfo(con, de);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
+	public int changeOrderStatusDetail(String[] checkedDnum, String changeState) {
+		Connection con = getConnection();
+		
+		int result = 0;
+		
+		for(String orderDnum : checkedDnum) {
+			result += new AdminDeliveryDao().changeOrderStatusDetail(con, orderDnum, changeState);
+		}
+		
+		if(result == checkedDnum.length) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
 	}
 
 }

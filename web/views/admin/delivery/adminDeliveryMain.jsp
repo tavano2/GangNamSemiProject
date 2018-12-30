@@ -1,13 +1,14 @@
-<%@page import="com.kh.semi.admin.delivery.model.vo.OrderSearchResultTable"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="com.kh.semi.customer.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	ArrayList<OrderSearchResultTable> searchResultList = null;
-	if(request.getAttribute("searchResultList") != null){
-		searchResultList = (ArrayList<OrderSearchResultTable>)request.getAttribute("searchResultList");
-	} else {
-		searchResultList = new ArrayList<OrderSearchResultTable>();
+	Member loginUser = (Member)session.getAttribute("loginUser");
+%>
+
+<%!
+	public String comma(int price){
+		return new DecimalFormat("#,###").format(price);
 	}
 %>
 <!DOCTYPE html>
@@ -15,7 +16,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>주문관리</title>
 
 	<!-- Semantic UI CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -45,6 +46,10 @@
 		text-align: center;
 	}
 	
+	.top-table tbody input:focus {
+		outline: none;
+	}
+	
 	.top-table tbody td:last-child input {
 		color: cornflowerblue;
 	}
@@ -62,6 +67,10 @@
 		font-size: 16px;
 	}
 	
+	.bottom-table tbody input:focus {
+		outline: none;
+	}
+	
 	.divide {
 		height: 50px;
 	}
@@ -70,6 +79,8 @@
 </head>
 
 <body>
+	
+	<%if(loginUser != null && loginUser.getUserId().equals("admin")) {%>
 	
 	<!-- 사이드바 메뉴 -->
     <%@ include file = "/views/admin/common/adminSidebarDelivery.jsp" %>
@@ -81,7 +92,7 @@
         <div class="content">
         	<div class="content-box">
         	
-                <h2 class="ui header">영업관리</h2>
+                <h2 class="ui header">주문관리</h2>
                 <div class="ui divider"></div>
 
 				<table class="ui celled table top-table">
@@ -97,7 +108,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>총 주문 검색</td>
+                            <td>총 주문 금액</td>
                             <td class="center aligned"><input type="text" name="todayTotal" value="10000000" readonly></td>
                             <td class="center aligned"><input type="text" name="monthTotal" value="999900000" readonly></td>
                         </tr>
@@ -121,27 +132,27 @@
                     <tbody>
                         <tr>
                             <td>상품준비중</td>
-                            <td class="center aligned"><input type="text" name="productReady" value="20건" readonly></td>
+                            <td class="center aligned"><input type="text" name="productReady" value="20 건" readonly></td>
                             <td>취소처리중</td>
-                            <td class="center aligned"><input type="text" name="cancel" value="1건" readonly></td>
+                            <td class="center aligned"><input type="text" name="cancel" value="1 건" readonly></td>
                         </tr>
                         <tr>
                         	<td>배송준비중</td>
-                            <td class="center aligned"><input type="text" name="deliveryReady" value="21건" readonly></td>
+                            <td class="center aligned"><input type="text" name="deliveryReady" value="21 건" readonly></td>
                         	<td>교환처리중</td>
-                            <td class="center aligned"><input type="text" name="exchange" value="1건" readonly></td>
+                            <td class="center aligned"><input type="text" name="exchange" value="1 건" readonly></td>
                         </tr>
                         <tr>
                             <td>배송대기중</td>
-                            <td class="center aligned"><input type="text" name="deliveryWating" value="0건" readonly></td>
+                            <td class="center aligned"><input type="text" name="deliveryWating" value="0 건" readonly></td>
                         	<td>반품처리중</td>
-                            <td class="center aligned"><input type="text" name="returnProd" value="2건" readonly></td>
+                            <td class="center aligned"><input type="text" name="returnProd" value="2 건" readonly></td>
                         </tr>
                         <tr>
                         	<td>배송중</td>
-                            <td class="center aligned"><input type="text" name="delivering" value="50건" readonly></td>
+                            <td class="center aligned"><input type="text" name="delivering" value="50 건" readonly></td>
                         	<td>환불처리중</td>
-                            <td class="center aligned"><input type="text" name="refund" value="0건" readonly></td>
+                            <td class="center aligned"><input type="text" name="refund" value="0 건" readonly></td>
                         </tr>
                     </tbody>
                 </table>
@@ -174,7 +185,12 @@
 		
 		
 	</script>
-	
+
+	<%} else {
+		request.setAttribute("msg", "잘못된 페이지 접근!");
+		request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
+	} %>
+
 </body>
 
 </html>
