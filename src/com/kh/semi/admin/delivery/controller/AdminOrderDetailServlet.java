@@ -1,11 +1,15 @@
 package com.kh.semi.admin.delivery.controller;
 
 import java.io.IOException;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.kh.semi.admin.delivery.model.service.AdminDeliveryService;
 
 /**
  * Servlet implementation class AdminOrderDetailServlet
@@ -29,6 +33,8 @@ public class AdminOrderDetailServlet extends HttpServlet {
 		String orderLnum = request.getParameter("orderLnum");
 		
 		//System.out.println(orderLnum);
+		
+		Map<String, Object> hmap = new AdminDeliveryService().getOrderDetail(orderLnum);
 		
 		
 		

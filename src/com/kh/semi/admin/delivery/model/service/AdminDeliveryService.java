@@ -5,8 +5,10 @@ import static com.kh.semi.admin.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.kh.semi.admin.delivery.model.dao.AdminDeliveryDao;
+import com.kh.semi.admin.delivery.model.vo.OrderDetail;
 import com.kh.semi.admin.delivery.model.vo.OrderSearchResult;
 
 public class AdminDeliveryService {
@@ -36,6 +38,16 @@ public class AdminDeliveryService {
 		
 		close(con);
 		return result;
+	}
+
+	public Map<String, Object> getOrderDetail(String orderLnum) {
+		Connection con = getConnection();
+
+		Map<String, Object> hmap = new AdminDeliveryDao().getOrderDetail(con, orderLnum);
+		
+		
+		close(con);
+		return hmap;
 	}
 
 }
