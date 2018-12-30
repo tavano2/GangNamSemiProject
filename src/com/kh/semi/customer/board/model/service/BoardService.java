@@ -104,9 +104,7 @@ public class BoardService {
 		Connection con = getConnection();
 		
 		int count = new BoardDao().countEventDetailPage(con,b);
-		System.out.println("이벤트 디테일 카운트 : " + count);
 		HashMap<String, Object> searchBoard = new BoardDao().searchEventDetailPage(con,b);
-		System.out.println("이벤트 디테일 해쉬맵 : " + searchBoard);
 		
 		if(count > 0 && searchBoard.get("board_num").equals(b.getBoardNum())) {
 			commit(con);
@@ -182,6 +180,27 @@ public class BoardService {
 		}
 		close(con);
 		return result;
+	}
+
+
+	
+	// 오버로딩 : 게시판 타입 번호로 페이징 커런트 리스트 조회
+	public int getListCount(int pageType) {
+		Connection con = getConnection();
+		int listCount = new BoardDao().getListCount(con,pageType);
+		close(con);
+		return listCount;
+	}
+
+
+	
+	//오버로딩 : 게시판 타입 별로 셀렉트
+	public ArrayList<HashMap<String, Object>> selectEventPageList(int currentPage, int limit, int pageType,String userId) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> list  = null;
+		list  = new BoardDao().selectEventPageList(con,currentPage,limit,pageType,userId);
+		close(con);
+		return list;
 	}
 
 

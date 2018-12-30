@@ -28,7 +28,7 @@
 		<div align="center"
 			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">MY
 			BOARD</div>
-		<br> <br> <b>Q&A 게시물 관리</b>
+		<br> <br> <b>리뷰 게시판 관리</b>
 		<hr>
 		<table class="ui single line table">
 			<thead>
@@ -42,20 +42,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td><input type="checkbox"></td>
-					<td><a href="/semi/views/customer/board/detailBoardPage.jsp">1</a></td>
-					<td>제목입니당</td>
-					<td>임수철</td>
-					<td>0</td>
-					<td>2018/12/14</td>
-				</tr>
 			</tbody>
 												<tfoot>
 				<th colspan="6">
-					<!--  작성하기는 관리자만 가능하다.  -->
 					<div align="right">
-					<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/board/updateBoard.jsp';">수정하기</button>
 					<button class="ui brown basic mini button">삭제하기</button>
 				</div>
 				</th>
@@ -64,7 +54,7 @@
 
 		<hr>
 		<br>
-		<br> <b>리뷰 게시판 관리</b>
+		<br> <b>Q&A 게시물 관리</b>
 		<hr>
 		<table class="ui single line table">
 			<thead>
@@ -89,9 +79,7 @@
 			</tbody>
 									<tfoot>
 				<th colspan="6">
-					<!--  작성하기는 관리자만 가능하다.  -->
 					<div align="right">
-					<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/board/updateBoard.jsp';">수정하기</button>
 					<button class="ui brown basic mini button">삭제하기</button>
 				</div>
 				</th>
@@ -113,9 +101,7 @@
 
 
 	<!-- J-query CDN -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- Semantic UI JS CDN -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
@@ -127,5 +113,32 @@
 	<script src="/semi/js/customer/common/main.js"></script>
 
 </body>
+
+<script type="text/javascript">
+	/* 리뷰 게시판 ajax 처리 */
+	$(function(){
+		
+		$.ajax({
+			url : "<%=request.getContextPath()%>/uesrMyBoardReviewList.bo",
+			type : "post",
+			success:function(data){
+				console.log(data);
+			},
+			error:function(data){
+				console.log("데이터 통신 실패");
+			}
+			
+			
+		});
+		
+		
+	});
+
+
+	
+	/* qna 게시판 gson 처리 */
+</script>
+
+
 
 </html>

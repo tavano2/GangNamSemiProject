@@ -15,9 +15,11 @@
 	int resultPirce = 0;
 	if(request.getAttribute("nextClass") != null){
 		nextClass = (HashMap<String,Object>)request.getAttribute("nextClass");
+		if(nextClass.size() > 0){
 		currentPrice = (int)nextClass.get("totalPirce");
 		nextPirce = (int)nextClass.get("standard_price");
 		resultPirce = nextPirce - currentPrice;
+		}
 	}
 	HashMap<String,Object> beforePrice = null;
 	if(request.getAttribute("beforePrice") != null){
@@ -131,12 +133,12 @@
 					<tr>
 
 						<td style="border-bottom: white; border-top: white;">
-							<%if(nextClass.size() > 0) {%>
+							<%if(nextClass != null) {%>
 							<p><%=nextClass.get("class_name") %> 까지 남은 구매금액은 <%=resultPirce %>원입니다.</p>
 							<%} else {%>
 							<p>축하합니다! 마지막 등급입니다.</p>
 							<%} %>
-							<%if(beforePrice.size() > 0) {%>
+							<%if(beforePrice != null) {%>
 							<p> (최근 12개월 동안 구매금액 : <%=beforePrice.get("oneYearTotalPrice") %>원 )</p>
 							<%}else{ %>
 								<p>(최근 12개월 동안 구매금액 : 0원 )</p>
@@ -199,7 +201,7 @@
 						<td
 							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">
 							
-							<%if(nextClass.size() > 0 ){ %>
+							<%if(nextClass != null ){ %>
 							<%=currentPrice %>원
 							<%}else{ %>
 								0원
@@ -326,7 +328,7 @@
 				<button class="ui grey basic button" style="font-size: 14px;" onclick="eventPage();">이벤트</button>
 			</div>
 			<div class="btn1">
-				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/board/UserBoardManager.jsp'">내 게시물
+				<button class="ui grey basic button" style="font-size: 14px;" onclick="location.href='/semi/views/customer/board/UserBoardManager.jsp' ">내 게시물
 					관리</button>
 			</div>
 
