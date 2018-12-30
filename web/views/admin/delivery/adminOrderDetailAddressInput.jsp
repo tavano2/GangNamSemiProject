@@ -1,15 +1,22 @@
+<%@page import="com.kh.semi.customer.member.model.vo.Member"%>
+<%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	Member loginUser = (Member)session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>주문관리 - 주문상세조회 - 배송정보 입력</title>
 
 	<!-- Semantic UI CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-	
+	<!-- DatePicker CSS -->
+    <link rel="stylesheet" href="/semi/css/common/datePicker.css">
+    
 	<style>
 		html {
 			overflow:hidden;
@@ -26,9 +33,20 @@
 		.address {
 			width: 100%;
 		}
+		
+		input[type='time'] {
+			height: 2.7em;
+		}
+		
+		input[type="time"]::-webkit-clear-button{
+			display: none;
+		}
 	</style>
 </head>
 <body>
+
+	<%if(loginUser != null && loginUser.getUserId().equals("admin")) {%>
+	
 	<div class="content">
 		<div class="content-box">
 		
@@ -36,27 +54,33 @@
             <div class="ui divider"></div>
                 
 			<form action="" method="post" id="addressInput" name="addressInput">
+				<%
+					String[] orderDnums = request.getParameterValues("orderDnum");
+					for(String orderDnum : orderDnums){
+				%>
+				<input type="hidden" name="orderDnum" value="<%= orderDnum %>">
+				<%} %>
 				<div class="ui grid">
 				
 					<div class="row">
 						<div class="eight wide column">
 							<h4 class="ui header">수령자 이름</h4>
 							<div class="ui input">
-								<input type="text" placeholder="수령자 이름" name="receiverName" id="receiverName">
+								<input type="text" placeholder="수령자 이름" name="receiverName" id="receiverName" maxlength="20">
 							</div>
 						</div>
 						
 						<div class="four wide column">
 							<h4 class="ui header">수령자 일반전화</h4>
 							<div class="ui input">
-								<input type="text" placeholder="수령자 일반전화" name="receiverPhone1" id="receiverPhone1">
+								<input type="text" placeholder="수령자 일반전화" name="receiverTel1" id="receiverTel1" maxlength="13">
 							</div>
 						</div>
 						
 						<div class="four wide column">
 							<h4 class="ui header">수령자 휴대전화</h4>
 							<div class="ui input">
-								<input type="text" placeholder="수령자 휴대전화" name="receiverPhone2" id="receiverPhone2">
+								<input type="text" placeholder="수령자 휴대전화" name="receiverTel2" id="receiverTel2" maxlength="13">
 							</div>
 						</div>
 					</div>
@@ -65,14 +89,14 @@
 						<div class="eight wide column">
 							<h4 class="ui header">배송지 주소</h4>
 							<div class="ui input address">
-								<input type="text" placeholder="배송지 주소" name="receiverAddress" id="receiverAddress">
+								<input type="text" placeholder="배송지 주소" name="receiverAddr" id="receiverAddr" maxlength="50">
 							</div>
 						</div>
 						
 						<div class="eight wide column">
 							<h4 class="ui header">배송메세지</h4>
 							<div class="ui input address">
-								<input type="text" placeholder="배송메세지" name="receiverMemo" id="receiverMemo">
+								<input type="text" placeholder="배송메세지" name="receiverMsg" id="receiverMsg" maxlength="100">
 							</div>
 						</div>
 					</div>
@@ -81,22 +105,25 @@
 						<div class="four wide column">
 							<h4 class="ui header">배송업체</h4>
 							<div class="ui input">
-								<input type="text" placeholder="배송업체" name="deliveryCompany" id="deliveryCompany">
+								<input type="text" placeholder="배송업체" name="deliveryCo" id="deliveryCo" maxlength="10">
 							</div>
 						</div>
 						
 						<div class="four wide column">
 							<h4 class="ui header">운송장번호</h4>
 							<div class="ui input">
-								<input type="text" placeholder="운송장번호" name="deliveryNumber" id="deliveryNumber">
+								<input type="text" placeholder="운송장번호" name="postnum" id="postnum" maxlength="20">
 							</div>
 						</div>
 						
 						<div class="eight wide column">
-							<h4 class="ui header">배송비</h4>
+							<h4 class="ui header">발송일</h4>
 							<div class="ui input">
-								<input type="text" placeholder="배송비" name="deliveryPrice" id="deliveryPrice">
-							</div>
+                            	<input type="date" id="postDate" name="postDate" value="<%=String.format("%tY-%<tm-%<td", Calendar.getInstance())%>">
+                            </div>
+                            <div class="ui input">
+                            	<input type="time" id="postTime" name="postTime" value="<%=String.format("%tH:%<tM", Calendar.getInstance())%>">
+                            </div>
 						</div>
 					</div>
 					
@@ -115,7 +142,7 @@
 	
 
     <!-- J-query CDN -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <!-- jQuery Custom Scroller CDN -->
@@ -123,19 +150,128 @@
 	
 	<script>
 		function addressSave(){
-			addressInput.action = '';
-			addressInput.submit();
-			self.close();
+			var chk = true;
+			var receiverName = $("#receiverName").val();
+			var receiverTel2 = $("#receiverTel2").val();
+			var receiverAddr = $("#receiverAddr").val();
+			var receiverMsg = $("#receiverMsg").val();
+			var deliveryCo = $("#deliveryCo").val();
+			var postnum = $("#postnum").val();
+			var postDate = $("#postDate").val();
+			var postTime = $("#postTime").val();
+			
+			if(receiverName == "") {
+				chk = false;
+				$('#receiverName').popup({	//팝업 요소 생성
+					html : '<span style="color: red;">입력되지 않았습니다.</span>',
+					on: 'click',	//클릭할때 보여짐
+					onHidden: () => {	//팝업창 히든시 팝업 요소 제거
+						$('#receiverName').popup('destroy');
+				    }
+				}).popup('show');	//팝업 보이기
+			}
+			if(receiverTel2 == "") {
+				chk = false;
+				$('#receiverTel2').popup({	//팝업 요소 생성
+					html : '<span style="color: red;">입력되지 않았습니다.</span>',
+					on: 'click',	//클릭할때 보여짐
+					onHidden: () => {	//팝업창 히든시 팝업 요소 제거
+						$('#receiverTel2').popup('destroy');
+				    }
+				}).popup('show');	//팝업 보이기
+			}
+			if(receiverAddr == "") {
+				chk = false;
+				$('#receiverAddr').popup({	//팝업 요소 생성
+					html : '<span style="color: red;">입력되지 않았습니다.</span>',
+					on: 'click',	//클릭할때 보여짐
+					onHidden: () => {	//팝업창 히든시 팝업 요소 제거
+						$('#receiverAddr').popup('destroy');
+				    }
+				}).popup('show');	//팝업 보이기
+			}
+			if(receiverMsg == "") {
+				chk = false;
+				$('#receiverMsg').popup({	//팝업 요소 생성
+					html : '<span style="color: red;">입력되지 않았습니다.</span>',
+					on: 'click',	//클릭할때 보여짐
+					onHidden: () => {	//팝업창 히든시 팝업 요소 제거
+						$('#receiverMsg').popup('destroy');
+				    }
+				}).popup('show');	//팝업 보이기
+			}
+			if(deliveryCo == "") {
+				chk = false;
+				$('#deliveryCo').popup({	//팝업 요소 생성
+					html : '<span style="color: red;">입력되지 않았습니다.</span>',
+					on: 'click',	//클릭할때 보여짐
+					onHidden: () => {	//팝업창 히든시 팝업 요소 제거
+						$('#deliveryCo').popup('destroy');
+				    }
+				}).popup('show');	//팝업 보이기
+			}
+			if(postnum == "") {
+				chk = false;
+				$('#postnum').popup({	//팝업 요소 생성
+					html : '<span style="color: red;">입력되지 않았습니다.</span>',
+					on: 'click',	//클릭할때 보여짐
+					onHidden: () => {	//팝업창 히든시 팝업 요소 제거
+						$('#postnum').popup('destroy');
+				    }
+				}).popup('show');	//팝업 보이기
+			}
+			if(postDate == "") {
+				chk = false;
+				$('#postDate').popup({	//팝업 요소 생성
+					html : '<span style="color: red;">입력되지 않았습니다.</span>',
+					on: 'click',	//클릭할때 보여짐
+					onHidden: () => {	//팝업창 히든시 팝업 요소 제거
+						$('#postDate').popup('destroy');
+				    }
+				}).popup('show');	//팝업 보이기
+			}
+			if(postTime == "") {
+				chk = false;
+				$('#postTime').popup({	//팝업 요소 생성
+					html : '<span style="color: red;">입력되지 않았습니다.</span>',
+					on: 'click',	//클릭할때 보여짐
+					onHidden: () => {	//팝업창 히든시 팝업 요소 제거
+						$('#postTime').popup('destroy');
+				    }
+				}).popup('show');	//팝업 보이기
+			}
+			
+			if(chk){
+				var addressInput = $("#addressInput").serialize();
+				
+				$.ajax({
+					url: '<%= request.getContextPath()%>/adminAddressInput.de',
+					type: 'post',
+					data: addressInput,
+					success: function(data){
+						opener.document.location.reload();
+						alert(data);
+						self.close();
+					}, error: function(){
+						console.log("실패ㅠㅠ");
+					}
+				});
+			}
 		}
 		
 		$(function(){
 			$('#receiverName').val('<%=request.getParameter("receiverName")%>');
-			$('#receiverPhone1').val('<%=request.getParameter("receiverPhone1")%>');
-			$('#receiverPhone2').val('<%=request.getParameter("receiverPhone2")%>');
-			$('#receiverAddress').val('<%=request.getParameter("receiverAddress")%>');
-			$('#receiverMemo').val('<%=request.getParameter("receiverMemo")%>');
+			$('#receiverTel1').val('<%=request.getParameter("receiverTel1")%>');
+			$('#receiverTel2').val('<%=request.getParameter("receiverTel2")%>');
+			$('#receiverAddr').val('<%=request.getParameter("receiverAddr")%>');
+			$('#receiverMsg').val('<%=request.getParameter("receiverMsg")%>');
 		});
 	</script>
+	
+	<%} else {
+		request.setAttribute("msg", "잘못된 페이지 접근!");
+		request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
+	} %>
 	
 </body>
 </html>

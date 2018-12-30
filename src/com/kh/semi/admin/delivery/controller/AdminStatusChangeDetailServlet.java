@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.semi.admin.delivery.model.service.AdminDeliveryService;
 
 /**
- * Servlet implementation class AdminStatusChangeServlet
+ * Servlet implementation class AdminStatusChangeDetailServlet
  */
-@WebServlet("/adminStatusChange.de")
-public class AdminStatusChangeServlet extends HttpServlet {
+@WebServlet("/adminStatusChangeDetail.de")
+public class AdminStatusChangeDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminStatusChangeServlet() {
+    public AdminStatusChangeDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,21 +28,14 @@ public class AdminStatusChangeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] checkedLnum = request.getParameterValues("resultChk");
+		String[] checkedDnum = request.getParameterValues("orderDnum");
 		String changeState = request.getParameter("changeState");
-		String uri = request.getParameter("uri");
+		String orderLnum = request.getParameter("orderLnum");
 		
-		
-		/*System.out.println(changeState);
-		
-		for(String chk : checkedLnum) {
-			System.out.println(chk);
-		}*/
-		
-		int result = new AdminDeliveryService().changeOrderStatus(checkedLnum, changeState);
+		int result = new AdminDeliveryService().changeOrderStatusDetail(checkedDnum, changeState);
 		
 		if(result > 0) {
-			response.sendRedirect(uri);
+			response.sendRedirect("orderDetail.de?orderLnum=" + orderLnum);
 		} else {
 			request.setAttribute("msg", "주문 상태 변경 실패!");
 			request.getRequestDispatcher("views/customer/common/errorPage.jsp").forward(request, response);;

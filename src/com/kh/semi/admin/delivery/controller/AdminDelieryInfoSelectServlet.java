@@ -8,18 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.semi.admin.delivery.model.service.AdminDeliveryService;
+import com.kh.semi.admin.delivery.model.vo.OrderDeliveryInfo;
 
 /**
- * Servlet implementation class AdminStatusChangeServlet
+ * Servlet implementation class AdminDelieryInfoSelectServlet
  */
-@WebServlet("/adminStatusChange.de")
-public class AdminStatusChangeServlet extends HttpServlet {
+@WebServlet("/adminDelieryInfoSelect.de")
+public class AdminDelieryInfoSelectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminStatusChangeServlet() {
+    public AdminDelieryInfoSelectServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,24 +29,17 @@ public class AdminStatusChangeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] checkedLnum = request.getParameterValues("resultChk");
-		String changeState = request.getParameter("changeState");
-		String uri = request.getParameter("uri");
+		String deliveryNum = request.getParameter("deliveryNum");
 		
+		OrderDeliveryInfo de = new AdminDeliveryService().selectDeliveryInfo(deliveryNum);
 		
-		/*System.out.println(changeState);
-		
-		for(String chk : checkedLnum) {
-			System.out.println(chk);
-		}*/
-		
-		int result = new AdminDeliveryService().changeOrderStatus(checkedLnum, changeState);
-		
-		if(result > 0) {
-			response.sendRedirect(uri);
+		if(de != null) {
+			request.setAttribute("de", de);
+			request.getRequestDispatcher("/views/admin/delivery/adminOrderDetailAddressUpdate.jsp").forward(request, response);
 		} else {
-			request.setAttribute("msg", "주문 상태 변경 실패!");
-			request.getRequestDispatcher("views/customer/common/errorPage.jsp").forward(request, response);;
+			de = new OrderDeliveryInfo("", "", "", null, "", "", "", "", "");
+			request.setAttribute("de", de);
+			request.getRequestDispatcher("/views/admin/delivery/adminOrderDetailAddressUpdate.jsp").forward(request, response);
 		}
 	}
 

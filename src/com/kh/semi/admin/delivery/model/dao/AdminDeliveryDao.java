@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +31,7 @@ public class AdminDeliveryDao {
 			e.printStackTrace();
 		}
 	}
+	
 	public ArrayList<OrderSearchResult> orderSearch(Connection con, HashMap<String, Object> hmap) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -360,6 +362,7 @@ public class AdminDeliveryDao {
 		
 		return searchResult;
 	}
+	
 	public int changeOrderStatus(Connection con, String orderLnum, String changeState) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -383,13 +386,14 @@ public class AdminDeliveryDao {
 		
 		return result;
 	}
+	
 	public Map<String, Object> getOrderDetail(Connection con, String orderLnum) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Map<String, Object> hmap = null;
 		ArrayList<OrderDetail> detailList = null;
 		OrderBuyerInfo bi = null;
-		ArrayList<OrderDeliveryInfo> deliveryList = null;
+		Map<String, OrderDeliveryInfo> deliveryList = null;
 		
 		String query = prop.getProperty("getOrderDetail");
 		
@@ -400,7 +404,8 @@ public class AdminDeliveryDao {
 			rset = pstmt.executeQuery();
 			
 			detailList = new ArrayList<OrderDetail>();
-			deliveryList = new ArrayList<OrderDeliveryInfo>();
+			bi = new OrderBuyerInfo();
+			deliveryList = new HashMap<String, OrderDeliveryInfo>();
 			
 			while(rset.next()) {
 				
@@ -409,6 +414,7 @@ public class AdminDeliveryDao {
 				/*private String orderLnum;	ORDER_LNUM
 				private String orderDnum;	ORDER_DNUM
 				private String userId;	USER_ID
+				private String className; CLASS_NAME
 				private Date orderDate;	ORDER_DATE
 				private int orderAmount;	ORDER_AMOUNT
 				private String memo;	MEMO
@@ -427,6 +433,7 @@ public class AdminDeliveryDao {
 				od.setOrderLnum(rset.getString("ORDER_LNUM"));
 				od.setOrderDnum(rset.getString("ORDER_DNUM"));
 				od.setUserId(rset.getString("USER_ID"));
+				od.setClassName(rset.getString("CLASS_NAME"));
 				od.setOrderDate(rset.getDate("ORDER_DATE"));
 				od.setOrderAmount(rset.getInt("ORDER_AMOUNT"));
 				od.setMemo(rset.getString("MEMO") == null ? "" : rset.getString("MEMO"));
@@ -445,7 +452,6 @@ public class AdminDeliveryDao {
 				detailList.add(od);
 				
 				if(rset.isFirst()) {
-					bi = new OrderBuyerInfo();
 					
 					/*private String buyerCode;	BUYER_CODE
 					private String buyerName;	BUYER_NAME
@@ -475,23 +481,23 @@ public class AdminDeliveryDao {
 					private String deliveryCo;	DELIVERY_CO
 					private String postnum;	POSTNUM
 					private Date postDate;	POST_DATE
-					private String receiverName;	RECEIVER_NAME
-					private String receiverTel1;	RECEIVER_TEL1
-					private String receiverTel2;	RECEIVER_TEL2
-					private String receiverAddr;	RECEIVER_ADDR
+					private String receiverName;	RECEIVER_NAME_DE
+					private String receiverTel1;	RECEIVER_TEL1_DE
+					private String receiverTel2;	RECEIVER_TEL2_DE
+					private String receiverAddr;	RECEIVER_ADDR_DE
 					private String deliveryMsg;	DELIVERY_MSG*/
 					
 					de.setDeliveryNum(rset.getString("DELIVERY_NUM"));
 					de.setDeliveryCo(rset.getString("DELIVERY_CO"));
 					de.setPostnum(rset.getString("POSTNUM"));
 					de.setPostDate(rset.getDate("POST_DATE"));
-					de.setReceiverName(rset.getString("RECEIVER_NAME"));
-					de.setReceiverTel1(rset.getString("RECEIVER_TEL1") == null ? "" : rset.getString("RECEIVER_TEL1"));
-					de.setReceiverTel2(rset.getString("RECEIVER_TEL2"));
-					de.setReceiverAddr(rset.getString("RECEIVER_ADDR"));
+					de.setReceiverName(rset.getString("RECEIVER_NAME_DE"));
+					de.setReceiverTel1(rset.getString("RECEIVER_TEL1_DE") == null ? "" : rset.getString("RECEIVER_TEL1_DE"));
+					de.setReceiverTel2(rset.getString("RECEIVER_TEL2_DE"));
+					de.setReceiverAddr(rset.getString("RECEIVER_ADDR_DE"));
 					de.setDeliveryMsg(rset.getString("DELIVERY_MSG") == null ? "" : rset.getString("DELIVERY_MSG"));
 					
-					deliveryList.add(de);
+					deliveryList.put(rset.getString("DELIVERY_NUM"), de);
 				}
 				
 				hmap = new HashMap<String, Object>();
@@ -509,6 +515,176 @@ public class AdminDeliveryDao {
 		}
 		
 		return hmap;
+	}
+	
+	public String getDeliveryNum(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		String deliveryNum = null;
+		
+		String query = prop.getProperty("getDeliveryNum");
+		
+		try {
+			stmt = con.createStatement();
+			
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				deliveryNum = rset.getString("DELIVERY_NUM");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return deliveryNum;
+	}
+	
+	public int insertDeliveryInfo(Connection con, String deliveryNum, OrderDeliveryInfo de) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertDeliveryInfo");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, deliveryNum);
+			pstmt.setString(2, de.getDeliveryCo());
+			pstmt.setString(3, de.getPostnum());
+			pstmt.setDate(4, de.getPostDate());
+			pstmt.setString(5, de.getReceiverName());
+			pstmt.setString(6, de.getReceiverTel1());
+			pstmt.setString(7, de.getReceiverTel2());
+			pstmt.setString(8, de.getReceiverAddr());
+			pstmt.setString(9, de.getDeliveryMsg());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int insertOLDeliveryNum(Connection con, String deliveryNum, String orderDnum) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertOLDeliveryNum");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, deliveryNum);
+			pstmt.setString(2, orderDnum);
+			
+			result = pstmt.executeUpdate();
+			
+			if(result > 0) {
+				result = 1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public OrderDeliveryInfo selectDeliveryInfo(Connection con, String deliveryNum) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		OrderDeliveryInfo de = null;
+		
+		String query = prop.getProperty("selectDeliveryInfo");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, deliveryNum);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				de = new OrderDeliveryInfo();
+
+				de.setDeliveryNum(rset.getString("DELIVERY_NUM") == null ? "" : rset.getString("DELIVERY_NUM"));
+				de.setDeliveryCo(rset.getString("DELIVERY_CO") == null ? "" : rset.getString("DELIVERY_CO"));
+				de.setPostnum(rset.getString("POSTNUM") == null ? "" : rset.getString("POSTNUM"));
+				de.setPostDate(rset.getDate("POST_DATE") == null ? null : rset.getDate("POST_DATE"));
+				de.setReceiverName(rset.getString("RECEIVER_NAME") == null ? "" : rset.getString("RECEIVER_NAME"));
+				de.setReceiverTel1(rset.getString("RECEIVER_TEL1") == null ? "" : rset.getString("RECEIVER_TEL1"));
+				de.setReceiverTel2(rset.getString("RECEIVER_TEL2") == null ? "" : rset.getString("RECEIVER_TEL2"));
+				de.setReceiverAddr(rset.getString("RECEIVER_ADDR") == null ? "" : rset.getString("RECEIVER_ADDR"));
+				de.setDeliveryMsg(rset.getString("DELIVERY_MSG") == null ? "" : rset.getString("DELIVERY_MSG"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return de;
+	}
+
+	public int updateDeliveryInfo(Connection con, OrderDeliveryInfo de) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateDeliveryInfo");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, de.getDeliveryCo());
+			pstmt.setString(2, de.getPostnum());
+			pstmt.setDate(3, de.getPostDate());
+			pstmt.setString(4, de.getReceiverName());
+			pstmt.setString(5, de.getReceiverTel1());
+			pstmt.setString(6, de.getReceiverTel2());
+			pstmt.setString(7, de.getReceiverAddr());
+			pstmt.setString(8, de.getDeliveryMsg());
+			pstmt.setString(9, de.getDeliveryNum());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int changeOrderStatusDetail(Connection con, String orderDnum, String changeState) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("changeOrderStatusDetail");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, changeState);
+			pstmt.setString(2, orderDnum);
+			
+			result = pstmt.executeUpdate();
+			
+			if(result > 0) result = 1;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }
