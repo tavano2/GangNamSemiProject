@@ -1,3 +1,4 @@
+<%@page import="com.kh.semi.customer.product.model.vo.Attachment"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.kh.semi.customer.product.model.vo.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,6 +6,9 @@
    
 <% Product SelectOneQnA = (Product)request.getAttribute("SelectOneQnA"); 
 ArrayList<Product> SelectReplyList =(ArrayList<Product>) request.getAttribute("SelectReplyList");
+
+ArrayList<Attachment>selectfileList = (ArrayList<Attachment>)request.getAttribute("selectfileList");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -42,7 +46,9 @@ margin-right:200px;
 width:80px;
 height:50px;
 }
-
+.attDiv{
+margin-left:150px;
+}
 
 
 </style>
@@ -63,6 +69,26 @@ height:50px;
       <hr>
       <br>
       
+      <!--/////////////////////////사진 불러오기///////////////////////////////////  -->
+	<%if(selectfileList!=null){ 
+		
+		for(Attachment a : selectfileList) { 
+		System.out.println("이거"+a.getFilePath()+a.getChangeName());
+		
+		%>
+	<div class="attDiv" align="center">
+	<h2 align="center">상품의문제는 이거에요</h2>
+		<img src="/semi/views/images/InsertQnA_uploadFiles/<%=a.getChangeName() %>" width="200" height="200">
+	</div><br>
+	<hr>
+
+	<%}}else{%>
+
+	<%} %>
+
+            <!--//////////////////////////////////////////////////////////////  -->
+      
+      <br>
       <div class="detailQnAText">
          <div class="ui comments">
             <div class="comment">
@@ -77,6 +103,7 @@ height:50px;
          </div>
 
       </div>
+      
       
       
       <!--//////////////////////////해당 게시물에 댓글 불러오기////////////////////////////////////  -->
@@ -106,9 +133,6 @@ height:50px;
       
       <%} %>
       </div>
-            <!--//////////////////////////////////////////////////////////////  -->
-      
-      
       
       <br><br>
       
