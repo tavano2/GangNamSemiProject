@@ -9,8 +9,11 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.semi.customer.board.model.dao.BoardDao;
+import com.kh.semi.customer.board.model.vo.Board;
 import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.dao.ProductDao;
+import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Option;
 import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
@@ -230,6 +233,45 @@ public class ProductService {
 		HashMap<String, Object> hmap = new ProductDao().firstClassName(con,m);
 		close(con);
 		return hmap;
+	}
+
+	public int insertQnA(Board insertQnAboard, ArrayList<Attachment> fileList) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		int result1= new ProductDao().insertQnA(con,insertQnAboard);
+
+		if(result1>0) {
+			int boardId = new ProductDao().selectCurrval(con);
+			
+			for(int i=0; i<fileList.size();i++) {
+				fileList.get(i).setBoardId(boardId);
+			}
+		}
+		
+		
+		int result2 = new ProductDao().insertQnAAttachment(con,fileList);
+		
+		if(result1>0 && result2>0) {
+			commit(con);
+			result = 1;
+		}else {
+			rollback(con);
+		}
+		close(con);
+		
+		return result;
+	}
+
+	//qna파일 리스트 가져오기
+	public ArrayList<Attachment> selectfileList(String pQnABoardId) {
+		Connection con = getConnection();
+		ArrayList<Attachment> selectfileList = new ProductDao().selectfileList(con,pQnABoardId);
+		
+		
+		close(con);
+		
+		return selectfileList;
 	}
 	
 	

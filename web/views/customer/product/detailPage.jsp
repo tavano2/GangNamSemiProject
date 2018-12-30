@@ -405,7 +405,7 @@
 				</table>
 				<div align="right">
 					<button class="ui brown basic mini button"
-						onclick="location.href='/semi/views/customer/board/insertBoard.jsp';">작성하기</button>
+						onclick="location.href='/semi/views/customer/product/insertQnABoard.jsp';">작성하기</button>
 					&nbsp;
 				</div>
 

@@ -50,14 +50,14 @@
 	<div class="content">
 		<br> <br>
 		<div align="center"
-			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">
-			product inquiry</div>
+			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">Review 
+			BOARD</div>
 		<br> <br>
 		<hr>
 		<br>
 		<div class="ui grid">
 			<div class="twelve wide column">
-				<b>상품문의</b>
+				<b>리뷰게시글 작성</b>
 			</div>
 			<div class="four wide column" align="right">
 				<button class="ui brown basic mini button"
@@ -66,24 +66,48 @@
 		</div>
 		<br>
 		
-		<form action="<%=request.getContextPath() %>/insertQnA.pd" method="post" encType="multipart/form-data">
+		<form action="<%=request.getContextPath() %>/insertReview.pd" method="post" encType="multipart/form-data">
 		<table class="ui celled table first-col">
 
 		<tbody>
+		<tr>
+				<td>작성자</td>
+				<td>
+					<div class="ui input">
+						<input type="text" value="<%=loginUser.getUserId()%>" name="userId" readonly>
+					</div>
+				</td>
+			</tr>
 			<tr>
 				<td>제목</td>
 				<td>
 					<div class="ui input">
 						<input type="text" name="title">
-						
+					</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>키</td>
+				<td>
+					<div class="ui input">
+						<input type="text" name="youHeight" placeholder="~cm">
 					</div>
 				</td>
 			</tr>
 			<tr>
-				<td>작성자</td>
+				<td>몸무게</td>
 				<td>
 					<div class="ui input">
-						<input type="text" value="<%=loginUser.getUserId()%>" name="userId" readonly>
+						<input type="text" name="youWeight" placeholder="~kg">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>평소사이즈</td>
+				<td>
+					<div class="ui input">
+						<input type="text" name="youSize" placeholder="S/M/L">
 					</div>
 				</td>
 			</tr>
@@ -103,9 +127,16 @@
 			<tfoot>
 				<tr>
 					<td>첨부파일</td>
-					<td><input type="file" name="file"></td>
+					<td><input type="file" name="file1"></td>
 				</tr>
-				
+				<tr>
+					<td>첨부파일</td>
+					<td><input type="file" name="file2"></td>
+				</tr>
+				<tr>
+					<td>첨부파일</td>
+					<td><input type="file" name="file3"></td>
+				</tr>
 			
 			</tfoot>
 		</table>
@@ -127,11 +158,11 @@
 	</div>
 	
 	<%} else{ 
+		
 		request.setAttribute("msg", "잘못된 경로로 접근하셨습니다!");
 		request.getRequestDispatcher("views/customer/common/errorPage.jsp");
-		
 	%>
-		<h2>로그인을 해주세용</h2>
+		<h2>로그인 하게용</h2>
 	<%} %>
 
 
