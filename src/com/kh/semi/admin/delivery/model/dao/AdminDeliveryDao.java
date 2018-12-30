@@ -1,5 +1,7 @@
 package com.kh.semi.admin.delivery.model.dao;
 
+import static com.kh.semi.admin.common.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -9,11 +11,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
+import com.kh.semi.admin.delivery.model.vo.OrderBuyerInfo;
+import com.kh.semi.admin.delivery.model.vo.OrderDeliveryInfo;
+import com.kh.semi.admin.delivery.model.vo.OrderDetail;
 import com.kh.semi.admin.delivery.model.vo.OrderSearchResult;
-
-import static com.kh.semi.admin.common.JDBCTemplate.*;
 
 public class AdminDeliveryDao {
 	private Properties prop = new Properties();
@@ -378,6 +382,133 @@ public class AdminDeliveryDao {
 		}
 		
 		return result;
+	}
+	public Map<String, Object> getOrderDetail(Connection con, String orderLnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Map<String, Object> hmap = null;
+		ArrayList<OrderDetail> detailList = null;
+		OrderBuyerInfo bi = null;
+		ArrayList<OrderDeliveryInfo> deliveryList = null;
+		
+		String query = prop.getProperty("getOrderDetail");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, orderLnum);
+			
+			rset = pstmt.executeQuery();
+			
+			detailList = new ArrayList<OrderDetail>();
+			deliveryList = new ArrayList<OrderDeliveryInfo>();
+			
+			while(rset.next()) {
+				
+				OrderDetail od = new OrderDetail();
+				
+				/*private String orderLnum;	ORDER_LNUM
+				private String orderDnum;	ORDER_DNUM
+				private String userId;	USER_ID
+				private Date orderDate;	ORDER_DATE
+				private int orderAmount;	ORDER_AMOUNT
+				private String memo;	MEMO
+				private String orderSname;	ORDER_SNAME
+				private String productName;	PRODUCT_NAME
+				private String optionName;	OPTION_NAME
+				private int productPrice;	PRODUCT_PRICE
+				private int postPrice;	POST_PRICE
+				private String couponCode;	COUPON_CODE
+				private int couponType;	COUPON_TYPE
+				private int couponPdiscount;	COUPON_PDISCOUNT
+				private double couponRdiscount;	COUPON_RDISCOUNT
+				private String buyerCode;	BUYER_CODE
+				private String deliveryNum;	DELIVERY_NUM*/
+				
+				od.setOrderLnum(rset.getString("ORDER_LNUM"));
+				od.setOrderDnum(rset.getString("ORDER_DNUM"));
+				od.setUserId(rset.getString("USER_ID"));
+				od.setOrderDate(rset.getDate("ORDER_DATE"));
+				od.setOrderAmount(rset.getInt("ORDER_AMOUNT"));
+				od.setMemo(rset.getString("MEMO") == null ? "" : rset.getString("MEMO"));
+				od.setOrderSname(rset.getString("ORDER_SNAME"));
+				od.setProductName(rset.getString("PRODUCT_NAME"));
+				od.setOptionName(rset.getString("OPTION_NAME"));
+				od.setProductPrice(rset.getInt("PRODUCT_PRICE"));
+				od.setPostPrice(rset.getInt("POST_PRICE"));
+				od.setCouponCode(rset.getString("COUPON_CODE"));
+				od.setCouponType(rset.getInt("COUPON_TYPE"));
+				od.setCouponPdiscount(rset.getInt("COUPON_PDISCOUNT"));
+				od.setCouponRdiscount(rset.getDouble("COUPON_RDISCOUNT"));
+				od.setBuyerCode(rset.getString("BUYER_CODE"));
+				od.setDeliveryNum(rset.getString("DELIVERY_NUM") == null ? "" : rset.getString("DELIVERY_NUM"));
+				
+				detailList.add(od);
+				
+				if(rset.isFirst()) {
+					bi = new OrderBuyerInfo();
+					
+					/*private String buyerCode;	BUYER_CODE
+					private String buyerName;	BUYER_NAME
+					private String buyerTel1;	BUYER_TEL1
+					private String buyerTel2;	BUYER_TEL2
+					private String receiverName;	RECEIVER_NAME
+					private String receiverTel1;	RECEIVER_TEL1
+					private String receiverTel2;	RECEIVER_TEL2
+					private String receiverAddr;	RECEIVER_ADDR
+					private String receiverMsg;	RECEIVER_MSG*/
+					
+					bi.setBuyerCode(rset.getString("BUYER_CODE"));
+					bi.setBuyerName(rset.getString("BUYER_NAME"));
+					bi.setBuyerTel1(rset.getString("BUYER_TEL1") == null ? "" : rset.getString("BUYER_TEL1"));
+					bi.setBuyerTel2(rset.getString("BUYER_TEL2"));
+					bi.setReceiverName(rset.getString("RECEIVER_NAME"));
+					bi.setReceiverTel1(rset.getString("RECEIVER_TEL1") == null ? "" : rset.getString("RECEIVER_TEL1"));
+					bi.setReceiverTel2(rset.getString("RECEIVER_TEL2"));
+					bi.setReceiverAddr(rset.getString("RECEIVER_ADDR"));
+					bi.setReceiverMsg(rset.getString("RECEIVER_MSG") == null ? "" : rset.getString("RECEIVER_MSG"));
+				}
+				
+				if(rset.getString("DELIVERY_NUM") != null) {
+					OrderDeliveryInfo de = new OrderDeliveryInfo();
+					
+					/*private String deliveryNum;	DELIVERY_NUM
+					private String deliveryCo;	DELIVERY_CO
+					private String postnum;	POSTNUM
+					private Date postDate;	POST_DATE
+					private String receiverName;	RECEIVER_NAME
+					private String receiverTel1;	RECEIVER_TEL1
+					private String receiverTel2;	RECEIVER_TEL2
+					private String receiverAddr;	RECEIVER_ADDR
+					private String deliveryMsg;	DELIVERY_MSG*/
+					
+					de.setDeliveryNum(rset.getString("DELIVERY_NUM"));
+					de.setDeliveryCo(rset.getString("DELIVERY_CO"));
+					de.setPostnum(rset.getString("POSTNUM"));
+					de.setPostDate(rset.getDate("POST_DATE"));
+					de.setReceiverName(rset.getString("RECEIVER_NAME"));
+					de.setReceiverTel1(rset.getString("RECEIVER_TEL1") == null ? "" : rset.getString("RECEIVER_TEL1"));
+					de.setReceiverTel2(rset.getString("RECEIVER_TEL2"));
+					de.setReceiverAddr(rset.getString("RECEIVER_ADDR"));
+					de.setDeliveryMsg(rset.getString("DELIVERY_MSG") == null ? "" : rset.getString("DELIVERY_MSG"));
+					
+					deliveryList.add(de);
+				}
+				
+				hmap = new HashMap<String, Object>();
+				hmap.put("detailList", detailList);
+				hmap.put("bi", bi);
+				hmap.put("deliveryList", deliveryList);
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return hmap;
 	}
 
 }

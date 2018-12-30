@@ -137,8 +137,6 @@ public class AdminOrderSearchServlet extends HttpServlet {
 		hmap.put("productText", productText);
 		hmap.put("orderState", orderState);
 		
-		//System.out.println(uri);
-		
 		ArrayList<OrderSearchResult> searchResult = new AdminDeliveryService().orderSearch(hmap);
 		
 		//System.out.println(searchResult);
@@ -148,6 +146,7 @@ public class AdminOrderSearchServlet extends HttpServlet {
 			
 			ArrayList<OrderSearchResult> searchResultOpt = new ArrayList<OrderSearchResult>();
 			
+			//옵션 합치기
 			for(int i=0; i<searchResult.size(); i++) {
 				if(i < searchResult.size()-1) {
 					if(searchResult.get(i).getOrderDnum().equals(searchResult.get(i+1).getOrderDnum())) {
@@ -164,6 +163,7 @@ public class AdminOrderSearchServlet extends HttpServlet {
 			
 			ArrayList<OrderSearchResultTable> searchResultListTemp = new ArrayList<OrderSearchResultTable>();
 			
+			//상품 + 옵션 합치기 및 가격 계산
 			for(int i=0; i<searchResultOpt.size(); i++) {			
 				OrderSearchResultTable item = new OrderSearchResultTable();
 				
@@ -204,6 +204,7 @@ public class AdminOrderSearchServlet extends HttpServlet {
 			
 			ArrayList<OrderSearchResultTable> searchResultList = new ArrayList<OrderSearchResultTable>();
 			
+			//주문 합치기
 			int cnt = 0;
 			for(int i=0; i<searchResultListTemp.size(); i++) {
 				if(i < searchResultListTemp.size()-1) {
