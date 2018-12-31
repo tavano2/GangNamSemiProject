@@ -1,9 +1,13 @@
+<%@page import="com.kh.semi.admin.board.model.vo.AdminHomeInfo"%>
 <%@page import="com.kh.semi.customer.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<%Member loginUser = (Member)session.getAttribute("loginUser"); %>
+<%
+	Member loginUser = (Member)session.getAttribute("loginUser");
+	//AdminHomeInfo info = (AdminHomeInfo)request.getAttribute("info");
+%>
 <html>
 
 <head>
@@ -27,16 +31,8 @@
 </head>
 
 <body>
-		
-		
-<%-- 	<%if(loginUser != null && !loginUser.getUserId().equals("admin")){ 
-			request.setAttribute("msg", "잘못된 페이지 접근!");
-			RequestDispatcher reqDispatcher = request.getRequestDispatcher("/views/customer/common/errorPage.jsp");
-			reqDispatcher.forward(request, response);
-	%>
 	
-	
-	<%}else{ %> --%>
+	<%if(loginUser != null && loginUser.getUserId().equals("admin")) {%>
 	
 	<!-- 사이드바 메뉴 -->
     <%@ include file = "/views/admin/common/adminSidebarHome.jsp" %>
@@ -55,7 +51,7 @@
                     <tr>
                         <td>사업자등록번호</td>
                         <td>
-                            <div class="ui input"><input type="text"></div>
+                            <div class="ui input"><input type="text" name="companyCode" value=""></div>
                         </td>
                     </tr>
                     <tr>
@@ -269,21 +265,23 @@
     <script src="/semi/js/admin/common/adminMain.js"></script>
     
     <script>
-    $('#sticky1').sticky(); //네이바 상단 고정
-    $('#menu').click(function () {  //사이드바 오픈 버튼
-        $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
-    })
-    $('.content-box .ui.dropdown').dropdown();  //컨텐츠 박스의 드롭다운 실행
-    $('.content-box .ui.menu .item').on('click', function () {  //컨텐츠 박스의 메뉴 아이템 클릭시 active
-        $('.ui .item').removeClass('active');
-        $(this).addClass('active');
-    });
-  $('.menu .item').tab();
-</script>
+	    $('#sticky1').sticky(); //네이바 상단 고정
+	    $('#menu').click(function () {  //사이드바 오픈 버튼
+	        $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
+	    })
+	    $('.content-box .ui.dropdown').dropdown();  //컨텐츠 박스의 드롭다운 실행
+	    $('.content-box .ui.menu .item').on('click', function () {  //컨텐츠 박스의 메뉴 아이템 클릭시 active
+	        $('.ui .item').removeClass('active');
+	        $(this).addClass('active');
+	    });
+	  $('.menu .item').tab();
+	</script>
 
 
-<%-- <%} %> --%>
-
+	<%} else {
+		request.setAttribute("msg", "잘못된 페이지 접근!");
+		request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
+	} %>
     
 </body>
 

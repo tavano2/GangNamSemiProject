@@ -5,7 +5,7 @@
             <a id="sidebarCollapse" class="item toggle button">
                 <i class="chevron right icon"></i>
             </a>
-            <a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
+            <a class="item" href="<%= request.getContextPath() %>/adminHomeInfo.bo">
                 <i class="home icon"></i> 홈
             </a>
             <a class="item" href="/semi/views/admin/member/adminMainMember.jsp">

@@ -77,7 +77,7 @@
                        예솔쓰 상세페이징
                 </a> 
                <%if(loginUser != null && loginUser.getUserId().equals("admin")) { %>
-		  		<a class="item" href="/semi/views/admin/main/adminMainHome.jsp">
+		  		<a class="item" href="<%= request.getContextPath() %>/adminHomeInfo.bo">
                        	관리자 페이지로 </a>
                  <%} %> 
                  <%if(loginUser == null) {%>
