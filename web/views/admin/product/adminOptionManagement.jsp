@@ -1,66 +1,69 @@
+<%@page import="com.kh.semi.admin.product.model.vo.Option"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	ArrayList<Option> list = (ArrayList<Option>)request.getAttribute("list");
+	Option op = (Option)request.getAttribute("op");
+%>
 <!DOCTYPE html>
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
+   <meta charset="UTF-8">
+   <title>Insert title here</title>
 
-	<!-- Semantic UI CSS -->
+   <!-- Semantic UI CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 
     <!-- Admin Common CSS -->
     <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
     
 <style>
-	.optionAdd{
-		text-align:center;
-	}
+   .optionAdd{
+      text-align:center;
+   }
 </style>
 </head>
 
 <body>
-	
-	<!-- 사이드바 메뉴 -->
+   
+   <!-- 사이드바 메뉴 -->
     <%@ include file = "/views/admin/common/adminSidebarProduct.jsp" %>
     
     <div class="wrapper">
-    	<!-- 상단 네비바 -->
+       <!-- 상단 네비바 -->
         <%@ include file = "/views/admin/common/adminNavi.jsp" %>
 
           <div class="content">
-        	<div class="content-box">
-        	<h2 class="ui header">옵션관리(상품연동형 옵션)</h2>
-        	<table class="ui celled table first-col">
-        	<tr>
-        		<td>옵션 검색</td>
-        		<td>
-        			<div class="ui selection dropdown">
-                                <!-- <input type="hidden" name="gender"> -->
+           <div class="content-box">
+           <h2 class="ui header">옵션관리(상품연동형 옵션)</h2>
+           <table class="ui celled table first-col">
+           <tr>
+              <td>옵션 검색</td>
+              <td>
+              	<input type="text" name="optionSelected" id="optionSelected" style="height:35px;">
+                 <div class="ui selection dropdown">
+                 	<input type="hidden" name="option" id="option">
                        <i class="dropdown icon"></i>
-                        <div class="default text">옵션명</div>
-                                <div class="menu">
-                                    <div class="item" data-value="0">옵션명</div>
-                                    <div class="item" data-value="1">옵션코드</div>
-                                    <div class="item" data-value="2">옵션값</div>
-                                    <div class="item" data-value="2">옵션설명</div>
-                                    <div class="item" data-value="2">옵션스타일</div>
-                                </div>
-                            </div>
-                            <button class="ui black button">검색</button>
+                        <div class="default text">옵션코드</div>
+                        <div class="menu">
+                            <div class="item" data-value="0">옵션코드</div>
+                            <div class="item" data-value="1">옵션명</div>
+                        </div>
+                 </div>
+                 			<button class="ui black button"  id="selectBtn">검색</button>
                   </td>
              </tr>
                     </table>
-        	
-        	<hr>
-        		<h2 class="ui header">옵션 목록</h2>
+           
+           <hr>
+              <h2 class="ui header">옵션 목록</h2>
 
                 <table class="ui celled table order-result">
-                    <!-- 검색 결과 테이블 -->
                     <thead>
                         <tr>
-                            <th colspan="9">
+                            <th colspan="3">
                                 <button class="ui white button">선택항목 삭제</button>
                             </th>
                         </tr>
@@ -68,55 +71,38 @@
                             <th><div class="ui fitted checkbox">
                                     <input type="checkbox" name="example"><label></label>
                                 </div></th>
-                            <th>No</th>
                             <th>옵션코드</th>
                             <th>옵션명</th>
-                            <th>옵션값</th>
-                            <th>옵션설명</th>
-                            <th>필수/선택</th>
-                            <th>옵션스타일</th>
-                            <th>등록일자</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="selectBody">
+                        <!-- <tr class="selectTr">
                             <td>
                                 <div class="ui fitted checkbox">
                                     <input type="checkbox" name="example"><label></label>
                                 </div>
                             </td>
-                            <td>1</td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="9">
-                        		<div class="optionAdd">
-                        			<button class="ui black button" onclick="location.href='/semi/views/admin/product/adminAddOption.jsp'">옵션등록</button>
- 		                       	</div>
-                       		</td>
-                        </tr>
-                        
+                        </tr> -->
                     </tbody>
                 </table>
-        		
-        	
-        	</div>
+                              <div class="optionAdd">
+                                 <button class="ui black button" onclick="location.href='/semi/views/admin/product/adminAddOption.jsp'">옵션등록</button>
+                                 </div>
+              
+           
+           </div>
         </div>
 
-		
-		<!-- Footer -->
+      
+      <!-- Footer -->
        <%@ include file = "/views/admin/common/adminFooter.jsp" %>
     </div>
 
 
     <!-- J-query CDN -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <!-- jQuery Custom Scroller CDN -->
@@ -138,6 +124,38 @@
     });
     $('.ui.radio.checkbox')
   .checkbox();
+    
+		    $(function(){
+		    	$("#selectBtn").click(function(){
+		    		var optionSelected = $("#optionSelected").val();
+		    		var option = $("#option").val();
+		    		
+		    		console.log(option);
+		    		$.ajax({
+		    			url:"/semi/selectOption.product",
+		    			data : {option : option , optionSelected : optionSelected},
+		    			type:"post",
+		    			success:function(data){
+		    				console.log("성공");
+		    				var $selectBody = $("#selectBody");
+		    				for(var key in data){
+		    					var $tr = $("<tr class='selectTr'>");
+		    					var $checkTd = $("<div class='ui fitted checkbox'><input type='checkbox' name='example''><label></label></div>");
+		    					var $numTd = $("<td>").text(data[key].optionNum);
+		    					var $nameTd = $("<td>").text(data[key].optionName);
+		    					
+		    					$tr.append($checkTd);
+		    					$tr.append($numTd);
+		    					$tr.append($nameTd);
+		    					$selectBody.append($tr);
+		    				}
+		    			},
+		    			error:function(){
+		    				console.log(실패);
+		    			}
+		    		});
+		    	});
+		  });
     
     </script>
     
