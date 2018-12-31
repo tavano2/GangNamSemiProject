@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import com.kh.semi.admin.promotion.model.vo.SelectUserVo;
+import com.sun.javafx.collections.MappingChange.Map;
 
 import static com.kh.semi.customer.common.JDBCTemplate.*;
 
@@ -139,7 +140,7 @@ public class PromotionDao {
 		return listCount;
 	}
 
-	public ArrayList<HashMap<String, Object>> selectAllUser(Connection con, SelectUserVo suv) {
+	public ArrayList<HashMap<String,Object>> selectAllUser(Connection con, SelectUserVo suv) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -178,5 +179,131 @@ public class PromotionDao {
 		}
 		
 		return list;
+	}
+
+	public ArrayList<HashMap<String,Object>> productSelect(Connection con) {
+		ArrayList<HashMap<String,Object>> productBigList =new ArrayList<HashMap<String,Object>>();
+		HashMap<String,Object> map = null;
+		ResultSet rset = null;
+		Statement stmt =null;
+		String query = prop.getProperty("productSelect");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			while(rset.next()) {
+				map = new HashMap<String,Object>();
+				map.put("CATEG_CODE", rset.getString("CATEG_CODE"));
+				map.put("CATEG_NAME", rset.getString("CATEG_NAME"));
+				map.put("CATEG_URL",rset.getString("CATEG_URL"));
+				map.put("CATEG_MEMO",rset.getString("CATEG_MEMO"));
+				map.put("CATEG_LEVEL",rset.getInt("CATEG_LEVEL"));
+				map.put("CATEG_REF_CODE",rset.getString("CATEG_REF_CODE"));
+				map.put("STATUS",rset.getString("STATUS"));
+				productBigList.add(map);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+		return productBigList;
+	}
+
+	public ArrayList<HashMap<String, Object>> productSelectResult(Connection con, HashMap<String, String> selectMap) {
+		ArrayList<HashMap<String, Object>> selectList = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> map =null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("productSelectResult");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, selectMap.get("selectBigCateg"));
+			pstmt.setString(2, selectMap.get("selectMiddleCateg"));
+			pstmt.setString(3, selectMap.get("selectValue"));
+			rset=pstmt.executeQuery();
+			while(rset.next()) {
+				map = new HashMap<String,Object>();
+				map.put("PRODUCT_CODE", rset.getString("PRODUCT_CODE"));
+				map.put("PRODUCT_NAME", rset.getString("PRODUCT_NAME"));
+				map.put("PRODUCT_PRICE", rset.getInt("PRODUCT_PRICE"));
+				selectList.add(map);
+				System.out.println(map);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return selectList;
+	}
+
+	public ArrayList<HashMap<String, Object>> selectMiddleCateg(Connection con, String selectBigCateg) {
+		ArrayList<HashMap<String, Object>> middleList = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> map = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query= prop.getProperty("selectMiddleCateg");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, selectBigCateg);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				map = new HashMap<String,Object>();
+				map.put("CATEG_CODE", rset.getString("CATEG_CODE"));
+				map.put("CATEG_NAME", rset.getString("CATEG_NAME"));
+				map.put("CATEG_URL",rset.getString("CATEG_URL"));
+				map.put("CATEG_MEMO",rset.getString("CATEG_MEMO"));
+				map.put("CATEG_LEVEL",rset.getInt("CATEG_LEVEL"));
+				map.put("CATEG_REF_CODE",rset.getString("CATEG_REF_CODE"));
+				map.put("STATUS",rset.getString("STATUS"));
+				middleList.add(map);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return middleList;
+	}
+
+	public ArrayList<HashMap<String, Object>> productSelectResult2(Connection con, HashMap<String, String> selectMap) {
+		ArrayList<HashMap<String, Object>> selectList = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> map =null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("productSelectResult2");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, selectMap.get("selectBigCateg"));
+			pstmt.setString(2, selectMap.get("selectMiddleCateg"));
+			pstmt.setString(3, selectMap.get("selectValue"));
+			rset=pstmt.executeQuery();
+			while(rset.next()) {
+				map = new HashMap<String,Object>();
+				map.put("PRODUCT_CODE", rset.getString("PRODUCT_CODE"));
+				map.put("PRODUCT_NAME", rset.getString("PRODUCT_NAME"));
+				map.put("PRODUCT_PRICE", rset.getInt("PRODUCT_PRICE"));
+				selectList.add(map);
+				System.out.println(map);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return selectList;
 	}
 }
