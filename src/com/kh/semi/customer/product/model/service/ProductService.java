@@ -145,7 +145,14 @@ public class ProductService {
 		return cart;
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------------------
+	
 	/*수정중*/ // 장바구니 | Shopping Cart > 품목 추가 | insertCartList  | model/service/ProductService.java
+	
+	public ArrayList<ShoppingCartPd> insertCartList(int currentPage, int limit) {
+		
+		return null;
+	}
 	
 	public ShoppingCartPd insertCartList(){
 		Connection con = getConnection();
@@ -158,7 +165,16 @@ public class ProductService {
 		
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------------------
+	
 	// 장바구니 | Shopping Cart : Deletion | deleteCartList  | model/service/ProductService.java
+	
+	public ArrayList<ShoppingCartPd> deleteCartList(int currentPage, int limit) {
+		
+		return null;
+	}
+	
+	
 	public int deleteCartList(String[] product_code, String userId) {
 		Connection con = getConnection();
 		int result = 0;
@@ -231,7 +247,10 @@ public class ProductService {
 		close(con);
 		return hmap;
 	}
-	
+
+
+
+
 	
 	
 	
