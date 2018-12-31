@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.kh.semi.customer.common.MyFileRenamePolicy;
+import com.kh.semi.customer.product.model.vo.ReviewList;
 import com.oreilly.servlet.MultipartRequest;
 
 
@@ -32,13 +33,13 @@ public class InsertReviewServlet extends HttpServlet {
 			int maxSize = 1024*1024*10;
 			
 			String root = request.getSession().getServletContext().getRealPath("/");
-			System.out.println(root);
+			//System.out.println(root);
 			String filePath=root+"views/images/InsertReview_uploadFiles/";
 			//System.out.println(filePath);
 			
 			MultipartRequest multiRequest = new MultipartRequest(request, filePath,maxSize,"UTF-8",new MyFileRenamePolicy());
 			
-			//키몸무게사이즈선택옵션/내용/사진
+			//사진
 			ArrayList<String> saveFiles = new ArrayList<String>();
 			ArrayList<String> orginFiles = new ArrayList<String>();
 			Enumeration<String> files = multiRequest.getFileNames();
@@ -52,10 +53,24 @@ public class InsertReviewServlet extends HttpServlet {
 			//키 몸무게 사이즈 선택옵션
 			String title = multiRequest.getParameter("title");
 			String content = multiRequest.getParameter("content");
-			String youWeight = multiRequest.getParameter("youWeight");
+			double youWeight = Double.parseDouble(multiRequest.getParameter("youWeight"));
 			String youSize = multiRequest.getParameter("youSize");
-			String youHeight = multiRequest.getParameter("youHeight");
-			//System.out.println(title+content+youWeight+youSize+youHeight);
+			double youHeight = Double.parseDouble(multiRequest.getParameter("youHeight"));
+			//String[] selectOptionArray =multiRequest.getParameterValues("selectOptionArray");
+			/*
+			for(int i=0;i<selectOptionArray.length;i++) {
+				System.out.println("잘오닌ㅇ"+selectOptionArray);
+			}*/
+			//String selectOption = multiRequest.getParameter("selectOption");
+			//System.out.println(title+content+youWeight+youSize+youHeight+" "+selectOption);
+			
+			/*//ReviewList객체 생성
+			ReviewList rlist = new ReviewList();
+			rlist.setHeight(youHeight);
+			rlist.setWeight(youWeight);
+			rlist.setUserSize(youSize);*/
+			
+			
 			
 		}
 	}

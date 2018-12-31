@@ -19,7 +19,9 @@ import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Option;
 import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ReallyProduct;
+import com.kh.semi.customer.product.model.vo.ReviewOption;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class ProductDao {
 	
@@ -89,7 +91,7 @@ public class ProductDao {
 			
 			while(rset.next()) {
 				Product p = new Product();
-				//p.setBoardId(rset.getInt("BOARD_ID"));
+				p.setBoardId(rset.getInt("BOARD_ID"));
 				p.setBoardType(rset.getInt("BOARD_TYPE"));
 				p.setBoardNum(rset.getInt("BOARD_NUM"));
 				//p.setBoardCate(rset.getString("BOARD_CATE"));
@@ -914,6 +916,58 @@ public class ProductDao {
 			close(pstmt);
 		}
 		
+		return list;
+	}
+
+	//상세보기 리뷰게시판!_!
+	public HashMap<String, Object> selectDetailReview(Connection con, String reviewRum) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		
+		
+		
+		
+		return null;
+	}
+	
+	//리뷰게시판-리뷰작성-option가져오깅
+	public ArrayList<ReviewOption> selectReviewOption(Connection con, String productCode, String userId) {
+		PreparedStatement pstmt = null;
+		ReviewOption reviewOption= null;
+		ResultSet rset = null;
+		ArrayList<ReviewOption> list = null;
+		
+		String query = prop.getProperty("SelectReviewOption");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, productCode);
+			pstmt.setString(2, userId);
+			rset = pstmt.executeQuery();
+		
+			
+			list = new ArrayList<ReviewOption>();
+			
+			while(rset.next()) {
+				reviewOption = new ReviewOption();
+				reviewOption.setOptionName(rset.getString("OPTION_NAME"));
+				reviewOption.setOrderDnum(rset.getString("ORDER_DNUM"));
+				reviewOption.setOptionNum(rset.getString("OPTION_NUM"));
+				list.add(reviewOption);
+			}
+			
+			System.out.println("dd"+list);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+
 		return list;
 	}
 

@@ -1,5 +1,22 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.kh.semi.customer.product.model.vo.ReviewOption"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+	<%
+	ArrayList<ReviewOption> reviewOption = (ArrayList<ReviewOption>)request.getAttribute("reviewOption");
+	
+	String optionAll="";
+	for(int i=0; i<reviewOption.size();i++){
+		if(i==0){
+			optionAll += reviewOption.get(i).getOptionName();
+		}else{
+			optionAll += ","+reviewOption.get(i).getOptionName();
+		}
+	}
+	
+	
+	%>
 <!DOCTYPE html>
 <html>
 
@@ -71,10 +88,35 @@
 
 		<tbody>
 		<tr>
+				<td>주문번호</td>
+				<td>
+					<div class="ui input">
+						<input type="text" value="<%=reviewOption.get(0).getOrderDnum()%>" name="userId" style="background-color:transparent;border:0 solid black; width:250px;"  readonly>
+					</div>
+				</td>
+			</tr>
+		<tr>
 				<td>작성자</td>
 				<td>
 					<div class="ui input">
-						<input type="text" value="<%=loginUser.getUserId()%>" name="userId" readonly>
+						<input type="text" value="<%=loginUser.getUserId()%>" name="userId" style="background-color:transparent;border:0 solid black; width:250px;" readonly>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>선택한 옵션</td>
+				<td>
+					<div class="ui input">
+				<%-- 	
+					<%for(int i=0;i<reviewOption.size();i++){%>
+					
+					
+					
+						<input type="hidden" value="<%=reviewOption.get(i).getOptionNum()%> name="selectOptionArray">
+						
+						
+					<% }%> --%>
+						<input type="text" value="<%=optionAll %>"name="selectOption" style="background-color:transparent;border:0 solid black; width:250px;" readonly>
 					</div>
 				</td>
 			</tr>
@@ -82,7 +124,7 @@
 				<td>제목</td>
 				<td>
 					<div class="ui input">
-						<input type="text" name="title">
+						<input type="text"  name="title" style="width:800px;">
 					</div>
 				</td>
 			</tr>
@@ -91,7 +133,7 @@
 				<td>키</td>
 				<td>
 					<div class="ui input">
-						<input type="text" name="youHeight" placeholder="~cm">
+						<input type="text" name="youHeight" style="width:300px;" placeholder="~cm(숫자만입력하세요 (제발))">
 					</div>
 				</td>
 			</tr>
@@ -99,7 +141,7 @@
 				<td>몸무게</td>
 				<td>
 					<div class="ui input">
-						<input type="text" name="youWeight" placeholder="~kg">
+						<input type="text" name="youWeight" style="width:300px;" placeholder="~kg(숫자만입력하세요 (제발))">
 					</div>
 				</td>
 			</tr>
@@ -107,7 +149,7 @@
 				<td>평소사이즈</td>
 				<td>
 					<div class="ui input">
-						<input type="text" name="youSize" placeholder="S/M/L">
+						<input type="text" name="youSize" style="width:300px;" placeholder="S/M/L">
 					</div>
 				</td>
 			</tr>
