@@ -48,21 +48,16 @@
                  
                  
                  <tr>
-                    <td>옵션 입력</td>
+                    <td>옵션명 입력</td>
                     <td>
                        <table class="ui celled table first-col">
-                          <tr>
-                             <td colspan="4">
-                                   <button class="ui white button">선택항목 삭제</button>
-                             </td>
-                          </tr>
                           <tr>
                              <td>
                                 <div class="ui fitted checkbox">
                                           <input type="checkbox" name="example"><label></label>
                                       </div>
                                    </td>
-                                   <td>한국어 쇼핑몰(한국어)</td>
+                                   <td>옵션명</td>
                           </tr>
                           <tr>
                              <td>
@@ -71,13 +66,7 @@
                                       </div>
                              </td>
                              <td>
-                                <input type="text">&nbsp;&nbsp;
-                                <button class="ui white button">
-                                   <span class="productPlus">-</span>
-                                </button>
-                                        <button class="ui white button">
-                                           <span class="productPlus">+</span>
-                                        </button>
+                                <input type="text" id="optionName">&nbsp;&nbsp;
                              </td>
                           </tr>
                        </table>
@@ -85,9 +74,9 @@
                  </tr>
                 </table>
                 <div class="productAddBtn">
-              <button class="ui black button">등록</button>
-              <button class="ui white button">취소</button>
-           
+                
+              <button class="ui black button" id="insertBtn">등록</button>
+              <button class="ui white button" onclick="cancelBtn();">취소</button>
            </div>
            </div>
         </div>
@@ -99,7 +88,7 @@
 
 
     <!-- J-query CDN -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <!-- jQuery Custom Scroller CDN -->
@@ -122,6 +111,28 @@
     $('.ui.radio.checkbox')
   .checkbox();
     
+    function cancelBtn(){
+    	location.href="<%=request.getContextPath()%>/views/admin/product/adminOptionManagement.jsp";
+    }
+    
+    $(function(){
+    	$("#insertBtn").click(function(){
+    		var optionName = $("#optionName").val();
+    		
+    		$.ajax({
+    			url:"/semi/insertOption.product",
+    			data:{optionName : optionName},
+    			type:"post",
+    			success:function(data){
+    				console.log("성공")
+    				$("#optionName").val("");
+    			},
+    			error:function(){
+    				console.log("실패");
+    			}
+    		});
+    	});
+    });
     </script>
 </body>
 
