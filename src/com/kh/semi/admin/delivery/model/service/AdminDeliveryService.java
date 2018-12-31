@@ -1,6 +1,9 @@
 package com.kh.semi.admin.delivery.model.service;
 
-import static com.kh.semi.admin.common.JDBCTemplate.*;
+import static com.kh.semi.admin.common.JDBCTemplate.close;
+import static com.kh.semi.admin.common.JDBCTemplate.commit;
+import static com.kh.semi.admin.common.JDBCTemplate.getConnection;
+import static com.kh.semi.admin.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -9,7 +12,6 @@ import java.util.Map;
 
 import com.kh.semi.admin.delivery.model.dao.AdminDeliveryDao;
 import com.kh.semi.admin.delivery.model.vo.OrderDeliveryInfo;
-import com.kh.semi.admin.delivery.model.vo.OrderDetail;
 import com.kh.semi.admin.delivery.model.vo.OrderSearchResult;
 
 public class AdminDeliveryService {
@@ -118,6 +120,25 @@ public class AdminDeliveryService {
 		
 		close(con);
 		return result;
+	}
+
+	public Map<String, Map<String, Long>> getDeliveryMain() {
+		Connection con = getConnection();
+		Map<String, Map<String, Long>> om = null;
+		
+		Map<String, Long> todaySales = new AdminDeliveryDao().getDeliveryMainSales(con, 1);
+		Map<String, Long> monthSales = new AdminDeliveryDao().getDeliveryMainSales(con, 30);
+		Map<String, Long> todayWork = new AdminDeliveryDao().getDeliveryMainWork(con);
+		
+		if (todaySales != null && monthSales != null && todayWork != null) {
+			om = new HashMap<String, Map<String, Long>>();
+			om.put("todaySales", todaySales);
+			om.put("monthSales", monthSales);
+			om.put("todayWork", todayWork);
+		}
+		
+		close(con);
+		return om;
 	}
 
 }

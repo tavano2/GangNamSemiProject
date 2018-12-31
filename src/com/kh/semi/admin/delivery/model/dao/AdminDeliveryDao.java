@@ -10,7 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -554,7 +556,7 @@ public class AdminDeliveryDao {
 			pstmt.setString(1, deliveryNum);
 			pstmt.setString(2, de.getDeliveryCo());
 			pstmt.setString(3, de.getPostnum());
-			pstmt.setDate(4, de.getPostDate());
+			pstmt.setString(4, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(de.getPostDate()));
 			pstmt.setString(5, de.getReceiverName());
 			pstmt.setString(6, de.getReceiverTel1());
 			pstmt.setString(7, de.getReceiverTel2());
@@ -616,7 +618,20 @@ public class AdminDeliveryDao {
 				de.setDeliveryNum(rset.getString("DELIVERY_NUM") == null ? "" : rset.getString("DELIVERY_NUM"));
 				de.setDeliveryCo(rset.getString("DELIVERY_CO") == null ? "" : rset.getString("DELIVERY_CO"));
 				de.setPostnum(rset.getString("POSTNUM") == null ? "" : rset.getString("POSTNUM"));
-				de.setPostDate(rset.getDate("POST_DATE") == null ? null : rset.getDate("POST_DATE"));
+				Date postDate = null;
+				if(rset.getDate("POST_DATE") != null) {
+					String[] postDateStr = rset.getString("POST_DATE").split(" ");
+					postDate = new Date(
+							new GregorianCalendar(
+									Integer.parseInt(postDateStr[0].split("-")[0]),
+									Integer.parseInt(postDateStr[0].split("-")[1])-1,
+									Integer.parseInt(postDateStr[0].split("-")[2]),
+									Integer.parseInt(postDateStr[1].split(":")[0]),
+									Integer.parseInt(postDateStr[1].split(":")[1]),
+									Integer.parseInt(postDateStr[1].split(":")[2])
+							).getTimeInMillis());
+				}
+				de.setPostDate(rset.getDate("POST_DATE") == null ? null : postDate);
 				de.setReceiverName(rset.getString("RECEIVER_NAME") == null ? "" : rset.getString("RECEIVER_NAME"));
 				de.setReceiverTel1(rset.getString("RECEIVER_TEL1") == null ? "" : rset.getString("RECEIVER_TEL1"));
 				de.setReceiverTel2(rset.getString("RECEIVER_TEL2") == null ? "" : rset.getString("RECEIVER_TEL2"));
@@ -644,7 +659,7 @@ public class AdminDeliveryDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, de.getDeliveryCo());
 			pstmt.setString(2, de.getPostnum());
-			pstmt.setDate(3, de.getPostDate());
+			pstmt.setString(3, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(de.getPostDate()));
 			pstmt.setString(4, de.getReceiverName());
 			pstmt.setString(5, de.getReceiverTel1());
 			pstmt.setString(6, de.getReceiverTel2());
@@ -685,6 +700,84 @@ public class AdminDeliveryDao {
 		}
 		
 		return result;
+	}
+
+	public Map<String, Long> getDeliveryMainSales(Connection con, int day) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Map<String, Long> sales = null;
+		
+		String query = prop.getProperty("getDeliveryMainSales");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, "취소");
+			pstmt.setString(2, "반품");
+			pstmt.setString(3, "환불");
+			pstmt.setInt(4, day);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				sales = new HashMap<String, Long>();
+				
+				sales.put("totalPrice", rset.getLong("TOTAL_PRICE"));
+				sales.put("payment", rset.getLong("PAYMENT"));
+				sales.put("refund", rset.getLong("REFUND"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return sales;
+	}
+
+	public Map<String, Long> getDeliveryMainWork(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Map<String, Long> work = null;
+		
+		String query = prop.getProperty("getDeliveryMainWork");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, "상품준비중");
+			pstmt.setString(2, "배송준비중");
+			pstmt.setString(3, "배송대기중");
+			pstmt.setString(4, "배송중");
+			pstmt.setString(5, "최소");
+			pstmt.setString(6, "교환");
+			pstmt.setString(7, "반품");
+			pstmt.setString(8, "환불");
+			pstmt.setString(9, "구매확정");
+			pstmt.setString(10, "완료");
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				work = new HashMap<String, Long>();
+				
+				work.put("productReady", rset.getLong("PRODUCT_READY"));
+				work.put("deliveryReady", rset.getLong("DELIVERY_READY"));
+				work.put("deliveryWating", rset.getLong("DELIVERY_WATING"));
+				work.put("delivering", rset.getLong("DELIVERING"));
+				work.put("cancel", rset.getLong("CANCEL"));
+				work.put("exchange", rset.getLong("EXCHANGE"));
+				work.put("returnProd", rset.getLong("RETURN_PROD"));
+				work.put("refund", rset.getLong("REFUND"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return work;
 	}
 
 }

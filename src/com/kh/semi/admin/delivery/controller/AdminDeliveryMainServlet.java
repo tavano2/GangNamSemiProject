@@ -1,11 +1,15 @@
 package com.kh.semi.admin.delivery.controller;
 
 import java.io.IOException;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.kh.semi.admin.delivery.model.service.AdminDeliveryService;
 
 /**
  * Servlet implementation class AdminDeliveryMainServlet
@@ -26,9 +30,10 @@ public class AdminDeliveryMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Map<String, Map<String, Long>> main = new AdminDeliveryService().getDeliveryMain();
 		
-		
-		if(true) {
+		if(main != null) {
+			request.setAttribute("main", main);
 			request.getRequestDispatcher("/views/admin/delivery/adminDeliveryMain.jsp").forward(request, response);
 		} else {
 			request.setAttribute("msg", "주문 상세 페이지 오픈 실패!");

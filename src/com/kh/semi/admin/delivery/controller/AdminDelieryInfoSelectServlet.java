@@ -1,6 +1,8 @@
 package com.kh.semi.admin.delivery.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +34,8 @@ public class AdminDelieryInfoSelectServlet extends HttpServlet {
 		String deliveryNum = request.getParameter("deliveryNum");
 		
 		OrderDeliveryInfo de = new AdminDeliveryService().selectDeliveryInfo(deliveryNum);
+		
+		//System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(de.getPostDate()));
 		
 		if(de != null) {
 			request.setAttribute("de", de);
