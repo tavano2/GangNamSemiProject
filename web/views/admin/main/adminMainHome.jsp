@@ -6,13 +6,12 @@
 
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
-	//AdminHomeInfo info = (AdminHomeInfo)request.getAttribute("info");
 %>
 <html>
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>관리자 - 홈</title>
 
 	<!-- Semantic UI CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -43,7 +42,7 @@
 
         <div class="content">
         	<div class="content-box">
-        	
+        	<!-- 
         		<h2 class="ui header">사업체 정보 설정</h2>
 
                 <table class="ui celled table first-col">
@@ -118,7 +117,7 @@
                 <h2>회사 소개 설정</h2>
                 <table class="ui celled table first-col">
                     <tr>
-                        <!-- 크기 늘리기 -->
+                        크기 늘리기
                         <td>회사소개</td>
                         <td>
                                 <div class="ui form">
@@ -129,7 +128,7 @@
                     </tr>
                     <tr>
                         <td>회사 약도</td>
-                        <!-- 버튼 잠구기 -->
+                        버튼 잠구기
                         <td>
                             <div class="ui input"><input type="text"></div><button class="ui black basic button">찾아보기</button>
                         </td>
@@ -186,7 +185,7 @@
                 <h2>서비스 문의안내 설정</h2>
                 <table class="ui celled table first-col">
                     <tr>
-                        <!-- 크기 늘리기 -->
+                        크기 늘리기
                         <td>서비스 문의안내 내용</td>
                         <td>
                                 <div class="ui form">
@@ -201,7 +200,7 @@
                     <button class="ui black button">저장</button>
                 </div>
 
-                <hr>
+                <hr> -->
                 <h2>쇼핑몰 현황</h2>
                 <div class="ui container center aligned search-box">
                     <!-- <button class="ui black basic button">일별 매출 현황</button>

@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>FAQ</title>
 	
 	<!-- Semantic UI CSS CDN -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -27,7 +28,6 @@
 <body>
 
 	<%@ include file="/views/customer/common/mainNav.jsp"%>
-
 
 	<div class="content">
 		<br> <br>
@@ -67,8 +67,10 @@
 			<tfoot>
 				<th colspan="3">
 					<!--  작성하기는 관리자만 가능하다.  -->
-					<div align="right">
-						<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/board/insertBoard.jsp';">작성하기</button>
+					<div align="right">&nbsp;
+						<%if(loginUser != null && loginUser.getUserId().equals("admin")){ %>
+						<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/board/FAQinsert.jsp';">작성하기</button>
+						<%} %>
 					</div>
 				</th>
 			</tfoot>
