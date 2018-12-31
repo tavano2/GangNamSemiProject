@@ -484,7 +484,8 @@ public class ProductDao {
 	   // 장바구니 | Shopping Cart > 삭제 | deleteCartList (named in DAO)
 	public int deleteCartList(Connection con, String msg, String userId) {
 		PreparedStatement pstmt = null;
-		int result = 0;
+		/*int result = 0;*/
+		
 		String query = prop.getProperty("deleteCartList");
 		
 		return 0;

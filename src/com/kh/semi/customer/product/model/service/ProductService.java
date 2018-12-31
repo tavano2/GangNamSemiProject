@@ -137,8 +137,8 @@ public class ProductService {
 	// 장바구니 | Shopping Cart : 조회 | selectCartList  | model/service/ProductService.java
 	public ArrayList<ShoppingCartPd> selectCartList(int currentShoppingCart, int limitShoppingCart) {
 		Connection con = getConnection();
-		
-		ArrayList<ShoppingCartPd> cart  = new ProductDao().selectCartList(con, currentShoppingCart, limitShoppingCart);
+		ArrayList<ShoppingCartPd> cart = null;
+		//cart  = new ProductDao().selectCartList(con, currentShoppingCart, limitShoppingCart);
 		
 		close(con);
 		
@@ -180,7 +180,7 @@ public class ProductService {
 		int result = 0;
 		int count = 0;
 		for(String msg : product_code) {
-			count += new ProductDao().deleteCartList(con,msg,userId);
+			count += new ProductDao().deleteCartList(con,null, msg);
 		}
 		if(product_code.length == count) {
 			commit(con);
