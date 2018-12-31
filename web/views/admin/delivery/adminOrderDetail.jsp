@@ -1,11 +1,31 @@
+<%@page import="com.kh.semi.customer.member.model.vo.Member"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="com.kh.semi.admin.delivery.model.vo.*"%>
+<%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	ArrayList<OrderDetail> detailList = (ArrayList<OrderDetail>)((HashMap<String, Object>)request.getAttribute("hmap")).get("detailList");
+	OrderBuyerInfo bi = (OrderBuyerInfo)((HashMap<String, Object>)request.getAttribute("hmap")).get("bi");
+	Map<String, OrderDeliveryInfo> deliveryList = (Map<String, OrderDeliveryInfo>)((HashMap<String, Object>)request.getAttribute("hmap")).get("deliveryList");
+	int productPrice = 0;
+	int payment = 0;
+
+	Member loginUser = (Member)session.getAttribute("loginUser");
+%>
+
+<%!
+	public String comma(int price){
+		return new DecimalFormat("#,###").format(price);
+	}
+%>
 <!DOCTYPE html>
 <html>
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>주문관리 - 주문상세조회</title>
 
 	<!-- Semantic UI CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -14,12 +34,14 @@
     <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
     <!-- DatePicker CSS -->
     <link rel="stylesheet" href="/semi/css/common/datePicker.css">
-    <!-- Delivery CSS -->
+    <!-- DeliveryDetail CSS -->
     <link rel="stylesheet" href="/semi/css/admin/delivery/adminDeliveryDetail.css">
     
 </head>
 
 <body>
+	
+	<%if(loginUser != null && loginUser.getUserId().equals("admin")) {%>
 	
 	<!-- 사이드바 메뉴 -->
     <%@ include file = "/views/admin/common/adminSidebarDelivery.jsp" %>
@@ -35,23 +57,23 @@
                 <div class="ui divider"></div>
 				
 				<form action="" method="post" id="detailBox" name="detailBox">
-					
+					<input type="hidden" name="changeState" id="changeState">
 					<!-- 주문 정보 기본 -->
 					<div class="ui segment tertiary grey grid top-info">
 						<div class="row">
 							<div class="five wide column">
-								<label>주문자 아이디 : </label><input type="text" id="userId" name="userId" value="asdasdadsl1004@hanmail.net" readonly></input>
+								<label>주문자 아이디 : </label><input type="text" id="userId" name="userId" value="<%= detailList.get(0).getUserId() %>" readonly></input>
 							</div>
 							<div class="eight wide column">
-								<label>회원등급 : </label><input type="text" id="userGrade" name="userGrade" value="이건희" readonly></input>
+								<label>회원등급 : </label><input type="text" id="userClass" name="userClass" value="<%= detailList.get(0).getClassName() %>" readonly></input>
 							</div>
 						</div>
 						<div class="row">
 							<div class="five wide column">
-								<label>주문번호 : </label><input type="text" id="orderNumber" name="orderNumber" value="2018090900001" readonly></input>
+								<label>주문번호 : </label><input type="text" id="orderLnum" name="orderLnum" value="<%= detailList.get(0).getOrderLnum() %>" readonly></input>
 							</div>
 							<div class="eight wide column">
-								<label>주문일자 : </label><input type="text" id="orderDate" name="orderDate" value="2018-09-09 14:30:32" readonly></input>
+								<label>주문일자 : </label><input type="text" id="orderDate" name="orderDate" value="<%= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(detailList.get(0).getOrderDate()) %>" readonly></input>
 							</div>
 						</div>
 					</div>
@@ -63,14 +85,28 @@
 	                    <thead>
 	                        <tr><th colspan="12">
                             	<div class="ui grid">
-		                            <div class="ten wide column">
+		                            <div class="eight wide column">
 		                                <button class="ui black button" type="button" onclick="addressInput();">배송정보입력</button>
+		                                <div class="ui selection dropdown">
+		                                    <input type="hidden">
+		                                    <i class="dropdown icon"></i>
+		                                    <div class="default text">주문상태 변경</div>
+		                                    <div class="menu">
+		                                        <div class="item" data-value="1" onclick="changeStateBtn(this);">상품준비중</div>
+		                                        <div class="item" data-value="2" onclick="changeStateBtn(this);">배송준비중</div>
+		                                        <div class="item" data-value="3" onclick="changeStateBtn(this);">배송대기중</div>
+		                                        <div class="item" data-value="4" onclick="changeStateBtn(this);">배송중</div>
+		                                        <div class="item" data-value="5" onclick="changeStateBtn(this);">배송완료</div>
+		                                        <div class="item" data-value="6" onclick="changeStateBtn(this);">구매확정</div>
+		                                    </div>
+	                                    </div>
 		                            </div>
 		                            
-	                                <div class="six wide column right aligned">
-	                                	<button class="ui basic black button" type="button" onclick="productCancel();">상품 취소</button>
-	                                	<button class="ui basic black button" type="button" onclick="productExchange();">상품 교환</button>
-	                                	<button class="ui basic black button" type="button" onclick="productReturn();">상품 반품</button>
+	                                <div class="eight wide column right aligned">
+	                                	<button class="ui basic black button" type="button" onclick="">상품 취소</button>
+	                                	<button class="ui basic black button" type="button" onclick="">상품 교환</button>
+	                                	<button class="ui basic black button" type="button" onclick="">상품 반품</button>
+	                                	<button class="ui basic black button" type="button" onclick="">상품 환불</button>
 	                                </div>
                                 </div>
                             </th></tr>
@@ -79,62 +115,61 @@
 	                            <th><div class="ui fitted master checkbox">
 	                                <input type="checkbox"><label></label>
 	                            </div></th>
-	                            <th>배송번호</th>
+	                            <th>주문번호/배송번호</th>
 	                            <th>상품명/옵션</th>
 	                            <th>수량</th>
 	                            <th>판매가</th>
-	                            <th>배송비</th>
 	                            <th>실결제<br>금액</th>
-	                            <th>배송지 주소</th>
-	                            <th>배송<br>업체</th>
+	                            <th>배송업체</th>
 	                            <th>운송장번호</th>
-	                            <th>주문<br>상태</th>
+	                            <th>배송지 주소</th>
+	                            <th>주문상태</th>
 	                            <th>메모</th>
 	                        </tr>
 	                    </thead>
 	                    
 	                    <tbody class="center aligned">
-	                        <tr>
+	                        <% for(OrderDetail detail : detailList) {%>
+	                    	
+	                    	<tr>
 	                            <td><div class="ui fitted checkbox">
-	                                <input type="checkbox" name="deliveryChk" value="20180909-10001"><label></label>
+	                                <input type="checkbox" name="orderDnum" value="<%= detail.getOrderDnum() %>"><label></label>
 	                            </div></td>
-	                            <td>20180909-10001</td>
-	                            <td>바지 (블랙, 라지)</td>
-	                            <td>1</td>
-	                            <td>50000</td>
-	                            <td>2500</td>
-	                            <td>45000</td>
-	                            <td>서울</td>
-	                            <td>CJ</td>
-	                            <td>101-101-101</td>
-	                            <td>상품준비중</td>
-	                            <td>주말에만 받습니다</td>
+	                            <td>
+	                            	<%= detail.getOrderDnum() %>
+	                            	<br>
+	                            	<a href="" onclick="deliveryInfoUpdate(this);"><%= detail.getDeliveryNum() %></a>
+	                            	</td>
+	                            <td><%= detail.getProductName() + " (" + detail.getOptionName() + ")" %></td>
+	                            <td><%= detail.getOrderAmount() %></td>
+	                            <td><%= comma(detail.getProductPrice()) %></td>
+	                            <td><%= comma(detail.getPayment()) %></td>
+	                            <%if(detail.getDeliveryNum() != ""){ %>
+	                            <td><%= deliveryList.get(detail.getDeliveryNum()).getDeliveryCo() %></td>
+	                            <td><%= deliveryList.get(detail.getDeliveryNum()).getPostnum() %></td>
+	                            <td><%= deliveryList.get(detail.getDeliveryNum()).getReceiverAddr() %></td>
+	                            <%} else { %>
+	                            <td></td>
+	                            <td></td>
+	                            <td></td>
+	                            <%} %>
+	                            <td><%= detail.getOrderSname() %></td>
+	                            <td><%= detail.getMemo() %></td>
 	                        </tr>
-	                        <tr>
-	                            <td><div class="ui fitted checkbox">
-	                                <input type="checkbox" name="deliveryChk" value="20180909-10001"><label></label>
-	                            </div></td>
-	                            <td>20180909-10001</td>
-	                            <td>상의 (레드, 라지)</td>
-	                            <td>1</td>
-	                            <td>60000</td>
-	                            <td></td>
-	                            <td>54000</td>
-	                            <td></td>
-	                            <td></td>
-	                            <td></td>
-	                            <td>배송준비중</td>
-	                            <td>1주일 늦게 배송해주세요</td>
-	                        </tr>
+
+	                    	<%
+		                    	productPrice += detail.getProductPrice();
+	                    		payment += detail.getPayment();
+	                        } %>
 	                    </tbody>
 	                    
 	                    <tfoot>
 	                    	<tr class="center aligned">
 	                    		<th colspan="4" class="right aligned">계</th>
-	                    		<th>114000</th>
-	                    		<th>2500</th>
-	                    		<th>101500</th>
-	                    		<th colspan="5"></th>
+	                    		<th><%= comma(productPrice) %></th>
+	                    		<th><%= comma(payment) %></th>
+	                    		<th colspan="4" class="right aligned">배송비</th>
+	                    		<th><%= comma(detailList.get(0).getPostPrice()) %></th>  		
 	                    	</tr>
 	                    </tfoot>
 	                </table>
@@ -154,15 +189,15 @@
 								<tbody>
 									<tr>
 										<td>주문자 이름</td>
-										<td><input type="text" id="orderName" value="사람이름" readonly></input></td>
+										<td><input type="text" id="orderName" value="<%= bi.getBuyerName() %>" readonly></input></td>
 									</tr>
 									<tr>
 										<td>주문자 일반전화</td>
-										<td><input type="text" id="orderPhone1" value="02-0101-0101" readonly></input></td>
+										<td><input type="text" id="orderPhone1" value="<%= bi.getBuyerTel1() %>" readonly></input></td>
 									</tr>
 									<tr>
 										<td>주문자 휴대전화</td>
-										<td><input type="text" id="orderPhone2" value="010-1103-0141" readonly></input></td>
+										<td><input type="text" id="orderPhone2" value="<%= bi.getBuyerTel2() %>" readonly></input></td>
 									</tr>
 								</tbody>
 							</table>
@@ -178,23 +213,23 @@
 								<tbody>
 									<tr>
 										<td>수령자 이름</td>
-										<td><input type="text" id="receiverName" name="receiverName" value="사람이름" readonly></input></td>
+										<td><input type="text" id="receiverName" name="receiverName" value="<%= bi.getReceiverName() %>" readonly></input></td>
 									</tr>
 									<tr>
 										<td>수령자 일반전화</td>
-										<td><input type="text" id="receiverPhone1" name="receiverPhone1" value="01-123-1234" readonly></input></td>
+										<td><input type="text" id="receiverTel1" name="receiverTel1" value="<%= bi.getReceiverTel1() %>" readonly></input></td>
 									</tr>
 									<tr>
 										<td>수령자 휴대전화</td>
-										<td><input type="text" id="receiverPhone2" name="receiverPhone2" value="010-102-3021" readonly></input></td>
+										<td><input type="text" id="receiverTel2" name="receiverTel2" value="<%= bi.getReceiverTel2() %>" readonly></input></td>
 									</tr>
 									<tr>
 										<td>배송지 주소</td>
-										<td><input type="text" id="receiverAddress" name="receiverAddress" value="서울 강남구 어딘가" readonly></input></td>
+										<td><input type="text" id="receiverAddr" name="receiverAddr" value="<%= bi.getReceiverAddr() %>" readonly></input></td>
 									</tr>
 									<tr>
 										<td>배송메세지</td>
-										<td><input type="text" id="receiverMemo" name="receiverMemo" value="잘 보내주세요!" readonly></input></td>
+										<td><input type="text" id="receiverMsg" name="receiverMsg" value="<%= bi.getReceiverMsg() %>" readonly></input></td>
 									</tr>
 								</tbody>
 							</table>
@@ -212,7 +247,7 @@
     </div>
 
     <!-- J-query CDN -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <!-- jQuery Custom Scroller CDN -->
@@ -226,28 +261,65 @@
 	<script src="/semi/js/common/common.js"></script>
 	
 	<script>
+		//컨텐츠 박스의 드롭다운 실행
+		$('.content-box .ui.dropdown').dropdown();
+		
+		//주문상태 변경
+		function changeStateBtn(btn){
+			var chkList = $(".order-detail tbody input[type='checkbox']:checked");
+			
+			if(chkList.length > 0 && confirm("주문 상태를 변경하시겠습니까?")){
+				$("#changeState").val(btn.innerText);
+				detailBox.action = '<%=request.getContextPath()%>/adminStatusChangeDetail.de';
+				detailBox.submit();
+			}
+		}
+		
 		function addressInput(){
+			var chkList = $(".order-detail tbody input[type='checkbox']:checked");
+			var deliveryNumChk = true;
+			
+			for(var i=0; i<chkList.length; i++){
+				var chk = $(chkList[i]).parents("tr").children().eq(1).children("a").text();
+
+				if(chk != ""){
+					deliveryNumChk = false;
+					alert("배송번호가 없는 주문내역만 입력이 가능합니다.");
+					break;
+				}
+			}
+			
+			if(chkList.length > 0 && deliveryNumChk){
+				var cw = 840;
+				var ch = 420;
+				var sw = screen.availWidth;
+				var sh = screen.availHeight;
+
+				var px = (sw - cw) / 2;
+				var py = ((sh - ch) / 2) - (ch/4);
+				
+				var popupname = "popup";
+				window.open("#", popupname, "location=0, resizable=no, menubar=no, status=no, toolbar=no"
+						+ ", width=" + cw + ", height=" + ch + ", left=" + px + ", top=" + py);
+				
+				detailBox.target = popupname;
+				detailBox.action = '/semi/views/admin/delivery/adminOrderDetailAddressInput.jsp';
+				detailBox.submit();
+			}
+		}
+		
+		function deliveryInfoUpdate(a){
 			var cw = 840;
 			var ch = 420;
 			var sw = screen.availWidth;
 			var sh = screen.availHeight;
 
 			var px = (sw - cw) / 2;
-			var py = ((sh - ch) / 2) - ch/4;
+			var py = ((sh - ch) / 2) - (ch/4);
 			
 			var popupname = "popup";
-			window.open("view/join/login.html", popupname, "location=0, resizable=no, menubar=no, status=no, toolbar=no"
+			window.open("/semi/adminDelieryInfoSelect.de?deliveryNum="+a.innerText, popupname, "location=0, resizable=no, menubar=no, status=no, toolbar=no"
 					+ ", width=" + cw + ", height=" + ch + ", left=" + px + ", top=" + py);
-			
-			detailBox.target = popupname;
-			detailBox.action = '/semi/views/admin/delivery/adminOrderDetailAddressInput.jsp';
-			detailBox.submit();
-		}
-		
-		function productCancel(){
-			detailBox.target = '';
-			detailBox.action = '';
-			detailBox.submit();
 		}
 	
 		function productExchange(){
@@ -262,6 +334,11 @@
 			detailBox.submit();
 		}
 	</script>
+	
+	<%} else {
+		request.setAttribute("msg", "잘못된 페이지 접근!");
+		request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
+	} %>
 	
 </body>
 

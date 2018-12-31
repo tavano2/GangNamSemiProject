@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.semi.customer.product.model.service.ProductService;
+import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Product;
 
 
@@ -40,17 +41,22 @@ public class SelectOneQnAServlet extends HttpServlet {
 		//QnA상세페이지 댓글쓰
 		ArrayList<Product> SelectReplyList = new ProductService().SelectReplyList(pQnABoardId);
 		
-		
+		//QnA상세페이지 파일가져오기 
+		ArrayList<Attachment> selectfileList = new ProductService().selectfileList(pQnABoardId);
 		
 		
 		//System.out.println(SelectOneQnA);
-		System.out.println("SelectReplyList"+SelectReplyList);
+		//System.out.println("SelectReplyList"+SelectReplyList);
+		//System.out.println("selectfileList"+selectfileList.get(0).getOriginName());
+		//System.out.println(selectfileList.get(0).getChangeName());
+		//System.out.println(selectfileList.get(0).getFilePath());
 		
 		String page="";
 		if(SelectOneQnA!=null) {
 			page="views/customer/product/detailQnA.jsp";
 			request.setAttribute("SelectOneQnA", SelectOneQnA);
 			request.setAttribute("SelectReplyList", SelectReplyList);
+			request.setAttribute("selectfileList", selectfileList);
 		}else {
 			page="views/customer/common/errorPage.jsp";
 			request.setAttribute("msg", "QnA상세보기 실행");

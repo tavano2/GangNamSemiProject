@@ -9,7 +9,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>주문관리 - 전체주문조회</title>
 
 	<!-- Semantic UI CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -46,13 +46,14 @@
 				<!-- result-box -->
                 <h3 class="ui header">검색 결과</h3>
 				<form action="" method="post" id="resultBox" name="resultBox">
+					<input type="hidden" name="uri" value="<%=request.getRequestURI()%>">
 	                <table class="ui celled table order-result">
 	                    <!-- 검색 결과 테이블 -->
 	                    <thead>
 	                        <tr><th colspan="12">
                             	<div class="ui grid">
-                            		<input type="hidden" name="changeState" id="changeState">
 		                            <div class="ten wide column">
+		                            	<input type="hidden" name="changeState" id="changeState">
 		                                <button class="ui grey button" type="button" onclick="changeStateBtn(this);">배송완료</button>
 		                            </div>
 		                            
@@ -126,6 +127,8 @@
     <script src="/semi/js/admin/common/adminMain.js"></script>
 	<!-- Delivery JS -->
 	<script src="/semi/js/admin/delivery/adminDelivery.js"></script>
+	<!-- Common JS -->
+	<script src="/semi/js/common/common.js"></script>
 	
 	<script>
 		var searchResult = null;
@@ -133,6 +136,11 @@
 		var currentPage = 1;
 		var maxPage = 0;
 		
+		$(function(){
+			$('#orderState').show();
+		});
+		
+		//주문상태 변경
 		function changeStateBtn(btn){
 			var statusChk = true;
 			
@@ -148,17 +156,12 @@
 				}
 			}
 			
-			if(chkList.length > 0 && statusChk){
+			if(chkList.length > 0 && statusChk && confirm("주문 상태를 변경하시겠습니까?")){
 				$("#changeState").val(btn.innerText);
 				resultBox.action = '<%=request.getContextPath()%>/adminStatusChange.de';
 				resultBox.submit();
 			}
 		}
-		
-		$(function(){
-			$('#orderState').show();
-		});
-		
 		
 		//검색 버튼
 		function searchBtn(){
@@ -363,9 +366,9 @@
 					var $td5 = $("<td>").text(searchResult[i].product);
 					var $td6 = $("<td>").text(searchResult[i].amount);
 					var $td7 = $("<td>").text(searchResult[i].postnum);
-					var $td8 = $("<td>").text(searchResult[i].productPrice);
-					var $td9 = $("<td>").text(searchResult[i].deliveryPrice);
-					var $td10 = $("<td>").text(searchResult[i].payment);
+					var $td8 = $("<td>").text(numComma(searchResult[i].productPrice));
+					var $td9 = $("<td>").text(numComma(searchResult[i].deliveryPrice));
+					var $td10 = $("<td>").text(numComma(searchResult[i].payment));
 					var $td11 = $("<td>").text(searchResult[i].orderSname);
 					var $td12 = $("<td>").text(searchResult[i].memo);
 					

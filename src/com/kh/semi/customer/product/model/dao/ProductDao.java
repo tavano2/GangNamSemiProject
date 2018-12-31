@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
+import com.kh.semi.customer.board.model.vo.Board;
 import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Option;
@@ -338,7 +339,7 @@ public class ProductDao {
 			
 				}
 			
-				System.out.println("가져왕"+list);
+				//System.out.println("가져왕"+list);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}finally {
@@ -796,6 +797,124 @@ public class ProductDao {
 			e.printStackTrace();
 		}
 		return hmap;
+	}
+
+	//qna 상품 뮨의작성하기-제목,내용 저장!
+	public int insertQnA(Connection con, Board insertQnAboard) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertQnA");
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1,insertQnAboard.getBoardTitle());
+			pstmt.setString(2, insertQnAboard.getBoardContent());
+			pstmt.setString(3, insertQnAboard.getUserId());
+			
+			System.out.println("!!!"+insertQnAboard.getBoardTitle());
+			System.out.println("!!!"+insertQnAboard.getBoardContent());
+			System.out.println("!!!"+insertQnAboard.getUserId());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	//qna 상품 문의 - 사진 저장!
+	public int insertQnAAttachment(Connection con, ArrayList<Attachment> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertQnAAttachment");
+		
+		for(int i=0; i<fileList.size();i++) {
+			try {
+				pstmt=con.prepareStatement(query);
+				pstmt.setInt(1, fileList.get(i).getBoardId());
+				pstmt.setString(2, fileList.get(i).getOriginName());
+				pstmt.setString(3, fileList.get(i).getChangeName());
+				pstmt.setString(4, fileList.get(i).getFilePath());
+				System.out.println(fileList.size());
+				System.out.println(fileList.get(i).getOriginName());
+				System.out.println(fileList.get(i).getChangeName());
+				System.out.println(fileList.get(i).getFilePath());
+				result += pstmt.executeUpdate();
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+			
+		}
+		
+		
+		return result;
+	}
+
+	//QnAinsert한 boardId시퀀스의 현재 번호 가져옴
+	public int selectCurrval(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		int boardId = 0;
+		
+		String query = prop.getProperty("selectBIDCurrval");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				boardId = rset.getInt("CURRVAL");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(stmt);
+		}
+		return boardId;
+	}
+
+	public ArrayList<Attachment> selectfileList(Connection con, String pQnABoardId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Attachment> list = null;
+		Attachment at = null;
+		
+		String query = prop.getProperty("selectfileList");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, pQnABoardId);
+			rset=pstmt.executeQuery();
+			list = new ArrayList<Attachment>();
+			
+			while(rset.next()) {
+				at = new Attachment();
+				at.setFilePath(rset.getString("FILE_PATH"));
+				at.setChangeName(rset.getString("CHANGE_NAME"));
+				at.setOriginName(rset.getString("ORIGIN_NAME"));
+				
+				
+				list.add(at);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 
 

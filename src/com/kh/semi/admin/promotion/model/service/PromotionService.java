@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import com.kh.semi.admin.promotion.model.dao.PromotionDao;
 import com.kh.semi.admin.promotion.model.vo.SelectUserVo;
+import com.sun.javafx.collections.MappingChange.Map;
 
 import static com.kh.semi.customer.common.JDBCTemplate.*;
 
@@ -44,6 +45,37 @@ public class PromotionService {
 		list = new PromotionDao().selectAllUser(con, suv);
 		close(con);
 		return list;
+	}
+
+	public ArrayList<HashMap<String,Object>> productSelect() {
+		ArrayList<HashMap<String,Object>> productBigList = null;
+		Connection con = getConnection();
+		productBigList = new PromotionDao().productSelect(con);
+		close(con);
+		return productBigList;
+	}
+
+	public ArrayList<HashMap<String, Object>> productSelectResult(HashMap<String, String> selectMap) {
+		ArrayList<HashMap<String, Object>> selectList = null;
+		Connection con = getConnection();
+		selectList = new PromotionDao().productSelectResult(con, selectMap);
+		close(con);
+		return selectList;
+	}
+
+	public ArrayList<HashMap<String, Object>> selectMiddleCateg(String selectBigCateg) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> middleList = new PromotionDao().selectMiddleCateg(con, selectBigCateg);
+		close(con);
+		return middleList;
+	}
+
+	public ArrayList<HashMap<String, Object>> productSelectResult2(HashMap<String, String> selectMap) {
+		ArrayList<HashMap<String, Object>> selectList = null;
+		Connection con = getConnection();
+		selectList = new PromotionDao().productSelectResult2(con, selectMap);
+		close(con);
+		return selectList;
 	}
 	
 	

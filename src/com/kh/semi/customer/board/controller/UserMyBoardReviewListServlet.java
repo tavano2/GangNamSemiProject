@@ -2,6 +2,8 @@ package com.kh.semi.customer.board.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.kh.semi.customer.board.model.service.BoardService;
@@ -62,25 +65,62 @@ public class UserMyBoardReviewListServlet extends HttpServlet {
 		ArrayList<HashMap<String, Object>>	reviewList = new BoardService().selectEventPageList(currentPage,limit,pageType,userId);
 		
 		
+
+		
+		JSONObject PageInfoJson = null;
+		JSONArray reviewListJson = null;
 		JSONObject reviewHashMap = null;
 		
-		if(reviewList.size() > 0) {
-			reviewHashMap = new JSONObject();
-			reviewHashMap.put("reviewList", reviewList);
-			reviewHashMap.put("reviewPi", reviewPi);
+		JSONObject result = new JSONObject();
+		
+		//페이징 처리한 것 jsonObject 에 담기
+		if(reviewPi != null) {
+			PageInfoJson = new JSONObject();
+			PageInfoJson.put("currentPage", currentPage);
+			PageInfoJson.put("listCount", listCount);
+			PageInfoJson.put("limit", limit);
+			PageInfoJson.put("maxPage", maxPage);
+			PageInfoJson.put("startPage", startPage);
+			PageInfoJson.put("endPage", endPage);
 		}
 		
+		//내가 리스트로 담은 해쉬맵 제이슨으로 변환
+		if(reviewList != null) {
+			reviewListJson = new JSONArray();
+			for(HashMap<String, Object> hmaps : reviewList) {
+				reviewHashMap = new JSONObject();
+				reviewHashMap.put("board_id", hmaps.get("board_id"));
+				reviewHashMap.put("board_num", hmaps.get("board_num"));
+				reviewHashMap.put("board_title", URLEncoder.encode((String)hmaps.get("board_title"), "utf-8"));
+				reviewHashMap.put("board_content", URLEncoder.encode((String)hmaps.get("board_content"), "utf-8"));
+				reviewHashMap.put("user_id", URLEncoder.encode((String)hmaps.get("user_id"), "utf-8"));
+				reviewHashMap.put("board_date", URLEncoder.encode(((Date)hmaps.get("board_date")).toString(), "utf-8"));
+				reviewHashMap.put("board_count", hmaps.get("board_count"));
+				reviewHashMap.put("status", URLEncoder.encode((String)hmaps.get("status"), "utf-8"));
+				reviewListJson.add(reviewHashMap);
+			}
+			
+		}
+		
+		// 제이슨 처리한것들을 Object에 담기
+		if(PageInfoJson != null && reviewListJson != null) {
+			result.put("resultPi", PageInfoJson);
+			result.put("resultList", reviewListJson);
+		}
+
+
+		
+		
 		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
-		out.print(reviewHashMap.toJSONString());
+		out.print(result.toJSONString());
 		out.flush();
 		out.close();
-		
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		doGet(request, response);
 	}
 

@@ -30,6 +30,8 @@ public class AdminStatusChangeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] checkedLnum = request.getParameterValues("resultChk");
 		String changeState = request.getParameter("changeState");
+		String uri = request.getParameter("uri");
+		
 		
 		/*System.out.println(changeState);
 		
@@ -40,7 +42,7 @@ public class AdminStatusChangeServlet extends HttpServlet {
 		int result = new AdminDeliveryService().changeOrderStatus(checkedLnum, changeState);
 		
 		if(result > 0) {
-			response.sendRedirect("views/admin/delivery/adminOrderAllSearch.jsp");
+			response.sendRedirect(uri);
 		} else {
 			request.setAttribute("msg", "주문 상태 변경 실패!");
 			request.getRequestDispatcher("views/customer/common/errorPage.jsp").forward(request, response);;

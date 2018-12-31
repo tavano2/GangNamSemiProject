@@ -326,13 +326,13 @@ span {
 		});
 
 		$("#allSelect").change(function() {
-			alert("allSelect 체크");
+			
 		})
 		$("#productSelect").change(function() {
-			alert("productSelect 체크");
+			window.open("<%=request.getContextPath()%>/views/admin/promotion/ProductSelect.jsp", "제품선택", "width=1200, height=1200, left=100, top=50");
 		})
 		$("#categorySelect").change(function() {
-			alert("categorySelect 체크");
+			window.open("<%=request.getContextPath()%>/views/admin/promotion/CategorySelect.jsp", "제품선택", "width=1200, height=1200, left=100, top=50")
 		})
 	</script>
 </body>
