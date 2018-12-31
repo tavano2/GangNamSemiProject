@@ -1,5 +1,8 @@
+<%@page import="com.kh.semi.customer.product.model.vo.ReviewOption"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+   <% 
+   %>
 <!DOCTYPE html>
 <html>
 
@@ -56,7 +59,7 @@
             <p>키 : 157 cm</p>
             <p>몸무게 : 45~49 kg</p>
             <p>평소사이즈 : M</p>
-            <p>선택한 옵션 색상 : 핑크</p>
+  <%--           <p>선택한 옵션<%=reoption.getOptionName() %></p> --%>
          </div>
          <br> <br>
          <!-- <div id="insertSubTitle">

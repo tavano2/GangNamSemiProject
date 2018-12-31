@@ -16,6 +16,7 @@ import com.kh.semi.customer.product.model.dao.ProductDao;
 import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Option;
 import com.kh.semi.customer.product.model.vo.Product;
+import com.kh.semi.customer.product.model.vo.ReviewOption;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 
 public class ProductService {
@@ -272,6 +273,28 @@ public class ProductService {
 		close(con);
 		
 		return selectfileList;
+	}
+
+	//리뷰게시판 -상세조회
+	public HashMap<String, Object> selectDetailReview(String reviewRum) {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> hmap = new ProductDao().selectDetailReview(con,reviewRum);
+		
+		close(con);
+		
+		return hmap;
+	}
+
+	//리뷰게시판-리뷰작성-option가져오깅
+	public static ArrayList<ReviewOption> selectReviewOption(String productCode, String userId) {
+		Connection con = getConnection();
+		
+		
+		ArrayList<ReviewOption> reviewOption = new ProductDao().selectReviewOption(con,productCode,userId);
+		
+		close(con);
+		return reviewOption;
 	}
 	
 	

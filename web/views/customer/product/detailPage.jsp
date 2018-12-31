@@ -232,7 +232,7 @@
 							<br> 색상  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<div class="ui selection dropdown">
-								<!-- <input type="hidden" name="gender"> -->
+								 <input type="hidden" name="gender">  
 								<i class="dropdown icon"></i>
 								<div class="default text">[필수]옵션을 선택해 주세요</div>
 								<div class="menu">
@@ -277,6 +277,7 @@
 			<div class="contextTop">
 
 				상품상세 :  <%=pro.getProductDmemo() %> 
+				<input type="hidden" id="productCode" value=<%=pro.getProductCode() %>>
 			</div>
 
 
@@ -375,7 +376,7 @@
 			</div>
 			<div class="detailBottom1">
 				<h3>리뷰게시판</h3>
-				<table class="ui brown table">
+				<table class="ui brown table" id="ReviewlistArea">
 					<thead>
 						<tr>
 							<th>번호</th>
@@ -395,7 +396,9 @@
 								<button onclick="detailReview();">클릭쓰</button></td>
 							<td><%=ppp.getUserId()%></td>
 							<td>별다섯</td>
+						<input type="hidden" value="<%=ppp.getBoardId() %>">
 						</tr>
+						
 						<%
 							}
 						%>
@@ -405,7 +408,7 @@
 				</table>
 				<div align="right">
 					<button class="ui brown basic mini button"
-						onclick="location.href='/semi/views/customer/product/insertQnABoard.jsp';">작성하기</button>
+						onclick=ReviewClick();>작성하기</button>
 					&nbsp;
 				</div>
 
@@ -617,11 +620,30 @@
 				
 				//글번호와 함께
 				location.href="<%=request.getContextPath()%>/SelectOneQnA.no?num="+num+"&pQnABoardId="+pQnABoardId;
-				
+
+			});
+			
+			//리뷰 상세페이징
+			$("#ReviewlistArea td").click(function(){
+				var reviewRum =$(this).parent().find("input").val();
 				
 			
-			});
+				console.log(reviewRum);
+				
+				location.href="<%=request.getContextPath()%>/selectReview.pd?reviewRum="+reviewRum;
+			
+			
+			
+			})
 		});
+		
+		//review 작성하기
+		function ReviewClick(){
+<%-- 			location.href="<%=request.getContextPath()%>/selectReviewOption.pd?product=<%=pro.getProductCode()%>"; --%>	
+				location.href="<%=request.getContextPath()%>/selectReviewOption.pd?productCode="+'PD000003';
+		
+		}
+	
 	</script>
 	
 </body>
