@@ -52,7 +52,7 @@ public class AdminAddressInputServlet extends HttpServlet {
 						Integer.parseInt(postTime[1])
 				).getTimeInMillis());
 		
-		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(postDate));
+		//System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(postDate));
 		
 		OrderDeliveryInfo de = new OrderDeliveryInfo();
 		de.setDeliveryCo(deliveryCo);

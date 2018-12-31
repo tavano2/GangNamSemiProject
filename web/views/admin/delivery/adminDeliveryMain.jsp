@@ -1,13 +1,20 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="com.kh.semi.customer.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	Map<String, Map<String, Long>> main = (HashMap<String, Map<String, Long>>)request.getAttribute("main");
+	Map<String, Long> todaySales = main.get("todaySales");
+	Map<String, Long> monthSales = main.get("monthSales");
+	Map<String, Long> todayWork = main.get("todayWork");
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	
 %>
 
 <%!
-	public String comma(int price){
+	public String comma(Number price){
 		return new DecimalFormat("#,###").format(price);
 	}
 %>
@@ -109,18 +116,18 @@
                     <tbody>
                         <tr>
                             <td>총 주문 금액</td>
-                            <td class="center aligned"><input type="text" name="todayTotal" value="10000000" readonly></td>
-                            <td class="center aligned"><input type="text" name="monthTotal" value="999900000" readonly></td>
+                            <td class="center aligned"><input type="text" name="todayTotal" value="<%= comma(todaySales.get("totalPrice")) %>" readonly></td>
+                            <td class="center aligned"><input type="text" name="monthTotal" value="<%= comma(monthSales.get("totalPrice")) %>" readonly></td>
                         </tr>
                         <tr>
                             <td>총 실 결제 금액</td>
-                            <td class="center aligned"><input type="text" name="todayPayment" value="9900000" readonly></td>
-                            <td class="center aligned"><input type="text" name="monthPayment" value="1110000000" readonly></td>
+                            <td class="center aligned"><input type="text" name="todayPayment" value="<%= comma(todaySales.get("payment")) %>" readonly></td>
+                            <td class="center aligned"><input type="text" name="monthPayment" value="<%= comma(monthSales.get("payment")) %>" readonly></td>
                         </tr>
                         <tr>
                             <td>총 환불 금액</td>
-                            <td class="center aligned"><input type="text" name="todayRefund" value="10000" readonly></td>
-                            <td class="center aligned"><input type="text" name="monthRefund" value="100000" readonly></td>
+                            <td class="center aligned"><input type="text" name="todayRefund" value="<%= comma(todaySales.get("refund")) %>" readonly></td>
+                            <td class="center aligned"><input type="text" name="monthRefund" value="<%= comma(monthSales.get("refund")) %>" readonly></td>
                         </tr>
                     </tbody>
                 </table>
@@ -132,27 +139,27 @@
                     <tbody>
                         <tr>
                             <td>상품준비중</td>
-                            <td class="center aligned"><input type="text" name="productReady" value="20 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="productReady" value="<%= comma(todayWork.get("productReady")) %> 건" readonly></td>
                             <td>취소처리중</td>
-                            <td class="center aligned"><input type="text" name="cancel" value="1 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="cancel" value="<%= comma(todayWork.get("deliveryReady")) %> 건" readonly></td>
                         </tr>
                         <tr>
                         	<td>배송준비중</td>
-                            <td class="center aligned"><input type="text" name="deliveryReady" value="21 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="deliveryReady" value="<%= comma(todayWork.get("deliveryWating")) %> 건" readonly></td>
                         	<td>교환처리중</td>
-                            <td class="center aligned"><input type="text" name="exchange" value="1 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="exchange" value="<%= comma(todayWork.get("delivering")) %> 건" readonly></td>
                         </tr>
                         <tr>
                             <td>배송대기중</td>
-                            <td class="center aligned"><input type="text" name="deliveryWating" value="0 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="deliveryWating" value="<%= comma(todayWork.get("cancel")) %> 건" readonly></td>
                         	<td>반품처리중</td>
-                            <td class="center aligned"><input type="text" name="returnProd" value="2 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="returnProd" value="<%= comma(todayWork.get("exchange")) %> 건" readonly></td>
                         </tr>
                         <tr>
                         	<td>배송중</td>
-                            <td class="center aligned"><input type="text" name="delivering" value="50 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="delivering" value="<%= comma(todayWork.get("returnProd")) %> 건" readonly></td>
                         	<td>환불처리중</td>
-                            <td class="center aligned"><input type="text" name="refund" value="0 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="refund" value="<%= comma(todayWork.get("refund")) %> 건" readonly></td>
                         </tr>
                     </tbody>
                 </table>
@@ -178,13 +185,6 @@
 	<script src="/semi/js/admin/delivery/adminDelivery.js"></script>
 	<!-- common JS -->
 	<script src="/semi/js/common/common.js"></script>
-	
-	
-	<script>
-		
-		
-		
-	</script>
 
 	<%} else {
 		request.setAttribute("msg", "잘못된 페이지 접근!");
