@@ -58,7 +58,7 @@ public class InsertShppingCartServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
-		ArrayList<ShoppingCartPd> list = new ProductService().selectCartList(currentPage, limit);
+		ArrayList<ShoppingCartPd> list = new ProductService().insertCartList(currentPage, limit);
 		
 		String page = ""; // Void...
 		if(list != null) {
