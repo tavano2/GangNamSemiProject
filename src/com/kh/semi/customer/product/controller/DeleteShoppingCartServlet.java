@@ -20,7 +20,7 @@ import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 /**
  * Servlet implementation class ShoppingCartServlet
  */
-@WebServlet("/shoppingCart.pd1") // The @WebServletannotation is used to declare a servlet.
+@WebServlet("/shoppingCart.pd3") // The @WebServletannotation is used to declare a servlet.
 public class DeleteShoppingCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -59,7 +59,7 @@ public class DeleteShoppingCartServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
-		ArrayList<ShoppingCartPd> list = new ProductService().selectCartList(currentPage, limit);
+		ArrayList<ShoppingCartPd> list = new ProductService().deleteCartList(currentPage, limit);
 		
 		String page = ""; // Void...
 		if(list != null) {

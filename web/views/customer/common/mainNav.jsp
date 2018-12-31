@@ -93,7 +93,7 @@
                     LogOut
                 </a>
                 <%} %>
-                <a class="item" href="<%=request.getContextPath()%>/shoppingCart.pd">
+                <a class="item" href="<%=request.getContextPath()%>/shoppingCart.jsp"><!-- .jsp or .pd1 or 2 or 3 ? -->
                     Cart
                 </a>
                 <a class="item" href="<%=request.getContextPath()%>/selectMyPage.me">

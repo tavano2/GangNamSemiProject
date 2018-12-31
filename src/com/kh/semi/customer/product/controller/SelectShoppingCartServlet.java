@@ -20,7 +20,7 @@ import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 /**
  * Servlet implementation class ShoppingCartServlet
  */
-@WebServlet("/shoppingCart.pd3") // The @WebServletannotation is used to declare a servlet.
+@WebServlet("/shoppingCart.pd1") // The @WebServletannotation is used to declare a servlet.
 public class SelectShoppingCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -71,6 +71,10 @@ public class SelectShoppingCartServlet extends HttpServlet {
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
+		
+		
+		
+		
 	}
 
 	/**
