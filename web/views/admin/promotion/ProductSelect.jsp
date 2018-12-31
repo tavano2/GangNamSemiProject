@@ -14,6 +14,19 @@
 <!-- Admin Common CSS -->
 <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
 
+<!-- J-query CDN -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Semantic UI JS CDN -->
+<script
+	src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!-- jQuery Custom Scroller CDN -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<!-- Admin Common JS -->
+<script src="/semi/js/admin/common/adminMain.js"></script>
+
 
 <style>
 .first-col td:first-child {
@@ -67,10 +80,11 @@
 .tableBox {
 	display: inline-block;
 }
-.btnDiv{
-	width:250px;
+
+.btnDiv {
+	width: 250px;
 	margin-left: auto;
-	margin-right:auto;
+	margin-right: auto;
 }
 </style>
 </head>
@@ -99,62 +113,53 @@
 						<div class="seven wide column">
 							<div class="tableBox">
 								<table class="ui celled table" id="productSelectTable">
-									<tbody>
+									<tbody id = "resultTbody">
 										<tr>
 											<td class="productTd" colspan="3">상품검색</td>
 										</tr>
 										<tr>
 											<td width="100px;">카테고리</td>
 											<td colspan="2"><div class="ui selection dropdown">
-													<input type="hidden" name="gender" id="select"> <i
-														class="dropdown icon"></i>
+													<input type="hidden" name="gender" id="selectBigCateg">
+													<i class="dropdown icon"></i>
 													<div class="default text">대분류</div>
-													<div class="menu">
-														<div class="item" data-value="1">다이아</div>
-														<div class="item" data-value="0">플레티넘</div>
-													</div>
+													<div class="menu" id="bigCateg"></div>
 												</div>
 												<div class="ui selection dropdown">
-													<input type="hidden" name="gender" id="select"> <i
-														class="dropdown icon"></i>
+													<input type="hidden" name="gender" id="selectMiddleCateg">
+													<i class="dropdown icon"></i>
 													<div class="default text">중분류</div>
-													<div class="menu">
-														<div class="item" data-value="1">다이아</div>
-														<div class="item" data-value="0">플레티넘</div>
-													</div>
+													<div class="menu" id="middleCateg"></div>
 												</div> <br>
 												<div class="ui selection dropdown">
 													<input type="hidden" name="gender" id="select"> <i
 														class="dropdown icon"></i>
 													<div class="default text">소분류</div>
-													<div class="menu">
-														<div class="item" data-value="1">다이아</div>
-														<div class="item" data-value="0">플레티넘</div>
-													</div>
+													<div class="menu" id="smallCateg"></div>
 												</div>
 										</tr>
 										<tr>
 											<td>상품검색</td>
 											<td colspan="2">
 												<div class="ui selection dropdown">
-													<input type="hidden" name="gender" id="select"> <i
-														class="dropdown icon"></i>
-													<div class="default text">상품명</div>
+													<input type="hidden" name="gender" id="selectOption">
+													<i class="dropdown icon"></i>
+													<div class="default text">검색설정</div>
 													<div class="menu">
-														<div class="item" data-value="1">다이아</div>
-														<div class="item" data-value="0">플레티넘</div>
+														<div class="item">상품명</div>
+														<div class="item">상품코드</div>
 													</div>
 												</div>
 												<div class="ui input focus mileageInput">
-													<input type="text">
+													<input type="text" id="selectName">
 												</div>
 											</td>
 										</tr>
 										<tr>
 											<td colspan="3">
 												<div class="productSearch">
-													<button class="midium ui secondary button">검
-														&nbsp;색</button>
+													<button class="midium ui secondary button"
+														id="selectProductBtn">검 &nbsp;색</button>
 												</div>
 											</td>
 										</tr>
@@ -178,12 +183,7 @@
 											<td>상품코드</td>
 											<td>상품명</td>
 											<td>판매가</td>
-										</tr>
-										<tr>
-											<td>예시1</td>
-											<td>예시1</td>
-											<td>예시1</td>
-										</tr>
+										</tr>									
 										<tr>
 											<td colspan="3">페이지 넘김표시
 										</tr>
@@ -231,8 +231,7 @@
 								</table>
 							</div>
 						</div>
-						<br>
-						<br>
+						<br> <br>
 						<div class="btnDiv">
 							<button class="ui secondary button">저장하기</button>
 							<button class="ui button">닫기</button>
@@ -250,19 +249,6 @@
 		</div>
 
 
-		<!-- J-query CDN -->
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-			crossorigin="anonymous"></script>
-		<!-- Semantic UI JS CDN -->
-		<script
-			src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-		<!-- jQuery Custom Scroller CDN -->
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
-		<!-- Admin Common JS -->
-		<script src="/semi/js/admin/common/adminMain.js"></script>
 
 		<script>
 			$('#sticky1').sticky(); //네이바 상단 고정
@@ -275,6 +261,81 @@
 			$('.content-box .ui.menu .item').on('click', function() { //컨텐츠 박스의 메뉴 아이템 클릭시 active
 				$('.ui .item').removeClass('active');
 				$(this).addClass('active');
+			});
+
+			$(function() {
+				$.ajax({
+					url : "<%=request.getContextPath()%>/ProductSelect.pm",
+					type : "get",
+					success : function(data) {
+						console.log(data);
+						 for (var i = 0; i < data.length; i++) {
+							 if(data[i].CATEG_LEVEL=="0"){
+								var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
+								var $bigCateg = $("#bigCateg");
+								$bigCateg.append($div);
+							 } else if(data[i].CATEG_LEVEL=="1"){
+								 var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
+									var $middleCateg = $("#middleCateg");
+									$middleCateg.append($div);
+							 }else{
+								 var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
+									var $smallCateg = $("#smallCateg");
+									$smallCateg.append($div);
+							 }	 					
+						} 
+					},
+					error : function(data) {
+						console.log("실패")
+					}
+				});			
+			});
+			$("#selectProductBtn").click(function(){
+				$.ajax({
+					url : "<%=request.getContextPath()%>/ProductSelectResult.pm",
+					type : "get",
+					data:{selectBigCateg:$("#selectBigCateg").val(),selectMiddleCateg:$("#selectMiddleCateg").val(),selectOption:$("#selectOption").val(),selectValue:$("#selectName").val()},
+					success : function(data) {
+						var $tbody=$("#resultTbody");
+						$.each(data, function(index, value){
+							console.log(data);
+							$tbody.children().eq(6).empty();
+							var $tr = $("<tr>");
+							var $tdCode = $("<td>").text(decodeURIComponent(value.PRODUCT_CODE));
+							var $tdName = $("<td>").text(decodeURIComponent(value.PRODUCT_NAME));
+							var $tdPrice = $("<td>").text(decodeURIComponent(value.PRODUCT_PRICE));
+							
+							$tr.append($tdCode);
+							$tr.append($tdName);
+							$tr.append($tdPrice);
+							$tbody.children().eq(5).after($tr); 						
+						})
+					},
+					error : function(data) {
+						console.log("실패")
+					}
+				});			
+			});
+			$("#selectBigCateg").change(function(){
+				$.ajax({
+					url:"<%=request.getContextPath()%>/selectMiddleCateg.pm",
+					type:"get",
+					data:{selectBigCateg:$("#selectBigCateg").val()},
+					success:function(data){
+							var $middleCateg = $("#middleCateg");
+							$middleCateg.empty();
+							console.log(data);
+							for(var i =0 ; i<data.length;i++){
+								if(data[i].CATEG_LEVEL==1){
+									var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
+									$middleCateg.append($div);
+								}
+						}
+					},
+					error:function(data){
+						console.log("실패");
+					}
+				});
 			});
 		</script>
 </body>
