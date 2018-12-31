@@ -9,39 +9,55 @@ import static com.kh.semi.admin.common.JDBCTemplate.*;
 
 public class CateService {
 
-	public int insertCategory(Category cate) {
-		Connection con = getConnection();
-		CategoryDao cd = new CategoryDao();
-		int result = cd.insertCategory(con, cate);
-		
-		if(result > 0) {
-			commit(con);
-		} else {
-			rollback(con);
-		}
-		
-		return result;
-	}
+   public int insertCategory(Category cate) {
+      Connection con = getConnection();
+      CategoryDao cd = new CategoryDao();
+      int result = cd.insertCategory(con, cate);
+      
+      if(result > 0) {
+         commit(con);
+      } else {
+         rollback(con);
+      }
+      
+      return result;
+   }
 
-	public ArrayList<Category> selectCategory() {
-		Connection con = getConnection();
-		ArrayList<Category> list = new CategoryDao().selectCategory(con);
-		close(con);
-		
-		return list;
-	}
+   public ArrayList<Category> selectCategory() {
+      Connection con = getConnection();
+      ArrayList<Category> list = new CategoryDao().selectCategory(con);
+      close(con);
+      
+      return list;
+   }
 
-	public int deleteCate(Category cate) {
-		Connection con = getConnection();
-		CategoryDao cd = new CategoryDao();
-		int result = cd.deleteCate(con, cate);
-		
-		if(result > 0) {
-			commit(con);
-		}else {
-			rollback(con);
-		}
-		
-		return result;
-	}
+   public int deleteCate(Category cate) {
+      Connection con = getConnection();
+      CategoryDao cd = new CategoryDao();
+      int result = cd.deleteCate(con, cate);
+      
+      if(result > 0) {
+         commit(con);
+      }else {
+         rollback(con);
+      }
+      
+      return result;
+   }
+
+   public int updateCategory(Category cate) {
+      Connection con = getConnection();
+      CategoryDao cd = new CategoryDao();
+      int result = cd.updateCate(con,cate);
+      
+      if(result > 0) {
+         commit(con);
+      }else {
+         rollback(con);
+      }
+      
+      return result;
+   }
+
+   
 }

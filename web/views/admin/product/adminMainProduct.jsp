@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("list");
+   ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
@@ -35,8 +35,8 @@
       margin-left:90px;
    }
    .cateNames:hover{
-   		background:darkgray;
-   		cursor:pointer;
+         background:darkgray;
+         cursor:pointer;
    }
 </style>
 </head>
@@ -93,13 +93,14 @@
                   <div class="header1">
                   <span class="cateNames">
                   <%=c.getCateName() %>
-                  	<input type="hidden" value="<%=c.getCateCode() %>">
-                  	<input type="hidden" value="<%=c.getCateName() %>">
-                  	<input type="hidden" value="<%=c.getCateUrl() %>">
-                  	<input type="hidden" value="<%=c.getCateMemo() %>">
-                  	<input type="hidden" value="대분류">
-                  	<input type="hidden" value="<%=c.getCateRefCode() %>">
-                  	<input type="hidden" value="<%=c.getStatus() %>">
+                     <input type="hidden" value="<%=c.getCateCode() %>">
+                     <input type="hidden" value="<%=c.getCateName() %>">
+                     <input type="hidden" value="<%=c.getCateUrl() %>">
+                     <input type="hidden" value="<%=c.getCateMemo() %>">
+                     <input type="hidden" value="<%=c.getCateLevel()%>">
+                     <input type="hidden" value="<%=c.getCateRefCode() %>">
+                     <input type="hidden" value="<%=c.getStatus() %>">
+                     <input type="hidden" value="대분류">
                   </span>
                   </div>
                   <div class="list">
@@ -110,16 +111,17 @@
                       <i class="window restore icon"></i>
                       <div class="content">
                         <div class="header2">
-                        	<span class="cateNames">
-                        	<%=ca.getCateName() %>
-                        		<input type="hidden" value="<%=ca.getCateCode() %>">
-                        		<input type="hidden" value="<%=ca.getCateName() %>">
-                        		<input type="hidden" value="<%=ca.getCateUrl() %>">
-                        		<input type="hidden" value="<%=ca.getCateMemo() %>">
-                        		<input type="hidden" value="중분류">
-                        		<input type="hidden" value="<%=ca.getCateRefCode() %>">
-                        		<input type="hidden" value="<%=ca.getStatus() %>">
-                        	</span>
+                           <span class="cateNames">
+                           <%=ca.getCateName() %>
+                              <input type="hidden" value="<%=ca.getCateCode() %>">
+                              <input type="hidden" value="<%=ca.getCateName() %>">
+                              <input type="hidden" value="<%=ca.getCateUrl() %>">
+                              <input type="hidden" value="<%=ca.getCateMemo() %>">
+                              <input type="hidden" value="<%=ca.getCateLevel()%>">
+                              <input type="hidden" value="<%=ca.getCateRefCode() %>">
+                              <input type="hidden" value="<%=ca.getStatus() %>">
+                              <input type="hidden" value="중분류">
+                           </span>
                         </div>
                       </div>
                     </div>
@@ -144,7 +146,8 @@
          <br>          
            <hr>
               <h2 class="ui header">분류정보</h2>
-				<div class="divBox">
+              <form action="<%=request.getContextPath()%>/updateCate.product" method="post" id="updateForm">
+            <div class="divBox">
                 <table class="ui celled table first-col">
                    
                     <tr>
@@ -156,7 +159,7 @@
                     <tr>
                         <td>분류코드</td>
                         <td>
-                            <div class="ui input"><span id="cateCode">PC00000010</span></div>
+                            <div class="ui input"><input type="text" id="cateCodeInput" name="cateCode" value="PC00000010" readonly style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"></div>
                         </td>
                     </tr>
                     <tr>
@@ -235,9 +238,10 @@
                     </tr>
                 </table>
                 <div class="productAddBtn">
-               <button class="ui blue button" onclick="cateUpdate();">확인</button>
+               <button class="ui blue button" type="submit" onclick="cateUpdate();">확인</button>
             </div>
                 </div>
+                </form>
                 <hr>
            
            </div>
@@ -278,40 +282,48 @@
     <script>
     var level = "";
     var code = "";
+    var url = "";
+    var name = "";
+    var memo = "";
+    var rcode = "";
+    var status = "";
+    var cateKinds = "";
     
     $(function(){
-		$(".cateNames").click(function(){
-			$(this).parent().css({"background":"#e9e9e9"});
-			$(this).parent().css({"background":"darkgray"});
-		}).click(function(){
-			code = $(this).children("input:nth-of-type(1)").val();
-			name = $(this).children("input:nth-of-type(2)").val();
-			url = $(this).children("input:nth-of-type(3)").val();
-			memo = $(this).children("input:nth-of-type(4)").val();
-			level = $(this).children("input:nth-of-type(5)").val();
-			rcode = $(this).children("input:nth-of-type(6)").val();
-			status = $(this).children("input:nth-of-type(7)").val();
+      $(".cateNames").click(function(){
+         $(".cateNames").parent().css({"background":"#e9e9e9"});
+         $(this).parent().css({"background":"darkgray"});
+         
+         code = $(this).children("input:nth-of-type(1)").val();
+         name = $(this).children("input:nth-of-type(2)").val();
+         url = $(this).children("input:nth-of-type(3)").val();
+         memo = $(this).children("input:nth-of-type(4)").val();
+         level = $(this).children("input:nth-of-type(5)").val();
+         rcode = $(this).children("input:nth-of-type(6)").val();
+         status = $(this).children("input:nth-of-type(7)").val();
+         cateKinds = $(this).children("input:nth-of-type(8)").val();
 
-			$("#currentCategory").html(level);
-			$("input[name=cateCode]").val(code);
-			$("input[name=cateUrl]").val(url);
-			$("input[name=cateName]").val(name);
-			$("input[name=cateMemo]").val(memo);
-		});
-	});
-	
-	function cateUpdate(){
-		location.href="<%=request.getContextPath()%>/updateCate.product";
-	}
-	
-	function cateAdd(){
-		location.href="<%=request.getContextPath()%>/insertCate.product?level="+level+"&code="+code;
-	}
-	
-	function cateDelete(){
-		location.href="<%=request.getContextPath()%>/deleteCate.product?code="+code;
-	}
-	
+         $("#currentCategory").html(cateKinds);
+         $("input[name=cateCode]").val(code);
+         $("input[name=cateUrl]").val(url);
+         $("input[name=cateName]").val(name);
+         $("input[name=cateMemo]").val(memo);
+      });
+   });
+      
+   
+   function cateUpdate(){
+      $("#updateForm").submit();
+   }
+   
+   function cateAdd(){
+      location.href="<%=request.getContextPath()%>/insertCate.product?level="+level+"&code="+code;
+   }
+   
+   function cateDelete(){
+      location.href="<%=request.getContextPath()%>/deleteCate.product?code="+code;
+   }
+   
     </script>
     
     
