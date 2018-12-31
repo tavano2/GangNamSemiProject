@@ -16,6 +16,9 @@
 <!-- Common css -->
 <link href="/semi/css/customer/common/main.css" rel="stylesheet">
 
+<!-- 다음 주소 api -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+
 </head>
 
 <body>
@@ -182,7 +185,7 @@
 				<td>
 					<div class="ui input">
 						<input type="text">
-						<button class="ui brown basic mini button">검색하기</button>
+						<button class="ui brown basic mini button" onclick="location.href='' ">검색하기</button>
 					</div> <br>
 					<div class="ui input">
 						<input type="text" style="width: 400px;">
