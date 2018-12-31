@@ -113,7 +113,7 @@
 						<div class="seven wide column">
 							<div class="tableBox">
 								<table class="ui celled table" id="productSelectTable">
-									<tbody id = "resultTbody">
+									<tbody id="resultTbody">
 										<tr>
 											<td class="productTd" colspan="3">상품검색</td>
 										</tr>
@@ -179,18 +179,20 @@
 												</div>
 											</td>
 										</tr>
-										<tr>
+										<tr align="center">
 											<td>상품코드</td>
 											<td>상품명</td>
 											<td>판매가</td>
-										</tr>									
-										<tr>
-											<td colspan="3">페이지 넘김표시
+										</tr>
+										</tbody>
+									<tfoot id="tfootResult">
+										<tr align="center">									
+											<td  colspan="3">상품을 검색해주세요</td>										
 										</tr>
 										<tr>
-											<td colspan="3"></td>
+										<td colspan="3"></td>
 										</tr>
-									</tbody>
+									</tfoot>
 								</table>
 							</div>
 						</div>
@@ -291,25 +293,65 @@
 				});			
 			});
 			$("#selectProductBtn").click(function(){
+				var $tfoot=$("#tfootResult");
 				$.ajax({
 					url : "<%=request.getContextPath()%>/ProductSelectResult.pm",
 					type : "get",
 					data:{selectBigCateg:$("#selectBigCateg").val(),selectMiddleCateg:$("#selectMiddleCateg").val(),selectOption:$("#selectOption").val(),selectValue:$("#selectName").val()},
-					success : function(data) {
-						var $tbody=$("#resultTbody");
-						$.each(data, function(index, value){
-							console.log(data);
-							$tbody.children().eq(6).empty();
+					success : function(data) {							
+						console.log(data);
+						$tfoot.empty();
+						for(var i = 0; i < data["selectList"].length; i++){
 							var $tr = $("<tr>");
-							var $tdCode = $("<td>").text(decodeURIComponent(value.PRODUCT_CODE));
-							var $tdName = $("<td>").text(decodeURIComponent(value.PRODUCT_NAME));
-							var $tdPrice = $("<td>").text(decodeURIComponent(value.PRODUCT_PRICE));
+							var $tdCode = $("<td>").text(decodeURIComponent(data["selectList"][i].PRODUCT_CODE));
+							var $tdName = $("<td>").text(decodeURIComponent(data["selectList"][i].PRODUCT_NAME));
+							var $tdPrice = $("<td>").text(decodeURIComponent(data["selectList"][i].PRODUCT_PRICE));
 							
 							$tr.append($tdCode);
 							$tr.append($tdName);
 							$tr.append($tdPrice);
-							$tbody.children().eq(5).after($tr); 						
-						})
+							$tfoot.append($tr); 						
+						}
+						var $pageDiv=$("<div>").addClass("ui pagination menu");
+						var $aDl = $("<a>").addClass("icon item");
+						var $iDl = $("<i>").addClass("angel double left icon");
+						
+						
+						
+						
+						if(data["pi"].currentPage<=1){
+							var $aL = $("<a>").addClass("icon item");
+							var $iL = $("<i>").addClass("angel left icon");						
+							$aL.append(#iL);
+						}else{
+							
+						}
+						
+						for(var p = data["pi"].startPage; p <= data["pi"].endPage; p++){
+							if(){
+								
+							}else{
+								
+							}
+						}
+						if(data["pi"].currentPage>=data["pi"].maxPage){
+							
+						}else{
+							
+						}
+						
+						
+						
+						
+						var $pageTd=$("<td colspan='3'>").text(" ");
+						var $pageTr=$("<tr>");						
+
+						$tr.append($pageTd);
+						$tfoot.append($pageTr);
+						
+						
+						
+						
 					},
 					error : function(data) {
 						console.log("실패")
@@ -319,20 +361,20 @@
 			$("#selectBigCateg").change(function(){
 				$.ajax({
 					url:"<%=request.getContextPath()%>/selectMiddleCateg.pm",
-					type:"get",
-					data:{selectBigCateg:$("#selectBigCateg").val()},
-					success:function(data){
-							var $middleCateg = $("#middleCateg");
-							$middleCateg.empty();
-							console.log(data);
-							for(var i =0 ; i<data.length;i++){
-								if(data[i].CATEG_LEVEL==1){
-									var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
-									$middleCateg.append($div);
-								}
+					type : "get",
+					data : {selectBigCateg : $("#selectBigCateg").val()},
+					success : function(data) {
+						var $middleCateg = $("#middleCateg");
+						$middleCateg.empty();
+						console.log(data);
+						for (var i = 0; i < data.length; i++) {
+							if (data[i].CATEG_LEVEL == 1) {
+								var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
+								$middleCateg.append($div);
+							}
 						}
 					},
-					error:function(data){
+					error : function(data) {
 						console.log("실패");
 					}
 				});
