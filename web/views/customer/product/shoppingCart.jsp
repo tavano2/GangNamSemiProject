@@ -29,7 +29,7 @@
 		<br> <br>
 
 		<table>
-			<div align="left"> 상품 갯수 : (0)</div>
+			<div align="left"> 상품 갯수 </div><!--  : (0)  -->
 		<p class="ui single line table"></p>
 		<br/>
 		<br/>
