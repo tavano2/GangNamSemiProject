@@ -1,6 +1,17 @@
+<%@page import="com.kh.semi.customer.board.model.vo.*"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%
+	HashMap<String, Object> list = (HashMap<String, Object>)request.getAttribute("list");
+	ArrayList<Board> bList = (ArrayList<Board>)list.get("bList");
+	HashMap<String, Attachment> atMap = (HashMap<String, Attachment>)list.get("atMap");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String categ = (String)request.getAttribute("categ");
+	String search = (String)request.getAttribute("search");
+	String cateName = "";
+%>
 <!DOCTYPE html>
 <html>
 
@@ -34,10 +45,17 @@
 		<div align="center" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">자주묻는질문</div>
 		<br> <br>
 		<hr>
-		<button class="ui grey basic button">결제</button>
-		<button class="ui grey basic button">환불</button>
-		<button class="ui grey basic button">배송</button>
-		<table class="ui single line table">
+		<button class="ui grey basic button" onclick="cateSel('');">전체</button>
+		<button class="ui grey basic button" onclick="cateSel(1);">주문관련</button>
+		<button class="ui grey basic button" onclick="cateSel(2);">결제관련</button>
+		<button class="ui grey basic button" onclick="cateSel(3);">배송관련</button>
+		<button class="ui grey basic button" onclick="cateSel(4);">교환/환불/반품관련</button>
+		<button class="ui grey basic button" onclick="cateSel(5);">적립금관련</button>
+		<button class="ui grey basic button" onclick="cateSel(6);">품절관련</button>
+		<button class="ui grey basic button" onclick="cateSel(7);">쿠폰관련</button>
+		<button class="ui grey basic button" onclick="cateSel(8);">기타</button>
+		
+		<table class="ui single line table accordion">
 			<thead>
 				<tr>
 					<th>번호</th>
@@ -47,34 +65,65 @@
 			</thead>
 			
 			<tbody>
+				<%for(Board b : bList){ %>
 				<tr>
-					<td>1</td>
-					<td>환불</td>
-					<td>환불하면 돈 돌려주나요?</td>
+					<td><%= b.getBoardNum() %></td>
+					<td>
+					<% switch(b.getBoardCate()) {
+					case "1": cateName="주문관련"; break;
+					case "2": cateName="결제관련"; break;
+					case "3": cateName="배송관련"; break;
+					case "4": cateName="교환/환불/반품관련"; break;
+					case "5": cateName="적립금관련"; break;
+					case "6": cateName="품절관련"; break;
+					case "7": cateName="쿠폰관련"; break;
+					case "8": cateName="기타"; break;
+					}%>
+					<%= cateName %>
+					</td>
+					<td>
+						<div class="title"><%= b.getBoardTitle() %></div>
+						<div class="content">
+							<div class="ui segment">
+								<p><%= b.getBoardContent() %></p>
+							</div>
+						</div>
+					</td>
 				</tr>
-				<tr>
-					<td>2</td>
-					<td>결제</td>
-					<td>왜 무통장입금은 안 되는거죠?</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td>배송</td>
-					<td>캄보디아에도 배송이 가능한가요?</td>
-				</tr>
+				<%} %>
 			</tbody>
 			
 			<tfoot>
-				<th colspan="3">
-					<!--  작성하기는 관리자만 가능하다.  -->
-					<div align="right">&nbsp;
-						<%if(loginUser != null && loginUser.getUserId().equals("admin")){ %>
-						<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/board/FAQinsert.jsp';">작성하기</button>
-						<%} %>
-					</div>
+				<th colspan="3" class="center aligned">
+					<div class="ui pagination menu" id="paging">
+			    		<a class="icon item"><i class="angle double left icon"></i></a>
+				        <a class="icon item"><i class="angle left icon"></i></a>
+				        <a class="item active">1</a>
+				        <a class="icon item"><i class="angle right icon"></i></a>
+				        <a class="icon item"><i class="angle double right icon"></i></a>
+			      	</div>
 				</th>
 			</tfoot>
 		</table>
+		
+		<div class="ui grid">
+			<div class="eight wide column left aligned">
+				<%if(loginUser != null && loginUser.getUserId().equals("admin")){ %>
+				<button class="ui button" onclick="location.href='/semi/views/customer/board/FAQinsert.jsp';">작성하기</button>
+				<%} %>
+			</div>
+
+			<div class="eight wide column right aligned">
+				<form method="post" name="searchFrom">
+					<input type="hidden" name="categ" id="categ" value="<%= categ %>">
+					<div class="ui action input">
+						<input type="text" placeholder="Search..." name="search" value="<%= search %>">
+						<button class="ui button">Search</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		
 		
 		
 		<hr>
@@ -90,7 +139,7 @@
 
 
 	<!-- J-query CDN -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- Semantic UI JS CDN -->
 	<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 	<!-- jQuery Custom Scroller CDN -->
@@ -98,6 +147,16 @@
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
+
+	<script>
+		function cateSel(num){
+			$("#categ").val(num);
+			searchFrom.action = "<%= request.getContextPath()%>/selectFAQList.bo";
+			searchFrom.submit();
+		}
+		
+		$('.ui.accordion').accordion();
+	</script>
 
 </body>
 

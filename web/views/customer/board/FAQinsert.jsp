@@ -58,7 +58,7 @@
 		</div>
 		<br>
 		
-		<form action="<%= request.getContextPath() %>/insertFAQ.bo" method="post" encType="multipart/form-data">
+		<form action="" method="post" encType="multipart/form-data" name="insertFAQ">
 		<table class="ui celled table first-col">
 
 		<tbody>
@@ -66,7 +66,7 @@
 				<td>제목</td>
 				<td>
 					<div class="ui selection dropdown">
-                        <input type="hidden" name="categ">
+                        <input type="hidden" name="categ" id="categ">
                         <i class="dropdown icon"></i>
                         <div class="default text">검색목록선택</div>
                         <div class="menu">
@@ -77,6 +77,7 @@
                             <div class="item" data-value="5">적립금관련</div>
                             <div class="item" data-value="6">품절관련</div>
                             <div class="item" data-value="7">쿠폰관련</div>
+                            <div class="item" data-value="8">기타</div>
                         </div>
                     </div>
 					<div class="ui input">
@@ -105,7 +106,7 @@
 				<td>
 					<div class="ui form">
 						<div class="field">
-							<textarea name="content"></textarea>
+							<textarea name="content" id="content"></textarea>
 						</div>
 
 					</div>
@@ -122,7 +123,7 @@
 		</table>
 
 		<div align="center">
-			<button type="submit" class="ui secondary button">등록하기</button>
+			<button onclick="insertBtn(); return false;" class="ui secondary button">등록하기</button>
 			<button type="reset" class="ui button">취소하기</button>
 
 		</div>
@@ -156,6 +157,23 @@
 	<script>
 		//컨텐츠 박스의 드롭다운 실행
 		$('.content .ui.dropdown').dropdown();
+		
+		function insertBtn(){
+			if($("#categ").val() != "" && $("#title").val() != "" && $("#content").val() != ""){
+				insertFAQ.action = "<%= request.getContextPath() %>/insertFAQ.bo";
+				insertFAQ.submit();
+			} else {
+				if($("#categ").val() == "") {
+					alert("카테고리를 선택하세요.");
+				} else if($("#title").val() == ""){
+					alert("제목을 입력하세요.");
+				} else if($("#content").val() == "") {
+					alert("내용을 입력하세요.");
+				}
+			}
+			
+		}
+		
 	</script>
 
 	<%} else{ 

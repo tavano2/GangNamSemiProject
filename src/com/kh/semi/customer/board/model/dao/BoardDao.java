@@ -540,5 +540,192 @@ public class BoardDao {
 	}
 
 
+	//BoardId Nextval 가져오기
+	public int selectNextval(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int bid = 0;
+		
+		String query = prop.getProperty("selectNextval");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			if (rset.next()) {
+				bid = rset.getInt("NEXTVAL");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+			close(rset);
+		}
+		
+		return bid;
+	}
+
+	//FAQ board에 넣기
+	public int insertFAQContent(Connection con, int bid, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertFAQBoard");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, bid);
+			pstmt.setInt(2, b.getBoardType());
+			pstmt.setString(3, b.getBoardCate());
+			pstmt.setString(4, b.getBoardTitle());
+			pstmt.setString(5, b.getBoardContent());
+			pstmt.setString(6, b.getUserId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	//FAQ 첨부파일 고고혓
+	public int insertFAQAttachment(Connection con, Attachment at) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertFAQAttachment");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, at.getBoardId());
+			pstmt.setString(2, at.getOriginName());
+			pstmt.setString(3, at.getChangeName());
+			pstmt.setString(4, at.getFilePath());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	//FAQ 리스트 개수
+	public int getFAQListCount(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		
+		String query = prop.getProperty("FAQListCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, 1);
+			
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+
+	//FAQ 리스트
+	public ArrayList<Board> selectListFAQ(Connection con, int currentPage, int limit, String categ, String search) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> list = null;
+		
+		String query = prop.getProperty("selectListFAQ");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			pstmt.setInt(1, 1);
+			pstmt.setString(2, categ);
+			pstmt.setString(3, search);
+			pstmt.setString(4, search);
+			pstmt.setInt(5, startRow);
+			pstmt.setInt(6, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Board>();
+			
+			int num = startRow;
+			while(rset.next()) {
+				Board b = new Board();
+				
+				b.setBoardId(rset.getInt("BOARD_ID"));
+				b.setBoardCate(rset.getString("BOARD_CATE"));
+				b.setBoardTitle(rset.getString("BOARD_TITLE"));
+				b.setBoardContent(rset.getString("BOARD_CONTENT"));
+				b.setBoardNum(num++);
+				
+				list.add(b);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	//FAQ 첨부파일
+	public ArrayList<Attachment> selectListFAQAt(Connection con, int boardId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Attachment> list = null;
+		
+		String query = prop.getProperty("selectListFAQAt");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, boardId);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Attachment>();
+			
+			while(rset.next()) {
+				Attachment at = new Attachment();
+				
+				at.setFileId(rset.getString("FILE_ID"));
+				at.setBoardId(rset.getInt("BOARD_ID"));
+				at.setOriginName(rset.getString("ORIGIN_NAME"));
+				at.setChangeName(rset.getString("CHANGE_NAME"));
+				at.setFilePath(rset.getString("FILE_PATH"));
+				at.setFileLevel(rset.getInt("FILE_LEVEL"));
+				at.setDownloadCount(rset.getInt("DOWNLOAD_COUNT"));
+				
+				list.add(at);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
 
 }

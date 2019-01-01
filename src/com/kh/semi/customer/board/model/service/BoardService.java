@@ -1,6 +1,5 @@
 package com.kh.semi.customer.board.model.service;
 
-
 import static com.kh.semi.customer.common.JDBCTemplate.*;
 
 import java.sql.Connection;
@@ -10,9 +9,6 @@ import java.util.HashMap;
 import com.kh.semi.customer.board.model.dao.BoardDao;
 import com.kh.semi.customer.board.model.vo.Attachment;
 import com.kh.semi.customer.board.model.vo.Board;
-
-import oracle.net.aso.l;
-import oracle.net.aso.s;
 public class BoardService {
 
 	public BoardService() {
@@ -204,7 +200,72 @@ public class BoardService {
 	}
 
 
+	
+	
+	//FAQ 작성하기
+	public int insertFAQ(Board b, ArrayList<Attachment> fileList) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		int bid = new BoardDao().selectNextval(con);
+		
+		int result1 = new BoardDao().insertFAQContent(con, bid, b);
+		
+		if(result1 > 0) {
+			for(int i=0; i<fileList.size(); i++) {
+				fileList.get(i).setBoardId(bid);
+			}
+		}
+		
+		int result2 = 0;
+		
+		for (Attachment at : fileList) {
+			result2 += new BoardDao().insertFAQAttachment(con, at);
+		}
+		
+		if(result1 > 0 && result2 == fileList.size()) {
+			commit(con);
+			result = 1;
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
 
+	//FAQ 목록 총 개수
+	public int getFAQListCount() {
+		Connection con = getConnection();
+		int listCount = new BoardDao().getFAQListCount(con);
+		
+		close(con);
+		return listCount;
+	}
+
+	//FAQ 목록 불러오기
+	public HashMap<String, Object> selectListFAQ(int currentPage, int limit, String categ, String search) {
+		Connection con = getConnection();
+		BoardDao bDao = new BoardDao();
+		HashMap<String, Object> list = new HashMap<String, Object>();
+		
+		ArrayList<Board> bList = bDao.selectListFAQ(con, currentPage, limit, categ, search);
+		
+		HashMap<String, ArrayList<Attachment>> atMap = new HashMap<String, ArrayList<Attachment>>();
+
+		for(Board b : bList) {
+			ArrayList<Attachment> atList = bDao.selectListFAQAt(con, b.getBoardId());
+			if (!atList.isEmpty()) {
+				atMap.put(String.valueOf(b.getBoardId()), atList);
+			}
+		}
+		
+		list.put("bList", bList);
+		list.put("atMap", atMap);
+		
+		close(con);
+		return list;
+	}
 
 
 
