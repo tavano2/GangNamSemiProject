@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
+import static com.kh.semi.customer.common.JDBCTemplate.*;
 
 public class OrderDao {
 	
@@ -47,12 +48,43 @@ public class OrderDao {
 					hmap.put("option_num", rset.getString("OPTION_NUM"));
 					hmap.put("amount", rset.getInt("AMOUNT"));
 					hmap.put("option_name",rset.getString("OPTION_NAME"));
+					hmap.put("product_price", rset.getInt("PRODUCT_PRICE"));
+					hmap.put("change_name", rset.getString("CHANGE_NAME"));
+					hmap.put("product_name", rset.getString("PRODUCT_NAME"));
 					list.add(hmap);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
 		}
 		return list;
+	}
+
+	public HashMap<String, Object> selectPointNDelivery(Connection con, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		String qurey = prop.getProperty("selectPointNDelivery");
+		try {
+			pstmt = con.prepareStatement(qurey);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				hmap = new HashMap<String,Object>();
+				hmap.put("discount_rate", rset.getDouble("DICOUNT_RATE"));
+				hmap.put("point_rate", rset.getDouble("POINT_RATE"));
+				hmap.put("free_delevery", rset.getString("FREE_DELEVERY"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return hmap;
 	}
 }
