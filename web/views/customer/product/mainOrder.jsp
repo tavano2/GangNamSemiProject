@@ -51,7 +51,6 @@
 					<th>판매가</th>
 					<th>수량</th>
 					<th>적립금</th>
-					<th>주문상태</th>
 					<th>배송비</th>
 					<th>합계</th>
 				</tr>
@@ -63,7 +62,6 @@
 					<td>jhlilk22@yahoo.com</td>
 					<td>No</td>
 					<td>35000원</td>
-					<td>배송중</td>
 					<td></td>
 					<td></td>
 				</tr>
