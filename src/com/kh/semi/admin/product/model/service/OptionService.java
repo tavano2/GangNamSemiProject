@@ -40,4 +40,12 @@ public class OptionService {
 		return result;
 	}
 
+	public ArrayList<Option> selectOptionAll() {
+		Connection con = getConnection();
+		ArrayList<Option> list = new OptionDao().selectOptionAll(con);
+		close(con);
+		
+		return list;
+	}
+
 }

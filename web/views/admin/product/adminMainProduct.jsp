@@ -58,31 +58,7 @@
          <div style="overflow:scroll; width:350px; height:400px;" class="overInnerDiv">
           <div class="ui list" id="divList">
             
-          <%-- <% for (Category c : list){ %>
-              <% if(c.getCateLevel() == 0) {%>
-              <div class="item">
-                <i class="window maximize icon"></i>
-                <div class="content">
-                  <div class="header1"><span class="cateNames"><input type="hidden" class="ccode" value="<%=c.getCateCode() %>"><input type="hidden" class="clevel" value="<%=c.getCateLevel() %>"><%=c.getCateName() %></span></div>
-                  <div class="list">
-                  <% }else{ %>
-                  <% for(Category ca : list){ %>
-                  <% if(c.getCateRefCode().equals(ca.getCateCode())){ %>
-                    <div class="item">
-                      <i class="window restore icon"></i>
-                      <div class="content">
-                        <div class="header2"><span class="cateNames"><input type="hidden" class="ccode" value="<%=c.getCateCode() %>"><input type="hidden" class="clevel" value="<%=c.getCateLevel() %>"><%=c.getCateName() %></span></div>
-                      </div>
-                    </div>
-                    <% } %>
-                    <% } %>
-                    <% } %>
-                    <% if(c.getCateLevel() == 0) {%>
-                  </div>
-                </div>
-              </div>
-              <% } %>
-              <% } %> --%>
+         
               
               
               <% for (Category c : list){ %>
