@@ -812,11 +812,11 @@ public class ProductDao {
 			pstmt.setString(1,insertQnAboard.getBoardTitle());
 			pstmt.setString(2, insertQnAboard.getBoardContent());
 			pstmt.setString(3, insertQnAboard.getUserId());
-			
+	/*		
 			System.out.println("!!!"+insertQnAboard.getBoardTitle());
 			System.out.println("!!!"+insertQnAboard.getBoardContent());
 			System.out.println("!!!"+insertQnAboard.getUserId());
-			
+			*/
 			result = pstmt.executeUpdate();
 			
 			
@@ -959,6 +959,7 @@ public class ProductDao {
 			}
 			
 			System.out.println("dd"+list);
+
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -970,6 +971,92 @@ public class ProductDao {
 
 		return list;
 	}
+
+	//리뷰게시판-제목내용 insert!
+	public int insertReviewTitleContent(Connection con, String title, String content, String boardId,String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertReviewTitleContent");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setString(3, userId);
+			pstmt.setInt(4, Integer.parseInt(boardId));
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+
+	}
+	//리뷰게시판-사진 insert!
+	public int insertReviewAttachment(Connection con, ArrayList<Attachment> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertReviewAttachment");
+		
+		try {
+			//게시물아이디,상품코드,원본이름,변환이름,위치
+			for(int i = 0; i<fileList.size();i++) {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, fileList.get(i).getBoardId());
+			pstmt.setString(2, fileList.get(i).getProductCode());
+			pstmt.setString(3, fileList.get(i).getOriginName());
+			pstmt.setString(4, fileList.get(i).getChangeName());
+			pstmt.setString(5, fileList.get(i).getFilePath());
+			
+			System.out.println("ddd"+fileList.get(i).getBoardId()+fileList.get(i).getProductCode()+
+					fileList.get(i).getOriginName()+ fileList.get(i).getFilePath());
+			
+			result +=pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	//리뷰게시판-옵션쓰 insert!
+	public int insertReviewT(Connection con, double youWeight, String youSize, double youHeight,
+			String[] selectOptionArray, String boardId, String userProductNum,String userId,String productCode) {
+
+		//review테이블데이터 추가(게시물 아이디,주문내역번호,옵션번호,키,몸무게,사이즈)
+		PreparedStatement pstmt = null;
+		int result =0;
+		
+		String query = prop.getProperty("insertReviewT");
+		
+		try {
+			for(int i=0; i<selectOptionArray.length;i++) {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, Integer.parseInt(boardId));
+				pstmt.setString(2, productCode);
+				pstmt.setString(3, selectOptionArray[i]);
+				pstmt.setDouble(4,youHeight);
+				pstmt.setDouble(5, youWeight);
+				pstmt.setString(6, youSize);
+				
+				result +=pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(con);
+		}
+
+		return result;
+	}
+
 
 
 

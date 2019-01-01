@@ -314,7 +314,43 @@ public class ProductService {
 		close(con);
 		return reviewOption;
 	}
-	
+
+	//상품 리뷰 작성하기 insert
+	public int InsertReview(ArrayList<Attachment> fileList, String title, String content, double youWeight,
+			String youSize, double youHeight, String[] selectOptionArray, String boardId, String userProductNum,String userId,String productCode) {
+
+		Connection con = getConnection();
+		int result = 0;
+		
+		//1.board넣깅(제목,내용)
+		int result1 = new ProductDao().insertReviewTitleContent(con,title,content,boardId,userId);
+		
+		if(result1>0) {
+			int bid= new ProductDao().selectCurrval(con);
+			
+			for(int i=0; i<fileList.size();i++) {
+				fileList.get(i).setBoardId(bid);
+			}
+		}
+		
+		//2.attachment(사진3개)
+		int result2 = new ProductDao().insertReviewAttachment(con,fileList);
+		
+		//3.review테이블(키,몸무게,평소사이즈,옵션번호,파일번호)
+		int result3 = new ProductDao().insertReviewT(con,youWeight,youSize,youHeight,selectOptionArray,boardId,userProductNum,userId,productCode);
+		
+		if(result1>0 && result2>0 && result3>0) {
+			commit(con);
+			result=1;
+		}
+		else rollback(con);
+		
+		close(con);
+		
+		return result;
+	}
+
+
 
 }
 
