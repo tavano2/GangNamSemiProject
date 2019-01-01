@@ -23,6 +23,10 @@
    .optionAdd{
       text-align:center;
    }
+   .checkCss{
+   	margin-left:10px;
+   	margin-top:10px;
+   }
 </style>
 </head>
 
@@ -64,12 +68,14 @@
                     <thead>
                         <tr>
                             <th colspan="3">
-                                <button class="ui white button">선택항목 삭제</button>
+                            <form action="<%=request.getContextPath()%>/deleteOption.product" method="post" id="deleteForm">
+                                <button class="ui white button" id="deleteOption">선택항목 삭제</button>
+                             </form>
                             </th>
                         </tr>
                         <tr>
                             <th><div class="ui fitted checkbox">
-                                    <input type="checkbox" name="example"><label></label>
+                                    <input type="checkbox" name="allCheck"><label></label>
                                 </div></th>
                             <th>옵션코드</th>
                             <th>옵션명</th>
@@ -140,7 +146,7 @@
 		    				var $selectBody = $("#selectBody");
 		    				for(var key in data){
 		    					var $tr = $("<tr class='selectTr'>");
-		    					var $checkTd = $("<div class='ui fitted checkbox'><input type='checkbox' name='example''><label></label></div>");
+		    					var $checkTd = $("<div class='checkCss'><div class='ui fitted checkbox'><input type='checkbox' name='optionCheck'><label></label></div></div>");
 		    					var $numTd = $("<td>").text(data[key].optionNum);
 		    					var $nameTd = $("<td>").text(data[key].optionName);
 		    					
@@ -151,12 +157,17 @@
 		    				}
 		    			},
 		    			error:function(){
-		    				console.log(실패);
+		    				console.log("실패");
 		    			}
 		    		});
 		    	});
 		  });
     
+		    $(function(){
+			    $("input:checkbox[name='allCheck']").is(":checked")(function(){
+			    	$("input:checkbox[name='optionCheck']").is(":checked");
+			    });
+		    });
     </script>
     
 </body>

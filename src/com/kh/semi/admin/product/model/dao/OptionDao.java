@@ -82,4 +82,23 @@ public class OptionDao {
 		return list;
 	}
 
+	public int insertOption(Connection con, Option op) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertOption");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, op.getOptionName());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }
