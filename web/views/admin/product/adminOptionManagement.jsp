@@ -82,15 +82,7 @@
                         </tr>
                     </thead>
                     <tbody id="selectBody">
-                        <!-- <tr class="selectTr">
-                            <td>
-                                <div class="ui fitted checkbox">
-                                    <input type="checkbox" name="example"><label></label>
-                                </div>
-                            </td>
-                            <td></td>
-                            <td></td>
-                        </tr> -->
+                        
                     </tbody>
                 </table>
                               <div class="optionAdd">

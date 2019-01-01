@@ -101,4 +101,29 @@ public class OptionDao {
 		return result;
 	}
 
+	public ArrayList<Option> selectOptionAll(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Option> list = null;
+		String query = prop.getProperty("selectOptionAll");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			list = new ArrayList<Option>();
+			
+			while(rset.next()) {
+				Option option = new Option();
+				option.setOptionNum(rset.getString("OPTION_NUM"));
+				option.setOptionName(rset.getString("OPTION_NAME"));
+				
+				list.add(option);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
 }
