@@ -47,7 +47,7 @@ public class SelectShoppingCartServlet extends HttpServlet {
 		limit = 10;
 		
 		
-		ProductService cs = new ProductService();
+		ProductService cs = new ProductService(); // cs : Cart Service 
 		int listCount = cs.getListCount();
 		maxPage=(int)((double)listCount/limit+0.9);
 		startPage=(((int)((double)currentPage/limit+0.9))-1)*limit+1;
@@ -60,15 +60,19 @@ public class SelectShoppingCartServlet extends HttpServlet {
 		
 		ArrayList<ShoppingCartPd> list = new ProductService().selectCartList(currentPage, limit);
 		
-		String page = ""; // Void...
-		if(list != null) {
-			page = "/semi/views/customer/product/shoppingCart.jsp";
+		String page = ""; // Void.
+		page = "views/customer/product/shoppingCart.jsp";
+		
+		
+/*		if(list != null) {
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 		}else {
 			page = "/semi/views/customer/common/errorPage.jsp";
 			request.setAttribute("msg", "쇼핑카트 조회 실패!");
 		}
+*/
+		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 		
