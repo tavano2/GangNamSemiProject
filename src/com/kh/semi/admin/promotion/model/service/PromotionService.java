@@ -55,10 +55,10 @@ public class PromotionService {
 		return productBigList;
 	}
 
-	public ArrayList<HashMap<String, Object>> productSelectResult(HashMap<String, String> selectMap) {
+	public ArrayList<HashMap<String, Object>> productSelectResult(HashMap<String, String> selectMap, int currentPage,int  limit) {
 		ArrayList<HashMap<String, Object>> selectList = null;
 		Connection con = getConnection();
-		selectList = new PromotionDao().productSelectResult(con, selectMap);
+		selectList = new PromotionDao().productSelectResult(con, selectMap, currentPage, limit);
 		close(con);
 		return selectList;
 	}
@@ -70,12 +70,20 @@ public class PromotionService {
 		return middleList;
 	}
 
-	public ArrayList<HashMap<String, Object>> productSelectResult2(HashMap<String, String> selectMap) {
+	public ArrayList<HashMap<String, Object>> productSelectResult2(HashMap<String, String> selectMap, int currentPage, int limit) {
 		ArrayList<HashMap<String, Object>> selectList = null;
 		Connection con = getConnection();
-		selectList = new PromotionDao().productSelectResult2(con, selectMap);
+		selectList = new PromotionDao().productSelectResult2(con, selectMap, currentPage, limit);
 		close(con);
 		return selectList;
+	}
+
+	public int getProductListCount(HashMap<String, String> selectMap) {
+		Connection con = getConnection();
+		int result = 0;
+		result = new PromotionDao().getProductListCount(con, selectMap);
+		close(con);
+		return result;
 	}
 	
 	

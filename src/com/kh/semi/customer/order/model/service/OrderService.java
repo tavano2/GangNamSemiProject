@@ -13,6 +13,8 @@ public class OrderService {
 		// 생성자에옵
 	}
 
+	
+	
 	public ArrayList<ArrayList<HashMap<String, Object>>> selectOrderProductList(String[] productNums, String userId) {
 		Connection con = getConnection();
 		ArrayList<ArrayList<HashMap<String, Object>>> list = new ArrayList<ArrayList<HashMap<String, Object>>>();
@@ -24,6 +26,15 @@ public class OrderService {
 		}
 		close(con);
 		return list;
+	}
+
+	
+	
+	public HashMap<String, Object> selectPointNDelivery(String userId) {
+		Connection con = getConnection();
+		HashMap<String, Object> hmap = new OrderDao().selectPointNDelivery(con,userId);
+		close(con);
+		return hmap;
 	}
 
 }

@@ -35,6 +35,7 @@
       background:lightgray;
       margin-left:10px;
       margin-top:25px;
+      overflow:scroll;
    }
    .iconDiv{
       margin-top:170px;
@@ -70,7 +71,7 @@
             </tr>                 
             <tr>
                <td>옵션세트 설명</td>
-               <td><input type="text" size="20"></td>
+               <td><input type="text" size="20" style="height:30px;" name="optionSetMemo"></td>
             </tr>
             </table>
             <h2 class="ui header">옵션세트 구성</h2>
@@ -85,7 +86,7 @@
                     <div class="optionSquare2">
                        <div class="optionSquare3">
                        <div class="ui selection dropdown">
-                                <!-- <input type="hidden" name="gender"> -->
+                                <input type="hidden" name="gender" name="option">
                                 <i class="dropdown icon"></i>
                                 <div class="default text">옵션명</div>
                                 <div class="menu">
@@ -94,11 +95,11 @@
                                 </div>
                                 
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button class="ui black button">전체목록</button>
+                            <button class="ui black button" id="selectOptionAll" name="selectOptionAll">전체목록</button>
                             <br>
                             <br>
-                            <input type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <button class="ui black button">검색</button>
+                            <input type="text" style="height:35px;" name="selectOption">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <button class="ui black button" id="selectOptionBtn" name="selectOptionBtn">검색</button>
                      
                            </div>
                     </div>
@@ -131,7 +132,7 @@
 
 
     <!-- J-query CDN -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <!-- jQuery Custom Scroller CDN -->
@@ -154,6 +155,23 @@
     $('.ui.radio.checkbox')
   .checkbox();
     
+    $(function(){
+    	$("#selectOptionAll").click(function(){
+    		$.ajax({
+    			url:"/semi/selectOptionAll.product",
+    			type:"post",
+    			success:function(data){
+    				console.log("성공");
+    				
+    				
+    				
+    			},
+    			error:function(){
+    				console.log("실패");
+    			}
+    		});
+    	});
+    });
     </script>
 </body>
 

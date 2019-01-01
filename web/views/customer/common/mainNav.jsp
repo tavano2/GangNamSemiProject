@@ -58,7 +58,7 @@
 
         <!-- 상단 네비 -->
         <div class="ui small text menu" id="top_nav">
-            <a class="item" href="/semi/views/customer/board/FAQBoard.jsp">
+            <a class="item" href="<%= request.getContextPath()%>/selectFAQList.bo">
                 Help
             </a>
             <a class="item"  href="/semi/views/customer/board/notice.jsp">
@@ -93,7 +93,7 @@
                     LogOut
                 </a>
                 <%} %>
-                <a class="item" href="<%=request.getContextPath()%>/shoppingCart.jsp"><!-- .jsp or .pd1 or 2 or 3 ? -->
+                <a class="item" href="<%=request.getContextPath()%>/shoppingCart.pd1"><!-- NOT .jsp BUT .pd1(SELECT) -->
                     Cart
                 </a>
                 <a class="item" href="<%=request.getContextPath()%>/selectMyPage.me">

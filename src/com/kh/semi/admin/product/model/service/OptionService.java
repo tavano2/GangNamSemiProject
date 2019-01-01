@@ -26,4 +26,26 @@ public class OptionService {
 		return list;
 	}
 
+	public int insertOption(Option op) {
+		Connection con = getConnection();
+		int result = new OptionDao().insertOption(con,op);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		
+		return result;
+	}
+
+	public ArrayList<Option> selectOptionAll() {
+		Connection con = getConnection();
+		ArrayList<Option> list = new OptionDao().selectOptionAll(con);
+		close(con);
+		
+		return list;
+	}
+
 }

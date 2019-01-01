@@ -82,4 +82,48 @@ public class OptionDao {
 		return list;
 	}
 
+	public int insertOption(Connection con, Option op) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertOption");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, op.getOptionName());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Option> selectOptionAll(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Option> list = null;
+		String query = prop.getProperty("selectOptionAll");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			list = new ArrayList<Option>();
+			
+			while(rset.next()) {
+				Option option = new Option();
+				option.setOptionNum(rset.getString("OPTION_NUM"));
+				option.setOptionName(rset.getString("OPTION_NAME"));
+				
+				list.add(option);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
 }

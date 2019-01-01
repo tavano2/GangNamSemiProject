@@ -1,6 +1,42 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+	// 가져온 객체 추출
+	ArrayList<HashMap<String,Object>> productList = null;
+	HashMap<String,Object> pointNDelivery = null;
+	// 총 상품 금액과 유저에 따라 배송비 책정
+	int totalPirce = 0;
+	int deliveryPrice = 0;
+	
+
+	
+	// 할인금액
+	int discountPirce = 0;
+	if(request.getAttribute("productList") != null){
+	productList = (ArrayList<HashMap<String,Object>>)request.getAttribute("productList");
+		
+	}
+	if(request.getAttribute("pointNDelivery") != null){
+	pointNDelivery = (HashMap<String,Object>)request.getAttribute("pointNDelivery");
+		
+	}
+	if(productList.size() > 0){
+		for(HashMap<String,Object> hmap : productList){
+			totalPirce += (int)hmap.get("product_price");
+		}
+		if(pointNDelivery.get("free_delevery").equals("D")){
+			deliveryPrice = 2500;
+		}
+	}
+	
+	
+
+%>
+
+
 <html>
 
 
@@ -47,32 +83,56 @@
 			<thead>
 				<tr>
 					<th>이미지</th>
-					<th>상품정보</th>
+					<th>상품명</th>
+					<th>옵션명</th>
 					<th>판매가</th>
 					<th>수량</th>
 					<th>적립금</th>
-					<th>주문상태</th>
-					<th>배송비</th>
-					<th>합계</th>
 				</tr>
 			</thead>
 			<tbody>
+					<%
+					if(productList.size()> 0){
+					for(HashMap<String,Object> hmap : productList){ %>
+						<%if(hmap.get("change_name") != null) { %>
 				<tr>
-					<td>0502-0505</td>
-					<td>이미지란</td>
-					<td>jhlilk22@yahoo.com</td>
-					<td>No</td>
-					<td>35000원</td>
-					<td>배송중</td>
-					<td></td>
-					<td></td>
+						<td><input type="hidden" value="<%=hmap.get("option_num")%>" class="product_optionNumber">
+						<input type="hidden" value="<%=hmap.get("product_code")%>" class="product_code">
+						<img src="/semi/image/customer/product/<%=hmap.get("change_name")%>"></td>
+						<%}else{ %>
+						<td><input type="hidden" value="<%=hmap.get("option_num")%>" class="product_optionNumber">
+						<input type="hidden" value="<%=hmap.get("product_code")%>" class="product_code">
+						이미지가 없습니다.</td>
+						<%} %>
+						
+						<td><%=hmap.get("product_name") %></td>
+						<td><%=hmap.get("option_name") %></td>
+						<td><%=hmap.get("product_price") %>원</td>
+						<td><%=hmap.get("amount") %></td>
+						<td><%=(int)(((double)((int)hmap.get("product_price")))*((double)pointNDelivery.get("point_rate"))) %>원</td>
 				</tr>
+					<%}
+					}else{%>
+					<tr><td colspan="5">장바구니에 담은 상품이 없습니다.</td></tr>
+					<%} %>
 			</tbody>
 		</table>
 		<br>
 		<div class="ui grid">
-			<div class="sixteen wide column" align="right">상품 구매금액 ?원 + 배송비
-				?원 = 합계 : ?원</div>
+			<div class="sixteen wide column" align="right">
+			<%if(productList.size() > 0) {%>
+			
+			상품 구매금액 <%=totalPirce %>원 + 배송비 <%=deliveryPrice %>원
+
+				= 합계 : <%=(totalPirce+deliveryPrice) %>원
+				
+				<%}else{ %>
+					상품이 없습니다. 돌아가서 확인해주세요
+				<%} %>
+				<br>
+				<br>
+				추가 할인 금액은 결제 정보창에 추가됩니다.
+				</div>
 		</div>
 		<br>
 		<hr>

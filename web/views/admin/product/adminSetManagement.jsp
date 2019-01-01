@@ -20,6 +20,10 @@
 	.optionSetAdd{
 		text-align:center;
 	}
+	.checkCss{
+		margin-left:10px;
+   		margin-top:10px;
+	}
 </style>
 </head>
 
@@ -39,51 +43,22 @@
         	<tr>
         		<td>옵션 검색</td>
         		<td>
+                            <input type="text" style="height:35px;" name="optionSetSelect" id="optionSetSelect">
         			<div class="ui selection dropdown">
-                                <!-- <input type="hidden" name="gender"> -->
+                                <input type="hidden" name="optionSet" id="optionSet">
                        <i class="dropdown icon"></i>
                         <div class="default text">옵션 세트 검색</div>
                                 <div class="menu">
-                                    <div class="item" data-value="0">옵션세트명</div>
-                                    <div class="item" data-value="1">옵션세트코드</div>
-                                    <div class="item" data-value="2">옵션명, 옵션코드, 옵션값</div>
-                                    <div class="item" data-value="3">옵션세트 설명</div>
+                                    <div class="item" data-value="0">옵션세트코드</div>
+                                    <div class="item" data-value="1">옵션세트 설명</div>
                                 </div>
                             </div>
-                            <input type="text">
                   </td>
-             </tr>
-             <tr>
-             	<td>사용여부</td>
-             	<td>
-             		<div class="ui form">
-                             <div class="inline fields">
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="productOrderby" checked="" tabindex="0" class="hidden">
-                                            <label>전체</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="productOrderby" tabindex="0" class="hidden">
-                                            <label>사용함</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="productOrderby" tabindex="0" class="hidden">
-                                            <label>사용안함</label>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-             	</td>
              </tr>
              
                     </table>
                     <div class="optionSetSelect">
-                    	<button class="ui black button">검색</button>
+                    	<button class="ui black button" id="selectBtn">검색</button>
                     </div>
         	
         	<hr>
@@ -93,7 +68,7 @@
                     <!-- 검색 결과 테이블 -->
                     <thead>
                         <tr>
-                            <th colspan="9">
+                            <th colspan="3">
                                 <button class="ui black button">선택 항목</button>
                                 <button class="ui black button">삭제</button>
                             </th>
@@ -102,42 +77,18 @@
                             <th><div class="ui fitted checkbox">
                                     <input type="checkbox" name="example"><label></label>
                                 </div></th>
-                            <th>No</th>
                             <th>옵션세트코드</th>
-                            <th>옵션세트명</th>
                             <th>옵션세트설명</th>
-                            <th>사용여부</th>
-                            <th>등록일자</th>
-                            <th>상품할당</th>
-                            <th>할당여부</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="ui fitted checkbox">
-                                    <input type="checkbox" name="example"><label></label>
-                                </div>
-                            </td>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                        	<td colspan="9">
-                        		<div class="optionSetAdd">
-                        			<button class="ui black button" onclick="location.href='/semi/views/admin/product/adminAddOptionSet.jsp'">옵션세트등록</button>
- 		                       	</div>
-                       		</td>
-                        </tr>
+                    <tbody id="selectBody">
+                        
                         
                     </tbody>
                 </table>
+                        		<div class="optionSetAdd">
+                        			<button class="ui black button" onclick="location.href='/semi/views/admin/product/adminAddOptionSet.jsp'">옵션세트등록</button>
+ 		                       	</div>
         		
         	
         	</div>
@@ -150,7 +101,7 @@
 
 
     <!-- J-query CDN -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <!-- jQuery Custom Scroller CDN -->
@@ -173,6 +124,38 @@
     $('.ui.radio.checkbox')
   .checkbox();
     
+    
+    $(function(){
+    	$("#selectBtn").click(function(){
+    		var optionSetSelect = $("#optionSetSelect").val();
+    		var optionSet = $("#optionSet").val();
+    		
+    		console.log(optionSet);
+    		$.ajax({
+    			url:"/semi/selectOptionSet.product",
+    			data : {optionSet : optionSet , optionSetSelect : optionSetSelect},
+    			type:"post",
+    			success:function(data){
+    				console.log("성공");
+    				var $selectBody = $("#selectBody");
+    				for(var key in data){
+    					var $tr = $("<tr class='selectTr'>");
+    					var $checkTd = $("<div class='checkCss'><div class='ui fitted checkbox'><input type='checkbox' name='optionCheck'><label></label></div></div>");
+    					var $sNumTd = $("<td>").text(data[key].optionSnum);
+    					var $memoTd = $("<td>").text(data[key].optionMemo);
+    					
+    					$tr.append($checkTd);
+    					$tr.append($sNumTd);
+    					$tr.append($memoTd);
+    					$selectBody.append($tr);
+    				}
+    			},
+    			error:function(){
+    				console.log("실패");
+    			}
+    		});
+    	});
+  });
     </script>
     
 </body>

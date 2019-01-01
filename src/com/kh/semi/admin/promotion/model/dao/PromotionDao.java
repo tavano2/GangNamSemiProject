@@ -211,18 +211,25 @@ public class PromotionDao {
 		return productBigList;
 	}
 
-	public ArrayList<HashMap<String, Object>> productSelectResult(Connection con, HashMap<String, String> selectMap) {
+	public ArrayList<HashMap<String, Object>> productSelectResult(Connection con, HashMap<String, String> selectMap, int currentPage, int limit) {
 		ArrayList<HashMap<String, Object>> selectList = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> map =null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = prop.getProperty("productSelectResult");
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, selectMap.get("selectBigCateg"));
 			pstmt.setString(2, selectMap.get("selectMiddleCateg"));
 			pstmt.setString(3, selectMap.get("selectValue"));
+			pstmt.setInt(4, startRow);
+			pstmt.setInt(5, endRow);
 			rset=pstmt.executeQuery();
+			System.out.println(selectMap.get("selectBigCateg"));
+			System.out.println(selectMap.get("selectMiddleCateg"));
+			System.out.println(selectMap.get("selectValue"));
 			while(rset.next()) {
 				map = new HashMap<String,Object>();
 				map.put("PRODUCT_CODE", rset.getString("PRODUCT_CODE"));
@@ -275,17 +282,21 @@ public class PromotionDao {
 		return middleList;
 	}
 
-	public ArrayList<HashMap<String, Object>> productSelectResult2(Connection con, HashMap<String, String> selectMap) {
+	public ArrayList<HashMap<String, Object>> productSelectResult2(Connection con, HashMap<String, String> selectMap, int currentPage, int limit) {
 		ArrayList<HashMap<String, Object>> selectList = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> map =null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = prop.getProperty("productSelectResult2");
+		int startRow = (currentPage - 1) * limit + 1; 	
+		int endRow = startRow + limit - 1;
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, selectMap.get("selectBigCateg"));
 			pstmt.setString(2, selectMap.get("selectMiddleCateg"));
 			pstmt.setString(3, selectMap.get("selectValue"));
+			pstmt.setInt(4, startRow);
+			pstmt.setInt(5, endRow);
 			rset=pstmt.executeQuery();
 			while(rset.next()) {
 				map = new HashMap<String,Object>();
@@ -305,5 +316,29 @@ public class PromotionDao {
 		}
 		
 		return selectList;
+	}
+
+	public int getProductListCount(Connection con, HashMap<String, String> selectMap) {
+		int result = 0;
+		PreparedStatement pstmt=null;
+		String query = prop.getProperty("getProductListCount");
+		ResultSet rset = null;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, selectMap.get("selectBigCateg"));
+			pstmt.setString(2, selectMap.get("selectMiddleCateg"));
+			pstmt.setString(3, selectMap.get("selectValue"));
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}	
+		return result;
 	}
 }
