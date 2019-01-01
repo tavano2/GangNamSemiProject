@@ -15,6 +15,8 @@
 		}
 	}
 	
+	String boardId = request.getParameter("boardId");
+	String productCode = request.getParameter("productCode");
 	
 	%>
 <!DOCTYPE html>
@@ -91,7 +93,9 @@
 				<td>주문번호</td>
 				<td>
 					<div class="ui input">
-						<input type="text" value="<%=reviewOption.get(0).getOrderDnum()%>" name="userId" style="background-color:transparent;border:0 solid black; width:250px;"  readonly>
+						<input type="hidden" value="<%=boardId %>" name="boardId">
+						<input type="hidden" value="<%=productCode %>" name="productCode">
+						<input type="text" value="<%=reviewOption.get(0).getOrderDnum()%>" name="userProductNum" style="background-color:transparent;border:0 solid black; width:250px;"  readonly>
 					</div>
 				</td>
 			</tr>
@@ -107,15 +111,15 @@
 				<td>선택한 옵션</td>
 				<td>
 					<div class="ui input">
-				<%-- 	
+					
 					<%for(int i=0;i<reviewOption.size();i++){%>
 					
 					
 					
-						<input type="hidden" value="<%=reviewOption.get(i).getOptionNum()%> name="selectOptionArray">
+						<input type="hidden" value="<%=reviewOption.get(i).getOptionNum()%>" name="selectOptionArray">
+ 						
 						
-						
-					<% }%> --%>
+					<% }%> 
 						<input type="text" value="<%=optionAll %>"name="selectOption" style="background-color:transparent;border:0 solid black; width:250px;" readonly>
 					</div>
 				</td>

@@ -31,16 +31,18 @@ public class SelectReviewOptionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String productCode = request.getParameter("productCode");
 		//System.out.println(productCode);
+		String boardId = request.getParameter("boardId");
+		System.out.println(boardId);
 		
 		//사용자 아이딩!
 		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
 		//System.out.println(userId);
 		
-		//ReviewOption reviewOption = ProductService.selectReviewOption(productCode,userId);
+
 		ArrayList<ReviewOption> reviewOption = ProductService.selectReviewOption(productCode,userId);
 		
-		//System.out.println(reviewOption.get(1).getOptionName());
-		//System.out.println(reviewOption.get(0).getOptionName());
+		
+		////////////////////////////////////////////////////////////////////////////////////////////
 		
 
 		
@@ -48,6 +50,7 @@ public class SelectReviewOptionServlet extends HttpServlet {
 		if(productCode!=null && userId!=null) {
 			page="views/customer/product/insertQnABoard.jsp";
 			request.setAttribute("reviewOption", reviewOption);
+			request.setAttribute("boardId", boardId);
 		}else {
 			page="views/customer/common/errorPage.jsp";
 			request.setAttribute("msg", "리뷰게시판,상품문의 게시판 조회 실팽 ㅠㅠㅠㅠㅠㅠ");

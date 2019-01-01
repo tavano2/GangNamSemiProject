@@ -34,6 +34,8 @@
 	Attachment detailImg2 = detailAttachmentList.get(2);
 	Attachment detailImg3 = detailAttachmentList.get(3);
 	
+	
+	
 	//Option option1 = detailOptionList.get(0);
 	//Option option2 = detailOptionList.get(1);
 	
@@ -640,7 +642,7 @@
 		//review 작성하기
 		function ReviewClick(){
 <%-- 			location.href="<%=request.getContextPath()%>/selectReviewOption.pd?product=<%=pro.getProductCode()%>"; --%>	
-				location.href="<%=request.getContextPath()%>/selectReviewOption.pd?productCode="+'PD000003';
+				location.href="<%=request.getContextPath()%>/selectReviewOption.pd?productCode=PD000003&boardId=420";
 		
 		}
 	
