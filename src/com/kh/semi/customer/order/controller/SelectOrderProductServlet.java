@@ -60,6 +60,9 @@ public class SelectOrderProductServlet extends HttpServlet {
 						pCodeOptionName.put("option_num", optionNumber);
 						pCodeOptionName.put("amount", hmap.get(("amount")));
 						pCodeOptionName.put("option_name",optionName);
+						pCodeOptionName.put("product_price", hmap.get("product_price"));
+						pCodeOptionName.put("change_name", hmap.get("change_name"));
+						pCodeOptionName.put("product_name", hmap.get("product_name"));
 					}
 					pCodeOptionList.add(pCodeOptionName);
 					
@@ -72,14 +75,29 @@ public class SelectOrderProductServlet extends HttpServlet {
 						pCodeOptionName.put("option_num", hmap.get(("option_num")));
 						pCodeOptionName.put("amount", hmap.get(("amount")));
 						pCodeOptionName.put("option_name",hmap.get(("option_name")));
+						pCodeOptionName.put("product_price", hmap.get("product_price"));
+						pCodeOptionName.put("change_name", hmap.get("change_name"));
+						pCodeOptionName.put("product_name", hmap.get("product_name"));
 					}
 					pCodeOptionList.add(pCodeOptionName);
 				}
 			}
-			System.out.println(pCodeOptionList);
+			// 이미지,상품정보,판매가,수량 정상 출력 완료 (상품 옵션은 숨겨서 insert시 추가)
+			//System.out.println(pCodeOptionList);
+			
+			//적립금 , 배송비 구해오기
+			HashMap<String, Object> pointNDeliveryHmap = new OrderService().selectPointNDelivery(userId);
+			
+			if(pCodeOptionList != null && pointNDeliveryHmap != null) {
+				request.setAttribute("productList", pCodeOptionList);
+				request.setAttribute("pointNDelivery", pointNDeliveryHmap);
+				request.getRequestDispatcher("views/customer/product/mainOrder.jsp").forward(request, response);
+			}else {
+				request.setAttribute("msg", "주문 페이지 주문 상품 정보 조회 실패!");
+				request.getRequestDispatcher("views/customer/common/errorPage.jsp").forward(request, response);
+			}
 		
 
-		request.getRequestDispatcher("views/customer/product/mainOrder.jsp").forward(request, response);
 
 	}
 
