@@ -140,6 +140,7 @@ public class ProductService {
 	
 	// 장바구니 | Shopping Cart : 조회 | selectCartList  | model/service/ProductService.java
 	public ArrayList<ShoppingCartPd> selectCartList(ShoppingCartPd cartList, int currentPage, int limit) {
+		
 		Connection con = getConnection();
 		ArrayList<ShoppingCartPd> cart = new ProductDao().SelectShoppingCartServlet(con, cartList, currentPage, limit);
 		close(con);
@@ -148,9 +149,10 @@ public class ProductService {
 	
 	// ----------------------------------------------------------------------------------------------------------------------------
 	
-	/*수정중*/ // 장바구니 | Shopping Cart : 품목 추가 | insertCartList  | model/service/ProductService.java
+	// 장바구니 | Shopping Cart : 품목 추가 | insertCartList  | model/service/ProductService.java
 	
 	public ArrayList<ShoppingCartPd> insertCartList(ShoppingCartPd cart) {
+		
 		Connection con = getConnection();
 		ArrayList<ShoppingCartPd> cartList  = null;
 		

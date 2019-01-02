@@ -441,10 +441,12 @@ public class ProductDao {
 			
 		while(rset.next()) { // #1 cartPd //next() : Moves the cursor forward one row from its current position.
 				ShoppingCartPd cartPd = new ShoppingCartPd(); // ShoppingCartPd > VO. The Result.
+				
 				cartPd.setProductCode(rset.getInt("PRODUCT_CODE"));
 				cartPd.setUserId(rset.getInt("USER_ID"));
 				cartPd.setOptionNum(rset.getInt("OPTION_NUM"));
 				cartPd.setAmount(rset.getInt("AMOUNT"));
+				
 				cartList.add(cartPd); // Add "cartProDuct" into "cart" // ▲ ArrayList<ShoppingCartPd> cart = null;
 			}
 			
@@ -471,20 +473,23 @@ public class ProductDao {
 	 //------------------------ DAO ---------------- Access *directly*. ------------------------------------------------------------------------------------------------
 	// 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO) 
     
-		public int insertCartList(Connection con, ShoppingCartPd cart) {
+		public int insertCartList(Connection con, ShoppingCartPd cartList) {
 			
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			int result = 0;
 		
+			
+			
 		String query = prop.getProperty("insertCartList");
 		
 		try {
+			con = JDBCTemplate.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, cart.getProductCode());
-			pstmt.setInt(2, cart.getUserId());
-			pstmt.setInt(3, cart.getOptionNum());
-			pstmt.setInt(4, cart.getAmount());
+			pstmt.setInt(1, cartList.getProductCode());
+			pstmt.setInt(2, cartList.getUserId());
+			pstmt.setInt(3, cartList.getOptionNum());
+			pstmt.setInt(4, cartList.getAmount());
 			result = pstmt.executeUpdate();// int result = 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -492,7 +497,7 @@ public class ProductDao {
 			close(pstmt);
 			close(rset);
 		}
-			return result;
+			return result;//cartList
 	}
 	
 

@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.kh.semi.customer.board.model.vo.PageInfo;
 import com.kh.semi.customer.product.model.service.ProductService;
-import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 
 /**
