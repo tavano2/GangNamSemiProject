@@ -57,8 +57,8 @@ public class SelectShoppingCartServlet extends HttpServlet {
 		// package com.kh.semi.customer.product.model.service; > public class ProductService
 		ProductService cs = new ProductService(); // #1 - cs : Cart Service 
 		int listCount = cs.getListCount();
-		/**/maxPage=(int)((double)listCount/limit+0.9); //double > 0.9
-		/**/startPage=(((int)((double)currentPage/limit+0.9))-1)*limit+1;
+		maxPage=(int)((double)listCount/limit+0.9); //double > 0.9
+		startPage=(((int)((double)currentPage/limit+0.9))-1)*limit+1;
 		endPage=startPage+10-1; // limit = 10;
 		if(maxPage<endPage) {
 			endPage=maxPage;	
@@ -66,24 +66,26 @@ public class SelectShoppingCartServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, limit, maxPage, startPage, endPage);
 		
-		ArrayList<ShoppingCartPd> list = new ProductService().selectCartList(currentPage, limit);
+		ArrayList<ShoppingCartPd> cartList = new ProductService().selectCartList(null, currentPage, limit);
 		
 		String page = ""; // The void.
 		page = "views/customer/product/shoppingCart.jsp";
 		
+		
+		
+		
 		/* ------------------------------------------- Pagination, Done. ------------------------------------------- */
 		
-/*	 	
- * 
- * if(list != null) {
-			request.setAttribute("list", list);
+		/* ▼ ERROR ▼ */
+		/*if(cartList != null) {
+			request.setAttribute("cartList", cartList);
 			request.setAttribute("pi", pi);
 		}else {
 			page = "/semi/views/customer/common/errorPage.jsp";
 			request.setAttribute("msg", "쇼핑카트 조회 실패!");
-		}
-*/
-		
+		}*/ 
+
+		// ------------------------------ Cart > 조회 ------------------------------ 
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 		

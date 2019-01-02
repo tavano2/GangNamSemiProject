@@ -61,7 +61,7 @@ public class DeleteShoppingCartServlet extends HttpServlet {
 		
 		ArrayList<ShoppingCartPd> list = new ProductService().deleteCartList(currentPage, limit);
 		
-		String page = ""; // Void...
+		String page = "";
 		if(list != null) {
 			page = "/semi/views/customer/product/shoppingCart.jsp";
 			request.setAttribute("list", list);
@@ -73,7 +73,13 @@ public class DeleteShoppingCartServlet extends HttpServlet {
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 	}
-
+	
+	// --------/* Pagination*/-----------------------------------------------------------------------------------------------
+	
+		
+	
+	// ------------------------------------------------------------------------------------------------------------------------------------
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

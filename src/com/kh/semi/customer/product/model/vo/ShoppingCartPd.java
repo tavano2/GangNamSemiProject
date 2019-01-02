@@ -1,15 +1,15 @@
 package com.kh.semi.customer.product.model.vo; // "Model" deals with "Business Logic(=Service that will be execute")
 
 // Service : Service calls several DAO out. Do serve...
-// Service send the result >to> Controller.
+// Service send the result >>to>> Controller.
 
-public class ShoppingCartPd{
+public class ShoppingCartPd{ // VO | The Result.
 
 
-	private int ProductCode; // ProductCode
-	private String UserId; // UserId
-	private int OptionNum; // OptionNum
-	private int Amount; // Amount
+	private int ProductCode;
+	private int UserId;
+	private int OptionNum;
+	private int Amount;
 	
 	
 /*	private static final long serialVersionUID = 1L;*/ // Value Object (the result) = Class Shopping Cart.
@@ -23,7 +23,7 @@ public class ShoppingCartPd{
 	public ShoppingCartPd() {}
 	
 	
-	public ShoppingCartPd(int ProductCode, String UserId, int OptionNum, int Amount) {
+	public ShoppingCartPd(int ProductCode, int UserId, int OptionNum, int Amount) {
 		super();
 		this.ProductCode = ProductCode;
 		this.UserId = UserId;
@@ -41,11 +41,11 @@ public class ShoppingCartPd{
 		
 	}
 	
-	public String getUserId() {
+	public int getUserId() {
 		return UserId;
 	}
 
-	public void setUserId(String UserId) {
+	public void setUserId(int UserId) {
 		
 		
 	}
@@ -54,7 +54,7 @@ public class ShoppingCartPd{
 		return OptionNum;
 	}
 	
-	public void setOptionNum(int OptionNum) {
+	public void setOptionNum(int optionNum) {
 		
 		
 	}
@@ -63,7 +63,7 @@ public class ShoppingCartPd{
 		return Amount;
 	}
 
-	public void setAmount(int Amount) {
+	public void setAmount(int amount) {
 		
 		
 	}
@@ -72,6 +72,16 @@ public class ShoppingCartPd{
 	public String toString() {
 		return "ShoppingCart [ProductCode=" + ProductCode + ", UserId=" + UserId + ", OptionNum=" + OptionNum + ", Amount=" + Amount + "]";
 	}
+
+
+
+
+
+
+
+
+
+
 	
 
 /*java.lang.Override
