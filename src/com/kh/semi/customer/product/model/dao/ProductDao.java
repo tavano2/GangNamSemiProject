@@ -426,6 +426,102 @@ public class ProductDao {
 	public ArrayList<ShoppingCartPd> selectCartList(ArrayList<ShoppingCartPd> cartList, int currentPage,
 			int limit) throws SQLException {// ▲ <ShoppingCartPd> = VO Class.
 		
+		//(comment) : 전의 코드를 따르면 해당 메서드는 HashMap<String, Object> 를 반환해야 하며, Connection con, String userId를 매개변수로 받습니다.
+		//(comment) : DB에 쿼리문을 전달하기 위해 Statement 객체를 생성합니다. userId를 넘겨줘야 하므로 PreparedStatement로 해야합니다.
+		//(comment) : SELECT 문을 쓸 것이기 때문에 ResultSet도 선언합니다.
+		//(comment) : 리턴 변수도 미리 선언합니다.
+		//(comment) : 쿼리문을 불러옵니다.
+		//(comment) : pstmt 객체를 생성하고, userId를 셋팅한 다음, 쿼리문을 실행합니다.
+		//(comment) : 그리고 정보를 담을 ArrayList와 HashMap을 각각 생성합니다.
+		//(comment) : 장바구니는 ArrayList에 담고, 상품과 옵션 정보, 이미지는 각각 HashMap에 담습니다.
+		//(comment) : 그리고 이 4개의 Collection은 hmap에 담고 리턴합니다.
+		//쿼리문--------------------------------------------------------------------------------------------------
+		/*SELECT CT.PRODUCT_CODE, CT.USER_ID, CT.OPTION_NUM, CT.AMOUNT,
+		    PD.PRODUCT_NAME, PD.PRODUCT_PRICE,
+		    OP.OPTION_NAME,
+		    AT.FILE_ID, AT.ORIGIN_NAME, AT.CHANGE_NAME, AT.FILE_PATH
+		FROM CART CT
+		JOIN PRODUCT PD ON(CT.PRODUCT_CODE = PD.PRODUCT_CODE
+		    AND CT.USER_ID = ?
+		    AND PD.SELL_STATUS = 'E'
+		    AND PD.DISPLAY_STATUS = 'E')
+		JOIN OPTION_TABLE OP ON(CT.OPTION_NUM = OP.OPTION_NUM)
+		JOIN ATTACHMENT AT ON(CT.PRODUCT_CODE = AT.PRODUCT_CODE
+		    AND FILE_LEVEL = 1
+		    AND STATUS = 'E')*/
+		//--------------------------------------------------------------------------------------------------------
+		//PreparedStatement pstmt = null;
+		//ResultSet rset = null;
+		//HashMap<String, Object> hmap = null;
+		//
+		//String query = prop.getProperty("selectCartList");
+		//
+		//try {
+		//	pstmt = con.prepareStatement(query);
+		//	pstmt.setString(1, userId);
+		//
+		//	rset = pstmt.executeQuery();
+		//
+		//	ArrayList<ShoppingCartPd> cartList = new ArrayList<ShoppingCartPd>();
+		//	HashMap<String, ReallyProduct> pdList = new HashMap<String, ReallyProduct>();
+		//	HashMap<String, String> opList = new HashMap<String, String>();
+		//	HashMap<String, Attachment> atList = new HashMap<String, Attachment>();
+		//	HashMap<String, Integer> count = new HashMap<String, Integer>();
+		//
+		//	while(rset.next()){
+		//		//장바구니 담기
+		//		ShoppingCartPd cart = new ShoppingCartPd();
+		//		cart.setProductCode(rset.getString("PRODUCT_CODE"));
+		//		cart.setUserId(rset.getString("USER_ID"));
+		//		cart.setOptionNum(rset.getString("OPTION_NUM"));
+		//		cart.setAmount(rset.getInt("AMOUNT"));
+		//
+		//		cartList.add(cart);
+		//
+		//		//상품 담기
+		//		ReallyProduct pd = new ReallyProduct();
+		//		pd.setProductCode(rset.getString("PRODUCT_CODE"));
+		//		pd.setProductName(rset.getString("PRODUCT_NAME"));
+		//		pd.setProductPrice(rset.getInt("PRODUCT_PRICE"));
+		//
+		//		pdList.put(rset.getString("PRODUCT_CODE"), pd);
+		//
+		//		//옵션 담기
+		//		opList.put(rset.getString("OPTION_NUM"), rset.getString("OPTION_NAME"));
+		//
+		//		//이미지 담기
+		//		Attachment at = new Attachment();
+		//		at.setFileId(rset.getString("FILE_ID"));
+		//		at.setProductCode(rset.getString("PRODUCT_CODE"));
+		//		at.setOriginName(rset.getString("ORIGIN_NAME"));
+		//		at.setChangeName(rset.getString("CHANGE_NAME"));
+		//		at.setFilePath(rset.getString("FILE_PATH"));
+		//
+		//		atList.put(rset.getString("PRODUCT_CODE"), at);
+		//
+		//		if (count.containsKey(rset.getString("PRODUCT_CODE"))) {
+		//			count.put(rset.getString("PRODUCT_CODE"), count.get(rset.getString("PRODUCT_CODE")) + 1);
+		//		} else {
+		//			count.put(rset.getString("PRODUCT_CODE"), 1);
+		//		}
+		//	}
+		//
+		//	hmap = new HashMap<String, Object>();
+		//	hmap.put("cartList", cartList);
+		//	hmap.put("pdList", pdList);
+		//	hmap.put("opList", opList);
+		//	hmap.put("atList", atList);
+		//	hmap.put("count", count);
+		//} catch (SQLException e) {
+		//	e.printStackTrace();
+		//} finally {
+		//	close(rset);
+		//	close(pstmt);
+		//}
+		//return hmap;
+		//--------------------------------------------------------------------------------------------------------
+		//shoppingCart.jsp로..
+		
 		Connection con  = null;
 		PreparedStatement pstmt = null;// PreparedStatement : An object that represents a pre-compiled SQL statement. 
 		ResultSet rset = null;

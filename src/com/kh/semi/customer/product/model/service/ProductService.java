@@ -141,6 +141,12 @@ public class ProductService {
 	
 	// 장바구니 | Shopping Cart : 조회 | selectCartList  | model/service/ProductService.java
 	public ArrayList<ShoppingCartPd> selectCartList(ShoppingCartPd cartList, int currentPage, int limit) {
+		//(comment) : 전의 코드를 따르면 해당 메서드는 HashMap<String, Object> 를 반환해야 하며, String userId를 매개변수로 받습니다.
+		//(comment) : 먼저 커넥션 객체를 만들고, 다음은 con과 userId를 Dao로 넘깁니다.
+		//HashMap<String, Object> hmap = new ProductDao().selectCartList(con, userId);
+		//(comment) : productDao로..
+		
+		
 		
 		Connection con = getConnection();
 		ArrayList<ShoppingCartPd> cart = new ProductDao().SelectShoppingCartServlet(con, cartList, currentPage, limit);
