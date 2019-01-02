@@ -1,16 +1,21 @@
+<%@page import="com.kh.semi.customer.product.model.vo.ShoppingCartPd"%>
+<%@page import="com.kh.semi.customer.member.model.vo.Member"%>
+
+	<%@page import="java.util.HashMap"%>
+	<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@page import="java.util.ArrayList"%>
-	<%@page import="com.kh.semi.customer.product.model.vo.ReallyProduct"%>
-	<%@page import="com.kh.semi.customer.member.model.vo.Member"%>
-	
+
 <!DOCTYPE html>
 
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>views.shoppingCart.jsp</title>
-	<%-- <% ArrayList<ShoppingCartPd> %> --%>
+	
+	<% ArrayList<ShoppingCartPd> cartPd = (ArrayList<ShoppingCartPd>) request.getAttribute("cartPd");%>
+	<% Member member = (Member) request.getAttribute("member"); %>
+	<% session.setAttribute("member", member);	 %>
 
     <!-- Semantic UI CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -21,13 +26,8 @@
 </head>
 
 <body>
-	
-
 	<%@ include file="/views/customer/common/mainNav.jsp"%>	
-	
-  
 	<div class="content" align="center">
-	
 		<br> <br>
 		<div align="center" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">SHOPPING CART</div>
 		<br> <br>
@@ -47,10 +47,24 @@
 					</tr>
 				</thead>
 				<tbody>
-				<%
-				
-				%>
-					<tr>
+				<%-- <%
+				/* if (...sth is exist >> ){Do>>조회} else { "장바구니에 담긴 상품이 없습니다."} */
+				if(){
+					
+				}else{
+					
+				}
+				%> --%>
+					<tr align="auto">
+						<th width="auto"><!--  align="center" --><input type="checkbox" id="chkBox"></th>
+						<th width="auto" align="auto"><% /* Attach IMG */ %></th>
+						<th width="auto">Info</th>
+						<th width="auto">N</th>
+						<th width="auto">$</th>
+						<th width="auto">$</th>
+						<th width="auto">$</th>
+						<th width="auto">$</th>
+						<th width="auto">$</th>
 					</tr>
 					
 <!-- 		Ref.
@@ -100,6 +114,12 @@
 	
 	<!-- Common js -->
     <script src="/semi/js/customer/common/main.js"></script>
+
+	<script>
+	
+	/*  */
+	
+	</script>
 
     
 </body>
