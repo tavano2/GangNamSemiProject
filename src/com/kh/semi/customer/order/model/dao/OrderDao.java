@@ -87,4 +87,37 @@ public class OrderDao {
 		
 		return hmap;
 	}
+
+	public ArrayList<HashMap<String, Object>> selectCouponList(Connection con, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HashMap<String, Object>> list = null;
+		HashMap<String, Object> hmap = null;
+		String query = prop.getProperty("selectCouponList");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while(rset.next()) {
+					hmap = new HashMap<String,Object>();
+					hmap.put("user_id", rset.getString("USER_ID"));
+					hmap.put("end_date", rset.getDate("END_DATE"));
+					hmap.put("coupon_code", rset.getString("COUPON_CODE"));
+					hmap.put("coupon_name", rset.getString("COUPON_NAME"));
+					hmap.put("coupon_type", rset.getInt("COUPON_TYPE"));
+					hmap.put("coupon_rdiscount", rset.getDouble("COUPON_RDISCOUNT"));
+					hmap.put("coupon_pdiscount", rset.getInt("COUPON_PDISCOUNT"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 }

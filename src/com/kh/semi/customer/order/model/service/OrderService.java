@@ -37,4 +37,13 @@ public class OrderService {
 		return hmap;
 	}
 
+
+
+	public ArrayList<HashMap<String, Object>> selectCouponList(String userId) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> list = new OrderDao().selectCouponList(con,userId);
+		close(con);
+		return list;
+	}
+
 }
