@@ -1,5 +1,10 @@
+<%@page import="com.kh.semi.admin.product.model.vo.Category"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+   ArrayList<Category> list1 = (ArrayList<Category>)request.getAttribute("list1");
+%>    
 <!DOCTYPE html>
 <html>
 
@@ -16,6 +21,9 @@
 <style>
 	.productAddBtn{
 		text-align:center;
+	}
+	.bigCate:hover{
+		cursor:pointer;
 	}
 </style>
 </head>
@@ -38,19 +46,19 @@
         	<tr>
         		<td>상품명</td>
         		<td>
-        			<input type="text" size="100">
+        			<input type="text" size="100" name="productName">
                 </td>
              </tr>
              <tr>
         		<td>상품요약설명</td>
         		<td>
-        			<input type="text" size="100">
+        			<input type="text" size="100" name="productMemo">
                 </td>
              </tr>
              <tr>
         		<td>상품상세설명</td>
         		<td>
-        			<textarea class="productDetail" rows="8" cols="100"></textarea>
+        			<textarea class="productDetail" rows="8" cols="100" name="productDetailMemo"></textarea>
                 </td>
              </tr>
                     </table>
@@ -61,8 +69,13 @@
         	<tr>
         		<td>판매가</td>
         		<td>
-        			<input type="text"> 원
+        			<input type="text" name="productPrice"> 원
                 </td>
+               </tr>
+               <tr>
+               	<td>수량</td>
+               	<td><input type="number" min="0" name="productAmount"> 개</td>
+               </tr>
             </table><br>
             <hr>
             <h2 class="ui header">표시설정</h2>
@@ -75,13 +88,13 @@
                                     <div class="field">
                                     	-진열상태 &nbsp;&nbsp;&nbsp;
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productExhibition" checked="" tabindex="0" class="hidden">
+                                            <input type="radio" name="productDisplay" checked="" tabindex="0" class="hidden">
                                             <label>진열함</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productExhibition" tabindex="0" class="hidden">
+                                            <input type="radio" name="productDisplay" tabindex="0" class="hidden">
                                             <label>진열안함</label>
                                         </div>
                                     </div>
@@ -95,13 +108,13 @@
                                     <div class="field">
                                     	-판매상태 &nbsp;&nbsp;&nbsp;
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productSale" checked="" tabindex="0" class="hidden">
+                                            <input type="radio" name="productSell" checked="" tabindex="0" class="hidden">
                                             <label>판매함</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productSale" tabindex="0" class="hidden">
+                                            <input type="radio" name="productSell" tabindex="0" class="hidden">
                                             <label>판매안함</label>
                                         </div>
                                     </div>
@@ -119,8 +132,33 @@
                 				<td>중분류</td>
                 			</tr>
                 			<tr>
-                				<td>아우터</td>
-                				<td>자켓</td>
+                				<td>
+                					<table>
+                						<% for (Category c : list1){ %>
+                							<% if(c.getCateLevel() == 0) {%>
+                								<tr>
+                									<td>
+                										<span class="bigCate">
+                											<%=c.getCateName() %> >
+                											<input type="hidden" class="bigCode" value="<%=c.getCateCode() %>">
+                											<% for (Category ca : list1){ %>
+																<% if(ca.getCateLevel() == 1 && ca.getCateRefCode().equals(c.getCateCode())){ %>
+																	<input type="hidden" id="middleCode" value="<%=ca.getCateCode() %>">
+                             										 <input type="hidden" id="middleName" value="<%=ca.getCateName() %>">
+																<% } %>                											
+                											<% } %>
+                										</span>
+                									</td>
+                								</tr>
+                							<% }else{ continue;} %>
+                						<% } %>
+                					</table>
+                				</td>
+                				<td>
+                					<table id="middleCate">
+                					
+                					</table>
+                				</td>
                 			</tr>
                 		</table>
                 	</td>
@@ -130,55 +168,7 @@
 			<h2 class="ui header">옵션설정</h2>
         	<table class="ui celled table first-col">
         	<tr>
-        		<td rowspan="4">상품옵션설정</td>
-        		<td>
-        			<div class="ui form">
-                             <div class="inline fields">
-                                    <div class="field">
-                                    	-옵션사용 &nbsp;&nbsp;&nbsp;
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="useOption" checked="" tabindex="0" class="hidden">
-                                            <label>사용함</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="useOption" tabindex="0" class="hidden">
-                                            <label>사용함</label>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                </td>
-            </tr>
-            <tr>
-            	<td>
-            		<div class="ui form">
-                             <div class="inline fields">
-                                    <div class="field">
-                                    	-옵션설정 &nbsp;&nbsp;&nbsp;
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="useSet" checked="" tabindex="0" class="hidden">
-                                            <label>옵션세트 불러오기</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="useSet" tabindex="0" class="hidden">
-                                            <label>옵션 불러오기</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="useSet" tabindex="0" class="hidden">
-                                            <label>직접 입력하기</label>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-            	</td>
-            </tr>
-            <tr>
+        		<td>상품옵션설정</td>
             	<td>
             -옵션설정 &nbsp;&nbsp;&nbsp;
             	<div class="ui selection dropdown">
@@ -193,33 +183,6 @@
                             </div>
                  </td>
             </tr>
-            <tr>
-            	<td>
-            		<div class="ui form">
-                             <div class="inline fields">
-                                    <div class="field">
-                                    	-사이즈 &nbsp;&nbsp;&nbsp;
-                                        <div class="ui radio checkbox">
-                                            <input type="checkbox" name="optionSize" checked="" tabindex="0" class="hidden">
-                                            <label>보통</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="checkbox" name="optionSize" tabindex="0" class="hidden">
-                                            <label>오버</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="checkbox" name="optionSize" tabindex="0" class="hidden">
-                                            <label>슬림</label>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-            	</td>
-            </tr>
             </table><br>
                 <hr>
             <h2 class="ui header">이미지 정보</h2>
@@ -228,13 +191,13 @@
         		<td>상품 이미지</td>
         		<td>
         			<img class="ui small image" src="/images/wireframe/image.png"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - 권장이미지 : 500px * 500px / 5M 이하 / gif, jpg, png<br>
-        			<button class="ui black button">등록</button>
+        			<button class="ui black button" id="imgBtn">등록</button>
                 </td>
             </table><br>
 
         	<div class="productAddBtn">
-        		<button class="ui blue button">상품등록</button><button class="ui white button">미리보기</button>
-        	
+        		<button class="ui blue button" id="AddBtn">상품등록</button>
+        		<button class="ui white button" id="viewBtn">미리보기</button>
         	</div>
         	</div>
         </div>
@@ -246,7 +209,7 @@
 
 
     <!-- J-query CDN -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <!-- jQuery Custom Scroller CDN -->
@@ -268,6 +231,35 @@
     });
     $('.ui.radio.checkbox')
   .checkbox();
+    
+    $(function(){
+    	$(".bigCate").click(function(){
+    		var bigCode = $(".bigCode").val();
+    		var middleCode = $("#middleCode").val();
+    		var middleName = $("#middleName").val();
+    		
+    		$.ajax({
+    			type:"post",
+    			success:function(data){
+    				var $middleCate = $("#middleCate");
+    				$middleCate.html('');
+    				
+    				for(key in data){
+	    				var $tr = $("<tr>");
+	    				var $td = $("<td>");
+	    				var $span = $("<span class='middleCate'>");
+						
+	    				$tr.append($td);
+	    				$td.append($span).text(middleName);
+	    				$middleCate.append($tr);
+    				}
+    			},
+    			error:function(){
+    				console.log("실패");
+    			}
+    		});
+    	});
+    });
     
     </script>
     

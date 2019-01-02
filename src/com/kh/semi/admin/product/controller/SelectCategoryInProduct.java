@@ -13,21 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.semi.admin.product.model.service.CateService;
 import com.kh.semi.admin.product.model.vo.Category;
 
-@WebServlet("/selectCategory.product")
-public class SelectCategoryListServlet extends HttpServlet {
+@WebServlet("/selectCateInProduct.product")
+public class SelectCategoryInProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectCategoryListServlet() {
+    public SelectCategoryInProduct() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Category> list = new CateService().selectCategory();
+		ArrayList<Category> list1 = new CateService().selectCategory();
 		
 		String page = "";
-		if(list != null) {
-			request.setAttribute("list", list);
-			page = "views/admin/product/adminMainProduct.jsp";
+		if(list1 != null) {
+			request.setAttribute("list1", list1);
+			page = "views/admin/product/adminSimpleAdd.jsp";
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
