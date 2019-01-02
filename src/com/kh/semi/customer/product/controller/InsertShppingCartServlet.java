@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.kh.semi.customer.board.model.vo.PageInfo;
 import com.kh.semi.customer.product.model.service.ProductService;
-import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 
 /**
@@ -64,7 +63,7 @@ public class InsertShppingCartServlet extends HttpServlet {
 		
 		// 가져올 내용 : 상품 정보 : ProductCode, UserId, OptionNum, Amount
 		 int ProductCode = (int) request.getAttribute("ProductCode");
-		 int UserId = (int) request.getAttribute("UserId");
+		 String UserId =  (String) request.getAttribute("UserId");
 		 int OptionNum = (int) request.getAttribute("OptionNum");
 		 int Amount = (int) request.getAttribute("Amount");
 		
