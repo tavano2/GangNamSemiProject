@@ -32,9 +32,9 @@ public class PromotionService {
 		return list;
 	}
 
-	public int getListCount() {
+	public int getListCount(SelectUserVo suv) {
 		Connection con = getConnection();
-		int listCount = new PromotionDao().getListCount(con);
+		int listCount = new PromotionDao().getListCount(con, suv);
 		close(con);
 		return listCount;
 	}
@@ -82,6 +82,19 @@ public class PromotionService {
 		Connection con = getConnection();
 		int result = 0;
 		result = new PromotionDao().getProductListCount(con, selectMap);
+		close(con);
+		return result;
+	}
+
+	public int createCouponAllRate(HashMap<String, Object> map) {
+		int result=0;
+		Connection con = getConnection();
+		result = new PromotionDao().createCouponAllRate(con, map);
+		if(result>0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
 		close(con);
 		return result;
 	}

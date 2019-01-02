@@ -119,17 +119,27 @@
 													<div class="menu" id="smallCateg"></div>
 												</div>
 										<div class="categoryButton categoryAddBtn">
-											<button class="ui secondary button" id="addCateg">추가</button>
+											<button class="ui secondary button" id="addCategBtn">추가</button>
 										</div>
 									</div>
-									<div class="categoryAddContent"></div>
+									<div class="categoryAddContent">
+									<table class="ui celled table">
+										<tbody id="addCateg">
+											<tr align="center">
+												<td>대분류</td>
+												<td>중분류</td>
+											</tr>
+										</tbody>
+									</table>
+									
+									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 					<div class="categoryButton">
-						<button class="ui secondary button">저장하기</button>
-						<button class="ui button">닫기</button>
+						<button class="ui secondary button" id="saveBtn">저장하기</button>
+						<button class="ui button" id="closeBtn">닫기</button>
 					</div>
 					<!-- 내용의끝 -->
 				</div>
@@ -186,20 +196,26 @@
 				}
 			});		
 			
-			$("#addCateg").click(function(){
-				$table=$("<table>").addClass("ui celled table resultTable");
-				$tbody=$("<tbody>");
+			$("#addCategBtn").click(function(){							
+				$tbody=$("#addCateg");
 				$tr=$("<tr align='center'>");
 				$td1=$("<td>");
 				$td2=$("<td>");
 				$tr.append($td1.text($("#selectBigCateg").val()));
 				$tr.append($td2.text($("#selectMiddleCateg").val()))
-				$tbody.append($tr);
-				$table.append($tbody);
-				
-				$(".categoryAddContent").append($table);
-				
+				$tbody.append($tr);						
 			});
+		})
+		
+		$("#saveBtn").click(function(){
+			$table=$("<table>").addClass("ui celled table").attr("id","slectedCateg");
+			$table.append($tbody);
+			window.opener.$("#selectedValue").append($table);
+			window.self.close();
+		})
+		
+		$("#closeBtn").click(function(){
+			window.self.close();
 		})
 	</script>
 </body>
