@@ -46,9 +46,6 @@
 	width: 600px;
 }
 
-#productSelectTable {
-	height: 500px;
-}
 
 .productTd {
 	background-color: #f9fafb;
@@ -85,6 +82,13 @@
 	width: 250px;
 	margin-left: auto;
 	margin-right: auto;
+}
+.addTr:hover {
+	cursor: pointer;
+}
+
+.removeTr:hover{
+	cursor:pointer;
 }
 </style>
 </head>
@@ -137,6 +141,7 @@
 													<div class="default text">소분류</div>
 													<div class="menu" id="smallCateg"></div>
 												</div>
+												</td>
 										</tr>
 										<tr>
 											<td>상품검색</td>
@@ -200,8 +205,8 @@
 
 						<div class="one wide column middle aligned centered ">
 							<div class="productIcon">
-								<i class="arrow big right icon"></i> <br> <br> <br>
-								<i class="arrow big left icon"></i>
+								<i class="arrow big right icon addTr"></i> <br> <br> <br>
+								<i class="arrow big left icon removeTr"></i>
 							</div>
 						</div>
 						<!-- 두번째 테이블 -->
@@ -210,33 +215,36 @@
 								<table class="ui celled table" id="productSelectTable">
 									<tbody>
 										<tr>
-											<td class="productTd" colspan="3">선택된 상품</td>
+											<td class="productTd" colspan="3" height="50px;">선택된 상품</td>
 										</tr>
 										<tr style="text-align: center">
-											<td width="70px" height="20px"></td>
-											<td width="200px">상품명</td>
+											<td width="120px" height="20px">상품코드</td>
+											<td width="150px">상품명</td>
 											<td width="150px">판매가</td>
 										</tr>
+									</tbody>
+									<tbody id="baseTr">
 										<tr>
-											<td colspan="3" height="350px">&nbsp;</td>
-										</tr>
+											<td colspan="3" height="100px" align="center">적용할 상품을 추가해주세요</td>
+										</tr>									
+									</tbody>
+									<tbody id="selectedProductList">
+									
+									</tbody>
+									<tbody>
 										<tr style="text-align: right">
-											<td class="productTd" colspan="3">
-												<button class="ui small secondary button">삭제</button>
+											<td class="productTd" colspan="3" height="50px;">
+												<button class="ui small secondary button" id="selectedReset">비우기</button>
 											</td>
 										</tr>
-										<tr>
-											<td class="productTd" colspan="3">페이지 넣어야함</td>
-										</tr>
-
 									</tbody>
 								</table>
 							</div>
 						</div>
 						<br> <br>
 						<div class="btnDiv">
-							<button class="ui secondary button">저장하기</button>
-							<button class="ui button">닫기</button>
+							<button class="ui secondary button" id="saveBtn">저장하기</button>
+							<button class="ui button" id="closeBtn">닫기</button>
 						</div>
 
 						<!-- 내용의끝 -->
@@ -270,7 +278,8 @@
 					url : "<%=request.getContextPath()%>/ProductSelect.pm",
 					type : "get",
 					success : function(data) {
-						console.log(data);
+						console.log(data
+								);
 						 for (var i = 0; i < data.length; i++) {
 							 if(data[i].CATEG_LEVEL=="0"){
 								var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
@@ -292,72 +301,116 @@
 					}
 				});			
 			});
+			
+			
+			
+			
 			$("#selectProductBtn").click(function(){
+				selectResult(1);
+			});
+
+			
+			var  selectResult = function(inputCurrentPage){
+				currentPage = inputCurrentPage;
 				var $tfoot=$("#tfootResult");
 				$.ajax({
 					url : "<%=request.getContextPath()%>/ProductSelectResult.pm",
 					type : "get",
-					data:{selectBigCateg:$("#selectBigCateg").val(),selectMiddleCateg:$("#selectMiddleCateg").val(),selectOption:$("#selectOption").val(),selectValue:$("#selectName").val()},
+					data:{selectBigCateg:$("#selectBigCateg").val(),selectMiddleCateg:$("#selectMiddleCateg").val(),selectOption:$("#selectOption").val(),selectValue:$("#selectName").val(),currentPage:currentPage},
 					success : function(data) {							
 						console.log(data);
 						$tfoot.empty();
+						console.log(data["selectList"].length);
+						if(data["selectList"].length==0){
+							console.log("test");
+							var $tr = $("<tr align='center'>")
+							var $td=$("<td colspan=3>").text("검색 결과가 없습니다.");
+							$tr.append($td);
+							$tfoot.append($tr);
+						}
 						for(var i = 0; i < data["selectList"].length; i++){
-							var $tr = $("<tr>");
-							var $tdCode = $("<td>").text(decodeURIComponent(data["selectList"][i].PRODUCT_CODE));
-							var $tdName = $("<td>").text(decodeURIComponent(data["selectList"][i].PRODUCT_NAME));
-							var $tdPrice = $("<td>").text(decodeURIComponent(data["selectList"][i].PRODUCT_PRICE));
-							
-							$tr.append($tdCode);
-							$tr.append($tdName);
-							$tr.append($tdPrice);
-							$tfoot.append($tr); 						
+								var $tr = $("<tr>").click(function(){
+									if($(this).hasClass("active")){
+										$(this).removeClass("active");
+									}else{
+										$(this).addClass("active");
+									}
+								});
+								var $tdCode = $("<td>").text(decodeURIComponent(data["selectList"][i].PRODUCT_CODE));
+								var $tdName = $("<td>").text(decodeURIComponent(data["selectList"][i].PRODUCT_NAME));
+								var $tdPrice = $("<td>").text(decodeURIComponent(data["selectList"][i].PRODUCT_PRICE));
+								
+								$tr.append($tdCode);
+								$tr.append($tdName);
+								$tr.append($tdPrice);
+								$tfoot.append($tr);												 					
 						}
 						var $pageDiv=$("<div>").addClass("ui pagination menu");
-						var $aDl = $("<a>").addClass("icon item");
-						var $iDl = $("<i>").addClass("angel double left icon");
+						var $aDl = $("<a>").addClass("icon item").click(function(){
+							selectResult(1);
+						});
+						var $iDl = $("<i>").addClass("angle double left icon");
+						
+						$aDl.append($iDl);
+						$pageDiv.append($aDl);
 						
 						
-						
-						
-						if(data["pi"].currentPage<=1){
-							var $aL = $("<a>").addClass("icon item");
-							var $iL = $("<i>").addClass("angel left icon");						
-							$aL.append(#iL);
-						}else{
-							
-						}
-						
-						for(var p = data["pi"].startPage; p <= data["pi"].endPage; p++){
-							if(){
+
+						var $aL = $("<a>").addClass("icon item").click(function(){
+							if(currentPage==1){
 								
 							}else{
-								
+								selectResult(currentPage-1);
 							}
+						});
+						var $iL = $("<i>").addClass("angle left icon");						
+						$aL.append($iL);
+						$pageDiv.append($aL);
+			
+						for(var p = data["pi"].startPage; p <= data["pi"].endPage; p++){
+								var $P = $("<a>").addClass("item").text(p).click(function(){
+									selectResult($(this).text());
+								});
+								$pageDiv.append($P);
 						}
-						if(data["pi"].currentPage>=data["pi"].maxPage){
-							
-						}else{
-							
-						}
 						
+						var $aR = $("<a>").addClass("icon item").click(function(){
+							if(currentPage>=data["pi"].endPage){
+								
+							}else{
+								selectResult(currentPage+1);
+							}
+						});
+						var $iR = $("<i>").addClass("angle right icon");
+						$aR.append($iR);
+						$pageDiv.append($aR);
 						
+						var $aDr = $("<a>").addClass("icon item").click(function(){
+							if(data["pi"].endPage==0){
+								
+							}else{
+								selectResult(data["pi"].endPage);
+							}						
+						});
+						var $iDr = $("<i>").addClass("angle double right icon");
 						
+						$aDr.append($iDr);
+						$pageDiv.append($aDr);
 						
 						var $pageTd=$("<td colspan='3'>").text(" ");
-						var $pageTr=$("<tr>");						
-
-						$tr.append($pageTd);
-						$tfoot.append($pageTr);
+						var $pageTr=$("<tr align='center'>");						
 						
-						
-						
-						
+						$pageTd.append($pageDiv);
+						$pageTr.append($pageTd);
+						$tfoot.append($pageTr);								
 					},
 					error : function(data) {
 						console.log("실패")
 					}
 				});			
-			});
+			}
+			
+			
 			$("#selectBigCateg").change(function(){
 				$.ajax({
 					url:"<%=request.getContextPath()%>/selectMiddleCateg.pm",
@@ -379,6 +432,55 @@
 					}
 				});
 			});
+			
+			$(".addTr").click(function(){
+				$("#baseTr").empty();
+				$("#tfootResult").children().each(function(){
+					if($(this).hasClass("active")){
+						$("#selectedProductList").append($(this).clone().
+								click(function(){
+									if($(this).hasClass("active")){
+										$(this).removeClass("active");
+									}else{
+										$(this).addClass("active");
+									}
+								}));					
+				
+						$(this).removeClass("active");
+					}else{
+						
+					}
+					$("#selectedProductList").children().each(function(){
+						$(this).removeClass("active");
+					})
+				})
+			})
+			
+			$(".removeTr").click(function(){
+				$("#selectedProductList").children().each(function(){
+					if($(this).hasClass("active")){
+						$(this).remove();
+					}
+				})
+			});
+			
+			$("#selectedReset").click(function(){
+				$("#selectedProductList").empty();
+			});
+	
+		$("#saveBtn").click(function(){		
+			$table=$("<table>").addClass("ui celled table");
+			$tbody=$("<tbody");
+			$tr=$("<tr>");
+			$tr.append($("#selectedProductList"));
+			$tbody.append($tr);
+			$table.append($tbody)
+			window.opener.$("#selectedValue").append($table);
+			window.self.close();
+		})
+		$("#closeBtn").click(function(){
+			window.self.close();
+		})
 		</script>
 </body>
 

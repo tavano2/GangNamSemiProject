@@ -215,9 +215,11 @@ span {
 											</div>
 										</td>
 									</tr>
-									<tr class="cuponTr">
-										<td class="cuponTd">&nbsp;</td>
-										<td></td>
+									<tr class="cuponTr" >
+										<td class="cuponTd"></td>
+										<td id="selectedValue" >
+															
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -326,13 +328,15 @@ span {
 		});
 
 		$("#allSelect").change(function() {
-			
+			$("#selectedValue").empty();
 		})
 		$("#productSelect").change(function() {
-			window.open("<%=request.getContextPath()%>/views/admin/promotion/ProductSelect.jsp", "제품선택", "width=1200, height=1200, left=100, top=50");
+			$("#selectedValue").empty();
+			 window.open("<%=request.getContextPath()%>/views/admin/promotion/ProductSelect.jsp", "제품선택", "width=1250, height=1200, left=100, top=50"); 
 		})
 		$("#categorySelect").change(function() {
-			window.open("<%=request.getContextPath()%>/views/admin/promotion/CategorySelect.jsp", "제품선택", "width=1200, height=1200, left=100, top=50")
+			$("#selectedValue").empty();
+			window.open("<%=request.getContextPath()%>/views/admin/promotion/CategorySelect.jsp", "제품선택", "width=1200, height=1200, left=100, top=50");
 		})
 	</script>
 </body>

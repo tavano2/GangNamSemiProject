@@ -63,16 +63,16 @@ public class ProductSelectResult extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
-		limit = 1;
+		limit = 10;
 		
 		int listCount = new PromotionService().getProductListCount(selectMap);
 		// 총 페이지 수 계산
 		// 예를 들어 목록 수가 123개면 페이지수는 13페이지가 필요하다.
 		maxPage = (int) ((double) listCount / limit + 0.9);
 		// 현재 페이지에 보여줄 시작페이지 수
-		startPage = (((int) ((double) currentPage / (limit+9) + 0.9)) - 1) * limit + 1;
+		startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
 		
-		endPage = startPage + 10 - 1;
+		endPage = startPage + 5 - 1;
 		
 		if(maxPage < endPage) {
 			endPage = maxPage;
