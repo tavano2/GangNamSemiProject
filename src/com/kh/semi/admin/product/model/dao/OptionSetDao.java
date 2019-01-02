@@ -82,4 +82,42 @@ public class OptionSetDao {
 		return list;
 	}
 
+	public int insertOptionSet(Connection con, String memo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertOptionSet");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, memo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertOptionSetMM(Connection con, String[] optionNum) {
+
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertOptionSetMM");
+		try {
+			pstmt = con.prepareStatement(query);
+			for(int i = 0; i < optionNum.length; i++) {
+				pstmt.setString(1, optionNum[i]);
+				
+				result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }

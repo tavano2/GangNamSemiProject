@@ -35,8 +35,8 @@
       margin-left:90px;
    }
    .cateNames:hover{
-         background:darkgray;
-         cursor:pointer;
+      background:darkgray;
+      cursor:pointer;
    }
 </style>
 </head>
