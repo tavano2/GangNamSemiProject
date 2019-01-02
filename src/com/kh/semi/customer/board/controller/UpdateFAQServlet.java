@@ -20,16 +20,16 @@ import com.kh.semi.customer.common.MyFileRenamePolicy;
 import com.oreilly.servlet.MultipartRequest;
 
 /**
- * Servlet implementation class InsertFAQBoardServlet
+ * Servlet implementation class UpdateFAQServlet
  */
-@WebServlet("/insertFAQ.bo")
-public class InsertFAQBoardServlet extends HttpServlet {
+@WebServlet("/updateFAQ.bo")
+public class UpdateFAQServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertFAQBoardServlet() {
+    public UpdateFAQServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -60,6 +60,7 @@ public class InsertFAQBoardServlet extends HttpServlet {
 				}
 			}
 			
+			int boardId = Integer.parseInt(multiRequest.getParameter("boardId"));
 			String categ = multiRequest.getParameter("categ");
 			String title = multiRequest.getParameter("title");
 			String userId = multiRequest.getParameter("userId");
@@ -71,6 +72,7 @@ public class InsertFAQBoardServlet extends HttpServlet {
 			String content = multiRequest.getParameter("content");
 			
 			Board b = new Board();
+			b.setBoardId(boardId);
 			b.setBoardCate(categ);
 			b.setBoardTitle(title);
 			b.setUserId(userId);
@@ -89,7 +91,7 @@ public class InsertFAQBoardServlet extends HttpServlet {
 				fileList.add(at);
 			}
 			
-			int result = new BoardService().insertFAQ(b, fileList);
+			int result = new BoardService().updateFAQ(b);
 			
 			if(result > 0) {
 				response.sendRedirect(request.getContextPath()+"/selectFAQList.bo");
@@ -103,7 +105,7 @@ public class InsertFAQBoardServlet extends HttpServlet {
 					failedFile.delete();
 				}
 				
-				request.setAttribute("msg", "FAQ 작성 실패!");
+				request.setAttribute("msg", "FAQ 수정 실패!");
 				request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
 			}
 		}
