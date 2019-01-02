@@ -5,10 +5,31 @@ package com.kh.semi.customer.product.model.vo; // "Model" deals with "Business L
 
 public class ShoppingCartPd{ // VO | The Result.
 
-
-	private int ProductCode;
+	//(comment) : 변수의 경우, 첫 글자는 소문자로 작성합니다. ex) productCode
+	//(comment) : productCode는 자료형이 String입니다. 테이블 정의서 참조. number이면 int, varchar이면 String.
+	//(comment) : optionNum은 자료형이 String입니다.
+	//(comment) : amount는 int형이 맞습니다.
+	//(comment) : 때에 따라서 number(10, 2)이런식으로 적혀있을 경우, 10은 자리수, 2는 소수점을 나타내므로 소수점을 표현할 수 있는 double로 선언을 해야합니다.
+	//(comment) : 현 vo에는 double형은 없습니다.
+	//(comment) : 자료형이 바뀌기 때문에 이후 수정해야 할 코드들이 많을겁니다.
+	
+	//(comment) : 자료형 수정에 따라 생성자 재 작성 바람.
+	//(comment) : Alt+Shift+s 클릭 후, Generate Constructor using fields.. -> Select All -> OK.
+	
+	//(comment) : setter 미완성. getter setter 삭제 후 재 작성 바람.
+	//(comment) : Alt+Shift+s 클릭 후, Generate Getters And Setters -> Select All -> OK.
+	
+	//(comment) : toString 오버라이드.
+	//(comment) : Alt+Shift+s 클릭 후, Generate toString() -> Fields Check -> OK.
+	
+	//(comment) : SelectShoppingCartServlet 으로..
+	
+	//(comment) : 해당 코멘트는 수정 및 확인 후 삭제 바랍니다.
+	
+	
+	private int ProductCode;	//자료형 수정바람.
 	private String UserId;
-	private int OptionNum;
+	private int OptionNum;	//자료형 수정바람.
 	private int Amount;
 	
 	
