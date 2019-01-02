@@ -421,34 +421,31 @@ public class ProductDao {
 // VO : Value Object. = Its' an Object Class. It exists for exchanging data between classes.
 // VO = DTO (Data Transfer Object) = Domain Object = Bean = Entity
 	
-	public ArrayList<ShoppingCartPd> selectCartList(Connection con) {
-		// ▲ <ShoppingCartPd> = VO Class.
+	public ArrayList<ShoppingCartPd> selectCartList(ArrayList<ShoppingCartPd> cartList, int currentPage,
+			int limit) throws SQLException {// ▲ <ShoppingCartPd> = VO Class.
+		
+		Connection con  = null;
 		PreparedStatement pstmt = null;// PreparedStatement : An object that represents a pre-compiled SQL statement. 
 		ResultSet rset = null;
-		ArrayList<ShoppingCartPd> cart = null;
+		cartList = null;
 		
 		String query = prop.getProperty("selectCartList");// "selectCartList" > text.properties (sql-product-QUERY)
 		// prop :	▲ private Properties prop = new Properties();
 		try {
 			
-			/**/ con = JDBCTemplate.getConnection(); 
-			
-			pstmt = (PreparedStatement) con.createStatement();
-			
+			con = JDBCTemplate.getConnection();
+			pstmt = con.prepareStatement(query);
 			rset = pstmt.executeQuery(query);
 			
-			cart = new ArrayList<ShoppingCartPd>();
+			cartList = new ArrayList<ShoppingCartPd>();
 			
-			while(rset.next()) { //next() : Moves the cursor forward one row from its current position.
+		while(rset.next()) { // #1 cartPd //next() : Moves the cursor forward one row from its current position.
 				ShoppingCartPd cartPd = new ShoppingCartPd(); // ShoppingCartPd > VO. The Result.
-				// #1 cartPd
-				
 				cartPd.setProductCode(rset.getInt("PRODUCT_CODE"));
 				cartPd.setUserId(rset.getInt("USER_ID"));
 				cartPd.setOptionNum(rset.getInt("OPTION_NUM"));
 				cartPd.setAmount(rset.getInt("AMOUNT"));
-				
-				cart.add(cartPd); // Add "cartProDuct" into "cart" // ▲ ArrayList<ShoppingCartPd> cart = null;
+				cartList.add(cartPd); // Add "cartProDuct" into "cart" // ▲ ArrayList<ShoppingCartPd> cart = null;
 			}
 			
 			
@@ -460,14 +457,16 @@ public class ProductDao {
 		}		
 		
 		
-		return cart;
+		return cartList;
 	}
 	
 	public ArrayList<ShoppingCartPd> SelectShoppingCartServlet(Connection con, ShoppingCartPd cartList, int currentPage,
 			int limit) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
+
+	
 	
 	 //------------------------ DAO ---------------- Access *directly*. ------------------------------------------------------------------------------------------------
 	// 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO) 
@@ -1088,6 +1087,7 @@ public class ProductDao {
 
 		return result;
 	}
+
 
 
 

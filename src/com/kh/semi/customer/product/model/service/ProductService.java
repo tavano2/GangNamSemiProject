@@ -136,7 +136,6 @@ public class ProductService {
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------------------
-
 	
 	// 장바구니 | Shopping Cart : 조회 | selectCartList  | model/service/ProductService.java
 	public ArrayList<ShoppingCartPd> selectCartList(ShoppingCartPd cartList, int currentPage, int limit) {
@@ -145,9 +144,6 @@ public class ProductService {
 		close(con);
 		return cart;
 	}
-	
-
-
 	
 	// ----------------------------------------------------------------------------------------------------------------------------
 	
