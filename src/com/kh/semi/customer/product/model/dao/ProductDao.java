@@ -946,11 +946,11 @@ public class ProductDao {
 			pstmt=con.prepareStatement(query);
 			pstmt.setString(1, productCode);
 			pstmt.setString(2, userId);
+			//System.out.println(userId+productCode);
 			rset = pstmt.executeQuery();
 		
 			
 			list = new ArrayList<ReviewOption>();
-			
 			while(rset.next()) {
 				reviewOption = new ReviewOption();
 				reviewOption.setOptionName(rset.getString("OPTION_NAME"));
@@ -959,7 +959,7 @@ public class ProductDao {
 				list.add(reviewOption);
 			}
 			
-			System.out.println("dd"+list);
+			//System.out.println("dd"+list);
 
 			
 		} catch (SQLException e) {
@@ -974,7 +974,7 @@ public class ProductDao {
 	}
 
 	//리뷰게시판-제목내용 insert!
-	public int insertReviewTitleContent(Connection con, String title, String content, String boardId,String userId) {
+	public int insertReviewTitleContent(Connection con, String title, String content, String boardId,String userId,String productCode) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -984,7 +984,7 @@ public class ProductDao {
 			pstmt.setString(1, title);
 			pstmt.setString(2, content);
 			pstmt.setString(3, userId);
-			pstmt.setInt(4, Integer.parseInt(boardId));
+			pstmt.setString(4, productCode);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -1028,7 +1028,7 @@ public class ProductDao {
 	}
 	//리뷰게시판-옵션쓰 insert!
 	public int insertReviewT(Connection con, double youWeight, String youSize, double youHeight,
-			String[] selectOptionArray, String boardId, String userProductNum,String userId,String productCode) {
+			String[] selectOptionArray,int bid, String userProductNum,String userId) {
 
 		//review테이블데이터 추가(게시물 아이디,주문내역번호,옵션번호,키,몸무게,사이즈)
 		PreparedStatement pstmt = null;
@@ -1039,12 +1039,14 @@ public class ProductDao {
 		try {
 			for(int i=0; i<selectOptionArray.length;i++) {
 				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, Integer.parseInt(boardId));
-				pstmt.setString(2, productCode);
+				pstmt.setInt(1, bid);
+				pstmt.setString(2, userProductNum);
 				pstmt.setString(3, selectOptionArray[i]);
 				pstmt.setDouble(4,youHeight);
 				pstmt.setDouble(5, youWeight);
 				pstmt.setString(6, youSize);
+				
+				//System.out.println(" "+boardId+" "+userProductNum+" "+selectOptionArray[0]+" "+youHeight+" "+youWeight+" "+youSize);
 				
 				result +=pstmt.executeUpdate();
 			}

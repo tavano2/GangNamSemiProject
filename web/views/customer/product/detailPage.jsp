@@ -394,8 +394,7 @@
 						%>
 						<tr>
 							<td><%=ppp.getBoardNum()%></td>
-							<td><%=ppp.getBoardTitle()%>
-								<button onclick="detailReview();">클릭쓰</button></td>
+							<td><%=ppp.getBoardTitle()%></td>
 							<td><%=ppp.getUserId()%></td>
 							<td>별다섯</td>
 						<input type="hidden" value="<%=ppp.getBoardId() %>">

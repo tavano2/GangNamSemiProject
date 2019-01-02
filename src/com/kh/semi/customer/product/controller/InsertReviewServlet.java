@@ -27,7 +27,7 @@ import oracle.jdbc.OracleConnection.CommitOption;
 public class InsertReviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-   
+   //QnA insert!!!
     public InsertReviewServlet() {
         super();
 
@@ -53,8 +53,10 @@ public class InsertReviewServlet extends HttpServlet {
 			while(files.hasMoreElements()) {
 				String name = files.nextElement();
 				
-				saveFiles.add(multiRequest.getFilesystemName(name));
-				orginFiles.add(multiRequest.getOriginalFileName(name));
+				if(multiRequest.getFilesystemName(name) != null) {
+					saveFiles.add(multiRequest.getFilesystemName(name));
+					orginFiles.add(multiRequest.getOriginalFileName(name));
+				}
 			}
 			//키 몸무게 사이즈 선택옵션
 			String title = multiRequest.getParameter("title");	//제목

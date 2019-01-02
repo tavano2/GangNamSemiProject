@@ -95,8 +95,8 @@
 					<div class="ui input">
 						<input type="hidden" value="<%=boardId %>" name="boardId">
 						<input type="hidden" value="<%=productCode %>" name="productCode">
-						<input type="text" value="<%=reviewOption.get(0).getOrderDnum()%>" name="userProductNum" style="background-color:transparent;border:0 solid black; width:250px;"  readonly>
-					</div>
+ 						<input type="text" value="<%=reviewOption.get(0).getOrderDnum()%>" name="userProductNum" style="background-color:transparent;border:0 solid black; width:250px;"  readonly>
+ 					</div>
 				</td>
 			</tr>
 		<tr>
