@@ -309,7 +309,7 @@
 								$item1 = $("<a class='item' >").text(i);
 								$paginationDiv.append($item1);
 							}else{
-								currentPageJs = i;
+								currentPageJs2 = i;
 								$item23 = $("<a class=\"icon item\" onclick=\"" +"qnaOnePageMove("+ i + ");" +"\">").text(i);
 								$paginationDiv.append($item23);
 							}
