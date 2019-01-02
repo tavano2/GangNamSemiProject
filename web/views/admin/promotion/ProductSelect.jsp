@@ -184,7 +184,7 @@
 												</div>
 											</td>
 										</tr>
-										<tr align="center">
+										<tr align="center" id="titleTr">
 											<td>상품코드</td>
 											<td>상품명</td>
 											<td>판매가</td>
@@ -329,7 +329,7 @@
 							$tfoot.append($tr);
 						}
 						for(var i = 0; i < data["selectList"].length; i++){
-								var $tr = $("<tr>").click(function(){
+								var $tr = $("<tr align='center'>").click(function(){
 									if($(this).hasClass("active")){
 										$(this).removeClass("active");
 									}else{
@@ -469,12 +469,9 @@
 			});
 	
 		$("#saveBtn").click(function(){		
-			$table=$("<table>").addClass("ui celled table");
-			$tbody=$("<tbody");
-			$tr=$("<tr>");
-			$tr.append($("#selectedProductList"));
-			$tbody.append($tr);
-			$table.append($tbody)
+			$table=$("<table>").addClass("ui celled table").attr("id","slectedProduct");
+			$("#selectedProductList").prepend($("#titleTr"));
+			$table.append($("#selectedProductList"))
 			window.opener.$("#selectedValue").append($table);
 			window.self.close();
 		})

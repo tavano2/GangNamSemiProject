@@ -25,7 +25,8 @@
 
 <!-- Admin Common JS -->
 <script src="/semi/js/admin/common/adminMain.js"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- alert CDN -->
 
 <style>
 .first-col td:first-child {
@@ -176,14 +177,9 @@ span {
 												<button class="ui button" type="button" id="selectMonth">1개월</button>
 												<button class="ui button" type="button" id="selectYear">1년</button>
 											</div>
-											<div class="date-range" id="dataRange">
-												<div class="ui input">
-													<input type="date" id="startDate" name="startDate">
-												</div>
-												<span>~</span>
-												<div class="ui input">
-													<input type="date" id="endDate" name="endDate">
-												</div>
+											<div class="ui input focus cuponContentInput" style="width:200px;">
+												<input type="text" placeholder="사용기간을 입력해주세요"
+													name="couponDate" id="couponDate">
 											</div>
 										</td>
 									</tr>
@@ -258,62 +254,21 @@ span {
 			$(this).addClass('active');
 		});
 
-		function dateFunction(today) {
-			var dd = today.getDate();
-			var mm = today.getMonth() + 1; //January is 0!
-			var yyyy = today.getFullYear();
-			if (dd < 10) {
-				dd = '0' + dd
-			}
-			if (mm < 10) {
-				mm = '0' + mm
-			}
-			today = yyyy + '-' + mm + '-' + dd;
-			return today;
-		};
+		
 		$(function() {
 			$("div[name=discountMethod]").html("할인율").css("color", "black");
-			var today = new Date();
-			today = dateFunction(today);
-
-			$("#selectToday").focus();
-			$("#startDate").val(today);
-			$("#endDate").val(today);
-
+			
 			$("#selectToday").click(function() {
-				today = new Date();
-				today = dateFunction(today);
-				$("#startDate").val(today);
+				$("#couponDate").val(1);
 			});
 			$("#selectWeek").click(function() {
-				var currentDate = new Date();
-				var date = currentDate.getTime();
-				var dateResult = date - (1000 * 60 * 60 * 24 * 7);
-				today = new Date(dateResult);
-				today = dateFunction(today);
-				console.log(today);
-				$("#startDate").val(today);
+				$("#couponDate").val(7);
 			});
 			$("#selectMonth").click(function() {
-				var currentDate = new Date();
-				var date = currentDate.getTime();
-				var dateResult = date - (1000 * 60 * 60 * 24 * 30);
-				today = new Date(dateResult);
-				today = dateFunction(today);
-				console.log(today);
-				$("#startDate").val(today);
+				$("#couponDate").val(30);
 			});
 			$("#selectYear").click(function() {
-				var currentDate = new Date();
-				var date = currentDate.getTime();
-				var dateResult = date - (1000 * 60 * 60 * 24 * 365);
-				today = new Date(dateResult);
-				today = dateFunction(today);
-				console.log(today);
-				$("#startDate").val(today);
-			});
-			$("#selectBtn").click(function() {
-				$("#selectForm").submit();
+				$("#couponDate").val(365);
 			});
 		});
 
@@ -325,6 +280,26 @@ span {
 			console.log($("#startDate").val());//시작일
 			console.log($("#endDate").val());//만기일
 			//$("#createCouponForm").submit();
+			if($("#allSelect").is(":checked")){
+				$.ajax({
+					url:"<%=request.getContextPath()%>/createCouponAll.pm",
+					type:"get",
+					data:{couponName:$("#couponName").val(),couponExp:$("#couponExp").val(),discountMethod:$("div[name=discountMethod]").html(),couponDiscount:$("#couponDiscount").val(),couponDate:$("#couponDate").val()},
+					success:function(data){
+						
+					},
+					error:function(data){
+						console.log("실패")
+					}
+				});
+			}else if($("#productSelect").is(":checked")){
+				var productSelect = productSelect;
+				
+			}else if($("#categorySelect").is(":checked")){
+				var categorySelect = categorySelect;
+			}else{
+				swal("적용범위를 선택해주세요!");
+			}
 		});
 
 		$("#allSelect").change(function() {

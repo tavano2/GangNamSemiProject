@@ -71,14 +71,6 @@ public class PromotionDao {
 		String query= prop.getProperty("selectUser");
 		int startRow = (currentPage - 1) * limit + 1;
 		int endRow = startRow + limit - 1;
-		System.out.println("---------------------------------------");
-		System.out.println("검색 실행");
-		System.out.println(suv.getUserId());
-		System.out.println(suv.getUserClass().toUpperCase());
-		System.out.println(suv.getStartDate());
-		System.out.println(suv.getEndDate());
-		System.out.println(currentPage);
-		System.out.println(limit);
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, suv.getUserId());
@@ -104,10 +96,6 @@ public class PromotionDao {
 				map.put("date",rset.getDate("ORDER_DATE"));
 				map.put("userId",rset.getString("USER_ID"));
 				list.add(map);	
-				System.out.println("---------------------------------------");
-				System.out.println("검색결과");
-				System.out.println(map);
-				System.out.println("---------------------------------------");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -120,22 +108,30 @@ public class PromotionDao {
 		return list;
 	}
 
-	public int getListCount(Connection con) {
-		Statement stmt = null;
+	public int getListCount(Connection con, SelectUserVo suv) {
+		PreparedStatement pstmt = null;
 		int listCount = 0;
 		ResultSet rset = null;
 		
 		String query = prop.getProperty("listCount");
 		
 		try {
-			stmt = con.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, suv.getUserId());
+			pstmt.setString(2, suv.getUserClass().toUpperCase());	
+			pstmt.setDate(3, suv.getStartDate());
+			pstmt.setDate(4, suv.getEndDate());	
+			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				listCount=rset.getInt(1);
+				System.out.println(listCount);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
 		}
 		return listCount;
 	}
@@ -146,8 +142,6 @@ public class PromotionDao {
 		ResultSet rset = null;
 		HashMap<String,Object> map = null;
 		String query= prop.getProperty("selectAllUser");
-		System.out.println("---------------------------------------");
-		System.out.println("검색 실행");
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, suv.getUserId());
@@ -339,6 +333,27 @@ public class PromotionDao {
 			close(pstmt);
 			close(rset);
 		}	
+		return result;
+	}
+
+	public int createCouponAllRate(Connection con, HashMap<String, Object> map) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("createCouponAllRate");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, (String)map.get("couponName"));
+			pstmt.setInt(2, Integer.parseInt((String)map.get("couponDate")));
+			pstmt.setString(3, (String)map.get("couponExp"));
+			pstmt.setLong(4, Long.parseLong((String)(map.get("couponDiscount"))));
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		System.out.println(result);
 		return result;
 	}
 }
