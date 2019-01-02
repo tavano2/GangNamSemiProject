@@ -139,34 +139,37 @@ public class ProductService {
 
 	
 	// 장바구니 | Shopping Cart : 조회 | selectCartList  | model/service/ProductService.java
-	public ArrayList<ShoppingCartPd> selectCartList(int currentShoppingCart, int limitShoppingCart) {
+	public ArrayList<ShoppingCartPd> selectCartList(ShoppingCartPd cartList, int currentPage, int limit) {
 		Connection con = getConnection();
-		ArrayList<ShoppingCartPd> cart = null;
-		//cart  = new ProductDao().selectCartList(con, currentShoppingCart, limitShoppingCart);
-		
+		ArrayList<ShoppingCartPd> cart = new ProductDao().SelectShoppingCartServlet(con, cartList, currentPage, limit);
 		close(con);
-		
 		return cart;
 	}
+	
+
+
 	
 	// ----------------------------------------------------------------------------------------------------------------------------
 	
 	/*수정중*/ // 장바구니 | Shopping Cart > 품목 추가 | insertCartList  | model/service/ProductService.java
 	
-	public ArrayList<ShoppingCartPd> insertCartList(Connection con, ShoppingCartPd cart,  int currentPage, int limit) {
-		
-		return null;
-	}
-	
-	public ShoppingCartPd insertCartList(){
+	public ArrayList<ShoppingCartPd> insertCartList(ShoppingCartPd cart) {
 		Connection con = getConnection();
+		ArrayList<ShoppingCartPd> cartList  = null;
 		
-		ShoppingCartPd cart  = new ProductDao().insertCartList(con, null, 0, 0);
+		int result = new ProductDao().insertCartList(con,cart);
+		System.out.println("Service Result : " + result);
+		if(result>0) {
+			commit(con);
+			/*cartList = new ProductDao().insertCartList(con,cart);*/
+			
+		}else {
+			rollback(con);
+		}
 		
 		close(con);
 		
-		return cart;
-		
+		return cartList;
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------------------
@@ -184,7 +187,7 @@ public class ProductService {
 		int result = 0;
 		int count = 0;
 		for(String msg : product_code) {
-			count += new ProductDao().deleteCartList(con,null, msg);
+			/*count += new ProductDao().deleteCartList(con,null, msg);*/ // 수정중
 		}
 		if(product_code.length == count) {
 			commit(con);
@@ -349,6 +352,8 @@ public class ProductService {
 		
 		return result;
 	}
+
+	
 
 
 

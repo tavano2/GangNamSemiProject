@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.kh.semi.customer.board.model.vo.PageInfo;
 import com.kh.semi.customer.product.model.service.ProductService;
+import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 
 /**
@@ -58,12 +60,34 @@ public class InsertShppingCartServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
-		ArrayList<ShoppingCartPd> list = new ProductService().insertCartList(currentPage, limit);
+		/* -------------------- ▲ Pagination ▲ -------------------- */
 		
-		String page = ""; // Void...
-		if(list != null) {
+		// 가져올 내용 : 상품 정보 : ProductCode, UserId, OptionNum, Amount
+		 int ProductCode = (int) request.getAttribute("ProductCode");
+		 int UserId = (int) request.getAttribute("UserId");
+		 int OptionNum = (int) request.getAttribute("OptionNum");
+		 int Amount = (int) request.getAttribute("Amount");
+		
+		ShoppingCartPd cartProduct = new ShoppingCartPd();
+		
+		cartProduct.setProductCode(ProductCode);
+		cartProduct.setUserId(UserId);
+		cartProduct.setOptionNum(OptionNum);
+		cartProduct.setAmount(Amount);
+		
+		ArrayList<ShoppingCartPd> cartList = new ProductService().insertCartList(cartProduct);
+		
+		System.out.println(cartList);
+		
+		response.setContentType("application/json");
+		new Gson().toJson(cartList,response.getWriter());
+		
+		// --------------------------------------------------------------------------------------------------------------------
+		
+		String page = ""; // The void.
+		if(cartList != null) {
 			page = "/semi/views/customer/product/shoppingCart.jsp";
-			request.setAttribute("list", list);
+			request.setAttribute("cartList", cartList);
 			request.setAttribute("pi", pi);
 		}else {
 			page = "/semi/views/customer/common/errorPage.jsp";
@@ -73,6 +97,9 @@ public class InsertShppingCartServlet extends HttpServlet {
 		view.forward(request, response);
 	}
 
+	
+	
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
