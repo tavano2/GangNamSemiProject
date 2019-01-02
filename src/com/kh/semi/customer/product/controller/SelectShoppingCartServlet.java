@@ -86,6 +86,22 @@ public class SelectShoppingCartServlet extends HttpServlet {
 		}*/ 
 
 		// ------------------------------ Cart > 조회 ------------------------------ 
+		
+		String category = request.getParameter("category");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		
+		/*
+		 *  Ref. 
+	private int ProductCode;
+	private String UserId;
+	private int OptionNum;
+	private int Amount;
+		 */
+		
+		
+		
+		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 		
