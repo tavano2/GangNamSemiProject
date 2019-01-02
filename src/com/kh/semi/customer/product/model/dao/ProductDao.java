@@ -479,7 +479,7 @@ public class ProductDao {
 	}
 	
 	 //------------------------ DAO ---------------- Access *directly*. ------------------------------------------------------------------------------------------------
-/*수정중*/ 			// 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO)
+/*수정중*/ 			// 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO) 
     
 		public ShoppingCartPd insertCartList(Connection con, ShoppingCartPd cart,  int currentPage, int limit) {
 			
