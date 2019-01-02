@@ -112,7 +112,6 @@
                  </div>
                  <div class="square iconDiv">
                     <span class="iconSpan" id="rightBtn"><i class="arrow circle right icon"></i></span><br><br>
-                    <span class="iconSpan" id="leftBtn"><i class="arrow circle left icon"></i></span>
                  </div>
                  <div class="optionSquare1">
                  	<div class="optionSquare2">
