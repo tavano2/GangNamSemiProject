@@ -58,7 +58,22 @@
 	margin-top: 10px;
 	border: 1px solid black;
 }
+.ui selection dropdown{
+	display: inline-block;
+}
 </style>
+	<!-- J-query CDN -->
+	<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- Semantic UI JS CDN -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+	<!-- jQuery Custom Scroller CDN -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+	<!-- Admin Common JS -->
+	<script src="/semi/js/admin/common/adminMain.js"></script>
 </head>
 
 <body>
@@ -85,21 +100,29 @@
 								<td class="categoryTd">상품카테고리</td>
 								<td>
 									<div>
-										<div class="ui input">
-											<input type="text" placeholder="대분류">
-										</div>
-										<div class="ui input">
-											<input type="text" placeholder="중분류">
-										</div>
-										<div class="ui input">
-											<input type="text" placeholder="소분류">
-										</div>
+										<div class="ui selection dropdown">
+													<input type="hidden" name="gender" id="selectBigCateg">
+													<i class="dropdown icon"></i>
+													<div class="default text">대분류</div>
+													<div class="menu" id="bigCateg"></div>
+												</div>
+												<div class="ui selection dropdown">
+													<input type="hidden" name="gender" id="selectMiddleCateg">
+													<i class="dropdown icon"></i>
+													<div class="default text">중분류</div>
+													<div class="menu" id="middleCateg"></div>
+												</div>
+												<div class="ui selection dropdown">
+													<input type="hidden" name="gender" id="select"> <i
+														class="dropdown icon"></i>
+													<div class="default text">소분류</div>
+													<div class="menu" id="smallCateg"></div>
+												</div>
 										<div class="categoryButton categoryAddBtn">
-											<button class="ui secondary button">추가</button>
+											<button class="ui secondary button" id="addCateg">추가</button>
 										</div>
-
 									</div>
-									<div class="categoryAddContent">내용</div>
+									<div class="categoryAddContent"></div>
 								</td>
 							</tr>
 						</tbody>
@@ -119,19 +142,7 @@
 			<%@ include file="/views/admin/common/adminFooter.jsp"%>
 	</div>
 
-	<!-- J-query CDN -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<!-- Semantic UI JS CDN -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-	<!-- jQuery Custom Scroller CDN -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-	<!-- Admin Common JS -->
-	<script src="/semi/js/admin/common/adminMain.js"></script>
 
 	<script>
 		$('#sticky1').sticky(); //네이바 상단 고정
@@ -146,6 +157,50 @@
 			$('.ui .item').removeClass('active');
 			$(this).addClass('active');
 		});
+		
+		$(function(){
+			$.ajax({
+				url : "<%=request.getContextPath()%>/ProductSelect.pm",
+				type : "get",
+				success : function(data) {
+					console.log(data
+							);
+					 for (var i = 0; i < data.length; i++) {
+						 if(data[i].CATEG_LEVEL=="0"){
+							var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
+							var $bigCateg = $("#bigCateg");
+							$bigCateg.append($div);
+						 } else if(data[i].CATEG_LEVEL=="1"){
+							 var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
+								var $middleCateg = $("#middleCateg");
+								$middleCateg.append($div);
+						 }else{
+							 var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
+								var $smallCateg = $("#smallCateg");
+								$smallCateg.append($div);
+						 }	 					
+					} 
+				},
+				error : function(data) {
+					console.log("실패")
+				}
+			});		
+			
+			$("#addCateg").click(function(){
+				$table=$("<table>").addClass("ui celled table resultTable");
+				$tbody=$("<tbody>");
+				$tr=$("<tr align='center'>");
+				$td1=$("<td>");
+				$td2=$("<td>");
+				$tr.append($td1.text($("#selectBigCateg").val()));
+				$tr.append($td2.text($("#selectMiddleCateg").val()))
+				$tbody.append($tr);
+				$table.append($tbody);
+				
+				$(".categoryAddContent").append($table);
+				
+			});
+		})
 	</script>
 </body>
 
