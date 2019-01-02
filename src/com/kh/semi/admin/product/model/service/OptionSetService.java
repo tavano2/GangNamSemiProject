@@ -24,5 +24,33 @@ public class OptionSetService {
 		
 		return list;
 	}
+
+	public int insertOptionSet(String memo) {
+		Connection con = getConnection();
+		int result = new OptionSetDao().insertOptionSet(con, memo);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		
+		return result;
+	}
+
+	public int insertOptionSetMM(String[] optionNum) {
+		Connection con = getConnection();
+		int result = new OptionSetDao().insertOptionSetMM(con, optionNum);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		
+		return result;
+	}
 	
 }
