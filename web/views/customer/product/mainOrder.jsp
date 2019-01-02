@@ -10,7 +10,7 @@
 	// 총 상품 금액과 유저에 따라 배송비 책정
 	int totalPirce = 0;
 	int deliveryPrice = 0;
-	
+	int totalPoint = 0;
 
 	
 	// 할인금액
@@ -26,6 +26,7 @@
 	if(productList.size() > 0){
 		for(HashMap<String,Object> hmap : productList){
 			totalPirce += (int)hmap.get("product_price");
+			totalPoint += (int)(((double)((int)hmap.get("product_price")))*((double)pointNDelivery.get("point_rate")));
 		}
 		if(pointNDelivery.get("free_delevery").equals("D")){
 			deliveryPrice = 2500;
@@ -100,7 +101,7 @@
 				<tr>
 						<td><input type="hidden" value="<%=hmap.get("option_num")%>" class="product_optionNumber">
 						<input type="hidden" value="<%=hmap.get("product_code")%>" class="product_code">
-						<img src="/semi/image/customer/product/<%=hmap.get("change_name")%>"></td>
+						<img src="/semi/image/customer/product/<%=hmap.get("change_name")%>" style="height: 200px; width: 200px;"></td>
 						<%}else{ %>
 						<td><input type="hidden" value="<%=hmap.get("option_num")%>" class="product_optionNumber">
 						<input type="hidden" value="<%=hmap.get("product_code")%>" class="product_code">
@@ -361,7 +362,7 @@
 					<td rowspan="3"><div align="right">
 							<b>카드결제 </b>: 최종 결제 금액
 						</div> <br>
-						<div align="center" style="color: olive; font-size: 20px;">?원</div>
+						<div align="center" style="color: olive; font-size: 20px;" id="resultByPrice"><%=(totalPirce+deliveryPrice) %>원</div>
 						<br>
 						<div align="center" style="">
 							<button class="ui brown basic button" style="width: 100px;" onclick = "showOrderPage();">결제하기</button>
@@ -390,15 +391,14 @@
 				<tr>
 
 					<td>&nbsp;&nbsp;&nbsp;</td>
-					<td>총 적립예정금액 : ?</td>
+					<td>총 적립예정금액 : <%=totalPoint%>won</td>
 				</tr>
 				<tr>
 					<td></td>
 					<td></td>
 					<td></td>
 					<td>&nbsp;&nbsp;&nbsp;</td>
-					<td>상품별 적립금 : ? won<br>
-					 회원 적립금 :  ? won </td>
+					<td></td>
 				</tr>
 			</tbody>
 		</table>
@@ -537,8 +537,10 @@
 		//결제 페이지 팝업
 		
 		function showOrderPage() {
-			window.open("/semi/views/customer/product/orderPopup.jsp","orderPage","width=400,height=300,left=100,top50");
-			console.log($("#buyerName").val());
+			
+			
+			
+			
 			
 			
 		}
@@ -731,14 +733,15 @@
 					$("#discountPirce1").text(discount+"원");
 					$("#totalPirce1").text((<%=(totalPirce+deliveryPrice)%>-discount)+"원");
 					$("#resultDiscount").text(discount+"원");
+					$("#resultByPrice").text((<%=(totalPirce+deliveryPrice)%>-discount)+"원");
 				}else{
 					$("#discountPirce1").text((<%=(totalPirce+deliveryPrice)%>*discount));
 					pdiscountResult = $("#discountPirce1").text();
 					$("#discountPirce1").text((<%=(totalPirce+deliveryPrice)%>*discount)+"원");
 					$("#totalPirce1").text((<%=(totalPirce+deliveryPrice)%>-pdiscountResult)+"원");
 					$("#resultDiscount").text((<%=(totalPirce+deliveryPrice)%>*discount)+"원");
+					$("#resultByPrice").text((<%=(totalPirce+deliveryPrice)%>-pdiscountResult)+"원");
 				}
-				
 			});
 
 		}
