@@ -1,20 +1,7 @@
-<%@page import="com.kh.semi.customer.board.model.vo.PageInfo"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-
-<%
-	PageInfo pi = (PageInfo) request.getAttribute("pi");
-	int listCount = pi.getListCount();
-	int currentPage = pi.getCurrentPage();
-	int maxPage = pi.getMaxPage();
-	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
-	ArrayList<HashMap<String,Object>> list = (ArrayList<HashMap<String,Object>>)request.getAttribute("list");
-%>
 
 <html>
 <head>
@@ -43,17 +30,29 @@
 		<br> <br>
 
 		<table>
-			<div align="left"> 상품 갯수 </div><!--  : (0)  -->
-		<p class="ui single line table"></p>
-		<br/>
-		<br/>
-		<p>장바구니가 현재 비어있습니다.</p>
-		<br/>
-		<br/>
-		<br/>
+			<!-- <div align="left"> 상품 갯수 </div> : (0)  -->
+		<table class="ui single line table">
+				<thead>
+					<tr>
+						<th><input type="checkbox" id="chkBox"></th>
+						<th>이미지</th>
+						<th>상품정보</th>
+						<th>수량</th>
+						<th>판매가</th>
+						<th>회원 할인가</th>
+						<th>적립금</th>
+						<th>배송비</th>
+						<th>합계</th>
+					</tr>
+				</thead>
+				
 			<!-- <tfoot>
 				<th colspan="4">
 					 작성하기는 관리자만 가능하다.  -->
+			<!-- 	</th>
+			</tfoot> -->
+		</table>
+		<table>
 					<div align="center">
 						<p class="ui single line table"></p>
 						<button class="ui secondary button" onclick="location.href='/semi/views/customer/product/mainOrder.jsp';">전체 상품 주문</button>
@@ -62,10 +61,7 @@
 					<div align="right">
 						<button class="ui brown button" onclick="location.href='/semi/views/customer/product/detailPage.jsp';">쇼핑 계속하기</button>
 					</div>
-			<!-- 	</th>
-			</tfoot> -->
 		</table>
-		
 		
 <!-- 		<hr> -->
 		<br>
