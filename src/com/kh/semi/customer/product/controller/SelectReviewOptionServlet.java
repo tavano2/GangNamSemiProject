@@ -30,18 +30,20 @@ public class SelectReviewOptionServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String productCode = request.getParameter("productCode");
-		//System.out.println(productCode);
+		System.out.println(productCode);
 		String boardId = request.getParameter("boardId");
 		System.out.println(boardId);
 		
 		//사용자 아이딩!
-		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
-		//System.out.println(userId);
+		String userId = (String.valueOf(((Member)(request.getSession().getAttribute("loginUser"))).getUserId()));
+
+		System.out.println(userId);
 		
 
 		ArrayList<ReviewOption> reviewOption = ProductService.selectReviewOption(productCode,userId);
 		
 		
+		System.out.println(reviewOption);
 		////////////////////////////////////////////////////////////////////////////////////////////
 		
 

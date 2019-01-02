@@ -30,7 +30,7 @@ public class InsertQnAServlet extends HttpServlet {
 
     }
 
-
+    //review insert!
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String title = request.getParameter("title");

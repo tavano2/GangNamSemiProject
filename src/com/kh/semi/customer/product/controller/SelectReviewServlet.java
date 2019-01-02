@@ -3,6 +3,7 @@ package com.kh.semi.customer.product.controller;
 import java.io.IOException;
 import java.util.HashMap;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,10 +26,15 @@ public class SelectReviewServlet extends HttpServlet {
 	//리븁 상세보기
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String reviewRum = request.getParameter("reviewRum");
-		System.out.println(reviewRum);
+		//System.out.println(reviewRum);
 		
 		HashMap<String, Object> hmap = new ProductService().selectDetailReview(reviewRum);
 
+		String page="";
+		page="views/customer/product/detailReview.jsp";
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 
