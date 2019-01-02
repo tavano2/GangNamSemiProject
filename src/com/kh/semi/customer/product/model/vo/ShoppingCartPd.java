@@ -7,7 +7,7 @@ public class ShoppingCartPd{ // VO | The Result.
 
 
 	private int ProductCode;
-	private int UserId;
+	private String UserId;
 	private int OptionNum;
 	private int Amount;
 	
@@ -23,7 +23,7 @@ public class ShoppingCartPd{ // VO | The Result.
 	public ShoppingCartPd() {}
 	
 	
-	public ShoppingCartPd(int ProductCode, int UserId, int OptionNum, int Amount) {
+	public ShoppingCartPd(int ProductCode, String UserId, int OptionNum, int Amount) {
 		super();
 		this.ProductCode = ProductCode;
 		this.UserId = UserId;
@@ -41,11 +41,11 @@ public class ShoppingCartPd{ // VO | The Result.
 		
 	}
 	
-	public int getUserId() {
+	public String getUserId() {
 		return UserId;
 	}
 
-	public void setUserId(int UserId) {
+	public void setUserId(String userId) {
 		
 		
 	}

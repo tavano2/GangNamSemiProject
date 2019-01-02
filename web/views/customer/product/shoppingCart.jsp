@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+	<%@page import="java.util.ArrayList"%>
+	<%@page import="com.kh.semi.customer.product.model.vo.ReallyProduct"%>
+	<%@page import="com.kh.semi.customer.member.model.vo.Member"%>
+	
 <!DOCTYPE html>
 
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>views.shoppingCart.jsp</title>
-
+	<%-- <% ArrayList<ShoppingCartPd> %> --%>
 
     <!-- Semantic UI CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -28,9 +31,7 @@
 		<br> <br>
 		<div align="center" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">SHOPPING CART</div>
 		<br> <br>
-
-		<table>
-			<!-- <div align="left"> 상품 갯수 </div> : (0)  -->
+		<!-- 장바구니 내역  -->
 		<table class="ui single line table">
 				<thead>
 					<tr>
@@ -45,7 +46,21 @@
 						<th>합계</th>
 					</tr>
 				</thead>
+				<tbody>
+				<%
 				
+				%>
+					<tr>
+					</tr>
+					
+<!-- 		Ref.
+			private int ProductCode;
+			private int UserId;
+			private int OptionNum;
+			private int Amount;	
+ -->
+				
+				</tbody>
 			<!-- <tfoot>
 				<th colspan="4">
 					 작성하기는 관리자만 가능하다.  -->

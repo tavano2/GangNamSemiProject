@@ -63,7 +63,7 @@ public class InsertShppingCartServlet extends HttpServlet {
 		
 		// 가져올 내용 : 상품 정보 : ProductCode, UserId, OptionNum, Amount
 		 int ProductCode = (int) request.getAttribute("ProductCode");
-		 int UserId = (int) request.getAttribute("UserId");
+		 String UserId =  (String) request.getAttribute("UserId");
 		 int OptionNum = (int) request.getAttribute("OptionNum");
 		 int Amount = (int) request.getAttribute("Amount");
 		
