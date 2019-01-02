@@ -153,7 +153,7 @@ public class ProductService {
 	
 	/*수정중*/ // 장바구니 | Shopping Cart > 품목 추가 | insertCartList  | model/service/ProductService.java
 	
-	public ArrayList<ShoppingCartPd> insertCartList(int currentPage, int limit) {
+	public ArrayList<ShoppingCartPd> insertCartList(Connection con, ShoppingCartPd cart,  int currentPage, int limit) {
 		
 		return null;
 	}
@@ -161,7 +161,7 @@ public class ProductService {
 	public ShoppingCartPd insertCartList(){
 		Connection con = getConnection();
 		
-		ShoppingCartPd cart  = new ProductDao().insertCartList(con, null);
+		ShoppingCartPd cart  = new ProductDao().insertCartList(con, null, 0, 0);
 		
 		close(con);
 		

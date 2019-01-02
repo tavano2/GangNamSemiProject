@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import com.kh.semi.customer.board.model.vo.Board;
+import com.kh.semi.customer.common.JDBCTemplate;
 import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Option;
@@ -412,7 +413,7 @@ public class ProductDao {
 		return SelectReplyList;
 	}*/
   
-	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//------------------------ DAO ---------------- Access *directly*. ------------------------------------------------------------------------------------------------
 
     	// 장바구니 | Shopping Cart > 조회 | selectCartList (named in DAO)
 	
@@ -421,30 +422,48 @@ public class ProductDao {
 // VO = DTO (Data Transfer Object) = Domain Object = Bean = Entity
 	
 	public ArrayList<ShoppingCartPd> selectCartList(Connection con, int currentPage, int limit) {
-		
+		// ▲ <ShoppingCartPd> = VO Class.
 		PreparedStatement pstmt = null;// PreparedStatement : An object that represents a pre-compiled SQL statement. 
 		ResultSet rset = null;
 		ArrayList<ShoppingCartPd> cart = null;
 		
-		String query = prop.getProperty("selectCartList");// "selectCartList" > text.properties (sql-product-QUERY)
+		/* 
+		 * 	 ▲ private Properties prop = new Properties();
+	
+	public ProductDao() {
+		String fileName = ProductDao.class.getResource("/sql/product/test.properties").getPath();
 		
 		try {
+			prop.load(new FileReader(fileName));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+		 * */
+		
+		String query = prop.getProperty("selectCartList");// "selectCartList" > text.properties (sql-product-QUERY)
+		// prop :	▲ private Properties prop = new Properties();
+		try {
+			
+			/**/ con = JDBCTemplate.getConnection(); 
+			
 			pstmt = (PreparedStatement) con.createStatement();
 			
 			rset = pstmt.executeQuery(query);
 			
 			cart = new ArrayList<ShoppingCartPd>();
 			
-			while(rset.next()) {
-				ShoppingCartPd cartPd = new ShoppingCartPd();
+			while(rset.next()) { //next() : Moves the cursor forward one row from its current position.
+				ShoppingCartPd cartPd = new ShoppingCartPd(); // ShoppingCartPd > VO. The Result.
+				// #1 cartPd
 				
 				cartPd.setProductCode(rset.getInt("PRODUCT_CODE"));
 				cartPd.setUserId(rset.getString("USER_ID"));
 				cartPd.setOptionNum(rset.getInt("OPTION_NUM"));
 				cartPd.setAmount(rset.getInt("AMOUNT"));
 				
-				
-				cart.add(cartPd);
+				cart.add(cartPd); // Add "cartProDuct" into "cart" // ▲ ArrayList<ShoppingCartPd> cart = null;
 			}
 			
 			
@@ -459,31 +478,36 @@ public class ProductDao {
 		return cart;
 	}
 	
-	
-	   /*수정중*/ // 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO)
+	 //------------------------ DAO ---------------- Access *directly*. ------------------------------------------------------------------------------------------------
+/*수정중*/ 			// 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO)
     
-		public ShoppingCartPd  insertCartList(Connection con, ShoppingCartPd cart) {
-		
-		PreparedStatement pstmt = null;
-		int result = 0;
+		public ShoppingCartPd insertCartList(Connection con, ShoppingCartPd cart,  int currentPage, int limit) {
+			
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			cart = null;
 		
 		String query = prop.getProperty("insertCartList");
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, cart.getProductCode());
-			pstmt.setString(2, cart.getUserId());
-			pstmt.setInt(3, cart.getOptionNum());
-			pstmt.setInt(4, cart.getAmount());
-			result = pstmt.executeUpdate();
+			pstmt.setInt(1, cart.getProductCode());//Int
+			pstmt.setString(2, cart.getUserId());//String
+			pstmt.setInt(3, cart.getOptionNum());//Int
+			pstmt.setInt(4, cart.getAmount());//Int
+			limit = pstmt.executeUpdate();/*Int*/
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
+			close(rset);
 		}
 			return cart;
 	}
 	
+
+		// ------------------------ deleteCartList ------------------------------------------------------------------------------------------------------------------
+		
 	   // 장바구니 | Shopping Cart > 삭제 | deleteCartList (named in DAO)
 	public int deleteCartList(Connection con, String msg, String userId) {
 		PreparedStatement pstmt = null;
@@ -495,7 +519,7 @@ public class ProductDao {
 	}
 	
 	
-	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	 // ------------------------ deleteCartList ------------------------------------------------------------------------------------------------------------------
     
     /*
      * 

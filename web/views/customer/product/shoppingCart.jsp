@@ -5,7 +5,7 @@
 <head>
 
 	<meta charset="UTF-8">
-	<title>shoppingCart.jsp</title>
+	<title>views.shoppingCart.jsp</title>
 
 
     <!-- Semantic UI CSS CDN -->

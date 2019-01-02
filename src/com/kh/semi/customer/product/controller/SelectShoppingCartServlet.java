@@ -83,7 +83,7 @@ public class SelectShoppingCartServlet extends HttpServlet {
 			request.setAttribute("msg", "쇼핑카트 조회 실패!");
 		}
 */
-		
+		// ------------------------------ Cart > 조회 ------------------------------ 
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 		

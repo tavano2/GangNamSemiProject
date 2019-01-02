@@ -1,9 +1,9 @@
 package com.kh.semi.customer.product.model.vo; // "Model" deals with "Business Logic(=Service that will be execute")
 
 // Service : Service calls several DAO out. Do serve...
-// Service send the result >to> Controller.
+// Service send the result >>to>> Controller.
 
-public class ShoppingCartPd{
+public class ShoppingCartPd{ // VO | The Result.
 
 
 	private int ProductCode; // ProductCode
