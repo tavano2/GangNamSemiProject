@@ -620,7 +620,7 @@
 				console.log(pQnABoardId);
 				
 				//글번호와 함께
-				location.href="<%=request.getContextPath()%>/SelectOneQnA.no?num="+num+"&pQnABoardId="+pQnABoardId;
+				location.href="<%=request.getContextPath()%>/SelectOneQnA.no?num="+num+"&pQnABoardId="+pQnABoardId+"&productCode=PD000003";
 
 			});
 			

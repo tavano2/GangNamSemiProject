@@ -27,7 +27,7 @@ import oracle.jdbc.OracleConnection.CommitOption;
 public class InsertReviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-   //QnA insert!!!
+   //QnA insert!!!d
     public InsertReviewServlet() {
         super();
 
@@ -89,12 +89,12 @@ public class InsertReviewServlet extends HttpServlet {
 			
 			//System.out.println(title+content+youWeight+youSize+youHeight+" "+boardId+userProductNum);
 			
-			int result = new ProductService().InsertReview(fileList,title,content,youWeight,
+			int[] result = new ProductService().InsertReview(fileList,title,content,youWeight,
 					youSize,youHeight,selectOptionArray,boardId,userProductNum,userId,productCode);
 			
 			String page="";
-			if(result>0) {
-				response.sendRedirect(request.getContextPath()+"/selectReview.pd");
+			if(result[0]>0) {
+				response.sendRedirect(request.getContextPath()+"/selectReview.pd?reviewRum="+result[1]);
 				
 			}else {
 				for(int i=0; i<saveFiles.size();i++) {

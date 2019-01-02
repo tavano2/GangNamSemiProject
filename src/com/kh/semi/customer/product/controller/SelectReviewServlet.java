@@ -26,12 +26,18 @@ public class SelectReviewServlet extends HttpServlet {
 	//리븁 상세보기
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String reviewRum = request.getParameter("reviewRum");
-		//System.out.println(reviewRum);
+		System.out.println("서비스 RE"+reviewRum);
 		
 		HashMap<String, Object> hmap = new ProductService().selectDetailReview(reviewRum);
 
 		String page="";
-		page="views/customer/product/detailReview.jsp";
+		if(hmap!=null) {
+			page="views/customer/product/detailReview.jsp";
+			request.setAttribute("hmap", hmap);
+		}else {
+			page="views/customer/common/errorPage.jsp";
+			request.setAttribute("msg", "리뷰 상세보기 조회 실패");
+		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);

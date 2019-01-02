@@ -20,8 +20,10 @@ import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Option;
 import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ReallyProduct;
+import com.kh.semi.customer.product.model.vo.ReviewList;
 import com.kh.semi.customer.product.model.vo.ReviewOption;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ResultTreeType;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class ProductDao {
@@ -951,19 +953,7 @@ public class ProductDao {
 		return list;
 	}
 
-	//상세보기 리뷰게시판!_!
-	public HashMap<String, Object> selectDetailReview(Connection con, String reviewRum) {
 
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		HashMap<String, Object> hmap = null;
-		
-		
-		
-		
-		return null;
-	}
-	
 	//리뷰게시판-리뷰작성-option가져오깅
 	public ArrayList<ReviewOption> selectReviewOption(Connection con, String productCode, String userId) {
 		PreparedStatement pstmt = null;
@@ -1089,6 +1079,121 @@ public class ProductDao {
 		}
 
 		return result;
+	}
+
+	//리뷰게시판 조회-제목 내용 쓰 ! 
+	public Board selectDetailReviewBoard(Connection con, String reviewRum) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board b= null;
+		
+		System.out.println(reviewRum+"reviewRum");
+		
+		String query = prop.getProperty("selectDetailReviewBoard");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(reviewRum));
+			rset= pstmt.executeQuery();
+			
+			
+			while(rset.next()) {
+				b= new Board();
+				b.setBoardTitle(rset.getString("BOARD_TITLE"));
+				b.setBoardContent(rset.getString("BOARD_CONTENT"));
+				b.setUserId(rset.getString("USER_ID"));
+			}
+			//System.out.println(b);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		
+		
+		
+		return b;
+	}
+	
+	//리뷰게시판 조회-사진쓰 ! 
+	public ArrayList<Attachment> selectDetailReviewAttachment(Connection con, String reviewRum) {
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		ArrayList<Attachment> ATTlist = null;
+		
+		Attachment at = null;
+		
+		String query = prop.getProperty("selectDetailReviewAttachment");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(reviewRum));
+			rset = pstmt.executeQuery();
+			
+			ATTlist= new ArrayList<Attachment>();
+			
+			while(rset.next()) {
+				at = new Attachment();
+				at.setFileId(rset.getString("FILE_ID"));
+				at.setOriginName(rset.getString("ORIGIN_NAME"));
+				at.setChangeName(rset.getString("CHANGE_NAME"));
+				at.setFilePath(rset.getString("FILE_PATH"));
+				
+				ATTlist.add(at);
+			}
+			
+			System.out.println(ATTlist);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return ATTlist;
+	}
+	
+	//리뷰게시판 조회-리뷰테이블 ! 
+	public ArrayList<ReviewList> selectDetailReviewReview(Connection con, String reviewRum) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<ReviewList> reviewArraylist = null;
+		ReviewList relist = null;
+		
+		String query = prop.getProperty("selectDetailReviewReview");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(reviewRum));
+			rset=pstmt.executeQuery();
+			reviewArraylist = new ArrayList<ReviewList>();
+			
+			while(rset.next()) {
+				 relist = new ReviewList();
+				 relist.setBoardId(rset.getInt("BOARD_ID"));
+				 relist.setOrderDnum(rset.getString("ORDER_DNUM"));
+				 relist.setOptionUnm(rset.getString("OPTION_NUM"));
+				 relist.setHeight(rset.getInt("HEIGHT"));
+				 relist.setWeight(rset.getInt("WEIGHT"));
+				 relist.setUserSize(rset.getString("USER_SIZE"));
+				 
+				 reviewArraylist.add(relist);
+				 
+			}
+			
+			System.out.println(reviewArraylist);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		
+		
+		return reviewArraylist;
 	}
 
 

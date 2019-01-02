@@ -16,6 +16,7 @@ import com.kh.semi.customer.product.model.dao.ProductDao;
 import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Option;
 import com.kh.semi.customer.product.model.vo.Product;
+import com.kh.semi.customer.product.model.vo.ReviewList;
 import com.kh.semi.customer.product.model.vo.ReviewOption;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 
@@ -300,7 +301,14 @@ public class ProductService {
 	public HashMap<String, Object> selectDetailReview(String reviewRum) {
 		Connection con = getConnection();
 		
-		HashMap<String, Object> hmap = new ProductDao().selectDetailReview(con,reviewRum);
+		HashMap<String, Object> hmap = new HashMap<>();
+		Board b = new ProductDao().selectDetailReviewBoard(con,reviewRum);
+		ArrayList<Attachment> atList = new ProductDao().selectDetailReviewAttachment(con, reviewRum);
+		ArrayList<ReviewList> reList = new ProductDao().selectDetailReviewReview(con, reviewRum);
+				
+		hmap.put("b", b);
+		hmap.put("atList",atList);
+		hmap.put("reList",reList);
 		
 		close(con);
 		
@@ -319,7 +327,7 @@ public class ProductService {
 	}
 
 	//상품 리뷰 작성하기 insert
-	public int InsertReview(ArrayList<Attachment> fileList, String title, String content, double youWeight,
+	public int[] InsertReview(ArrayList<Attachment> fileList, String title, String content, double youWeight,
 			String youSize, double youHeight, String[] selectOptionArray, String boardId, String userProductNum,String userId,String productCode) {
 
 		Connection con = getConnection();
@@ -350,7 +358,10 @@ public class ProductService {
 		
 		close(con);
 		
-		return result;
+		int[] resultArr = new int[2];
+		resultArr[0]=result;
+		resultArr[1]=bid;
+		return resultArr;
 	}
 
 	
