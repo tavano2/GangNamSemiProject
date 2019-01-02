@@ -10,7 +10,7 @@
 	// 총 상품 금액과 유저에 따라 배송비 책정
 	int totalPirce = 0;
 	int deliveryPrice = 0;
-	
+	int totalPoint = 0;
 
 	
 	// 할인금액
@@ -26,6 +26,7 @@
 	if(productList.size() > 0){
 		for(HashMap<String,Object> hmap : productList){
 			totalPirce += (int)hmap.get("product_price");
+			totalPoint += (int)(((double)((int)hmap.get("product_price")))*((double)pointNDelivery.get("point_rate")));
 		}
 		if(pointNDelivery.get("free_delevery").equals("D")){
 			deliveryPrice = 2500;
@@ -100,7 +101,7 @@
 				<tr>
 						<td><input type="hidden" value="<%=hmap.get("option_num")%>" class="product_optionNumber">
 						<input type="hidden" value="<%=hmap.get("product_code")%>" class="product_code">
-						<img src="/semi/image/customer/product/<%=hmap.get("change_name")%>"></td>
+						<img src="/semi/image/customer/product/<%=hmap.get("change_name")%>" style="height: 200px; width: 200px;"></td>
 						<%}else{ %>
 						<td><input type="hidden" value="<%=hmap.get("option_num")%>" class="product_optionNumber">
 						<input type="hidden" value="<%=hmap.get("product_code")%>" class="product_code">
@@ -361,10 +362,10 @@
 					<td rowspan="3"><div align="right">
 							<b>카드결제 </b>: 최종 결제 금액
 						</div> <br>
-						<div align="center" style="color: olive; font-size: 20px;">?원</div>
+						<div align="center" style="color: olive; font-size: 20px;" id="resultByPrice"><%=(totalPirce+deliveryPrice) %>원</div>
 						<br>
 						<div align="center" style="">
-							<button class="ui brown basic button" style="width: 100px;" onclick = "showOrderPage();">결제하기</button>
+							<button class="ui brown basic button"  type="submit" style="width: 100px;" onclick = "return showOrderPage();">결제하기</button>
 						</div></td>
 				</tr>
 				<tr>
@@ -390,15 +391,14 @@
 				<tr>
 
 					<td>&nbsp;&nbsp;&nbsp;</td>
-					<td>총 적립예정금액 : ?</td>
+					<td>총 적립예정금액 : <%=totalPoint%>won</td>
 				</tr>
 				<tr>
 					<td></td>
 					<td></td>
 					<td></td>
 					<td>&nbsp;&nbsp;&nbsp;</td>
-					<td>상품별 적립금 : ? won<br>
-					 회원 적립금 :  ? won </td>
+					<td></td>
 				</tr>
 			</tbody>
 		</table>
@@ -536,10 +536,55 @@
 				
 		//결제 페이지 팝업
 		
+	
+		
+	
+		
 		function showOrderPage() {
-			window.open("/semi/views/customer/product/orderPopup.jsp","orderPage","width=400,height=300,left=100,top50");
-			console.log($("#buyerName").val());
+			//
 			
+			name1 = $("#buyerName").val();
+			delTel1 = $("#buyerTel1").val();
+			delTel2 = $("#buyerTel2").val();
+			delTel3 = $("#buyerTel3").val();
+			delTel = delTel1 + "-" +delTel2 +"-" + delTel3;
+			delPhone1 = $("#buyerPhone1").val();
+			delPhone2 = $("#buyerPhone2").val();
+			delPhone3 = $("#buyerPhone3").val();
+			delPhone = delPhone1 + "-" +delPhone2 +"-" + delPhone3;
+			email1 = $("#buyerEmail1").val();
+			email2 = $("#buyerEmail2").val();
+			email = email1 + "@" + email2;
+			
+			//주문자 이름 정규 표현식
+			var regExp1 = /^[가-힣]{2,10}$/;
+			if(!regExp1.test(name1)){
+				alert("이름을 정확하게 입력해주세요.(한글2~10자)");
+				$("#buyerName").select();
+				return false;
+			}
+			
+			//휴대폰 번호 정규표현식
+			var regExp2 = /[0-9]{2,3}\-[0-9]{3,4}\-[0-9]{4}/g;
+			
+			if(!regExp2.test(delTel)){
+				alert("일반 번호를 정확하게 입력해주세요.");
+				return false;
+			}
+			if(!regExp2.test(delPhone)){
+				alert("핸드폰 번호를 정확하게 입력해주세요.");
+				return false;
+			}
+			
+			
+			
+			//이메일 정규 표현식
+			var regExp3 = /^[0-9a-zA-Z]/
+			
+			
+			
+			
+			return;
 			
 		}
 		
@@ -731,14 +776,15 @@
 					$("#discountPirce1").text(discount+"원");
 					$("#totalPirce1").text((<%=(totalPirce+deliveryPrice)%>-discount)+"원");
 					$("#resultDiscount").text(discount+"원");
+					$("#resultByPrice").text((<%=(totalPirce+deliveryPrice)%>-discount)+"원");
 				}else{
 					$("#discountPirce1").text((<%=(totalPirce+deliveryPrice)%>*discount));
 					pdiscountResult = $("#discountPirce1").text();
 					$("#discountPirce1").text((<%=(totalPirce+deliveryPrice)%>*discount)+"원");
 					$("#totalPirce1").text((<%=(totalPirce+deliveryPrice)%>-pdiscountResult)+"원");
 					$("#resultDiscount").text((<%=(totalPirce+deliveryPrice)%>*discount)+"원");
+					$("#resultByPrice").text((<%=(totalPirce+deliveryPrice)%>-pdiscountResult)+"원");
 				}
-				
 			});
 
 		}
