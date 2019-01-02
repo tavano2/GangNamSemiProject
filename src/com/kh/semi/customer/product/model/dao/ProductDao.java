@@ -501,7 +501,7 @@ public class ProductDao {
 		// ------------------------ ▼ deleteCartList ------------------------------------------------------------------------------------------------------------------
 		
 	   // 장바구니 | Shopping Cart > 삭제 | deleteCartList (named in DAO)
-		public int deleteCartList(Connection con, ShoppingCartPd cart) {
+		public int deleteCartList(Connection con, ShoppingCartPd cartList, String[] product_code, String userId) {
 			
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
@@ -511,10 +511,10 @@ public class ProductDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, cart.getProductCode());
-			pstmt.setInt(2, cart.getUserId());
-			pstmt.setInt(3, cart.getOptionNum());
-			pstmt.setInt(4, cart.getAmount());
+			pstmt.setInt(1, cartList.getProductCode());
+			pstmt.setInt(2, cartList.getUserId());
+			pstmt.setInt(3, cartList.getOptionNum());
+			pstmt.setInt(4, cartList.getAmount());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -524,6 +524,7 @@ public class ProductDao {
 		}
 			return 0;
 	}
+		
 	
 	 // ------------------------ ▲ deleteCartList ------------------------------------------------------------------------------------------------------------------
     
@@ -1087,6 +1088,9 @@ public class ProductDao {
 
 		return result;
 	}
+
+
+
 
 
 
