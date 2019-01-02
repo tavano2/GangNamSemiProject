@@ -107,6 +107,7 @@ public class OptionSetDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			for(int i = 0; i < optionNum.length; i++) {
+				System.out.println(optionNum[i]);
 				pstmt.setString(1, optionNum[i]);
 				
 				result = pstmt.executeUpdate();

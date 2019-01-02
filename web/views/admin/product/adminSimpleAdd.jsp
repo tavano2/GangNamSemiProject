@@ -114,7 +114,14 @@
                 		
                 	<td>
                 		<table class="ui celled table first-col">
-                			<!-- ??????????? -->
+                			<tr style="text-align:center;">
+                				<td>대분류</td>
+                				<td>중분류</td>
+                			</tr>
+                			<tr>
+                				<td>아우터</td>
+                				<td>자켓</td>
+                			</tr>
                 		</table>
                 	</td>
                 </tr>
