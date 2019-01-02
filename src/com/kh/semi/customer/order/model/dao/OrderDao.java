@@ -88,15 +88,19 @@ public class OrderDao {
 		return hmap;
 	}
 
-	public ArrayList<HashMap<String, Object>> selectCouponList(Connection con, String userId) {
+	public ArrayList<HashMap<String, Object>> selectCouponList(Connection con, String userId, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<HashMap<String, Object>> list = null;
 		HashMap<String, Object> hmap = null;
 		String query = prop.getProperty("selectCouponList");
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, userId);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rset = pstmt.executeQuery();
 			if(rset != null) {
 				list = new ArrayList<HashMap<String, Object>>();
@@ -120,4 +124,33 @@ public class OrderDao {
 		}
 		return list;
 	}
+
+	public int getListCount(Connection con, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int listcount = 0;
+		String query = prop.getProperty("getListCount");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				listcount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+			
+		}
+		
+		return listcount;
+	}
+	
+	
+	
+	
 }
+

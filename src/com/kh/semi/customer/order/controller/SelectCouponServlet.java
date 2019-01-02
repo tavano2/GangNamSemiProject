@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
 import com.google.gson.Gson;
+import com.kh.semi.customer.board.model.service.BoardService;
+import com.kh.semi.customer.board.model.vo.PageInfo;
 import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.order.model.service.OrderService;
 
@@ -27,15 +31,43 @@ public class SelectCouponServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//쿠폰 갯수가 많을시 페이징
+		int currentPage;
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
 		String userId = String.format(((Member)request.getSession().getAttribute("loginUser")).getUserId());
 		
-		ArrayList<HashMap<String, Object>> couponList = new OrderService().selectCouponList(userId);
+		currentPage =1;
+		if(request.getParameter("currentPage") != null) {
+			currentPage= Integer.parseInt(request.getParameter("currentPage"));
+		}
+		int listCount = 0;
+		limit = 10;
+		OrderService os = new OrderService();
+		listCount = os.getListCount(userId);
+
 		
+		maxPage = listCount/limit +(listCount % limit == 0 ? 0 : 1);
+		startPage = ((int)((double)currentPage/limit+0.9)-1)*limit+1;
+		endPage = startPage+10-1;
+		if(maxPage<endPage) {
+			endPage=maxPage;
+		}
+		
+		
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		ArrayList<HashMap<String, Object>> couponList = new OrderService().selectCouponList(userId,currentPage,limit);
+		
+		JSONObject json = new JSONObject();
+		json.put("pi", pi);
+		json.put("couponList", couponList);
 		
 		if(couponList.size() > 0 ) {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			new Gson().toJson(couponList,response.getWriter());
+			new Gson().toJson(json,response.getWriter());
 		}else {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");

@@ -307,7 +307,7 @@
 		<br>
 		<hr>
 		<br>
-		쿠폰조회 : <button class="ui brown basic button" onclick="showOrderPage();">조회하기</button>
+		쿠폰조회 : <button class="ui brown basic button" onclick="showCouponPage();">조회하기</button>
 		<br>
 		<br>
 		쿠폰 사용시 해당되는 할인율만큼 구매금액이 차감됩니다.	
@@ -322,27 +322,27 @@
 					<td style="text-align: center; border-right: white;">총 주문 금액</td>
 					<td
 						style="text-align: center; border-left: white; border-right: white;">총
-						할인 + 부가결제 금액</td>
+						할인 금액</td>
 					<td style="text-align: center; border-left: white;">총 결제예정 금액</td>
 				</tr>
 				<tr>
-					<td style="text-align: center; border-right: white;">?원</td>
+					<td style="text-align: center; border-right: white;"><%=(totalPirce+deliveryPrice) %>원</td>
 					<td
-						style="text-align: center; border-left: white; border-right: white;">?원
+						style="text-align: center; border-left: white; border-right: white;" id="discountPirce1">?원
 					</td>
-					<td style="text-align: center; border-left: white;">?원</td>
+					<td style="text-align: center; border-left: white;" id="totalPirce1"><%=(totalPirce+deliveryPrice) %>원</td>
 				</tr>
 				<tr>
 					<td><b>총 할인금액</b></td>
-					<td colspan="2" style="text-align: left;">?원</td>
+					<td colspan="2" style="text-align: left;" id="resultDiscount">?원</td>
 				</tr>
 				<tr>
 					<td>추가할인금액</td>
-					<td colspan="2" style="text-align: left;">?원</td>
+					<td colspan="2" style="text-align: left;">0원</td>
 				</tr>
 				<tr>
 					<td><b>총 부가결제금액</b></td>
-					<td colspan="2" style="text-align: left;">?원</td>
+					<td colspan="2" style="text-align: left;">0원</td>
 				</tr>
 			</tbody>
 		</table>
@@ -418,14 +418,23 @@
 
 	<!-- 모달 -->
 	
-    <div class="ui modal test">
+    <div class="ui fullscreen longer modal test">
         <i class="close icon"></i>
         <div class="header">
             쿠폰 조회
         </div>
         <div class="image content">
           <div class="description">
-          <table>
+          <table class="ui single line table">
+          		<thead>
+				<tr>
+					<th></th>
+					<th>쿠폰 소유자명</th>
+					<th>쿠폰명</th>
+					<th>할인 퍼센트/금액</th>
+					<th>쿠폰 만기일</th>
+				</tr>
+			</thead>
           <tbody id="couponTbody">
           
           
@@ -434,7 +443,7 @@
           
           </table>
           
-            내용
+            
             <br>
             <br>
             <br>
@@ -445,7 +454,7 @@
           <div class="ui black deny button">
             취소
           </div>
-          <div class="ui positive right labeled icon button">
+          <div class="ui positive right labeled icon button" id="couponOkBtn">
             확인
             <i class="checkmark icon"></i>
           </div>
@@ -586,33 +595,175 @@
 
 	
 		
+		var couponValue = "";
+		var discount = 0;
+		var currentPageJs = 1;
 		
-		var dataArr  = [];
-		function showOrderPage(){
+		
+		
+		function showCouponPage(data){
+			
+
 			$.ajax({
 				url : "<%=request.getContextPath()%>/selectCoupon.or",
-				type : "post",
+				data : {currentPage : currentPageJs},
+				type : "get",
 				success : function(data){
 					if(data == "조회한 쿠폰이 없습니다"){
 						alert("쿠폰이 없습니다.");
 					}
-					dataArr = data;
+					console.log(data);
+					$tableBody = $("#couponTbody");
+					$tableBody.html('');
+					for(key in data.couponList){
+						$tr = $("<tr class='couponTr' >");
+						var $radioTd = $("<td>");
+						var $radioDiv = $("<div class='ui radio checkbox'>")
+						var $radioInput = $("<input type='radio' name='order1' class='couponRadio' value=\""+data.couponList[key].coupon_code +"\">")
+						var $label = $("<label>").text("선택");
+						$radioDiv.append($radioInput);
+						$radioDiv.append($label);
+						$radioTd.append($radioDiv);
+						$tr.append($radioTd);
+						
+						var $couponUserIdTd = $("<td>").text(data.couponList[key].user_id);
+						var $couponNameTd = $("<td>").text(data.couponList[key].coupon_name);
+						$tr.append($couponUserIdTd);
+						$tr.append($couponNameTd);
+						if(data.couponList[key].coupon_pdiscount != 0){
+							var $couponPdiscountTd = $("<td class='disCount'>").text(data.couponList[key].coupon_pdiscount);
+							$tr.append($couponPdiscountTd);
+						}
+						if(data.couponList[key].coupon_rdiscount != 0){
+							var $couponRdiscountTd = $("<td class='disCount'>").text(data.couponList[key].coupon_rdiscount);
+							$tr.append($couponRdiscountTd);
+						}
+						var $endDateTd = $("<td>").text(data.couponList[key].end_date);
+						$tr.append($endDateTd);
+						$tableBody.append($tr);
+					}
+					
+					//페이징 처리
+					$trPage = $("<tr>");
+					$tdPage = $("<td colspan='5' >");
+					$centerDiv = $("<div align='center'>");
+					$paginationDiv = $("<div class='ui pagination menu'>");
+
+					
+					$currentPageOne = $("<a class=\"icon item\" onclick=\"" +"firstPageMove("+ 1 + ");" +"\">");
+					$angleIcon = $("<i class='angle double left icon'>");
+					
+					$currentPageOne.append($angleIcon);
+					$paginationDiv.append($currentPageOne);
+					
+					if(data.pi.currentPage <= 1){
+						$leftIconDisable = $("<a class='icon item'>");
+						$angleIcon2 = $("<i class='angle left icon' >");
+						$leftIconDisable.append($angleIcon2);
+						$paginationDiv.append($leftIconDisable);
+					}else{ 
+						currentPageJs = (data.pi.currentPage-1);
+						$leftIconAble = $("<a class=\"icon item\" onclick=\"" +"beforePageMove("+ currentPageJs + ");" +"\">");
+						$angleIcon3 = $("<i class='angle left icon' >");
+						$leftIconAble.append($angleIcon3);
+						$paginationDiv.append($leftIconAble);
+					}
+					
+					for(var i = data.pi.startPage; i <= data.pi.endPage; i++){
+						if( i == data.pi.currentPage){
+							$item1 = $("<a class='item' >").text(i);
+							$paginationDiv.append($item1);
+						}else{
+							currentPageJs = i;
+							$item23 = $("<a class=\"icon item\" onclick=\"" +"onePageMove("+ i + ");" +"\">").text(i);
+							$paginationDiv.append($item23);
+						}
+					}
+					
+					if(data.pi.currentPage >= data.pi.maxPage){
+						$rightIconDisable = $("<a class='icon item'>");
+						$angleIcon4 = $("<i class='angle right icon' >");
+						$rightIconDisable.append($angleIcon4);
+						$paginationDiv.append($rightIconDisable);
+					}else{
+						currentPageJs = (data.pi.currentPage+1)
+						$rightIconAble = $("<a class=\"icon item\" onclick=\"" +"nextPageMove("+ currentPageJs + ");" +"\">");
+						$angleIcon5 = $("<i class='angle right icon' >");
+						$rightIconAble.append($angleIcon5);
+						$paginationDiv.append($rightIconAble);
+					}
+					
+					$currentMaxPage = $("<a class=\"icon item\" onclick=\"" +"lastPageMove("+ data.pi.maxPage + ");" +"\">");	
+					$angleIcon6 = $("<i class='angle double right icon'>");
+					$currentMaxPage.append($angleIcon6);
+					$paginationDiv.append($currentMaxPage);
+					$centerDiv.append($paginationDiv);
+					$tdPage.append($centerDiv);
+					$trPage.append($tdPage);
+					$tableBody.append($trPage);
+
 					
 					$('.test').modal('show');
-					
-					
-					/* window.open("/semi/views/customer/promotion/couponPopup.jsp?data=","couponPage","width=400,height=300,left=100,top=50,resize=none"); */
-					
+					couponValue = $(".couponRadio:checked").val();
 				},
 				error: function(data){
 					console.log("데이터 통신 실패");
 				}
 				
 				
+				
+				
 			});
+			
+			
+	
+			
+			
+				
+				
+			// 모달 확인창을 눌렀을때 쿠폰 코드와 할인 금액/률이 담김.
+			var pdiscountResult = 0;
+			$("#couponOkBtn").click(function(){
+				couponValue = $(".couponRadio:checked").val();
+				discount = $(".couponRadio:checked").parent().parent().parent().find(".disCount").text();
+				
+				if(discount > 100){
+					$("#discountPirce1").text(discount+"원");
+					$("#totalPirce1").text((<%=(totalPirce+deliveryPrice)%>-discount)+"원");
+					$("#resultDiscount").text(discount+"원");
+				}else{
+					$("#discountPirce1").text((<%=(totalPirce+deliveryPrice)%>*discount));
+					pdiscountResult = $("#discountPirce1").text();
+					$("#discountPirce1").text((<%=(totalPirce+deliveryPrice)%>*discount)+"원");
+					$("#totalPirce1").text((<%=(totalPirce+deliveryPrice)%>-pdiscountResult)+"원");
+					$("#resultDiscount").text((<%=(totalPirce+deliveryPrice)%>*discount)+"원");
+				}
+				
+			});
+
 		}
 
-	
+
+		
+		// 쿠폰 모달 안 페이징 재귀호출
+		function firstPageMove(data){
+			showCouponPage(data);
+		}		
+		function beforePageMove(data){
+			showCouponPage(data);
+		}
+		function onePageMove(data){
+			showCouponPage(data);
+		}
+		function nextPageMove(data){
+			showCouponPage(data);
+		}
+		function lastPageMove(data){
+			showCouponPage(data);
+		}
+		
+		
+		
 	</script>
 
 </body>
