@@ -11,8 +11,17 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 	<title>views.shoppingCart.jsp</title>
-	
+	<script>
+	/* ▼ 일괄 Check */
+	$( document ).ready( function() {
+        $( '.check-all' ).click( function() {
+          $( '.class' ).prop( 'checked', this.checked );
+        } );
+      } );
+	</script>
 	<% ArrayList<ShoppingCartPd> cartPd = (ArrayList<ShoppingCartPd>) request.getAttribute("cartPd");%>
 	<% Member member = (Member) request.getAttribute("member"); %>
 	<% session.setAttribute("member", member);	 %>
@@ -35,7 +44,7 @@
 		<table class="ui single line table">
 				<thead>
 					<tr>
-						<th><input type="checkbox" id="chkBox"></th>
+						<th><input type="checkbox" name="all" class="check-all" id="chkBox"></th>
 						<th>이미지</th>
 						<th>상품정보</th>
 						<th>수량</th>
@@ -56,9 +65,31 @@
 				}
 				%> --%>
 					<tr align="auto">
-						<th width="auto"><!--  align="center" --><input type="checkbox" id="chkBox"></th>
+						<th width="auto"><!--  align="center" --><input type="checkbox"  name="chkBox01" class="class" id="chkBox"></th>
 						<th width="auto" align="auto"><% /* Attach IMG */ %></th>
-						<th width="auto">Info</th>
+						<th width="auto"><%-- <% request.getAttribute(sth); %> --%>Info</th>
+						<th width="auto">N</th>
+						<th width="auto">$</th>
+						<th width="auto">$</th>
+						<th width="auto">$</th>
+						<th width="auto">$</th>
+						<th width="auto">$</th>
+					</tr>
+					<tr align="auto">
+						<th width="auto"><!--  align="center" --><input type="checkbox"  name="chkBox02" class="class" id="chkBox"></th>
+						<th width="auto" align="auto"><% /* Attach IMG */ %></th>
+						<th width="auto"><%-- <% request.getAttribute(sth); %> --%>Info</th>
+						<th width="auto">N</th>
+						<th width="auto">$</th>
+						<th width="auto">$</th>
+						<th width="auto">$</th>
+						<th width="auto">$</th>
+						<th width="auto">$</th>
+					</tr>
+					<tr align="auto">
+						<th width="auto"><!--  align="center" --><input type="checkbox"  name="chkBox03" class="class" id="chkBox"></th>
+						<th width="auto" align="auto"><% /* Attach IMG */ %></th>
+						<th width="auto"><%-- <% request.getAttribute(sth); %> --%>Info</th>
 						<th width="auto">N</th>
 						<th width="auto">$</th>
 						<th width="auto">$</th>
