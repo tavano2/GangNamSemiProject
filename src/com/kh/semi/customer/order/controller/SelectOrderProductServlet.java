@@ -82,7 +82,6 @@ public class SelectOrderProductServlet extends HttpServlet {
 					pCodeOptionList.add(pCodeOptionName);
 				}
 			}
-			System.out.println(pCodeOptionList);
 			// 이미지,상품정보,판매가,수량 정상 출력 완료 (상품 옵션은 숨겨서 insert시 추가)
 			//System.out.println(pCodeOptionList);
 			

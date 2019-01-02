@@ -365,7 +365,7 @@
 						<div align="center" style="color: olive; font-size: 20px;" id="resultByPrice"><%=(totalPirce+deliveryPrice) %>원</div>
 						<br>
 						<div align="center" style="">
-							<button class="ui brown basic button" style="width: 100px;" onclick = "showOrderPage();">결제하기</button>
+							<button class="ui brown basic button"  type="submit" style="width: 100px;" onclick = "return showOrderPage();">결제하기</button>
 						</div></td>
 				</tr>
 				<tr>
@@ -536,12 +536,55 @@
 				
 		//결제 페이지 팝업
 		
+	
+		
+	
+		
 		function showOrderPage() {
+			//
+			
+			name1 = $("#buyerName").val();
+			delTel1 = $("#buyerTel1").val();
+			delTel2 = $("#buyerTel2").val();
+			delTel3 = $("#buyerTel3").val();
+			delTel = delTel1 + "-" +delTel2 +"-" + delTel3;
+			delPhone1 = $("#buyerPhone1").val();
+			delPhone2 = $("#buyerPhone2").val();
+			delPhone3 = $("#buyerPhone3").val();
+			delPhone = delPhone1 + "-" +delPhone2 +"-" + delPhone3;
+			email1 = $("#buyerEmail1").val();
+			email2 = $("#buyerEmail2").val();
+			email = email1 + "@" + email2;
+			
+			//주문자 이름 정규 표현식
+			var regExp1 = /^[가-힣]{2,10}$/;
+			if(!regExp1.test(name1)){
+				alert("이름을 정확하게 입력해주세요.(한글2~10자)");
+				$("#buyerName").select();
+				return false;
+			}
+			
+			//휴대폰 번호 정규표현식
+			var regExp2 = /[0-9]{2,3}\-[0-9]{3,4}\-[0-9]{4}/g;
+			
+			if(!regExp2.test(delTel)){
+				alert("일반 번호를 정확하게 입력해주세요.");
+				return false;
+			}
+			if(!regExp2.test(delPhone)){
+				alert("핸드폰 번호를 정확하게 입력해주세요.");
+				return false;
+			}
+			
+			
+			
+			//이메일 정규 표현식
+			var regExp3 = /^[0-9a-zA-Z]/
 			
 			
 			
 			
-			
+			return;
 			
 		}
 		
