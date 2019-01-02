@@ -1,8 +1,21 @@
+<%@page import="com.kh.semi.customer.board.model.vo.PageInfo"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%-- <%@ import = "java.util.ArrayList" %> --%>
 
 <!DOCTYPE html>
+
+<%
+	PageInfo pi = (PageInfo) request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	ArrayList<HashMap<String,Object>> list = (ArrayList<HashMap<String,Object>>)request.getAttribute("list");
+%>
+
 <html>
 <head>
 	<meta charset="UTF-8">
