@@ -25,7 +25,7 @@
 	<% ArrayList<ShoppingCartPd> cartPd = (ArrayList<ShoppingCartPd>) request.getAttribute("cartPd");%>
 	<% Member member = (Member) request.getAttribute("member"); %>
 	<% session.setAttribute("member", member);	 %>
-
+	
     <!-- Semantic UI CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     
@@ -40,6 +40,7 @@
 		<br> <br>
 		<div align="center" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">SHOPPING CART</div>
 		<br> <br>
+	
 		<!-- 장바구니 내역  -->
 		<table class="ui single line table">
 				<thead>
@@ -56,6 +57,11 @@
 					</tr>
 				</thead>
 				<tbody>
+				
+				<!-- <tr>
+					<td colspan="8">장바구니에 담긴 상품이 없습니다.</td>
+				</tr> -->
+				
 				<%-- <%
 				/* if (...sth is exist >> ){Do>>조회} else { "장바구니에 담긴 상품이 없습니다."} */
 				if(){
@@ -63,7 +69,7 @@
 				}else{
 					
 				}
-				%> --%>
+				%> --%>	
 					<tr align="auto">
 						<th width="auto"><!--  align="center" --><input type="checkbox"  name="chkBox01" class="class" id="chkBox"></th>
 						<th width="auto" align="auto"><% /* Attach IMG */ %></th>
