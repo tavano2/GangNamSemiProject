@@ -615,7 +615,7 @@ public class BoardDao {
 	}
 
 	//FAQ 리스트 개수
-	public int getFAQListCount(Connection con) {
+	public int getFAQListCount(Connection con, String categ, String search) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int listCount = 0;
@@ -625,6 +625,9 @@ public class BoardDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, 1);
+			pstmt.setString(2, categ);
+			pstmt.setString(3, search);
+			pstmt.setString(4, search);
 			
 			rset = pstmt.executeQuery();
 			if (rset.next()) {
@@ -725,6 +728,83 @@ public class BoardDao {
 		}
 		
 		return list;
+	}
+	
+	//FAQ 수정 페이지 열기
+	public Board updateSelectFAQ(Connection con, int boardId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board b = null;
+		
+		String query = prop.getProperty("updateSelectFAQ");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, boardId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				b = new Board();
+				
+				b.setBoardId(rset.getInt("BOARD_ID"));
+				b.setBoardCate(rset.getString("BOARD_CATE"));
+				b.setBoardTitle(rset.getString("BOARD_TITLE"));
+				b.setBoardContent(rset.getString("BOARD_CONTENT"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return b;
+	}
+
+	public int updateFAQ(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateFAQ");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, b.getBoardType());
+			pstmt.setString(2, b.getBoardCate());
+			pstmt.setString(3, b.getBoardTitle());
+			pstmt.setString(4, b.getBoardContent());
+			pstmt.setInt(5, b.getBoardId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteFAQ(Connection con, int boardId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteFAQ");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, boardId);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 

@@ -65,11 +65,11 @@
 			</thead>
 			
 			<tbody>
-				<%for(Board b : bList){ %>
+				<%for(int i=0; i<bList.size(); i++){ %>
 				<tr>
-					<td><%= b.getBoardNum() %></td>
+					<td><%= bList.get(i).getBoardNum() %></td>
 					<td>
-					<% switch(b.getBoardCate()) {
+					<% switch(bList.get(i).getBoardCate()) {
 					case "1": cateName="주문관련"; break;
 					case "2": cateName="결제관련"; break;
 					case "3": cateName="배송관련"; break;
@@ -82,10 +82,16 @@
 					<%= cateName %>
 					</td>
 					<td>
-						<div class="title"><%= b.getBoardTitle() %></div>
+						<div class="title"><%= bList.get(i).getBoardTitle() %></div>
 						<div class="content">
 							<div class="ui segment">
-								<p><%= b.getBoardContent() %></p>
+								<p><%= bList.get(i).getBoardContent() %></p>
+								<%if(loginUser != null && loginUser.getUserId().equals("admin")){ %>
+								<div align="right">
+									<button class="ui grey basic button" onclick="location.href='/semi/updateSelectFAQ.bo?boardId=<%= bList.get(i).getBoardId() %>';">수정</button>
+									<button class="ui grey basic button" onclick="javascript: if(confirm('삭제하시겠습니까?')) location.href='/semi/deleteFAQ.bo?boardId=<%= bList.get(i).getBoardId() %>';">삭제</button>
+								</div>
+								<%} %>
 							</div>
 						</div>
 					</td>
@@ -96,11 +102,32 @@
 			<tfoot>
 				<th colspan="3" class="center aligned">
 					<div class="ui pagination menu" id="paging">
-			    		<a class="icon item"><i class="angle double left icon"></i></a>
+			    		
+				        <%if(pi.getCurrentPage() == 1){ %>
+				        <a class="icon item"><i class="angle double left icon"></i></a>
 				        <a class="icon item"><i class="angle left icon"></i></a>
+				        <%} else { %>
+				        <a class="icon item" onclick="pageBtn(1);"><i class="angle double left icon"></i></a>
+				        <a class="icon item" onclick="pageBtn(<%= pi.getCurrentPage() - 1 %>);"><i class="angle left icon"></i></a>
+				        <%} %>
+				        <%if(pi.getEndPage() == 0){ %>
 				        <a class="item active">1</a>
+				        <%} %>
+				        <%for(int i=pi.getStartPage(); i<=pi.getEndPage(); i++){ %>
+				        	<%if(i == pi.getCurrentPage()){ %>
+				        		<a class="item active"><%= i %></a>
+				        	<%} else { %>
+				        		<a class="item" onclick="pageBtn(<%= i %>);"><%= i %></a>
+				        	<%} %>
+				        <%} %>
+				        <%if(pi.getCurrentPage() == pi.getMaxPage() || pi.getMaxPage() == 0){ %>
 				        <a class="icon item"><i class="angle right icon"></i></a>
 				        <a class="icon item"><i class="angle double right icon"></i></a>
+				        <%} else { %>
+				        <a class="icon item" onclick="pageBtn(<%= pi.getCurrentPage() + 1 %>);"><i class="angle right icon"></i></a>
+				        <a class="icon item" onclick="pageBtn(<%= pi.getMaxPage() %>);"><i class="angle double right icon"></i></a>
+				        <%} %>
+				        
 			      	</div>
 				</th>
 			</tfoot>
@@ -118,7 +145,7 @@
 					<input type="hidden" name="categ" id="categ" value="<%= categ %>">
 					<div class="ui action input">
 						<input type="text" placeholder="Search..." name="search" value="<%= search %>">
-						<button class="ui button">Search</button>
+						<button class="ui button" onclick="seatchBtn();">Search</button>
 					</div>
 				</form>
 			</div>
@@ -151,7 +178,17 @@
 	<script>
 		function cateSel(num){
 			$("#categ").val(num);
-			searchFrom.action = "<%= request.getContextPath()%>/selectFAQList.bo";
+			searchFrom.action = "<%= request.getContextPath()%>/selectFAQList.bo?currentPage=1";
+			searchFrom.submit();
+		}
+		
+		function seatchBtn(){
+			searchFrom.action = "<%= request.getContextPath()%>/selectFAQList.bo?currentPage=1";
+			searchFrom.submit();
+		}
+		
+		function pageBtn(num){
+			searchFrom.action = "<%= request.getContextPath()%>/selectFAQList.bo?currentPage=" + num;
 			searchFrom.submit();
 		}
 		

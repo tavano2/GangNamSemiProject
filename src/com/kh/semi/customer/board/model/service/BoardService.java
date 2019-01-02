@@ -235,9 +235,9 @@ public class BoardService {
 	}
 
 	//FAQ 목록 총 개수
-	public int getFAQListCount() {
+	public int getFAQListCount(String categ, String search) {
 		Connection con = getConnection();
-		int listCount = new BoardDao().getFAQListCount(con);
+		int listCount = new BoardDao().getFAQListCount(con, categ, search);
 		
 		close(con);
 		return listCount;
@@ -265,6 +265,45 @@ public class BoardService {
 		
 		close(con);
 		return list;
+	}
+
+
+	public Board updateSelectFAQ(int boardId) {
+		Connection con = getConnection();
+		Board b = new BoardDao().updateSelectFAQ(con, boardId);
+		
+		close(con);
+		return b;
+	}
+
+
+	public int updateFAQ(Board b) {
+		Connection con = getConnection();
+		int result = new BoardDao().updateFAQ(con, b);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
+
+	public int deleteFAQ(int boardId) {
+		Connection con = getConnection();
+		int result = new BoardDao().deleteFAQ(con, boardId);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
 	}
 
 

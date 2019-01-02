@@ -1,6 +1,10 @@
+<%@page import="com.kh.semi.customer.board.model.vo.Board"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	Board b = (Board)request.getAttribute("b");
+%>
 <!DOCTYPE html>
 <html>
 
@@ -42,21 +46,22 @@
 	<div class="content">
 		<br> <br>
 		<div align="center"
-			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">INSERT
+			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">UPDATE
 			BOARD</div>
 		<br> <br>
 		<hr>
 		<br>
 		<div class="ui grid">
 			<div class="twelve wide column">
-				<b>게시글 작성</b>
+				<b>게시글 수정</b>
 			</div>
 			<div class="four wide column" align="right">
 			</div>
 		</div>
 		<br>
 		
-		<form action="" method="post" encType="multipart/form-data" name="insertFAQ" id="insertFAQ">
+		<form action="" method="post" encType="multipart/form-data" name="updateFAQ">
+		<input type="hidden" name="boardId" value="<%= b.getBoardId() %>">
 		<table class="ui celled table first-col">
 
 		<tbody>
@@ -64,7 +69,7 @@
 				<td>제목</td>
 				<td>
 					<div class="ui selection dropdown">
-                        <input type="hidden" name="categ" id="categ">
+                        <input type="hidden" name="categ" id="categ" value="<%= b.getBoardCate() %>">
                         <i class="dropdown icon"></i>
                         <div class="default text">검색목록선택</div>
                         <div class="menu">
@@ -79,7 +84,7 @@
                         </div>
                     </div>
 					<div class="ui input">
-						<input type="text" name="title" id="title">
+						<input type="text" name="title" id="title" value="<%= b.getBoardTitle() %>">
 					</div>
 				</td>
 			</tr>
@@ -92,7 +97,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>작성일</td>
+				<td>수정일</td>
 				<td>
 					<div class="ui input">
 						<input type="date" name="date" value="<%=String.format("%tY-%<tm-%<td", Calendar.getInstance())%>" readonly>
@@ -104,7 +109,7 @@
 				<td>
 					<div class="ui form">
 						<div class="field">
-							<textarea name="content" id="content"></textarea>
+							<textarea name="content" id="content"><%= b.getBoardContent() %></textarea>
 						</div>
 
 					</div>
@@ -121,18 +126,13 @@
 		</table>
 
 		<div align="center">
-			<button onclick="insertBtn(); return false;" class="ui secondary button">등록하기</button>
-			<button onclick="resetBtn(); return false;" class="ui button">초기화</button>
+			<button onclick="updateBtn(); return false;" class="ui secondary button">수정하기</button>
 			<button onclick="location.href='<%= request.getContextPath()%>/selectFAQList.bo'; return false;" class="ui button">취소하기</button>
-
 		</div>
 		</form>
 		<br>
 		<hr>
 		<br> <br> <br>
-
-
-
 
 
 	</div>
@@ -162,10 +162,10 @@
 		//컨텐츠 박스의 드롭다운 실행
 		$('.content .ui.dropdown').dropdown();
 		
-		function insertBtn(){
+		function updateBtn(){
 			if($("#categ").val() != "" && $("#title").val() != "" && $("#content").val() != ""){
-				insertFAQ.action = "<%= request.getContextPath() %>/insertFAQ.bo";
-				insertFAQ.submit();
+				updateFAQ.action = "<%= request.getContextPath() %>/updateFAQ.bo";
+				updateFAQ.submit();
 			} else {
 				if($("#categ").val() == "") {
 					alert("카테고리를 선택하세요.");
@@ -175,12 +175,10 @@
 					alert("내용을 입력하세요.");
 				}
 			}
+			
 		}
 		
-		function resetBtn(){
-			$('#insertFAQ .ui.dropdown').dropdown('restore defaults');
-			insertFAQ.reset();
-		}
+		
 		
 	</script>
 

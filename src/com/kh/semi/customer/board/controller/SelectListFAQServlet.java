@@ -40,6 +40,10 @@ public class SelectListFAQServlet extends HttpServlet {
 		int startPage;		//한번에 표시될 페이지가 시작할 페이지
 		int endPage;		//한번에 표시될 페이지가 끝나는 페이지
 		
+		String categ = request.getParameter("categ") == null ? "" : request.getParameter("categ");
+		String search = request.getParameter("search") == null ? "" : request.getParameter("search");
+		//System.out.println("categ: " + categ + ", search: " + search);
+		
 		//현재 페이지 처리
 		currentPage = 1;
 		
@@ -51,7 +55,7 @@ public class SelectListFAQServlet extends HttpServlet {
 		limit = 10;
 		
 		//전체 게시글 수 조회
-		int listCount = new BoardService().getFAQListCount();
+		int listCount = new BoardService().getFAQListCount(categ, search);
 		//총 페이지 수 계산
 		//예를 들어 목록 수가 123개면 페이지수는 13페이지가 필요하다.
 		maxPage = (int)((double)listCount / limit + 0.9);
@@ -66,10 +70,8 @@ public class SelectListFAQServlet extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		System.out.println(pi);
-		String categ = request.getParameter("categ") == null ? "" : request.getParameter("categ");
-		String search = request.getParameter("search") == null ? "" : request.getParameter("search");
-		System.out.println("categ: " + categ + ", search: " + search);
+		//System.out.println(pi);
+		
 		
 		HashMap<String, Object> list = new BoardService().selectListFAQ(currentPage, limit, categ, search);
 		
