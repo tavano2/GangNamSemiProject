@@ -196,6 +196,29 @@
 				}
 			});		
 			
+			$("#selectBigCateg").change(function(){
+				$.ajax({
+					url:"<%=request.getContextPath()%>/selectMiddleCateg.pm",
+					type : "get",
+					data : {selectBigCateg : $("#selectBigCateg").val()},
+					success : function(data) {
+						var $middleCateg = $("#middleCateg");
+						$middleCateg.empty();
+						console.log(data);
+						for (var i = 0; i < data.length; i++) {
+							if (data[i].CATEG_LEVEL == 1) {
+								var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
+								$middleCateg.append($div);
+							}
+						}
+					},
+					error : function(data) {
+						console.log("실패");
+					}
+				});
+			});
+			
+			
 			$("#addCategBtn").click(function(){							
 				$tbody=$("#addCateg");
 				$tr=$("<tr align='center'>");

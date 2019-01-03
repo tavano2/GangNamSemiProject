@@ -286,17 +286,60 @@ span {
 					type:"get",
 					data:{couponName:$("#couponName").val(),couponExp:$("#couponExp").val(),discountMethod:$("div[name=discountMethod]").html(),couponDiscount:$("#couponDiscount").val(),couponDate:$("#couponDate").val()},
 					success:function(data){
-						
+						if(data>1){
+							insertSeccess();
+						}else{
+							insertFail();
+						}
 					},
 					error:function(data){
 						console.log("실패")
 					}
 				});
 			}else if($("#productSelect").is(":checked")){
-				var productSelect = productSelect;
-				
+				var productArr = new Array;
+				console.log($("#slectedProduct").children().children());
+				$("#slectedProduct").children().children().each(function(index, item){
+					productArr[index] = $(this).children("td").eq(0).text();
+					console.log(productArr[index]);
+				})
+				$.ajax({
+					url:"<%=request.getContextPath()%>/createCouponPRange.pm",
+					type:"get",
+					data:{productArr:productArr,couponName:$("#couponName").val(),couponExp:$("#couponExp").val(),discountMethod:$("div[name=discountMethod]").html(),couponDiscount:$("#couponDiscount").val(),couponDate:$("#couponDate").val()},
+					success:function(data){
+						if(data>1){
+							insertSeccess();
+						}else{
+							insertFail();
+						}
+					},
+					error:function(){
+						console.log("실패");
+					}
+				});			
 			}else if($("#categorySelect").is(":checked")){
-				var categorySelect = categorySelect;
+				var bigCategArr = new Array;
+				var middleCategArr = new Array;
+				$("#slectedCateg").children().children().each(function(index,item){
+					bigCategArr[index]=$(this).children("td").eq(0).text();
+					middleCategArr[index]=$(this).children("td").eq(1).text();
+				});
+				$.ajax({
+					url:"<%=request.getContextPath()%>/createCouponCRange.pm",
+					type:"get",
+					data:{bigCategArr:bigCategArr,middleCategArr:middleCategArr,couponName:$("#couponName").val(),couponExp:$("#couponExp").val(),discountMethod:$("div[name=discountMethod]").html(),couponDiscount:$("#couponDiscount").val(),couponDate:$("#couponDate").val()},
+					success:function(data){
+						if(data>1){
+							//insertSeccess();
+						}else{
+							//insertFail();
+						}
+					},
+					error:function(){
+						console.log("실패");
+					}
+				});	
 			}else{
 				swal("적용범위를 선택해주세요!");
 			}
@@ -313,6 +356,22 @@ span {
 			$("#selectedValue").empty();
 			window.open("<%=request.getContextPath()%>/views/admin/promotion/CategorySelect.jsp", "제품선택", "width=1200, height=1200, left=100, top=50");
 		})
+		
+		function insertSeccess(){
+			swal("쿠폰 등록 성공!", "확인 버튼을 눌러주세요.", "success")
+			.then((value) => {	
+				  location.reload();		
+			});
+		}
+		function insertFail(){
+			swal("쿠폰 등록 실패!")
+			.then((value) => {	
+				  location.reload();		
+			});			
+		}
+		
+		
+		
 	</script>
 </body>
 
