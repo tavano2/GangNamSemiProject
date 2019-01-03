@@ -484,7 +484,7 @@
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
 	
-	<!--  결제창 팝업 띄우기 -->
+	
 	<script type="text/javascript">
 	
 		var name1 = "";
@@ -820,8 +820,8 @@
 			
 			//기사님에게 한마디
 			sayDeliveryMan = $("#sayDeliveryMan").val();
-	/* 		
-			//주문자 이름 정규 표현식
+	 		
+/* 			//주문자 이름 정규 표현식
 			var regExp1 = /^[가-힣]{2,10}$/;
 			if(!regExp1.test(name1)){
 				alert("주문자 이름을 정확하게 입력해주세요.(한글2~10자)");
@@ -865,9 +865,9 @@
 				alert("수령자 일반 번호를 정확하게 입력해주세요.");
 				$("#receiptTel1").select();
 				return false;
-			}
+			} */
 			
-			 */
+			 
 			
 			
 			$.ajax({
@@ -915,8 +915,9 @@
 					
 					var lnumCode = data.lnum;
 					
+
 					
-				 	<%-- var IMP = window.IMP;
+					var IMP = window.IMP;
 					IMP.init("imp70399198");
 					IMP.request_pay({ // param
 					    pg: "html5_inicis",
@@ -931,11 +932,31 @@
 					    buyer_postcode: postCode
 					}, function (rsp) { // callback
 					    if (rsp.success) {
+					    	var infoData = {orderLnum:lnumCode,
+									imp_uid:rsp.imp_uid,
+			    					totalPirce:totalPriceResult,
+			    					byerName:name1,
+			    					byerTel:delTel,
+			    					byerPhone:delPhone,
+			    					email:email,
+			    					recieverName:name2,
+			    					recieverAdd:paymentAddress,
+			    					recieverTel:recTel,
+			    					recieverPhone:recPhone,
+			    					memo:sayDeliveryMan,
+			    					couponValue:couponValue};
+					    	var infoArr = []
+					    	infoArr.push(infoData);
+					    	
+					    	
+					    	var jsonArr2 = JSON.stringify(infoArr);
+					    	jQuery.ajaxSettings.traditional = true;
 					    	$.ajax({
 					    		url : "<%=request.getContextPath()%>/insertOrderList.or",
 					    		type : "post",
-								traditional : true,
-					    		data : {orderLnum:lnumCode},
+					    		data : JSON.stringify(productList),
+					    		datatype: 'json',
+					    		contentType: "application/json",
 					    		success : function(data){
 					    			console.log(data);
 					    		},
@@ -955,7 +976,7 @@
 					        //alert("결제 실패!");
 					        
 					    }
-					});  --%>
+					});  
 
 				},
 				error : function(){

@@ -52,6 +52,8 @@ public class SelectMyPageServlet extends HttpServlet {
 		// 나의 주문 처리 현황
 		ArrayList<HashMap<String, String>> myDeliveryStatus = new MemberService().myDeliveryStatus(m);
 		
+
+		
 		if(userMap != null ) {
 			request.setAttribute("userMap", userMap);
 			request.setAttribute("nextClass", nextClass);

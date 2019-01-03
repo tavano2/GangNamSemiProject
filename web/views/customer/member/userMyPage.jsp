@@ -5,10 +5,15 @@
 	<%
 	HashMap<String,Object> userMap = null;
 	
+	// 기본적인 사용자 등급 및 아이디
 	if(request.getAttribute("userMap") != null){
 		userMap = (HashMap<String,Object>)request.getAttribute("userMap");
 	}
 	
+	// 다음 등급에 대한 해쉬맵
+	// currentPrice = 현재 고객이 산 구매액
+	// nextPrice = 다음 등급이 되기위한 조건 구매액
+	// resultPrice = 다음 등급까지 남은 구매액
 	HashMap<String,Object> nextClass = null;
 	int currentPrice = 0;
 	int nextPirce = 0;
@@ -21,10 +26,14 @@
 		resultPirce = nextPirce - currentPrice;
 		}
 	}
+	
+	//최근 12개월 구매액
 	HashMap<String,Object> beforePrice = null;
 	if(request.getAttribute("beforePrice") != null){
 		beforePrice = (HashMap<String,Object>)request.getAttribute("beforePrice");
 	}
+	
+	// 사용자 적립금, 총 적립금 , 사용 적립금
 	ArrayList<HashMap<String,Object>> pointGroupList = null;
 	int currentPoint = 0;
 	int minusPoint = 0;
@@ -40,11 +49,11 @@
 		}
 	}
 	
-	
+	// 사용자 쿠폰 조회, 총 주문 횟수 조회
 	int countCoupon = (int)request.getAttribute("countCoupon");
 	int totalByCount = (int)request.getAttribute("totalByCount");
 	
-	
+	// 사용자 배송 현황
 	ArrayList<HashMap<String,Object>> myDeliveryStatus = null;
 	int deliveryStay = 0;
 	int delivering = 0;
@@ -127,7 +136,7 @@
 					<tr>
 						<td style="width: 250px; border-right: white;" rowspan="3">이미지</td>
 						<td style="border-bottom: white;">
-							<p>저희 쇼핑몰을 이용해 주셔서 감사합니다. <%=arry[0] %> 님은 <%=userMap.get("class_name") %> 회원이십니다.</p>
+							<p>저희 쇼핑몰을 이용해 주셔서 감사합니다. <%=arry[0] %> 님은 <%-- <%=userMap.get("class_name") %> --%>GOLD 회원이십니다.</p>
 						</td>
 					</tr>
 					<tr>
