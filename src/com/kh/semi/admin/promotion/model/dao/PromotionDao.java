@@ -475,16 +475,71 @@ public class PromotionDao {
 		int result = 0;
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
-		String query = prop.getProperty("createCouponCRate");
+		String query = prop.getProperty("createCouponC");
 		try {
 			pstmt = con.prepareStatement(query);
+			System.out.println(middleCategList);
+			System.out.println(bigCategList);
 			for(int i =0;i<bigCategList.size();i++) {
-				
+				pstmt.setString(1, middleCategList.get(i));
+				pstmt.setString(2, bigCategList.get(i));		
+				result += pstmt.executeUpdate();
+				System.out.println(result);
+			}
+			if(result == bigCategList.size()) {
+				result = 2;
+			}else {
+				result = 1;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+	public int createCouponCRate(Connection con, HashMap<String, Object> map) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("createCouponAllRate");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, (String) map.get("couponName"));
+			pstmt.setInt(2, Integer.parseInt((String) map.get("couponDate")));
+			pstmt.setString(3, (String) map.get("couponExp"));
+			pstmt.setDouble(4, ((double) map.get("couponDiscount")) / 100);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int createCouponCPrice(Connection con, HashMap<String, Object> map) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("createCouponAllPrice");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, (String) map.get("couponName"));
+			pstmt.setInt(2, Integer.parseInt((String) map.get("couponDate")));
+			pstmt.setString(3, (String) map.get("couponExp"));
+			pstmt.setDouble(4, (int) (double) map.get("couponDiscount"));
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		return result;
 	}
 

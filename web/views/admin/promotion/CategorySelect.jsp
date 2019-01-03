@@ -54,26 +54,25 @@
 }
 
 .categoryAddContent {
-	height: 300px;
-	margin-top: 10px;
-	border: 1px solid black;
+	position: relative;
 }
-.ui selection dropdown{
+
+.ui selection dropdown {
 	display: inline-block;
 }
 </style>
-	<!-- J-query CDN -->
-	<script
+<!-- J-query CDN -->
+<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<!-- Semantic UI JS CDN -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-	<!-- jQuery Custom Scroller CDN -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+<!-- Semantic UI JS CDN -->
+<script
+	src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!-- jQuery Custom Scroller CDN -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-	<!-- Admin Common JS -->
-	<script src="/semi/js/admin/common/adminMain.js"></script>
+<!-- Admin Common JS -->
+<script src="/semi/js/admin/common/adminMain.js"></script>
 </head>
 
 <body>
@@ -97,43 +96,48 @@
 					<table class="ui celled table" id="cuponTable">
 						<tbody>
 							<tr>
-								<td class="categoryTd">상품카테고리</td>
-								<td>
+								<td class="categoryTd" rowspan="2">상품카테고리</td>
+								<td height="50px">
 									<div>
 										<div class="ui selection dropdown">
-													<input type="hidden" name="gender" id="selectBigCateg">
-													<i class="dropdown icon"></i>
-													<div class="default text">대분류</div>
-													<div class="menu" id="bigCateg"></div>
-												</div>
-												<div class="ui selection dropdown">
-													<input type="hidden" name="gender" id="selectMiddleCateg">
-													<i class="dropdown icon"></i>
-													<div class="default text">중분류</div>
-													<div class="menu" id="middleCateg"></div>
-												</div>
-												<div class="ui selection dropdown">
-													<input type="hidden" name="gender" id="select"> <i
-														class="dropdown icon"></i>
-													<div class="default text">소분류</div>
-													<div class="menu" id="smallCateg"></div>
-												</div>
+											<input type="hidden" name="gender" id="selectBigCateg">
+											<i class="dropdown icon"></i>
+											<div class="default text">대분류</div>
+											<div class="menu" id="bigCateg"></div>
+										</div>
+										<div class="ui selection dropdown">
+											<input type="hidden" name="gender" id="selectMiddleCateg">
+											<i class="dropdown icon"></i>
+											<div class="default text">중분류</div>
+											<div class="menu" id="middleCateg"></div>
+										</div>
+										<div class="ui selection dropdown">
+											<input type="hidden" name="gender" id="select"> <i
+												class="dropdown icon"></i>
+											<div class="default text">소분류</div>
+											<div class="menu" id="smallCateg"></div>
+										</div>
 										<div class="categoryButton categoryAddBtn">
 											<button class="ui secondary button" id="addCategBtn">추가</button>
 										</div>
 									</div>
-									<div class="categoryAddContent">
-									<table class="ui celled table">
-										<tbody id="addCateg">
-											<tr align="center">
-												<td>대분류</td>
-												<td>중분류</td>
-											</tr>
-										</tbody>
-									</table>
-									
-									</div>
 								</td>
+							</tr>
+							
+							<tr>
+							<td>
+							<div class="categoryAddContent">
+								<table class="ui celled table">
+									<tbody id="addCateg">
+										<tr align="center">
+											<td>대분류</td>
+											<td>중분류</td>
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
+							</td>
 							</tr>
 						</tbody>
 					</table>
@@ -146,10 +150,10 @@
 			</div>
 
 
-			
+
 		</div>
 		<!-- Footer -->
-			<%@ include file="/views/admin/common/adminFooter.jsp"%>
+		<%@ include file="/views/admin/common/adminFooter.jsp"%>
 	</div>
 
 
@@ -177,9 +181,11 @@
 							);
 					 for (var i = 0; i < data.length; i++) {
 						 if(data[i].CATEG_LEVEL=="0"){
-							var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
-							var $bigCateg = $("#bigCateg");
-							$bigCateg.append($div);
+							 if(!(decodeURIComponent(data[i].CATEG_MEMO)=="전체")){
+								var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
+								var $bigCateg = $("#bigCateg");
+								$bigCateg.append($div);
+							 }
 						 } else if(data[i].CATEG_LEVEL=="1"){
 							 var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
 								var $middleCateg = $("#middleCateg");
@@ -202,42 +208,43 @@
 					type : "get",
 					data : {selectBigCateg : $("#selectBigCateg").val()},
 					success : function(data) {
-						var $middleCateg = $("#middleCateg");
-						$middleCateg.empty();
-						console.log(data);
-						for (var i = 0; i < data.length; i++) {
-							if (data[i].CATEG_LEVEL == 1) {
-								var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
-								$middleCateg.append($div);
-							}
+					var $middleCateg = $("#middleCateg");
+					$middleCateg.empty();
+					console.log(data);
+					for (var i = 0; i < data.length; i++) {
+					if (data[i].CATEG_LEVEL == 1) {
+							var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
+							$middleCateg	.append($div);
 						}
+					}
 					},
 					error : function(data) {
 						console.log("실패");
 					}
-				});
+					});
 			});
-			
-			
-			$("#addCategBtn").click(function(){							
-				$tbody=$("#addCateg");
-				$tr=$("<tr align='center'>");
-				$td1=$("<td>");
-				$td2=$("<td>");
+
+			$("#addCategBtn").click(function() {
+				$tbody = $("#addCateg");
+				$tr = $("<tr align='center'>");
+				$td1 = $("<td>");
+				$td2 = $("<td>");
 				$tr.append($td1.text($("#selectBigCateg").val()));
 				$tr.append($td2.text($("#selectMiddleCateg").val()))
-				$tbody.append($tr);						
+				$tbody.append($tr);
 			});
 		})
-		
-		$("#saveBtn").click(function(){
-			$table=$("<table>").addClass("ui celled table").attr("id","slectedCateg");
-			$table.append($tbody);
-			window.opener.$("#selectedValue").append($table);
-			window.self.close();
-		})
-		
-		$("#closeBtn").click(function(){
+
+		$("#saveBtn").click(
+				function() {
+					$table = $("<table>").addClass("ui celled table").attr(
+							"id", "slectedCateg");
+					$table.append($tbody);
+					window.opener.$("#selectedValue").append($table);
+					window.self.close();
+				})
+
+		$("#closeBtn").click(function() {
 			window.self.close();
 		})
 	</script>

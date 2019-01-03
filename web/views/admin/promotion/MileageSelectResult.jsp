@@ -7,10 +7,8 @@
 	pageEncoding="UTF-8"%>
 <%
 	ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) session.getAttribute("list");
-	ArrayList<HashMap<String, Object>> selectUserList = (ArrayList<HashMap<String, Object>>) request
-			.getAttribute("selectUserList");
-	ArrayList<HashMap<String, Object>> selectAllUserList = (ArrayList<HashMap<String, Object>>) request
-			.getAttribute("selectAllUserList");
+	ArrayList<HashMap<String, Object>> selectUserList = (ArrayList<HashMap<String, Object>>) request.getAttribute("selectUserList");
+	ArrayList<HashMap<String, Object>> selectAllUserList = (ArrayList<HashMap<String, Object>>) request.getAttribute("selectAllUserList");
 	SelectUserVo suv = (SelectUserVo) request.getAttribute("suv");
 	PageInfo pi = (PageInfo) request.getAttribute("pi");
 	int listCount = pi.getListCount();
@@ -383,9 +381,9 @@ span {
 			$(this).addClass('active');
 		});
 
-		function dateFunction(today) {
+		function dateFunction(today) {  // 오늘날짜를 원하는 String 형식으로 만들기위해 사용한 함수
 			var dd = today.getDate();
-			var mm = today.getMonth() + 1; //January is 0!
+			var mm = today.getMonth() + 1; 
 			var yyyy = today.getFullYear();
 			if (dd < 10) {
 				dd = '0' + dd
@@ -459,4 +457,4 @@ span {
 	</script>
 </body>
 
-</html>
+</html>-

@@ -41,7 +41,7 @@ public class ProductSelect extends HttpServlet {
 		productBigList = new PromotionService().productSelect();
 		JSONArray jarr = new JSONArray();
 		JSONObject jmap = null;
-	
+		//제품 검색시 카테고리 목록을 검색하여 전달하는것은 json으로 구현
 		for(HashMap<String, Object> map : productBigList) {
 			jmap = new JSONObject();
 			jmap.put("CATEG_CODE", URLEncoder.encode((String)map.get("CATEG_CODE"), "UTF-8"));
