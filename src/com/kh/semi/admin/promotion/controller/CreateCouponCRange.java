@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.kh.semi.admin.promotion.model.service.PromotionService;
 
 /**
@@ -75,9 +76,11 @@ public class CreateCouponCRange extends HttpServlet {
 		if (discountMethod.equals("할인율")) {
 			 result =new PromotionService().createCouponCRate(map, bigCategList, middleCategList);
 		} else {
-			// result = new PromotionService().createCouponPPrice(map, bigCategList, middleCategList);
+			 result = new PromotionService().createCouponCPrice(map, bigCategList, middleCategList);
 		}
-
+		response.setContentType("application/json");
+	    response.setCharacterEncoding("utf-8");
+	    new Gson().toJson(result, response.getWriter());
 	}
 
 	/**

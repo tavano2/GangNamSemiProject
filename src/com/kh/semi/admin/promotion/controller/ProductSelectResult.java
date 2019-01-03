@@ -86,6 +86,7 @@ public class ProductSelectResult extends HttpServlet {
 		}else {
 			selectList = new PromotionService().productSelectResult2(selectMap, currentPage, limit);		
 		}
+		//제품검색 결과는 gson을 이용하여 값을 전달
 		HashMap<String, Object> gmap = new HashMap<String, Object>();
 		gmap.put("selectList", selectList);
 		gmap.put("pi",pi);

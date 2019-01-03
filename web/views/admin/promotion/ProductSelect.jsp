@@ -433,11 +433,11 @@
 				});
 			});
 			
-			$(".addTr").click(function(){
-				$("#baseTr").empty();
-				$("#tfootResult").children().each(function(){
+			$(".addTr").click(function(){ 
+				$("#baseTr").empty(); //table의 tbody를 3개로 구분하여 데이터를 삽입할 tbody를 초기화
+				$("#tfootResult").children().each(function(){ //tfootResult의 차식은 검색 결과를 표시하는 tr들을 each로 불러옴
 					if($(this).hasClass("active")){
-						$("#selectedProductList").append($(this).clone().
+						$("#selectedProductList").append($(this).clone(). //결과를 표시할 selectedProductList에 지금 불러온 tr을 복사하여 append함
 								click(function(){
 									if($(this).hasClass("active")){
 										$(this).removeClass("active");
@@ -451,7 +451,7 @@
 						
 					}
 					$("#selectedProductList").children().each(function(){
-						$(this).removeClass("active");
+						$(this).removeClass("active"); //복사해서 selectedProductList에 삽입된 tr들은 active 상태임으로 active를 제거 함.
 					})
 				})
 			})
@@ -469,11 +469,11 @@
 			});
 	
 		$("#saveBtn").click(function(){		
-			$table=$("<table>").addClass("ui celled table").attr("id","slectedProduct");
-			$("#selectedProductList").prepend($("#titleTr"));
-			$table.append($("#selectedProductList"))
-			window.opener.$("#selectedValue").append($table);
-			window.self.close();
+			$table=$("<table>").addClass("ui celled table").attr("id","slectedProduct"); // tbody를 담을 table을 생성
+			$("#selectedProductList").prepend($("#titleTr")); //상품코드, 상품명, 판매가를 적을 tr을 selectedProductList의 맨 앞부분에 삽입함
+			$table.append($("#selectedProductList")); // table에 selectedProductList를 append함
+			window.opener.$("#selectedValue").append($table); // window.opener를 이용하여 부모 페이지의 selectedValue를 선택하여 table을 삽입
+			window.self.close(); //팝업 창을 닫는다
 		})
 		$("#closeBtn").click(function(){
 			window.self.close();

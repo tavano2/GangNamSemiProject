@@ -50,7 +50,7 @@ public class InsertMemberServlet extends HttpServlet {
 			request.setAttribute("msg", "회원가입에 실패했습니다.");
 			RequestDispatcher view = request.getRequestDispatcher(page);
 			view.forward(request, response);
-		}
+		} // 결과 값에 따라 
 	}
 
 	/**

@@ -134,6 +134,7 @@ public class PromotionService {
 		int result = 0;
 		Connection con = getConnection();
 		result = new PromotionDao().createCouponAllPrice(con, map);
+		System.out.println(result);
 		if(result>0) {
 			result += new PromotionDao().createCouponPPrice(con, productList);
 		}
@@ -152,7 +153,27 @@ public class PromotionService {
 			ArrayList<String> middleCategList) {
 		int result = 0;
 		Connection con = getConnection();
-		result = new PromotionDao().createCouponAllRate(con, map);
+		result = new PromotionDao().createCouponCRate(con, map);
+		System.out.println("test");
+		if(result>0) {
+			result += new PromotionDao().createCouponCRate(con, bigCategList, middleCategList);
+		}
+		
+		if(result>1) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
+	public int createCouponCPrice(HashMap<String, Object> map, ArrayList<String> bigCategList,
+			ArrayList<String> middleCategList) {
+		int result = 0;
+		Connection con = getConnection();
+		result = new PromotionDao().createCouponCPrice(con, map);
 		if(result>0) {
 			result += new PromotionDao().createCouponCRate(con, bigCategList, middleCategList);
 		}

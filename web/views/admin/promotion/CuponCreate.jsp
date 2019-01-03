@@ -330,10 +330,11 @@ span {
 					type:"get",
 					data:{bigCategArr:bigCategArr,middleCategArr:middleCategArr,couponName:$("#couponName").val(),couponExp:$("#couponExp").val(),discountMethod:$("div[name=discountMethod]").html(),couponDiscount:$("#couponDiscount").val(),couponDate:$("#couponDate").val()},
 					success:function(data){
-						if(data>1){
-							//insertSeccess();
+						console.log(data);
+						if(data>2){
+							insertSeccess();
 						}else{
-							//insertFail();
+							insertFail();
 						}
 					},
 					error:function(){
