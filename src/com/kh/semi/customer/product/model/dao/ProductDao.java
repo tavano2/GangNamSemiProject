@@ -211,9 +211,10 @@ public class ProductDao {
 			if(rset.next()) {
 				SelectOneQnA= new Product();
 				
+				SelectOneQnA.setBoardNum(rset.getInt("BOARD_NUM"));
 				SelectOneQnA.setBoardContent(rset.getString("BOARD_CONTENT"));
 				SelectOneQnA.setBoardId(rset.getInt("BOARD_ID"));
-				
+				SelectOneQnA.setBoardTitle(rset.getString("BOARD_TITLE"));
 			}
 			
 			
@@ -541,7 +542,7 @@ public class ProductDao {
 				ShoppingCartPd cartPd = new ShoppingCartPd(); // ShoppingCartPd > VO. The Result.
 				
 				cartPd.setProductCode(rset.getInt("PRODUCT_CODE"));
-				cartPd.setUserId(rset.getInt("USER_ID"));
+			//	cartPd.setUserId(rset.getInt("USER_ID"));
 				cartPd.setOptionNum(rset.getInt("OPTION_NUM"));
 				cartPd.setAmount(rset.getInt("AMOUNT"));
 				
@@ -585,7 +586,7 @@ public class ProductDao {
 			con = JDBCTemplate.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, cartList.getProductCode());
-			pstmt.setInt(2, cartList.getUserId());
+		//	pstmt.setInt(2, cartList.getUserId());
 			pstmt.setInt(3, cartList.getOptionNum());
 			pstmt.setInt(4, cartList.getAmount());
 			result = pstmt.executeUpdate();// int result = 0;
@@ -615,7 +616,7 @@ public class ProductDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, cartList.getProductCode());
-			pstmt.setInt(2, cartList.getUserId());
+		//	pstmt.setInt(2, cartList.getUserId());
 			pstmt.setInt(3, cartList.getOptionNum());
 			pstmt.setInt(4, cartList.getAmount());
 			result = pstmt.executeUpdate();
@@ -1295,6 +1296,64 @@ public class ProductDao {
 		
 		
 		return reviewArraylist;
+	}
+
+	//상품문의 수정하기
+	public int updateQnA(Connection con, Board updateQnABoard, String pQnABoardId) {
+		PreparedStatement pstmt = null;
+		int result =0;
+		
+		String query = prop.getProperty("updateQnA");
+		
+		//System.out.println("다오"+updateQnABoard.getBoardTitle());
+		//System.out.println("다오"+updateQnABoard.getBoardContent());
+		//System.out.println(pQnABoardId);
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, updateQnABoard.getBoardTitle());
+			pstmt.setString(2, updateQnABoard.getBoardContent());
+			pstmt.setString(3, pQnABoardId);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	//상품문의 사진 수정쓰
+	public int updateQnAAttachment(Connection con, ArrayList<Attachment> fileList, String pQnABoardId) {
+		PreparedStatement pstmt = null;
+		int result =0;
+		
+		String query = prop.getProperty("updateQnAAttachment");
+		//System.out.println("다오"+fileList.get(0).getOriginName());
+		//System.out.println("e다오"+fileList.get(0).getChangeName());
+		//System.out.println("다오"+pQnABoardId);
+		
+		for(int i=0; i<fileList.size();i++) {
+			try {
+				pstmt=con.prepareStatement(query);
+				pstmt.setString(1, fileList.get(i).getOriginName());
+				pstmt.setString(2, fileList.get(i).getChangeName());
+				pstmt.setString(3, pQnABoardId);
+				
+				result +=pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+		}
+		
+		return result;
 	}
 
 
