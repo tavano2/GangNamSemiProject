@@ -11,6 +11,8 @@
 	int totalPirce = 0;
 	int deliveryPrice = 0;
 	int totalPoint = 0;
+	
+	
 
 	
 	// 할인금액
@@ -57,6 +59,10 @@
 
 <!-- 다음 주소 api -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+
+<!-- i am port api -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
 
 </head>
 
@@ -108,10 +114,10 @@
 						이미지가 없습니다.</td>
 						<%} %>
 						
-						<td><%=hmap.get("product_name") %></td>
+						<td class= "product_name1"><%=hmap.get("product_name") %></td>
 						<td><%=hmap.get("option_name") %></td>
 						<td><%=hmap.get("product_price") %>원</td>
-						<td><%=hmap.get("amount") %></td>
+						<td class=" amount_class1"><%=hmap.get("amount") %></td>
 						<td><%=(int)(((double)((int)hmap.get("product_price")))*((double)pointNDelivery.get("point_rate"))) %>원</td>
 				</tr>
 					<%}
@@ -365,7 +371,7 @@
 						<div align="center" style="color: olive; font-size: 20px;" id="resultByPrice"><%=(totalPirce+deliveryPrice) %>원</div>
 						<br>
 						<div align="center" style="">
-							<button class="ui brown basic button"  type="submit" style="width: 100px;" onclick = "return showOrderPage();">결제하기</button>
+							<button class="ui brown basic button"  type="submit" style="width: 100px;" onclick = "showOrderPage();">결제하기</button>
 						</div></td>
 				</tr>
 				<tr>
@@ -431,6 +437,7 @@
 					<th></th>
 					<th>쿠폰 소유자명</th>
 					<th>쿠폰명</th>
+					<th>쿠폰 적용 상품</th>
 					<th>할인 퍼센트/금액</th>
 					<th>쿠폰 만기일</th>
 				</tr>
@@ -528,66 +535,6 @@
 			
 		});	
 			
-			
-
-	
-			
-				
-				
-		//결제 페이지 팝업
-		
-	
-		
-	
-		
-		function showOrderPage() {
-			//
-			
-			name1 = $("#buyerName").val();
-			delTel1 = $("#buyerTel1").val();
-			delTel2 = $("#buyerTel2").val();
-			delTel3 = $("#buyerTel3").val();
-			delTel = delTel1 + "-" +delTel2 +"-" + delTel3;
-			delPhone1 = $("#buyerPhone1").val();
-			delPhone2 = $("#buyerPhone2").val();
-			delPhone3 = $("#buyerPhone3").val();
-			delPhone = delPhone1 + "-" +delPhone2 +"-" + delPhone3;
-			email1 = $("#buyerEmail1").val();
-			email2 = $("#buyerEmail2").val();
-			email = email1 + "@" + email2;
-			
-			//주문자 이름 정규 표현식
-			var regExp1 = /^[가-힣]{2,10}$/;
-			if(!regExp1.test(name1)){
-				alert("이름을 정확하게 입력해주세요.(한글2~10자)");
-				$("#buyerName").select();
-				return false;
-			}
-			
-			//휴대폰 번호 정규표현식
-			var regExp2 = /[0-9]{2,3}\-[0-9]{3,4}\-[0-9]{4}/g;
-			
-			if(!regExp2.test(delTel)){
-				alert("일반 번호를 정확하게 입력해주세요.");
-				return false;
-			}
-			if(!regExp2.test(delPhone)){
-				alert("핸드폰 번호를 정확하게 입력해주세요.");
-				return false;
-			}
-			
-			
-			
-			//이메일 정규 표현식
-			var regExp3 = /^[0-9a-zA-Z]/
-			
-			
-			
-			
-			return;
-			
-		}
-		
 		
 		// 주소 팝업
 		   function selectAddress() {
@@ -673,8 +620,10 @@
 						
 						var $couponUserIdTd = $("<td>").text(data.couponList[key].user_id);
 						var $couponNameTd = $("<td>").text(data.couponList[key].coupon_name);
+						var $couponAccessPnTd = $("<td>").text(data.couponList[key].product_name);
 						$tr.append($couponUserIdTd);
 						$tr.append($couponNameTd);
+						$tr.append($couponAccessPnTd);
 						if(data.couponList[key].coupon_pdiscount != 0){
 							var $couponPdiscountTd = $("<td class='disCount'>").text(data.couponList[key].coupon_pdiscount);
 							$tr.append($couponPdiscountTd);
@@ -809,6 +758,213 @@
 		}
 		
 		
+	//결제 페이지 팝업
+		
+		function showOrderPage() {
+			//
+			
+			//주문자 이름
+			name1 = $("#buyerName").val();
+			//주문자 번호
+			delTel1 = $("#buyerTel1").val();
+			delTel2 = $("#buyerTel2").val();
+			delTel3 = $("#buyerTel3").val();
+			if(delTel1 != "" && delTel2 != "" && delTel3 != ""){
+				delTel = delTel1 + "-" +delTel2 +"-" + delTel3;
+			}else{
+				delTel = "";
+			}
+			
+			//주문자 핸드폰 번호
+			delPhone1 = $("#buyerPhone1").val();
+			delPhone2 = $("#buyerPhone2").val();
+			delPhone3 = $("#buyerPhone3").val();
+			if(delPhone1 != "" && delPhone2 != "" && delPhone3 != ""){
+				delPhone = delPhone1 + "-" +delPhone2 +"-" + delPhone3;
+			}else{
+				delPhone = "";
+			}
+			
+			//주문자 이메일
+			email1 = $("#buyerEmail1").val();
+			email2 = $("#buyerEmail2").val();
+			email = email1 + "@" + email2;
+			
+			//수령자 이름
+			name2 = $("#buyerName2").val();
+			// 수령자 주소
+			postCode = $("#postCode").val();
+			address = $("#address").val();
+			detailAddress = $("#detailAddress").val();
+			paymentAddress = address+"@"+detailAddress;
+			// 수령자 번호
+			recTel1 = $("#receiptTel1").val();
+			recTel2 = $("#receiptTel2").val();
+			recTel3 = $("#receiptTel3").val();
+			
+			if(recTel1 != "" && recTel2 != "" && recTel3 != ""){
+				recTel = recTel1 + "-" +recTel2 +"-" + recTel3;
+			}else{
+				recTel = "";
+			}
+			
+			//수령자 핸드폰 번호
+			recPhone1 = $("#receiptPhone1").val();
+			recPhone2 = $("#receiptPhone2").val();
+			recPhone3 = $("#receiptPhone3").val();
+			if(recPhone1 != "" && recPhone2 != "" && recPhone3 != ""){
+				recPhone = recPhone1 + "-" +recPhone2 +"-" + recPhone3;
+			}else{
+				recPhone = "";
+			}
+			
+			//기사님에게 한마디
+			sayDeliveryMan = $("#sayDeliveryMan").val();
+	/* 		
+			//주문자 이름 정규 표현식
+			var regExp1 = /^[가-힣]{2,10}$/;
+			if(!regExp1.test(name1)){
+				alert("주문자 이름을 정확하게 입력해주세요.(한글2~10자)");
+				$("#buyerName").select();
+				return false;
+			}
+			
+			//휴대폰 번호 정규표현식
+			var regExp2 = /[0-9]{2,3}\-[0-9]{3,4}\-[0-9]{4}/g;
+			if(!regExp2.test(delTel)){
+				alert("주문자 일반 번호를 정확하게 입력해주세요.");
+				return false;
+			}
+			
+			
+			//이메일 정규 표현식
+			var regExp3 = /^[0-9a-zA-Z]{4,}[@]\w{4,}[.]\w{3}/g;
+			if(!regExp3.test(email)){
+				alert("이메일 형식이 올바르지 않습니다!");
+				return false;
+			}
+			
+			if(!regExp1.test(name2)){
+				alert("수령자 이름을 정확하게 입력해주세요.(한글2~10자)");
+				$("#buyerName").select();
+				return false;
+			}
+			
+			//주소 정규표현식
+			//regExp4 = /^[0-9]\d{4,}[@]\w{1,}[@]\w{1,}/g;
+			regExp4 = /(([가-힣]+(\d{1,5}|\d{1,5}(,|.)\d{1,5}|)+(읍|면|동|가|리))(^구|)((\d{1,5}(~|-)\d{1,5}|\d{1,5})(가|리|)|))([ ](산(\d{1,5}(~|-)\d{1,5}|\d{1,5}))|)|(([가-힣]|(\d{1,5}(~|-)\d{1,5})|\d{1,5})+(로|길))/;
+			if(!regExp4.test(paymentAddress)){
+				alert("주소가 올바르지 않습니다.");
+				$("#postCode").select();
+				return false;
+			}
+			
+			//수령자 일반 번호
+			var regExp5 = /[0-9]{2,3}\-[0-9]{3,4}\-[0-9]{4}/g;
+			if(!regExp5.test(recTel)){
+				alert("수령자 일반 번호를 정확하게 입력해주세요.");
+				$("#receiptTel1").select();
+				return false;
+			}
+			
+			 */
+			
+			
+			$.ajax({
+				url : "<%=request.getContextPath()%>/selectOrderListCode.or",
+				type : "post",
+				success : function(data){
+					var item = []
+					var count = 0;
+					$(".product_name1").each(function(){
+							item.push($(this).text());
+							count++;
+					});
+					
+				
+					// 프로덕트 코드,옵션명,수량
+					var productList = [];
+					
+					<%for(HashMap<String,Object> hmap : productList){%>
+						var object = {product_code:"<%=hmap.get("product_code")%>",
+						option_num : "<%=hmap.get("option_num")%>",	
+						amount : "<%=hmap.get("amount")%>"
+						};
+						productList.push(object);
+					
+					<%}%>
+					console.log(productList);
+					//총 결제 금액
+					var totalPriceResult = $("#resultByPrice").text().replace("원","");
+									
+					
+					//주문자 정보
+					console.log(name1);
+					console.log(delTel);
+					console.log(delPhone);
+					console.log(email);
+					
+					// 수령자 정보
+					console.log(name2);
+					console.log(paymentAddress);
+					console.log(recTel);
+					console.log(recPhone);
+					console.log(sayDeliveryMan);
+					console.log(couponValue);
+					
+					
+					var lnumCode = data.lnum;
+					
+					
+				 	<%-- var IMP = window.IMP;
+					IMP.init("imp70399198");
+					IMP.request_pay({ // param
+					    pg: "html5_inicis",
+					    pay_method: "card",
+					    merchant_uid: data.lnum,
+					    name: item[0]+" 외 "+(count-1)+"개",
+					    amount: 10,
+					    buyer_email: email,
+					    buyer_name: name1,
+					    buyer_tel: delTel,
+					    buyer_addr: paymentAddress,
+					    buyer_postcode: postCode
+					}, function (rsp) { // callback
+					    if (rsp.success) {
+					    	$.ajax({
+					    		url : "<%=request.getContextPath()%>/insertOrderList.or",
+					    		type : "post",
+								traditional : true,
+					    		data : {orderLnum:lnumCode},
+					    		success : function(data){
+					    			console.log(data);
+					    		},
+					    		error:function(data){
+					    			console.log("데이터 통신 실패");
+					    		}
+					    		
+					    	});
+					    	//아임 포트 고유 거래번호
+					        //console.log(rsp.imp_uid);
+					        
+					        
+					        
+					        
+					    } else {
+					        // 결제 실패 시 로직,
+					        //alert("결제 실패!");
+					        
+					    }
+					});  --%>
+
+				},
+				error : function(){
+					alert("코드 조회 실패!");
+					return false;
+				}
+				
+			});	
+		}
 		
 	</script>
 

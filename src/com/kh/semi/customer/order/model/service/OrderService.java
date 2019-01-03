@@ -39,20 +39,29 @@ public class OrderService {
 
 
 
-	public ArrayList<HashMap<String, Object>> selectCouponList(String userId, int currentPage, int limit) {
+	public ArrayList<HashMap<String, Object>> selectCouponList(String[] productNums, String userId, int currentPage, int limit) {
 		Connection con = getConnection();
-		ArrayList<HashMap<String, Object>> list = new OrderDao().selectCouponList(con,userId,currentPage,limit);
+		ArrayList<HashMap<String, Object>> list = new OrderDao().selectCouponList(con,productNums,userId,currentPage,limit);
 		close(con);
 		return list;
 	}
 
 
 
-	public int getListCount(String userId) {
+	public int getListCount(String userId, String[] productNums) {
 		Connection con = getConnection();
-		int listcount = new OrderDao().getListCount(con,userId);
+		int listcount = new OrderDao().getListCount(con,userId,productNums);
 		close(con);
 		return listcount;
+	}
+
+
+
+	public HashMap<String, Object> selectOrderLnum() {
+		Connection con = getConnection();
+		HashMap<String, Object> hmap = new OrderDao().selectOrderLnum(con);
+		close(con);
+		return hmap;
 	}
 
 }
