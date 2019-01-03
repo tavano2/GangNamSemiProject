@@ -1,4 +1,4 @@
-package com.kh.semi.customer.product.model.service;
+/*package com.kh.semi.customer.product.model.service;
 
 import static com.kh.semi.customer.common.JDBCTemplate.close;
 import static com.kh.semi.customer.common.JDBCTemplate.commit;
@@ -136,25 +136,29 @@ public class ProductService {
 		return SelectReplyList;
 	}
 
-	/*// ------ProductService.java---------------------------장바구니 : 조회 | selectCartList------------------------------------------------
+	// ------ProductService.java---------------------------장바구니 : 조회 | selectCartList------------------------------------------------
 
-	public ArrayList<ShoppingCartPd> selectCartList(ShoppingCartPd cartList,  String userId) {// Q.
-			// #0 "selectCartList Method" returns "HashMap<String, Object>", and gets "String userId" as parameter.
-			//#1 At first, Create "a connection object"
+	public ArrayList<ShoppingCartPd> selectCartList(ShoppingCartPd cartList,  String userId) {
+			// #0 selectCartList Method 는 HashMap<String, Object> 를 반환하고, String userId 를 매개변수로 받는다.
+			// #1 먼저 Connection 객체를 생성하고, 다음으로 con 과 userId 를 Dao 로 넘긴다.
 		Connection con = getConnection();
-			// and then throw "con and userId" >>to>> "DAO".
 		HashMap<String, Object> hmap = new ProductDao().selectCartList(con, userId);
-		return null;// Q.
+		return null;
 		
-			 [MOVE.](from)ProductService.java >>(to)>> ProductDao 
+			 ProductService.java 에서 ProductDao 로 이동한다. 
+		
+		
+		ArrayList<ShoppingCartPd> cart = new ProductDao().SelectShoppingCartServlet(con, cartList);
+		close(con);
+		return cart;
 		
 	}
 	
-	NEW
 	public HashMap<String, Object> selectCartList(String userId) {
-		
+		// TODO Auto-generated method stub
 		return null;
 	}
+
 	
 	// ------ProductService.java---------------------------장바구니 : 품목 추가 | insertCartList------------------------------------------------
 	
@@ -205,7 +209,7 @@ public class ProductService {
 	}
 	
 	// ------------------ CART ----------------------------------------------------------------------------------------------------------
-*/
+
 	public int getListCountPointAndClassMember(Member m) {
 		Connection con = getConnection();
 		int result = new ProductDao().getListCountPointAndClassMember(con,m);
@@ -368,38 +372,7 @@ public class ProductService {
 		return resultArr;
 	}
 
-	//qna수정하기
-	public int updateQnA(Board updateQnABoard, ArrayList<Attachment> fileList,String pQnABoardId,String atstatus) {
-		Connection con = getConnection();
-		int result=0;
-		
-		int result1 = new ProductDao().updateQnA(con,updateQnABoard,pQnABoardId);
-		
 	
-		int result2=0;
-		if(atstatus.equals("y")) {
-			result2 = new ProductDao().updateQnAAttachment(con,fileList,pQnABoardId);			
-		}else {
-			result2=1;
-		}
-		
-		
-		if(result1>0 && result2>0) {
-			commit(con);
-			result =1;
-		}else {
-			rollback(con);
-		}
-		close(con);
-		
-		
-		return result;
-	}
-
-	
-
-	
-
 
 
 }
@@ -425,3 +398,4 @@ public class ProductService {
 
 
 
+*/

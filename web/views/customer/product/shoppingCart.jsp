@@ -7,6 +7,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+		<!-- ProductDao.java 에서 shoppingCart.jsp  로 이동한다. -->
+
 <%
 	HashMap<String, Object> hmap = null;
 	ArrayList<ShoppingCartPd> cartList = null;
@@ -14,14 +16,14 @@
 	HashMap<String, String> opList = null;
 	HashMap<String, Attachment> atList = null;
 	HashMap<String, Integer> count = null;
-	if(request.getAttribute("hmap") != null){		//hmap이 있을 경우 실행.
+	if(request.getAttribute("hmap") != null){		//If "hmap" is NOT null, Execute {}.  "hmap"이 있을 경우 실행한다.
 		hmap = (HashMap<String, Object>)request.getAttribute("hmap");
 		cartList = (ArrayList<ShoppingCartPd>)hmap.get("cartList");
 		pdList = (HashMap<String, ReallyProduct>)hmap.get("pdList");
 		opList = (HashMap<String, String>)hmap.get("opList");
 		atList = (HashMap<String, Attachment>)hmap.get("atList");
 		count = (HashMap<String, Integer>)hmap.get("count");
-	} else {
+	} else { // "hmap"이 비어있을 경우.
 		cartList = new ArrayList<ShoppingCartPd>();
 		pdList = new HashMap<String, ReallyProduct>();
 		opList = new HashMap<String, String>();
@@ -29,32 +31,6 @@
 		count = new HashMap<String, Integer>();
 	}
 %>
-
-<!-- [Move.] (from) ProductDao.java >>(to)>> shoppingCart.jsp -->
-
-<%--
-
-	테이블 작성 코드
-	<% for(int i=0; i<cartList.size(); i++){ %>
-	<tr>
-		<td>
-			<img src="<%= atList.get(cartList.get(i).getProductCode()).getFilePath() + atList.get(cartList.get(i).getProductCode()).getChangeName() %>" width="50" height="50">
-		</td>
-		<td>
-			<span><%= pdList.get(cartList.get(i).getProductCode()).getProductName() %></span>&nbsp;[
-			<% for(int j=i; j<i+count.get(cartList.get(i).getProductCode()); j++) { %>
-				&nbsp;<span><%= opList.get(cartList.get(j).getProductCode()) %></span>&nbsp;
-			<% } %>
-			]
-		</td>
-		<td><%= cartList.get(i).getAmount() %></td>
-		<td><%= pdList.get(cartList.get(i).getProductCode()).getProductPrice() %></td>
-		<td><%= pdList.get(cartList.get(i).getProductCode()).getProductPrice() * cartList.get(i).getAmount() %></td>
-	</tr>
-	<% i += count.get(cartList.get(i).getProductCode()) - 1;
-	} %>
-	
---%>
 
 <!DOCTYPE html>
 
@@ -77,57 +53,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 	<!-- Common js -->
     <script src="/semi/js/customer/common/main.js"></script>
-
 	<script>
-	/* ▼ 일괄 Check */
+	// Checkbox > 일괄 Check 기능
 	$( document ).ready( function() {
         $( '.check-all' ).click( function() {
           $( '.class' ).prop( 'checked', this.checked );
         } );
       } );
 	</script>
-
 </head>
-
 <body>
 	<%@ include file="/views/customer/common/mainNav.jsp"%>	
 	
-	<%if(loginUser != null) {%>
+	<%if(loginUser != null) {%> <!-- 로그인 상태에서만 장바구니로 이동할 수 있다. -->
 	
 	<div class="content" align="center">
 		<br> <br>
 		<div align="center" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">SHOPPING CART</div>
 		<br> <br>
 	
-		<!-- 장바구니 내역  -->
+		<!-- 이하 장바구니 내역  -->
 		<table class="ui single line table">
 				<thead>
 					<tr>
 						<th><input type="checkbox" name="all" class="check-all" id="chkBox"></th>
 						<th>이미지</th>
 						<th>상품정보</th>
-						<th>수량</th>
 						<th>판매가</th>
-						<th>회원 할인가</th>
-						<th>적립금</th>
-						<th>배송비</th>
+						<th>수량	</th>
 						<th>합계</th>
+						<!-- <th>회원 할인가</th> --> <!--(+할인가, 적립금은 쿼리문이 다소 복잡해지므로 다음에 여유가 되면 추가 예정.)-->
+						<!-- <th>적립금</th> -->
 					</tr>
 				</thead>
-				<tbody>
-				
-				<!-- <tr>
-					<td colspan="8">장바구니에 담긴 상품이 없습니다.</td>
-				</tr> -->
-				
-				<%-- <%
-				/* if (...sth is exist >> ){Do>>조회} else { "장바구니에 담긴 상품이 없습니다."} */
-				if(){
+				<tbody> <!-- tbody : 수정중 -->
 					
-				}else{
+							<%-- <%
+							/* if (...sth is exist >> ){Do>>조회} else { "장바구니에 담긴 상품이 없습니다."} */
+							if(){
 					
-				}
-				%> --%>	
+							}else{
+					
+							}
+							%> --%>	
+				
 					<tr align="auto">
 						<th width="auto"><!--  align="center" --><input type="checkbox"  name="chkBox01" class="class" id="chkBox"></th>
 						<th width="auto" align="auto"><% /* Attach IMG */ %></th>
@@ -161,21 +130,36 @@
 						<th width="auto">$</th>
 						<th width="auto">$</th>
 					</tr>
-					
-<!-- 		Ref.
-			private int ProductCode;
-			private int UserId;
-			private int OptionNum;
-			private int Amount;	
- -->
-				
-				</tbody>
+			</tbody>
+			
+			<tbody><!--  ★ Table code  -->
+<% for(int i=0; i<cartList.size(); i++){ %>
+	<tr>
+		<td>
+			<img src="<%= atList.get(cartList.get(i).getProductCode()).getFilePath() + atList.get(cartList.get(i).getProductCode()).getChangeName() %>" width="50" height="50">
+		</td>
+		<td>
+			<span><%= pdList.get(cartList.get(i).getProductCode()).getProductName() %></span>&nbsp;[
+			<% for(int j=i; j<i+count.get(cartList.get(i).getProductCode()); j++) { %>
+				&nbsp;<span><%= opList.get(cartList.get(j).getProductCode()) %></span>&nbsp;
+			<% } %>
+			]
+		</td>
+		<td><%= cartList.get(i).getAmount() %></td> <!-- 장바구니 수량  -->
+		<td><%= pdList.get(cartList.get(i).getProductCode()).getProductPrice() %></td> <!-- 상품 목록에서 상품 코드와 가격(상품 정보) 가져오기. | 단일 수량 -->
+		<td><%= pdList.get(cartList.get(i).getProductCode()).getProductPrice() * cartList.get(i).getAmount() %></td> <!-- 상품 목록에서 상품 코드와 가격(상품 정보) 가져오기. | 복수 수량 -->
+	</tr>
+	<% i += count.get(cartList.get(i).getProductCode()) - 1;
+	} %>
+		</tbody>
+			
 			<!-- <tfoot>
 				<th colspan="4">
 					 작성하기는 관리자만 가능하다.  -->
 			<!-- 	</th>
 			</tfoot> -->
 		</table>
+		<p>배송비 : 2500원</p> <!-- 배송비는 2,500원 고정이므로 페이지 하단부에 별도로 표기한다. -->
 		<table>
 					<div align="center">
 						<p class="ui single line table"></p>
@@ -199,15 +183,7 @@
   
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
 
-
-
-	<script>
-	
-	/*  */
-	
-	</script>
-
-	<%} else {
+	<%} else { // 비 로그인 상태일 시 로그인 페이지로 이동한다.
 		response.sendRedirect("views/customer/member/memberLogin.jsp");
 	} %>
     

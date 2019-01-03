@@ -48,7 +48,7 @@
             <li><a href="/semi/index.jsp">홈</a></li>
             <li><a href="/semi/views/customer/board/notice.jsp">공지사항</a></li>
             <li><a href="<%=request.getContextPath()%>/selectMyPage.me">마이페이지</a></li>
-            <li><a href="<%=request.getContextPath()%>/shoppingCart.pd1">장바구니</a></li>
+            <li><a href="<%=request.getContextPath()%>/selectCartList.pd">장바구니</a></li>
             <li><a href="/semi/views/customer/delivery/orderList.jsp">주문내역</a></li>
             <li><a href="<%=request.getContextPath()%>/selectMessageAndCoupon.pm">쪽지/쿠폰함</a></li>
         </ul>
@@ -93,7 +93,7 @@
                     LogOut
                 </a>
                 <%} %>
-                <a class="item" href="<%=request.getContextPath()%>/shoppingCart.pd1"><!-- NOT .jsp BUT .pd1(SELECT) -->
+                <a class="item" href="<%=request.getContextPath()%>/selectCartList.pd">
                     Cart
                 </a>
                 <a class="item" href="<%=request.getContextPath()%>/selectMyPage.me">

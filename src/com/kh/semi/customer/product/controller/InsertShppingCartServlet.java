@@ -18,7 +18,7 @@ import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 *//**
  * Servlet implementation class ShoppingCartServlet
  *//*
-@WebServlet("/shoppingCart.pd2") // The @WebServletannotation is used to declare a servlet.
+@WebServlet("/insertCartList.pd")
 public class InsertShppingCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -29,54 +29,20 @@ public class InsertShppingCartServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		 Pagination
-		
-		int currentPage;
-		int limit;
-		int maxPage;
-		int startPage;
-		int endPage;
-		
-		currentPage = 1;
-		if(request.getParameter("currentPage")!=null) {
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
-		
-		limit = 10;
-		
-		
-		ProductService cs = new ProductService();
-		int listCount = cs.getListCount();
-		maxPage=(int)((double)listCount/limit+0.9);
-		startPage=(((int)((double)currentPage/limit+0.9))-1)*limit+1;
-		endPage=startPage+10-1;
-		if(maxPage<endPage) {
-			endPage=maxPage;	
-		}
-		
-		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		
-		 -------------------- [ X ] Pagination --------------------  
-		
-	 Ref.
-	 	private int cartNum;//TYPE : NUMBER | PK
-		private String productCode;//TYPE : VARCHAR2 | PK | FK
-		private String userId;//TYPE : VARCHAR2 | PK | FK
-		private String optionNum;//TYPE : VARCHAR2 | PK | FK
-		private int amount;//TYPE : NUMBER
-		
-		// [ 수정중 ] [ X ] 가져올 내용 : 상품 정보 : ProductCode, UserId, OptionNum, Amount
-		 int ProductCode = (int) request.getAttribute("ProductCode");
-		 String UserId =  (String) request.getAttribute("UserId");
-		 int OptionNum = (int) request.getAttribute("OptionNum");
-		 int Amount = (int) request.getAttribute("Amount");
+		// 가져올 내용 : 상품 정보 : cartNum, productCode, userId, optionNum, amount
+		 int cartNum =  request.getAttribute("cartNum");
+		 String productCode = request.getAttribute("productCode");
+		 String userId = request.getAttribute("userId");
+		 String optionNum =  request.getAttribute("optionNum");
+		 int amount = request.getAttribute("amount");
 		
 		ShoppingCartPd cartProduct = new ShoppingCartPd();
 		
-		cartProduct.setProductCode(ProductCode); 						// ERROR 	
-		cartProduct.setUserId(UserId);
-		cartProduct.setOptionNum(OptionNum);
-		cartProduct.setAmount(Amount);
+		cartProduct.setCartNum(cartNum);
+		cartProduct.setProductCode(productCode);
+		cartProduct.setUserId(userId);
+		cartProduct.setOptionNum(optionNum);
+		cartProduct.setAmount(amount);
 		
 		ArrayList<ShoppingCartPd> cartList = new ProductService().insertCartList(cartProduct);
 		
@@ -87,11 +53,10 @@ public class InsertShppingCartServlet extends HttpServlet {
 		
 		// --------------------------------------------------------------------------------------------------------------------
 		
-		String page = ""; // The void.
+		String page = "";
 		if(cartList != null) {
 			page = "/semi/views/customer/product/shoppingCart.jsp";
 			request.setAttribute("cartList", cartList);
-			request.setAttribute("pi", pi);
 		}else {
 			page = "/semi/views/customer/common/errorPage.jsp";
 			request.setAttribute("msg", "쇼핑카트 조회 실패!");
@@ -112,12 +77,6 @@ public class InsertShppingCartServlet extends HttpServlet {
 	}
 
 }
-
-
-
-//Controller is the Servlet. | Controller = Serlvet | Controller != JSP
-//The controller is usually a servlet, because it does NOT generate any HTML. 
-
 
 
 */
