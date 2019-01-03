@@ -103,9 +103,10 @@ public class OrderDao {
 				pstmt.setString(1, userId);
 				pstmt.setString(2, item);
 				pstmt.setString(3, userId);
-				pstmt.setString(4, item);
-				pstmt.setInt(5, startRow);
-				pstmt.setInt(6, endRow);
+				pstmt.setString(4, userId);
+				pstmt.setString(5, item);
+				pstmt.setInt(6, startRow);
+				pstmt.setInt(7, endRow);
 				rset = pstmt.executeQuery();
 				if(rset != null) {
 					while(rset.next()) {
@@ -143,7 +144,8 @@ public class OrderDao {
 				pstmt.setString(1, userId);
 				pstmt.setString(2, item);
 				pstmt.setString(3, userId);
-				pstmt.setString(4, item);
+				pstmt.setString(4, userId);
+				pstmt.setString(5, item);
 				rset = pstmt.executeQuery();
 				if(rset.next()) {
 					listcount += rset.getInt(1);
