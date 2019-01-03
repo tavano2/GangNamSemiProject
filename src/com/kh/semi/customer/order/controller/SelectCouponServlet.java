@@ -37,6 +37,7 @@ public class SelectCouponServlet extends HttpServlet {
 		int maxPage;
 		int startPage;
 		int endPage;
+		String[] productNums = { "PD000001", "PD000002","PD000010" };
 		String userId = String.format(((Member)request.getSession().getAttribute("loginUser")).getUserId());
 		
 		currentPage =1;
@@ -46,7 +47,7 @@ public class SelectCouponServlet extends HttpServlet {
 		int listCount = 0;
 		limit = 10;
 		OrderService os = new OrderService();
-		listCount = os.getListCount(userId);
+		listCount = os.getListCount(userId,productNums);
 
 		
 		maxPage = listCount/limit +(listCount % limit == 0 ? 0 : 1);
@@ -58,7 +59,7 @@ public class SelectCouponServlet extends HttpServlet {
 		
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		ArrayList<HashMap<String, Object>> couponList = new OrderService().selectCouponList(userId,currentPage,limit);
+		ArrayList<HashMap<String, Object>> couponList = new OrderService().selectCouponList(productNums,userId,currentPage,limit);
 		
 		JSONObject json = new JSONObject();
 		json.put("pi", pi);

@@ -88,7 +88,7 @@ public class OrderDao {
 		return hmap;
 	}
 
-	public ArrayList<HashMap<String, Object>> selectCouponList(Connection con, String userId, int currentPage, int limit) {
+	public ArrayList<HashMap<String, Object>> selectCouponList(Connection con, String[] productNums, String userId, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<HashMap<String, Object>> list = null;
@@ -97,23 +97,30 @@ public class OrderDao {
 		int startRow = (currentPage - 1) * limit + 1;
 		int endRow = startRow + limit - 1;
 		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, userId);
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
-			rset = pstmt.executeQuery();
-			if(rset != null) {
-				list = new ArrayList<HashMap<String, Object>>();
-				while(rset.next()) {
-					hmap = new HashMap<String,Object>();
-					hmap.put("user_id", rset.getString("USER_ID"));
-					hmap.put("end_date", rset.getDate("END_DATE"));
-					hmap.put("coupon_code", rset.getString("COUPON_CODE"));
-					hmap.put("coupon_name", rset.getString("COUPON_NAME"));
-					hmap.put("coupon_type", rset.getInt("COUPON_TYPE"));
-					hmap.put("coupon_rdiscount", rset.getDouble("COUPON_RDISCOUNT"));
-					hmap.put("coupon_pdiscount", rset.getInt("COUPON_PDISCOUNT"));
-					list.add(hmap);
+			list = new ArrayList<HashMap<String, Object>>();
+			for(String item : productNums) {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, userId);
+				pstmt.setString(2, item);
+				pstmt.setString(3, userId);
+				pstmt.setString(4, item);
+				pstmt.setInt(5, startRow);
+				pstmt.setInt(6, endRow);
+				rset = pstmt.executeQuery();
+				if(rset != null) {
+					while(rset.next()) {
+						hmap = new HashMap<String,Object>();
+						hmap.put("user_id", rset.getString("USER_ID"));
+						hmap.put("end_date", rset.getDate("END_DATE"));
+						hmap.put("coupon_code", rset.getString("COUPON_CODE"));
+						hmap.put("coupon_name", rset.getString("COUPON_NAME"));
+						hmap.put("coupon_type", rset.getInt("COUPON_TYPE"));
+						hmap.put("coupon_rdiscount", rset.getDouble("COUPON_RDISCOUNT"));
+						hmap.put("coupon_pdiscount", rset.getInt("COUPON_PDISCOUNT"));
+						hmap.put("product_code", rset.getString("PRODUCT_CODE"));
+						hmap.put("product_name", rset.getString("PRODUCT_NAME"));
+						list.add(hmap);
+					}
 				}
 			}
 		} catch (SQLException e) {
@@ -125,28 +132,52 @@ public class OrderDao {
 		return list;
 	}
 
-	public int getListCount(Connection con, String userId) {
+	public int getListCount(Connection con, String userId, String[] productNums) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int listcount = 0;
 		String query = prop.getProperty("getListCount");
 		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, userId);
-			rset = pstmt.executeQuery();
-			if(rset.next()) {
-				listcount = rset.getInt(1);
+			for(String item : productNums) {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, userId);
+				pstmt.setString(2, item);
+				pstmt.setString(3, userId);
+				pstmt.setString(4, item);
+				rset = pstmt.executeQuery();
+				if(rset.next()) {
+					listcount += rset.getInt(1);
+				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(rset);
 			close(pstmt);
 			
 		}
-		
 		return listcount;
+	}
+
+	public HashMap<String, Object> selectOrderLnum(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		String query = prop.getProperty("selectOrderLnum");
+		try {
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				hmap = new HashMap<String,Object>();
+				hmap.put("lnum", rset.getString("ORDER_LNUM"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return hmap;
 	}
 	
 	
