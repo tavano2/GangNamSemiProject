@@ -136,27 +136,27 @@ public class ProductService {
 		return SelectReplyList;
 	}
 
-	// ----------------------------------------------------------------------------------------------------------------------------
+	/*// ------ProductService.java---------------------------장바구니 : 조회 | selectCartList------------------------------------------------
 
-	
-	// 장바구니 | Shopping Cart : 조회 | selectCartList  | model/service/ProductService.java
-	public ArrayList<ShoppingCartPd> selectCartList(ShoppingCartPd cartList, int currentPage, int limit) {
-		//(comment) : 전의 코드를 따르면 해당 메서드는 HashMap<String, Object> 를 반환해야 하며, String userId를 매개변수로 받습니다.
-		//(comment) : 먼저 커넥션 객체를 만들고, 다음은 con과 userId를 Dao로 넘깁니다.
-		//HashMap<String, Object> hmap = new ProductDao().selectCartList(con, userId);
-		//(comment) : productDao로..
-		
-		
-		
+	public ArrayList<ShoppingCartPd> selectCartList(ShoppingCartPd cartList,  String userId) {// Q.
+			// #0 "selectCartList Method" returns "HashMap<String, Object>", and gets "String userId" as parameter.
+			//#1 At first, Create "a connection object"
 		Connection con = getConnection();
-		ArrayList<ShoppingCartPd> cart = new ProductDao().SelectShoppingCartServlet(con, cartList, currentPage, limit);
-		close(con);
-		return cart;
+			// and then throw "con and userId" >>to>> "DAO".
+		HashMap<String, Object> hmap = new ProductDao().selectCartList(con, userId);
+		return null;// Q.
+		
+			 [MOVE.](from)ProductService.java >>(to)>> ProductDao 
+		
 	}
 	
-	// ----------------------------------------------------------------------------------------------------------------------------
+	NEW
+	public HashMap<String, Object> selectCartList(String userId) {
+		
+		return null;
+	}
 	
-	// 장바구니 | Shopping Cart : 품목 추가 | insertCartList  | model/service/ProductService.java
+	// ------ProductService.java---------------------------장바구니 : 품목 추가 | insertCartList------------------------------------------------
 	
 	public ArrayList<ShoppingCartPd> insertCartList(ShoppingCartPd cart) {
 		
@@ -167,7 +167,7 @@ public class ProductService {
 		System.out.println("Service Result : " + result);
 		if(result>0) {
 			commit(con);
-			/*cartList = new ProductDao().insertCartList(con,cart);*/
+			cartList = new ProductDao().insertCartList(con,cart);
 			
 		}else {
 			rollback(con);
@@ -178,9 +178,8 @@ public class ProductService {
 		return cartList;
 	}
 	
-	// ----------------------------------------------------------------------------------------------------------------------------
+	// ------ProductService.java---------------------------장바구니 : 품목 삭제 | deleteCartList------------------------------------------------
 	
-	// 장바구니 | Shopping Cart : Deletion | deleteCartList  | model/service/ProductService.java
 	
 	public ArrayList<ShoppingCartPd> deleteCartList(int currentPage, int limit) {
 		
@@ -205,8 +204,8 @@ public class ProductService {
 		return result;
 	}
 	
-	// ----------------------------------------------------------------------------------------------------------------------------
-
+	// ------------------ CART ----------------------------------------------------------------------------------------------------------
+*/
 	public int getListCountPointAndClassMember(Member m) {
 		Connection con = getConnection();
 		int result = new ProductDao().getListCountPointAndClassMember(con,m);
@@ -368,6 +367,8 @@ public class ProductService {
 		resultArr[1]=bid;
 		return resultArr;
 	}
+
+	
 
 	
 

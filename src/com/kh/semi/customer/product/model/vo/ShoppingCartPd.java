@@ -4,35 +4,65 @@ package com.kh.semi.customer.product.model.vo; // "Model" deals with "Business L
 // Service send the result >>to>> Controller.
 
 public class ShoppingCartPd{ // VO | The Result.
+	
+			/* [MOVE.](from) model/vo/ShoppingCartPd.java >>(to)>> controller/SelectShoppingCartServlet.java */
 
-	//(comment) : 변수의 경우, 첫 글자는 소문자로 작성합니다. ex) productCode
-	//(comment) : productCode는 자료형이 String입니다. 테이블 정의서 참조. number이면 int, varchar이면 String.
-	//(comment) : optionNum은 자료형이 String입니다.
-	//(comment) : amount는 int형이 맞습니다.
-	//(comment) : 때에 따라서 number(10, 2)이런식으로 적혀있을 경우, 10은 자리수, 2는 소수점을 나타내므로 소수점을 표현할 수 있는 double로 선언을 해야합니다.
-	//(comment) : 현 vo에는 double형은 없습니다.
-	//(comment) : 자료형이 바뀌기 때문에 이후 수정해야 할 코드들이 많을겁니다.
-	
-	//(comment) : 자료형 수정에 따라 생성자 재 작성 바람.
-	//(comment) : Alt+Shift+s 클릭 후, Generate Constructor using fields.. -> Select All -> OK.
-	
-	//(comment) : setter 미완성. getter setter 삭제 후 재 작성 바람.
-	//(comment) : Alt+Shift+s 클릭 후, Generate Getters And Setters -> Select All -> OK.
-	
-	//(comment) : toString 오버라이드.
-	//(comment) : Alt+Shift+s 클릭 후, Generate toString() -> Fields Check -> OK.
-	
-	//(comment) : SelectShoppingCartServlet 으로..
-	
-	//(comment) : 해당 코멘트는 수정 및 확인 후 삭제 바랍니다.
+	private int cartNum;//TYPE : NUMBER | PK
+	private String productCode;//TYPE : VARCHAR2 | PK | FK
+	private String userId;//TYPE : VARCHAR2 | PK | FK
+	private String optionNum;//TYPE : VARCHAR2 | PK | FK
+	private int amount;//TYPE : NUMBER
 	
 	
-	private int ProductCode;	//자료형 수정바람.
-	private String UserId;
-	private int OptionNum;	//자료형 수정바람.
-	private int Amount;
-	
-	
+	public int getCartNum() {
+		return cartNum;
+	}
+
+
+	public void setCartNum(int cartNum) {
+		this.cartNum = cartNum;
+	}
+
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+
+
+	public String getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+
+	public String getOptionNum() {
+		return optionNum;
+	}
+
+
+	public void setOptionNum(String optionNum) {
+		this.optionNum = optionNum;
+	}
+
+
+	public int getAmount() {
+		return amount;
+	}
+
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
 /*	private static final long serialVersionUID = 1L;*/ // Value Object (the result) = Class Shopping Cart.
 	/*
 	 * "Controller" calls "Service(It deals with requests.)" out.
@@ -44,67 +74,29 @@ public class ShoppingCartPd{ // VO | The Result.
 	public ShoppingCartPd() {}
 	
 	
-	public ShoppingCartPd(int ProductCode, String UserId, int OptionNum, int Amount) {
+	public ShoppingCartPd(int cartNum, String productCode, String userId, String optionNum, int amount) {
 		super();
-		this.ProductCode = ProductCode;
-		this.UserId = UserId;
-		this.OptionNum = OptionNum;
-		this.Amount = Amount;
+		this.cartNum = cartNum;
+		this.productCode = productCode;
+		this.userId = userId;
+		this.optionNum = optionNum;
+		this.amount = amount;
 	}
 
 
-	public int getProductCode() {
-		return ProductCode;
-	}
-	
-	public void setProductCode(int ProductCode) {
-		
-		
-	}
-	
-	public String getUserId() {
-		return UserId;
-	}
-
-	public void setUserId(String userId) {
-		
-		
-	}
-
-	public int  getOptionNum() {
-		return OptionNum;
-	}
-	
-	public void setOptionNum(int optionNum) {
-		
-		
-	}
-	
-	public int  getAmount() {
-		return Amount;
-	}
-
-	public void setAmount(int amount) {
-		
-		
-	}
-	
 	@Override
 	public String toString() {
-		return "ShoppingCart [ProductCode=" + ProductCode + ", UserId=" + UserId + ", OptionNum=" + OptionNum + ", Amount=" + Amount + "]";
+		/*return super.toString();*/
+		return "ShoppingCart [cartNum=" + cartNum + ", productCode=" + productCode + ", userId=" + userId + ", optionNum=" + optionNum + ", amount="+ amount + "]";
 	}
 
 
-
-
-
-
-
-
+	// toString @Override. | Alt+Shift+s > Generate toString() > *Fields* Check > OK.
+	
 
 
 	
-
+	
 /*java.lang.Override
 
 
