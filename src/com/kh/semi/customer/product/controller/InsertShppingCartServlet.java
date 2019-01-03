@@ -1,7 +1,4 @@
-package com.kh.semi.customer.product.controller;
-
-// Controller is the Servlet. | Controller = Serlvet | Controller != JSP
-//  The controller is usually a servlet, because it does NOT generate any HTML. 
+/*package com.kh.semi.customer.product.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,9 +15,9 @@ import com.kh.semi.customer.board.model.vo.PageInfo;
 import com.kh.semi.customer.product.model.service.ProductService;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 
-/**
+*//**
  * Servlet implementation class ShoppingCartServlet
- */
+ *//*
 @WebServlet("/shoppingCart.pd2") // The @WebServletannotation is used to declare a servlet.
 public class InsertShppingCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -32,7 +29,7 @@ public class InsertShppingCartServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		/* Pagination*/
+		 Pagination
 		
 		int currentPage;
 		int limit;
@@ -59,9 +56,16 @@ public class InsertShppingCartServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
-		/* -------------------- ▲ Pagination ▲ -------------------- */
+		 -------------------- [ X ] Pagination --------------------  
 		
-		// 가져올 내용 : 상품 정보 : ProductCode, UserId, OptionNum, Amount
+	 Ref.
+	 	private int cartNum;//TYPE : NUMBER | PK
+		private String productCode;//TYPE : VARCHAR2 | PK | FK
+		private String userId;//TYPE : VARCHAR2 | PK | FK
+		private String optionNum;//TYPE : VARCHAR2 | PK | FK
+		private int amount;//TYPE : NUMBER
+		
+		// [ 수정중 ] [ X ] 가져올 내용 : 상품 정보 : ProductCode, UserId, OptionNum, Amount
 		 int ProductCode = (int) request.getAttribute("ProductCode");
 		 String UserId =  (String) request.getAttribute("UserId");
 		 int OptionNum = (int) request.getAttribute("OptionNum");
@@ -69,7 +73,7 @@ public class InsertShppingCartServlet extends HttpServlet {
 		
 		ShoppingCartPd cartProduct = new ShoppingCartPd();
 		
-		cartProduct.setProductCode(ProductCode);
+		cartProduct.setProductCode(ProductCode); 						// ERROR 	
 		cartProduct.setUserId(UserId);
 		cartProduct.setOptionNum(OptionNum);
 		cartProduct.setAmount(Amount);
@@ -99,12 +103,21 @@ public class InsertShppingCartServlet extends HttpServlet {
 	
 	
 	
-	/**
+	*//**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	 *//*
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		doGet(request, response);
 	}
 
 }
+
+
+
+//Controller is the Servlet. | Controller = Serlvet | Controller != JSP
+//The controller is usually a servlet, because it does NOT generate any HTML. 
+
+
+
+*/

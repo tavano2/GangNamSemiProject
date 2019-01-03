@@ -416,31 +416,35 @@ public class ProductDao {
 		return SelectReplyList;
 	}*/
   
-	//------------------------ DAO ---------------- Access *directly*. ------------------------------------------------------------------------------------------------
+  	
+  	
+  	
+  	/*	// ------ProductDAO.java---------------------------장바구니 : 조회 | selectCartList------------------------------------------------
+	
+  	 Ref. (5)
+  	private int cartNum;//TYPE : NUMBER | PK
+	private String productCode;//TYPE : VARCHAR2 | PK | FK
+	private String userId;//TYPE : VARCHAR2 | PK | FK
+	private String optionNum;//TYPE : VARCHAR2 | PK | FK
+	private int amount;//TYPE : NUMBER
+  	 	
+  	
+  	 ▼ NEW
+	public HashMap<String, Object> selectCartList(Connection con, String userId) {
+	
+	return null;
+}
+	 ▲ NEW
+  	
+	public ArrayList<ShoppingCartPd> selectCartList(ArrayList<ShoppingCartPd> cartList) throws SQLException {// ▲ <ShoppingCartPd> = VO Class.
 
-    	// 장바구니 | Shopping Cart > 조회 | selectCartList (named in DAO)
 	
-// DAO : Data Access Object : Get a request and Return the result. / DAO access to DataBase *directly*. (and Return the result.)
-// VO : Value Object. = Its' an Object Class. It exists for exchanging data between classes.
-// VO = DTO (Data Transfer Object) = Domain Object = Bean = Entity
-	
-	public ArrayList<ShoppingCartPd> selectCartList(ArrayList<ShoppingCartPd> cartList, int currentPage,
-			int limit) throws SQLException {// ▲ <ShoppingCartPd> = VO Class.
+		//---------------------------------------QUERY------------------------------------------------
 		
-		//(comment) : 전의 코드를 따르면 해당 메서드는 HashMap<String, Object> 를 반환해야 하며, Connection con, String userId를 매개변수로 받습니다.
-		//(comment) : DB에 쿼리문을 전달하기 위해 Statement 객체를 생성합니다. userId를 넘겨줘야 하므로 PreparedStatement로 해야합니다.
-		//(comment) : SELECT 문을 쓸 것이기 때문에 ResultSet도 선언합니다.
-		//(comment) : 리턴 변수도 미리 선언합니다.
-		//(comment) : 쿼리문을 불러옵니다.
-		//(comment) : pstmt 객체를 생성하고, userId를 셋팅한 다음, 쿼리문을 실행합니다.
-		//(comment) : 그리고 정보를 담을 ArrayList와 HashMap을 각각 생성합니다.
-		//(comment) : 장바구니는 ArrayList에 담고, 상품과 옵션 정보, 이미지는 각각 HashMap에 담습니다.
-		//(comment) : 그리고 이 4개의 Collection은 hmap에 담고 리턴합니다.
-		//쿼리문--------------------------------------------------------------------------------------------------
-		/*SELECT CT.PRODUCT_CODE, CT.USER_ID, CT.OPTION_NUM, CT.AMOUNT,
-		    PD.PRODUCT_NAME, PD.PRODUCT_PRICE,
-		    OP.OPTION_NAME,
-		    AT.FILE_ID, AT.ORIGIN_NAME, AT.CHANGE_NAME, AT.FILE_PATH
+		 	SELECT CT.CART_NUM, CT.PRODUCT_CODE, CT.USER_ID, CT.OPTION_NUM, CT.AMOUNT,
+ 			PD.PRODUCT_NAME, PD.PRODUCT_PRICE,
+ 			OP.OPTION_NAME,
+ 			AT.FILE_ID, AT.ORIGIN_NAME, AT.CHANGE_NAME, AT.FILE_PATH
 		FROM CART CT
 		JOIN PRODUCT PD ON(CT.PRODUCT_CODE = PD.PRODUCT_CODE
 		    AND CT.USER_ID = ?
@@ -449,21 +453,27 @@ public class ProductDao {
 		JOIN OPTION_TABLE OP ON(CT.OPTION_NUM = OP.OPTION_NUM)
 		JOIN ATTACHMENT AT ON(CT.PRODUCT_CODE = AT.PRODUCT_CODE
 		    AND FILE_LEVEL = 1
-		    AND STATUS = 'E')*/
+		    AND STATUS = 'E')
+		    
 		//--------------------------------------------------------------------------------------------------------
-		//PreparedStatement pstmt = null;
-		//ResultSet rset = null;
-		//HashMap<String, Object> hmap = null;
-		//
-		//String query = prop.getProperty("selectCartList");
-		//
-		//try {
-		//	pstmt = con.prepareStatement(query);
-		//	pstmt.setString(1, userId);
-		//
-		//	rset = pstmt.executeQuery();
-		//
-		//	ArrayList<ShoppingCartPd> cartList = new ArrayList<ShoppingCartPd>();
+		
+		// * QUERY
+		// Q. STATUS = 'E' // E Abbr. def.
+
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null; //ResultSet  for SELECT
+		HashMap<String, Object> hmap = null;
+		
+		String query = prop.getProperty("selectCartList"); // GET QUERY
+		
+		try {
+			pstmt = con.prepareStatement(query);						// ERROR 
+			pstmt.setString(1, userId);													// ERROR 
+		
+			rset = pstmt.executeQuery();
+		
+			ArrayList<ShoppingCartPd> cartList = new ArrayList<ShoppingCartPd>();								// ERROR 
 		//	HashMap<String, ReallyProduct> pdList = new HashMap<String, ReallyProduct>();
 		//	HashMap<String, String> opList = new HashMap<String, String>();
 		//	HashMap<String, Attachment> atList = new HashMap<String, Attachment>();
@@ -521,14 +531,15 @@ public class ProductDao {
 		//}
 		//return hmap;
 		//--------------------------------------------------------------------------------------------------------
-		//shoppingCart.jsp로..
+		
+		//[Move.] (from) ProductDao.java >>(to)>> shoppingCart.jsp
 		
 		Connection con  = null;
-		PreparedStatement pstmt = null;// PreparedStatement : An object that represents a pre-compiled SQL statement. 
-		ResultSet rset = null;
+		PreparedStatement pstmt = null;// PreparedStatement : An object that represents a pre-compiled SQL statement. 							// ERROR 
+		ResultSet rset = null;																																																								// ERROR 
 		cartList = null;
 		
-		String query = prop.getProperty("selectCartList");// "selectCartList" > text.properties (sql-product-QUERY)
+		String query = prop.getProperty("selectCartList");// "selectCartList" > text.properties (sql-product-QUERY)											
 		// prop :	▲ private Properties prop = new Properties();
 		try {
 			
@@ -567,7 +578,7 @@ public class ProductDao {
 		return null;
 	}
 
-	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	
 	 //------------------------ DAO ---------------- Access *directly*. ------------------------------------------------------------------------------------------------
 	// 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO) 
@@ -632,6 +643,9 @@ public class ProductDao {
 	
 	 // ------------------------ ▲ deleteCartList ------------------------------------------------------------------------------------------------------------------
     
+		*/
+		
+		
     /*
      * 
      * public int deleteWishList(Connection con, String msg, String userId) {
@@ -1355,6 +1369,10 @@ public class ProductDao {
 		
 		return result;
 	}
+
+
+
+	
 
 
 

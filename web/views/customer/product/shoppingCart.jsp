@@ -30,9 +30,11 @@
 	}
 %>
 
+<!-- [Move.] (from) ProductDao.java >>(to)>> shoppingCart.jsp -->
+
 <%--
-	수정해야 할 사항이 산재해있어서 몇몇은 임의로 수정하였습니다.
-	아래 코드는 테이블 작성 코드(안 될 수 있음)
+
+	테이블 작성 코드
 	<% for(int i=0; i<cartList.size(); i++){ %>
 	<tr>
 		<td>
@@ -51,6 +53,7 @@
 	</tr>
 	<% i += count.get(cartList.get(i).getProductCode()) - 1;
 	} %>
+	
 --%>
 
 <!DOCTYPE html>
