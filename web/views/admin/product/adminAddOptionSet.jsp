@@ -171,6 +171,8 @@
 	var num1 = "";
 	var name1 = "";
     
+	
+	// 옵션 전체조회
     $(function(){
     	$("#selectOptionAll").click(function(){
     		$.ajax({
@@ -211,6 +213,7 @@
     });
     
     
+	// 드롭박스로 옵션 조건조회
     $(function(){
     	$("#selectOptionBtn").click(function(){
     		var optionSelected = $("#optionSelected").val();
@@ -253,6 +256,8 @@
     			}
     		});
     	});
+    	
+    	// 세트메뉴에 추가할 옵션 선택
     	$("#rightBtn").click(function(){
     		var $showOption1 = $("#showOption1");
     		

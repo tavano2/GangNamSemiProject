@@ -10,38 +10,27 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.semi.admin.product.model.service.CateService;
 import com.kh.semi.admin.product.model.vo.Category;
 
-@WebServlet("/updateCate.product")
+@WebServlet("/deleteCate.product")
 public class DeleteCategoryServlet extends HttpServlet {
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
        
     public DeleteCategoryServlet() {
         super();
     }
 
-   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      request.setCharacterEncoding("UTF-8");
-      response.setContentType("text/html charset=UTF-8");
-      
-      String cateCode = request.getParameter("cateCode");
-      String cateUrl = request.getParameter("cateUrl");
-      String cateName = request.getParameter("cateName");
-      String cateMemo = request.getParameter("cateMemo");
-      
-      Category cate = new Category();
-      cate.setCateCode(cateCode);
-      cate.setCateUrl(cateUrl);
-      cate.setCateName(cateName);
-      cate.setCateMemo(cateMemo);
-      
-      int result = new CateService().updateCategory(cate);
-      
-      if(result > 0) {
-         response.sendRedirect(request.getContextPath()+"/selectCategory.product");
-      }
-   
-   }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String code = request.getParameter("code");
+		Category cate = new Category();
+		cate.setCateCode(code);
+		
+		int result = new CateService().deleteCate(cate);
+		
+		if(result>0) {
+			 response.sendRedirect(request.getContextPath()+"/selectCategory.product");
+		}
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
 
-   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      doGet(request, response);
-   }
 }

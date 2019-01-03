@@ -122,7 +122,9 @@
     });
     $('.ui.radio.checkbox')
   .checkbox();
+    	
     
+    		// ajax를 사용하여 옵션검색
 		    $(function(){
 		    	$("#selectBtn").click(function(){
 		    		var optionSelected = $("#optionSelected").val();
@@ -154,12 +156,6 @@
 		    		});
 		    	});
 		  });
-    
-		    $(function(){
-			    $("input:checkbox[name='allCheck']").is(":checked")(function(){
-			    	$("input:checkbox[name='optionCheck']").is(":checked");
-			    });
-		    });
     </script>
     
 </body>
