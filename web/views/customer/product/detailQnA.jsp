@@ -8,6 +8,8 @@
 ArrayList<Product> SelectReplyList =(ArrayList<Product>) request.getAttribute("SelectReplyList");
 
 ArrayList<Attachment>selectfileList = (ArrayList<Attachment>)request.getAttribute("selectfileList");
+String num = request.getParameter("num");
+String pQnABoardId = request.getParameter("pQnABoardId");
 
 %>
 <!DOCTYPE html>
@@ -69,16 +71,18 @@ margin-left:150px;
       <hr>
       <br>
       
-      <!--/////////////////////////사진 불러오기///////////////////////////////////  -->
-	<%if(selectfileList!=null){ 
+      <!--/////////////////////////사진 불러오기///////////////////////////////////////  -->
+	<%if(selectfileList.size()>0){ 
 		
 		for(Attachment a : selectfileList) { 
 		System.out.println("이거"+a.getFilePath()+a.getChangeName());
-		
+		System.out.println("이거ss"+selectfileList);
+
 		%>
 	<div class="attDiv" align="center">
 	<h2 align="center">상품의문제는 이거에요</h2>
 		<img src="/semi/views/images/InsertQnA_uploadFiles/<%=a.getChangeName() %>" width="200" height="200">
+		<input type="hidden" value="<%=a.getChangeName() %>" id="imgimg">
 	</div><br>
 	<hr>
 
@@ -173,7 +177,9 @@ margin-left:150px;
       <hr>
       <div class="updateDeleteBtn" align="right">
 					
-			 <button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/product/updateQnA.jsp';">수정하기</button>
+			 <button class="ui brown basic mini button" 
+			 onclick="location.href='<%=request.getContextPath()%>/selectforUpdate.pd?num=<%=num %>&pQnABoardId=<%=pQnABoardId%>'">수정하기</button>
+			 
 			&nbsp;
 			<button class="ui brown basic mini button">삭제하기</button> 
 		</div>

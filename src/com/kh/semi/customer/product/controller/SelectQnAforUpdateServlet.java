@@ -14,27 +14,31 @@ import com.kh.semi.customer.product.model.service.ProductService;
 import com.kh.semi.customer.product.model.vo.Attachment;
 import com.kh.semi.customer.product.model.vo.Product;
 
-
-
-@WebServlet("/SelectOneQnA.no")
-public class SelectOneQnAServlet extends HttpServlet {
+/**
+ * Servlet implementation class SelectQnAforUpdateServlet
+ */
+@WebServlet("/selectforUpdate.pd")
+public class SelectQnAforUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-
-    public SelectOneQnAServlet() {
-
-
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public SelectQnAforUpdateServlet() {
+        super();
+        // TODO Auto-generated constructor stub
     }
 
-
-
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String num = request.getParameter("num");
-		//System.out.println("num"+num);
+		System.out.println("num"+num);
 		String pQnABoardId = request.getParameter("pQnABoardId");
+		
 
-		//System.out.println("pQnABoardId : "+pQnABoardId);
+		System.out.println("pQnABoardId : "+pQnABoardId);
 		//상세페이징 뿌려주깅
 		Product SelectOneQnA = new ProductService().SelectOneQnA(num);
 		
@@ -45,16 +49,15 @@ public class SelectOneQnAServlet extends HttpServlet {
 		ArrayList<Attachment> selectfileList = new ProductService().selectfileList(pQnABoardId);
 		
 		
-		//System.out.println(SelectOneQnA);
+		System.out.println(SelectOneQnA);
 		//System.out.println("SelectReplyList"+SelectReplyList);
 		//System.out.println("selectfileList"+selectfileList.get(0).getOriginName());
 		//System.out.println(selectfileList.get(0).getChangeName());
 		//System.out.println(selectfileList.get(0).getFilePath());
-		System.out.println(selectfileList);
 		
 		String page="";
 		if(SelectOneQnA!=null) {
-			page="views/customer/product/detailQnA.jsp";
+			page="views/customer/product/updateQnA.jsp";
 			request.setAttribute("SelectOneQnA", SelectOneQnA);
 			request.setAttribute("SelectReplyList", SelectReplyList);
 			request.setAttribute("selectfileList", selectfileList);
@@ -66,13 +69,13 @@ public class SelectOneQnAServlet extends HttpServlet {
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 		
-		
 	}
 
-
-
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

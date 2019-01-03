@@ -531,7 +531,7 @@
 				
 				
 				<!-- /////////////////////////////////////////////// -->
-				 <div class="ui container center aligned search-box">
+		<!-- 		 <div class="ui container center aligned search-box">
                     
 
                     <div class="ui top attached tabular menu">
@@ -549,7 +549,7 @@
             		</div>
 
 
-
+ -->
 
 			</div>
 

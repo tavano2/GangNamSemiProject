@@ -369,6 +369,34 @@ public class ProductService {
 		return resultArr;
 	}
 
+	//qna수정하기
+	public int updateQnA(Board updateQnABoard, ArrayList<Attachment> fileList,String pQnABoardId,String atstatus) {
+		Connection con = getConnection();
+		int result=0;
+		
+		int result1 = new ProductDao().updateQnA(con,updateQnABoard,pQnABoardId);
+		
+	
+		int result2=0;
+		if(atstatus.equals("y")) {
+			result2 = new ProductDao().updateQnAAttachment(con,fileList,pQnABoardId);			
+		}else {
+			result2=1;
+		}
+		
+		
+		if(result1>0 && result2>0) {
+			commit(con);
+			result =1;
+		}else {
+			rollback(con);
+		}
+		close(con);
+		
+		
+		return result;
+	}
+
 	
 
 
