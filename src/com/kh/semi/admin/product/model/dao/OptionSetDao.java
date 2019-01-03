@@ -121,4 +121,33 @@ public class OptionSetDao {
 		return result;
 	}
 
+	public ArrayList<OptionSet> selectOptionSetAll(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<OptionSet> list = null;
+		OptionSet ops = null;
+		String query = prop.getProperty("selectOptionSetAll");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<OptionSet>();
+				while(rset.next()) {
+					ops = new OptionSet();
+					ops.setOptionSnum(rset.getString("OPTION_SNUM"));
+					ops.setOptionMemo(rset.getString("OPTION_MEMO"));
+					
+					list.add(ops);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		return list;
+	}
+
 }

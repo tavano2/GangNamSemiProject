@@ -52,5 +52,13 @@ public class OptionSetService {
 		
 		return result;
 	}
+
+	public ArrayList<OptionSet> selectOptionSetAll() {
+		Connection con = getConnection();
+		ArrayList<OptionSet> list = new OptionSetDao().selectOptionSetAll(con);
+		close(con);
+		
+		return list;
+	}
 	
 }
