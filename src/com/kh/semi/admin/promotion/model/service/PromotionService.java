@@ -90,7 +90,7 @@ public class PromotionService {
 		int result=0;
 		Connection con = getConnection();
 		result = new PromotionDao().createCouponAllRate(con, map);
-		if(result>0) {
+		if(result>1) {
 			commit(con);
 		}else {
 			rollback(con);
@@ -98,6 +98,76 @@ public class PromotionService {
 		close(con);
 		return result;
 	}
+
+	public int createCouponAllPrice(HashMap<String, Object> map) {
+		int result=0;
+		Connection con = getConnection();
+		result = new PromotionDao().createCouponAllPrice(con, map);
+		if(result>1) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		return result;
+	}
+
+	public int createCouponPRate(HashMap<String, Object> map, ArrayList<String> productList) {
+		int result = 0;
+		Connection con = getConnection();
+		result = new PromotionDao().createCouponAllRate(con, map);
+		if(result>0) {
+			result += new PromotionDao().createCouponPRate(con, productList);
+		}
+		
+		if(result>1) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
+	public int createCouponPPrice(HashMap<String, Object> map, ArrayList<String> productList) {
+		int result = 0;
+		Connection con = getConnection();
+		result = new PromotionDao().createCouponAllPrice(con, map);
+		if(result>0) {
+			result += new PromotionDao().createCouponPPrice(con, productList);
+		}
+		
+		if(result>1) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
+	public int createCouponCRate(HashMap<String, Object> map, ArrayList<String> bigCategList,
+			ArrayList<String> middleCategList) {
+		int result = 0;
+		Connection con = getConnection();
+		result = new PromotionDao().createCouponAllRate(con, map);
+		if(result>0) {
+			result += new PromotionDao().createCouponCRate(con, bigCategList, middleCategList);
+		}
+		
+		if(result>1) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
+
 	
 	
 }
