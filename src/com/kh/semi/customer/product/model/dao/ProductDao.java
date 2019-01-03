@@ -1,4 +1,4 @@
-package com.kh.semi.customer.product.model.dao;
+/*package com.kh.semi.customer.product.model.dao;
 
 import static com.kh.semi.customer.common.JDBCTemplate.close;
 
@@ -377,7 +377,7 @@ public class ProductDao {
 
 
   	
-/*	public ArrayList<Product> SelectReplyList(Connection con, String pQnABoardId) {
+	public ArrayList<Product> SelectReplyList(Connection con, String pQnABoardId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Product> SelectReplyList = null;
@@ -414,12 +414,12 @@ public class ProductDao {
 		}
 		
 		return SelectReplyList;
-	}*/
+	}
   
   	
   	
   	
-  	/*	// ------ProductDAO.java---------------------------장바구니 : 조회 | selectCartList------------------------------------------------
+  		// ------ProductDAO.java---------------------------장바구니 : 조회 | selectCartList------------------------------------------------
 	
   	 Ref. (5)
   	private int cartNum;//TYPE : NUMBER | PK
@@ -428,115 +428,90 @@ public class ProductDao {
 	private String optionNum;//TYPE : VARCHAR2 | PK | FK
 	private int amount;//TYPE : NUMBER
   	 	
+  
   	
-  	 ▼ NEW
-	public HashMap<String, Object> selectCartList(Connection con, String userId) {
-	
-	return null;
-}
-	 ▲ NEW
-  	
-	public ArrayList<ShoppingCartPd> selectCartList(ArrayList<ShoppingCartPd> cartList) throws SQLException {// ▲ <ShoppingCartPd> = VO Class.
+	public ArrayList<ShoppingCartPd> selectCartList(ArrayList<ShoppingCartPd> cartList) throws SQLException {
 
-	
-		//---------------------------------------QUERY------------------------------------------------
-		
-		 	SELECT CT.CART_NUM, CT.PRODUCT_CODE, CT.USER_ID, CT.OPTION_NUM, CT.AMOUNT,
- 			PD.PRODUCT_NAME, PD.PRODUCT_PRICE,
- 			OP.OPTION_NAME,
- 			AT.FILE_ID, AT.ORIGIN_NAME, AT.CHANGE_NAME, AT.FILE_PATH
-		FROM CART CT
-		JOIN PRODUCT PD ON(CT.PRODUCT_CODE = PD.PRODUCT_CODE
-		    AND CT.USER_ID = ?
-		    AND PD.SELL_STATUS = 'E'
-		    AND PD.DISPLAY_STATUS = 'E')
-		JOIN OPTION_TABLE OP ON(CT.OPTION_NUM = OP.OPTION_NUM)
-		JOIN ATTACHMENT AT ON(CT.PRODUCT_CODE = AT.PRODUCT_CODE
-		    AND FILE_LEVEL = 1
-		    AND STATUS = 'E')
-		    
-		//--------------------------------------------------------------------------------------------------------
-		
-		// * QUERY
-		// Q. STATUS = 'E' // E Abbr. def.
-
-		
 		PreparedStatement pstmt = null;
-		ResultSet rset = null; //ResultSet  for SELECT
+		ResultSet rset = null; //ResultSet  for "SELECT"
 		HashMap<String, Object> hmap = null;
 		
 		String query = prop.getProperty("selectCartList"); // GET QUERY
 		
 		try {
-			pstmt = con.prepareStatement(query);						// ERROR 
-			pstmt.setString(1, userId);													// ERROR 
+			pstmt = con.prepareStatement(query); // ERROR > con
+			pstmt.setString(1, userId); // ERROR > userId
 		
 			rset = pstmt.executeQuery();
 		
-			ArrayList<ShoppingCartPd> cartList = new ArrayList<ShoppingCartPd>();								// ERROR 
-		//	HashMap<String, ReallyProduct> pdList = new HashMap<String, ReallyProduct>();
-		//	HashMap<String, String> opList = new HashMap<String, String>();
-		//	HashMap<String, Attachment> atList = new HashMap<String, Attachment>();
-		//	HashMap<String, Integer> count = new HashMap<String, Integer>();
-		//
-		//	while(rset.next()){
-		//		//장바구니 담기
-		//		ShoppingCartPd cart = new ShoppingCartPd();
-		//		cart.setProductCode(rset.getString("PRODUCT_CODE"));
-		//		cart.setUserId(rset.getString("USER_ID"));
-		//		cart.setOptionNum(rset.getString("OPTION_NUM"));
-		//		cart.setAmount(rset.getInt("AMOUNT"));
-		//
-		//		cartList.add(cart);
-		//
-		//		//상품 담기
-		//		ReallyProduct pd = new ReallyProduct();
-		//		pd.setProductCode(rset.getString("PRODUCT_CODE"));
-		//		pd.setProductName(rset.getString("PRODUCT_NAME"));
-		//		pd.setProductPrice(rset.getInt("PRODUCT_PRICE"));
-		//
-		//		pdList.put(rset.getString("PRODUCT_CODE"), pd);
-		//
-		//		//옵션 담기
-		//		opList.put(rset.getString("OPTION_NUM"), rset.getString("OPTION_NAME"));
-		//
-		//		//이미지 담기
-		//		Attachment at = new Attachment();
-		//		at.setFileId(rset.getString("FILE_ID"));
-		//		at.setProductCode(rset.getString("PRODUCT_CODE"));
-		//		at.setOriginName(rset.getString("ORIGIN_NAME"));
-		//		at.setChangeName(rset.getString("CHANGE_NAME"));
-		//		at.setFilePath(rset.getString("FILE_PATH"));
-		//
-		//		atList.put(rset.getString("PRODUCT_CODE"), at);
-		//
-		//		if (count.containsKey(rset.getString("PRODUCT_CODE"))) {
-		//			count.put(rset.getString("PRODUCT_CODE"), count.get(rset.getString("PRODUCT_CODE")) + 1);
-		//		} else {
-		//			count.put(rset.getString("PRODUCT_CODE"), 1);
-		//		}
-		//	}
-		//
-		//	hmap = new HashMap<String, Object>();
-		//	hmap.put("cartList", cartList);
-		//	hmap.put("pdList", pdList);
-		//	hmap.put("opList", opList);
-		//	hmap.put("atList", atList);
-		//	hmap.put("count", count);
-		//} catch (SQLException e) {
-		//	e.printStackTrace();
-		//} finally {
-		//	close(rset);
-		//	close(pstmt);
-		//}
-		//return hmap;
+			ArrayList<ShoppingCartPd> cartList = new ArrayList<ShoppingCartPd>();
+			HashMap<String, ReallyProduct> pdList = new HashMap<String, ReallyProduct>();
+			HashMap<String, String> opList = new HashMap<String, String>();
+			HashMap<String, Attachment> atList = new HashMap<String, Attachment>();
+			HashMap<String, Integer> count = new HashMap<String, Integer>();
+		
+			while(rset.next()){
+				//장바구니 담기
+				ShoppingCartPd cart = new ShoppingCartPd();
+				cart.setCartNum(rset.getInt("CART_NUM"));
+				cart.setProductCode(rset.getString("PRODUCT_CODE"));
+				cart.setUserId(rset.getString("USER_ID"));
+				cart.setOptionNum(rset.getString("OPTION_NUM"));
+				cart.setAmount(rset.getInt("AMOUNT"));
+		
+				cartList.add(cart);
+				
+				//상품 담기
+				ReallyProduct pd = new ReallyProduct();
+				pd.setProductCode(rset.getString("PRODUCT_CODE"));
+				pd.setProductName(rset.getString("PRODUCT_NAME"));
+				pd.setProductPrice(rset.getInt("PRODUCT_PRICE"));
+		
+				pdList.put(rset.getString("PRODUCT_CODE"), pd);
+				
+				//옵션 담기
+				opList.put(rset.getString("OPTION_NUM"), rset.getString("OPTION_NAME"));
+		
+				//이미지 담기
+				Attachment at = new Attachment();
+				at.setFileId(rset.getString("FILE_ID"));
+				at.setProductCode(rset.getString("PRODUCT_CODE"));
+				at.setOriginName(rset.getString("ORIGIN_NAME"));
+				at.setChangeName(rset.getString("CHANGE_NAME"));
+				at.setFilePath(rset.getString("FILE_PATH"));
+		  		    
+				atList.put(rset.getString("PRODUCT_CODE"), at);
+		  		    
+				if (count.containsKey(rset.getString("PRODUCT_CODE"))) {
+					count.put(rset.getString("PRODUCT_CODE"), count.get(rset.getString("PRODUCT_CODE")) + 1);
+					} else {
+						count.put(rset.getString("PRODUCT_CODE"), 1);
+						}
+				}
+		
+				hmap = new HashMap<String, Object>();
+				hmap.put("cartList", cartList);
+				hmap.put("pdList", pdList);
+				hmap.put("opList", opList);
+				hmap.put("atList", atList);
+				hmap.put("count", count);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return hmap;
+			
+			
+			
 		//--------------------------------------------------------------------------------------------------------
 		
-		//[Move.] (from) ProductDao.java >>(to)>> shoppingCart.jsp
+		// ProductDao.java 에서 shoppingCart.jsp 로 이동한다.
 		
 		Connection con  = null;
-		PreparedStatement pstmt = null;// PreparedStatement : An object that represents a pre-compiled SQL statement. 							// ERROR 
-		ResultSet rset = null;																																																								// ERROR 
+		PreparedStatement pstmt = null;// PreparedStatement : An object that represents a pre-compiled SQL statement. 
+		ResultSet rset = null;																																																					
 		cartList = null;
 		
 		String query = prop.getProperty("selectCartList");// "selectCartList" > text.properties (sql-product-QUERY)											
@@ -577,6 +552,13 @@ public class ProductDao {
 		
 		return null;
 	}
+	
+	public HashMap<String, Object> selectCartList(Connection con, String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	
@@ -643,10 +625,10 @@ public class ProductDao {
 	
 	 // ------------------------ ▲ deleteCartList ------------------------------------------------------------------------------------------------------------------
     
-		*/
 		
 		
-    /*
+		
+    
      * 
      * public int deleteWishList(Connection con, String msg, String userId) {
 		PreparedStatement pstmt = null;
@@ -664,7 +646,7 @@ public class ProductDao {
 		}
 		return result;
 	}
-	*/
+	
 	
 	
 	public int getListCountPointAndClassMember(Connection con, Member m) {
@@ -794,7 +776,7 @@ public class ProductDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		HashMap<String, Object> hmap = null;
-		/*String query = prop.getProperty("resultClassNameAndStandardPrice");*/
+		String query = prop.getProperty("resultClassNameAndStandardPrice");
 		String query = "SELECT CLASS_NAME,STANDARD_PRICE FROM USER_CLASS WHERE STANDARD_PRICE > "+totalPirce;
 		try {
 			pstmt = con.prepareStatement(query);
@@ -962,11 +944,11 @@ public class ProductDao {
 			pstmt.setString(1,insertQnAboard.getBoardTitle());
 			pstmt.setString(2, insertQnAboard.getBoardContent());
 			pstmt.setString(3, insertQnAboard.getUserId());
-	/*		
+			
 			System.out.println("!!!"+insertQnAboard.getBoardTitle());
 			System.out.println("!!!"+insertQnAboard.getBoardContent());
 			System.out.println("!!!"+insertQnAboard.getUserId());
-			*/
+			
 			result = pstmt.executeUpdate();
 			
 			
@@ -1370,6 +1352,14 @@ public class ProductDao {
 		return result;
 	}
 
+	public HashMap<String, Object> selectCartList(Connection con, String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
 
 
 	
@@ -1413,3 +1403,4 @@ public class ProductDao {
 
 
 
+*/
