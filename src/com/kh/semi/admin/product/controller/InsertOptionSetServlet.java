@@ -20,6 +20,8 @@ public class InsertOptionSetServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// 옵션세트 추가
 		String memo = request.getParameter("optionSetMemo");
 		String submitNum1 = request.getParameter("submitNum1");
 		

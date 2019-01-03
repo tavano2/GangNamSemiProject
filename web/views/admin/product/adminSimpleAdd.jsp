@@ -248,14 +248,13 @@
     
     var cateCode1 = "";
     
+    // 레벨에 따른 카테고리 선택
     $(function(){
     	$(".bigCate").click(function(){
     		var $middleCate = $("#middleCate");
 			$middleCate.html('');
-			
     		var bigCode = $(".bigCode").val();
     		var size = $(this).children("input[name=middleName]").length;
-    		
 			
     		for(var i = 0; i < size; i++){
     			var $tr = $("<tr>");
@@ -281,6 +280,7 @@
     	});
     });
     
+    // 상품등록
 	$(function(){
 		$("#addBtn").click(function(){
 			var productName = $("#productName").val();
@@ -302,11 +302,6 @@
 					optionCode += "," + optionCode1;
 				}
 			}
-			
-			console.log(optionCode);
-		
-			
-			
 			$.ajax({
 				url:"/semi/insertProduct.product",
 				data:{productName : productName,
@@ -347,6 +342,7 @@
 		});
 	});
 	
+	// 상품옵션 추가
 	var cnt = 0;
 	function optionChoice(obj){
 			cnt ++;
@@ -378,10 +374,8 @@
 						for(var key in data){
 						var $div4 = $("<div class='item' data-value='"+data[key].optionSnum+"'>").text(data[key].optionMemo);
 						$optionSetSelect.append($div4);
-						
-						
 						}
-							$('.content-box .ui.dropdown').dropdown();
+						$('.content-box .ui.dropdown').dropdown();
 				},
 				error:function(){
 					console.log("실패");
