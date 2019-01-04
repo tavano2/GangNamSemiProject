@@ -21,7 +21,7 @@
 	<script>
 		var naverLogin = new naver.LoginWithNaverId(
 			{
-				clientId: "키값",
+				clientId: "키값이오",
 				callbackUrl: "암호우",
 				isPopup: false,
 				callbackHandle: true
@@ -43,7 +43,13 @@
 					var birthday = naverLogin.user.getBirthday();			
 					var uniqId = naverLogin.user.getId();
 					var age = naverLogin.user.getAge();
+					
+					
+					
 					location.href="<%=request.getContextPath()%>/naverLogin.me?emilData="+email+"&userPwd1=0101";
+					
+					
+					
 					
 					if( email == undefined || email == null) {
 						alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");

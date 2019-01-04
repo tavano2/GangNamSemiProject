@@ -207,5 +207,12 @@ public class MemberService {
 	}
 
 
+	public int selectTotalByPrice(Member m) {
+		Connection con = getConnection();
+		int result = new MemberDao().selectTotalPirce(con, m);
+		return result;
+	}
+
+
 
 }

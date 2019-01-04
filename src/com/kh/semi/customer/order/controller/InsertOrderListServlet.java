@@ -18,6 +18,7 @@ import org.json.simple.JSONObject;
 
 import com.google.gson.Gson;
 import com.kh.semi.customer.member.model.vo.Member;
+import com.kh.semi.customer.order.model.service.OrderService;
 
 
 @WebServlet("/insertOrderList.or")
@@ -86,7 +87,11 @@ public class InsertOrderListServlet extends HttpServlet {
 			}
 		}
 		
-		
+		// 결과값
+		int result = 0;
+		if(couponValue != "") {
+			/*result = new OrderService().insert*/
+		}
 		
 		response.setContentType("json/application");
 		response.setCharacterEncoding("UTF-8");
