@@ -419,7 +419,7 @@ public class PromotionDao {
 		} finally {
 			close(pstmt);
 		}
-		
+
 		return result;
 	}
 
@@ -429,21 +429,21 @@ public class PromotionDao {
 		String query = prop.getProperty("createCouponPRate");
 		try {
 			pstmt = con.prepareStatement(query);
-			for(int i=0; i<productList.size(); i++) {
+			for (int i = 0; i < productList.size(); i++) {
 				pstmt.setString(1, productList.get(i));
 				result += pstmt.executeUpdate();
 			}
-			if(result == productList.size()) {
+			if (result == productList.size()) {
 				result = 1;
-			}else {
+			} else {
 				result = 0;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(pstmt);
-		}			
+		}
 		return result;
 	}
 
@@ -453,21 +453,21 @@ public class PromotionDao {
 		String query = prop.getProperty("createCouponPPrice");
 		try {
 			pstmt = con.prepareStatement(query);
-			for(int i=0; i<productList.size(); i++) {
+			for (int i = 0; i < productList.size(); i++) {
 				pstmt.setString(1, productList.get(i));
 				result += pstmt.executeUpdate();
 			}
-			if(result == productList.size()) {
+			if (result == productList.size()) {
 				result = 1;
-			}else {
+			} else {
 				result = 0;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(pstmt);
-		}			
+		}
 		return result;
 	}
 
@@ -480,28 +480,26 @@ public class PromotionDao {
 			pstmt = con.prepareStatement(query);
 			System.out.println(middleCategList);
 			System.out.println(bigCategList);
-			for(int i =0;i<bigCategList.size();i++) {
+			for (int i = 0; i < bigCategList.size(); i++) {
 				pstmt.setString(1, middleCategList.get(i));
-				pstmt.setString(2, bigCategList.get(i));		
+				pstmt.setString(2, bigCategList.get(i));
 				result += pstmt.executeUpdate();
 				System.out.println(result);
 			}
-			if(result == bigCategList.size()) {
+			if (result == bigCategList.size()) {
 				result = 2;
-			}else {
+			} else {
 				result = 1;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(rset);
 			close(pstmt);
 		}
 		return result;
 	}
-
-
 
 	public int createCouponCRate(Connection con, HashMap<String, Object> map) {
 		int result = 0;
@@ -543,5 +541,49 @@ public class PromotionDao {
 		return result;
 	}
 
+	// 쿠폰번호와 쿠폰사용기간을 바탕으로 쿠폰을 검색해서 ArrayList로 리턴하는 함수
+	public ArrayList<HashMap<String, Object>> couponLookUp(Connection con, String couponNum, int couponExp) {
+		ArrayList<HashMap<String, Object>> couponList = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> map = null;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String query = "";
+		// 번호와 기간을 입력안했을때 전체 검색을 실시
+		if ((couponNum.equals("")) && (couponExp == 0)) {
+			query = prop.getProperty("couponAllLookUp");
+		} else {
+			query = prop.getProperty("couponLookUp");
+		}
+		try {
+			System.out.println(query);
+			pstmt = con.prepareStatement(query);
+			if ((couponNum.equals("")) && (couponExp == 0)) {
+
+			} else {
+				pstmt.setString(1, couponNum);
+				pstmt.setInt(2, couponExp);
+			//	pstmt.setInt(3, );
+			//	pstmt.setInt(4, );
+			}
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				map = new HashMap<String, Object>();
+				map.put("couponCode", rset.getString("COUPON_CODE"));
+				map.put("couponName", rset.getString("COUPON_NAME"));
+				map.put("couponExp", rset.getInt("COUPON_EXP"));
+				map.put("couponType", rset.getInt("COUPON_TYPE"));
+				map.put("couponRDiscount", rset.getDouble("COUPON_RDISCOUNT"));
+				map.put("couponPDiscount", rset.getInt("COUPON_PDISCOUNT"));
+				couponList.add(map);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		return couponList;
+	}
 
 }

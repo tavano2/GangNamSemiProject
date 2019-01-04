@@ -187,7 +187,15 @@ public class PromotionService {
 		close(con);
 		return result;
 	}
-
+	//쿠폰번호와 쿠폰사용일을 바탕으로 쿠폰을 검색하는 Connection을 연결하는 함수
+	public ArrayList<HashMap<String, Object>> couponLookUp(String couponNum, int couponExp) {
+		Connection con = getConnection(); //connection 생성
+		ArrayList<HashMap<String, Object>> couponList = null;
+		couponList = new PromotionDao().couponLookUp(con, couponNum, couponExp);
+		close(con);
+		return couponList;
+	}
+	
 
 	
 	
