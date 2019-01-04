@@ -100,7 +100,6 @@ public class OptionSetDao {
 	}
 
 	public int insertOptionSetMM(Connection con, String[] optionNum) {
-
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("insertOptionSetMM");

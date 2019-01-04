@@ -308,48 +308,6 @@
     	});
     });
     
-    // 상품등록
-	$(function(){
-		$("#addBtn").click(function(){
-			var productName = $("#productName").val();
-			var productMemo = $("#productMemo").val();
-			var productDmemo = $("#productDmemo").val();
-			var productPrice = $("#productPrice").val();
-			var productAmount = $("#productAmount").val();
-			var productDisplay = $("input[type=radio][name=productDisplay]:checked").val();
-			var productSell = $("input[type=radio][name=productSell]:checked").val();
-			var cateCode = cateCode1;
-			var optionCode = "";
-			
-			var size = $("input[name=optionSet]").length;
-			for(var i = 0; i < size; i ++){
-				var optionCode1 = $("input[name=optionSet]").eq(i).val();
-				if(optionCode == ""){
-					optionCode += optionCode1;
-				}else{
-					optionCode += "," + optionCode1;
-				}
-			}
-			$.ajax({
-				url:"/semi/insertProduct.product",
-				data:{productName : productName,
-					  productMemo : productMemo,
-					  productDmemo : productDmemo,
-					  productPrice : productPrice,
-					  productAmont : productAmount,
-					  productDisplay : productDisplay,
-					  productSell : productSell,
-					  cateCode : cateCode},
-				type:"post",
-				success:function(data){
-					console.log("성공");
-				},
-				error:function(){
-					console.log("실패");
-				}
-			});
-		});
-	});
 	
 	$(function(){
 		$.ajax({
@@ -423,16 +381,6 @@
 		});
 	});
 	
-	/* function addImg(){
-		var size = $("div[name=subImg]").length;
-		$("div[name=subImg]").off();
-		for(var i = 0 ; i < size; i++){
-			$("div[name=subImg]").eq(i).click(function(){
-				$("input[name=imgList]").eq(i).click();
-			});
-		}
-	} */
-	
 	var cnt2 = 2;
 	function loadImg(value,num){
 		var size = $("div[name=subImg]").length;
@@ -467,6 +415,50 @@
 			reader.readAsDataURL(value.files[0]);
 		}
 	}
+	
+	// 상품등록
+	$(function(){
+		$("#addBtn").click(function(){
+			var productName = $("#productName").val();
+			var productMemo = $("#productMemo").val();
+			var productDmemo = $("#productDmemo").val();
+			var productPrice = $("#productPrice").val();
+			var productAmount = $("#productAmount").val();
+			var productDisplay = $("input[type=radio][name=productDisplay]:checked").val();
+			var productSell = $("input[type=radio][name=productSell]:checked").val();
+			var cateCode = cateCode1;
+			var optionCode = "";
+			
+			var size = $("input[name=optionSet]").length;
+			for(var i = 0; i < size; i ++){
+				var optionCode1 = $("input[name=optionSet]").eq(i).val();
+				if(optionCode == ""){
+					optionCode += optionCode1;
+				}else{
+					optionCode += "," + optionCode1;
+				}
+			}
+			$.ajax({
+				url:"/semi/insertProduct.product",
+				data:{productName : productName,
+					  productMemo : productMemo,
+					  productDmemo : productDmemo,
+					  productPrice : productPrice,
+					  productAmont : productAmount,
+					  productDisplay : productDisplay,
+					  productSell : productSell,
+					  cateCode : cateCode,
+					  optionCode : optionCode},
+				type:"post",
+				success:function(data){
+					console.log("성공");
+				},
+				error:function(){
+					console.log("실패");
+				}
+			});
+		});
+	});
     </script>
     
 </body>
