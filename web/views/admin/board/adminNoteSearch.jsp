@@ -84,8 +84,9 @@
 
 				<H2>쪽지 검색</H2>
 				<H4>쪽지 검색하기</H4>
+			<form action="<%=request.getContextPath() %>/adminNoticeSearch.bo" method="post">
 				<table class="ui celled table border_table_1">
-
+		
 					<tr>
 						<td>작성일</td>
 						<td>
@@ -116,7 +117,7 @@
 						<td>게시글 찾기</td>
 						<td>
 							<div class="ui selection dropdown">
-								<!-- <input type="hidden" name="gender"> -->
+								<input type="hidden" name="BoardSearch">
 								<i class="dropdown icon"></i>
 								<div class="default text">제목</div>
 								<div class="menu">
@@ -126,7 +127,8 @@
 								</div>
 							</div>
 							<div class="ui input">
-								<input type="text" placeholder="내용을 입력해주세요">
+								<input type="text" placeholder="내용을 입력해주세요" name="contentSearch">
+								
 							</div>
 						</td>
 					</tr>
@@ -134,14 +136,14 @@
 					<tr>
 						<td>수신회원</td>
 						<td><div class="ui input">
-								<input type="text" placeholder="내용을 입력해주세요">
+								<input type="text" placeholder="내용을 입력해주세요" name="MemberSearch">
 							</div></td>
 					</tr>
 					<tr>
 						<td>게시판 종류</td>
 						<td>
 							<div class="ui selection dropdown">
-								<!-- <input type="hidden" name="gender"> -->
+								<input type="hidden" name="BoardType"> 
 								<i class="dropdown icon"></i>
 								<div class="default text">전체목록</div>
 								<div class="menu">
@@ -157,11 +159,13 @@
 					</tr>
 
 				</table>
+				
+				
 				<div class="ui container center aligned search-box">
-					<button class="ui black button">검색</button>
+					<button type="submit" class="ui black button">검색</button>
 				</div>
 
-
+</form>
 				<hr>
 				&nbsp;
 
@@ -237,6 +241,9 @@
 						</tr>
 					</tbody>
 				</table>
+				
+				
+				
 				<!-- 페이징 넘버 -->
 				<div class="ui container center aligned">
 					<div aria-label="Pagination Navigation" role="navigation"
