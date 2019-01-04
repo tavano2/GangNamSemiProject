@@ -134,6 +134,7 @@
 				
 				//테이블 리스트 구현
 				for(var key in data.resultList){
+					//tr 제이쿼리 변수
 					$tr = $("<tr class='reviewTr' >");
 					var $chkTd = $("<td>");
 					var $chk = $("<input type='checkbox' class='reviewChk' value='"  +  "'>");

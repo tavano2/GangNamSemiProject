@@ -69,7 +69,7 @@
 				</a>
 				<!-- 카카오 로그인 -->
 				<script>
-					Kakao.init('키값이오');
+					Kakao.init('a2e36012b1a121ef998458a68ac59611');
 					function loginWithKakao() {
 						Kakao.Auth.login({
 							success : function(authObj) {
@@ -97,8 +97,8 @@
 				<!-- 네이버아디디로로그인 초기화 Script -->
 				<script type="text/javascript">
 					var naverLogin = new naver.LoginWithNaverId({
-						clientId : "키값",
-						callbackUrl : "콜백",
+						clientId : "키값이오",
+						callbackUrl : "콜백주소오",
 						isPopup : false, /* 팝업을 통한 연동처리 여부 */
 						loginButton : {
 							color : "green",

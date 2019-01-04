@@ -46,6 +46,9 @@ public class SelectMyPageServlet extends HttpServlet {
 		//사용자 쿠폰 조회
 		int countCoupon = new MemberService().countCoupon(m);
 		
+		//사용자 총 주문금액 조회
+		int totalByPrice = new MemberService().selectTotalByPrice(m);
+		
 		//총 주문 횟수 조회
 		int totalByCount = new MemberService().totalByCount(m);
 		
@@ -60,6 +63,7 @@ public class SelectMyPageServlet extends HttpServlet {
 			request.setAttribute("beforePrice", beforePrice);
 			request.setAttribute("pointGroupList", pointGroupList);
 			request.setAttribute("countCoupon", countCoupon);
+			request.setAttribute("totalByPrice", totalByPrice);
 			request.setAttribute("totalByCount", totalByCount);
 			request.setAttribute("myDeliveryStatus", myDeliveryStatus);
 			request.getRequestDispatcher("views/customer/member/userMyPage.jsp").forward(request, response);

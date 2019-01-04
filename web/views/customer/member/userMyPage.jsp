@@ -49,9 +49,10 @@
 		}
 	}
 	
-	// 사용자 쿠폰 조회, 총 주문 횟수 조회
+	// 사용자 쿠폰 조회, 총 주문 횟수 조회,주문 금액
 	int countCoupon = (int)request.getAttribute("countCoupon");
 	int totalByCount = (int)request.getAttribute("totalByCount");
+	int totalByPrice = (int)request.getAttribute("totalByPrice");
 	
 	// 사용자 배송 현황
 	ArrayList<HashMap<String,Object>> myDeliveryStatus = null;
@@ -134,9 +135,9 @@
 				style="width: 900px; height: 120px; text-align: center;">
 				<tbody>
 					<tr>
-						<td style="width: 250px; border-right: white;" rowspan="3">이미지</td>
+					<!-- 	<td style="width: 250px; border-right: white;" rowspan="3"></td> -->
 						<td style="border-bottom: white;">
-							<p>저희 쇼핑몰을 이용해 주셔서 감사합니다. <%=arry[0] %> 님은 <%-- <%=userMap.get("class_name") %> --%>GOLD 회원이십니다.</p>
+							<p>저희 쇼핑몰을 이용해 주셔서 감사합니다. <%=arry[0] %> 님은 <%=userMap.get("class_name") %>등급 입니다. </p>
 						</td>
 					</tr>
 					<tr>
@@ -210,11 +211,7 @@
 						<td
 							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">
 							
-							<%if(nextClass != null ){ %>
-							<%=currentPrice %>원
-							<%}else{ %>
-								0원
-							<%} %>
+							<%=totalByPrice %>원
 							<%if(totalByCount > 0) {%>
 							(<%=totalByCount %>회)
 							<%}else{ %>

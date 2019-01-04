@@ -827,7 +827,7 @@
 			//기사님에게 한마디
 			sayDeliveryMan = $("#sayDeliveryMan").val();
 	 		
-/* 			//주문자 이름 정규 표현식
+ 			//주문자 이름 정규 표현식
 			var regExp1 = /^[가-힣]{2,10}$/;
 			if(!regExp1.test(name1)){
 				alert("주문자 이름을 정확하게 입력해주세요.(한글2~10자)");
@@ -871,7 +871,7 @@
 				alert("수령자 일반 번호를 정확하게 입력해주세요.");
 				$("#receiptTel1").select();
 				return false;
-			} */
+			} 
 			
 			 
 			
