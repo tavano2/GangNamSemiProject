@@ -25,8 +25,9 @@
 
 <!-- Admin Common JS -->
 <script src="/semi/js/admin/common/adminMain.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- alert CDN -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 <style>
 .first-col td:first-child {

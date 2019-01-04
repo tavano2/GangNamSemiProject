@@ -13,10 +13,24 @@
 
 <!-- Admin Common CSS -->
 <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
+<!-- J-query CDN -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Semantic UI JS CDN -->
+<script
+	src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!-- jQuery Custom Scroller CDN -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
+<!-- Admin Common JS -->
+<script src="/semi/js/admin/common/adminMain.js"></script>
+
+<!-- alert CDN -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style>
-.first-col td:first-child {
+.first-col td:first-child{
 	width: 200px;
 	background-color: #f9fafb;
 }
@@ -270,21 +284,6 @@
 		<!-- Footer -->
 		<%@ include file="/views/admin/common/adminFooter.jsp"%>
 	</div>
-
-
-	<!-- J-query CDN -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<!-- Semantic UI JS CDN -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-	<!-- jQuery Custom Scroller CDN -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
-	<!-- Admin Common JS -->
-	<script src="/semi/js/admin/common/adminMain.js"></script>
 
 	<script>
 		$('#sticky1').sticky(); //네이바 상단 고정

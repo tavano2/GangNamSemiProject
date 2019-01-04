@@ -276,7 +276,7 @@ span {
 		};
 
 		$(function() {
-	<%if (loginUser == null) {
+		<%if (loginUser == null) {
 				request.setAttribute("msg", "잘못된 경로로 접근했습니다.");
 				request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
 			} else {
