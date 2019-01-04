@@ -26,7 +26,7 @@ public class SelectReviewServlet extends HttpServlet {
 	//리븁 상세보기
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String reviewRum = request.getParameter("reviewRum");
-		System.out.println("서비스 RE"+reviewRum);
+		//System.out.println("서비스 RE"+reviewRum);
 		
 		HashMap<String, Object> hmap = new ProductService().selectDetailReview(reviewRum);
 
