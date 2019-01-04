@@ -227,15 +227,15 @@
         			</br></br></br></br>
         			&nbsp;&nbsp;&nbsp;&nbsp; * 상세 이미지를 선택하세요.
         			</br>
-        			<!-- <div name="subImg">
+        			<div name="subImg">
         				<img name="detailImg" width="150" height="150">
-        			</div> -->
+        			</div>
                 </td>
             </tr>
             </table><br>
             <div id="fileArea">
             	<input type="file" id="thumbnailImg" onchange="loadImg(this,1)">
-            	<!-- <input type="file" name="imgList" onchange="loadImg(this,2)"> -->
+            	<input type="file" name="imgList" onchange="loadImg(this,2)">
             </div>
 
         	<div class="productAddBtn">
@@ -418,52 +418,53 @@
 			$("#thumbnailImg").click();
 		});
 		
-		var size = $("div[name=subImg]").length;
-		for(var i = 0 ; i < size; i++){
-			$("div[name=subImg]").eq(i).click(function(){
-				$("#fileArea").children("input[name=imgList]").eq(i).click();
-				console.log("ad");
-			});
-		}
+		$("div[name=subImg]").eq(0).click(function(){
+			$("input[name=imgList]").eq(0).click();
+		});
 	});
 	
+	/* function addImg(){
+		var size = $("div[name=subImg]").length;
+		$("div[name=subImg]").off();
+		for(var i = 0 ; i < size; i++){
+			$("div[name=subImg]").eq(i).click(function(){
+				$("input[name=imgList]").eq(i).click();
+			});
+		}
+	} */
 	
-	var cnt2 = 1;
+	var cnt2 = 2;
 	function loadImg(value,num){
 		var size = $("div[name=subImg]").length;
-		
 		if(value.files && value.files[0]){
 			var reader = new FileReader();
 			reader.onload = function(e){
-				/* switch(num){
-					case 1 : $("#titleImg").attr("src",e.target.result); break;
-					for(var i = 0; i < size; i++){
-						cnt2 ++;
-						case cnt2 : $("img[name=detailmg]").eq(i).attr("src",e.target.result); break;
-					}
-				} */
 				if(num == 1){
 					$("#titleImg").attr("src",e.target.result);
 				}else{
 					for(var i = 0 ; i < size; i++){
-						if(num == cnt2){
-							$("img[name=detailmg]").eq(i).attr("src",e.target.result);
-						}else{
-							cnt2 ++;
+						if(num == i+2){
+							$("img[name=detailImg]").eq(i).attr("src",e.target.result);
+							
+								cnt2 ++;
+								var $imgPlus = $("#imgPlus");
+								var $div = $("<div name='subImg'>");
+								var $img = $("<img id='detailImg"+cnt2+"' name='detailImg' width='150' height='150'>");
+								
+								$div.append($img);
+								$imgPlus.append($div);
+								
+								var $fileArea = $("#fileArea");
+								var $input = $("<input type='file' id='imgList"+cnt2+"' name='imgList' onchange='loadImg(this,"+cnt2+")'>");
+								$fileArea.append($input);
 						}
 					}
+					$("#detailImg"+cnt2).click(function(){
+						$("#imgList"+cnt2).click();
+					});
 				}
 			}
 			reader.readAsDataURL(value.files[0]);
-			cnt2 ++;
-			var $imgPlus = $("#imgPlus");
-			var $div = $("<div name='subImg'>");
-			var $img = $("<img name='detailImg' width='150' height='150'>");
-			$div.append($img);
-			$imgPlus.append($div);
-			var $fileArea = $("#fileArea");
-			var $input = $("<input type='file' name='imgList' onchange='loadImg(this."+cnt2+")'>");
-			$fileArea.append($input);
 		}
 	}
     </script>
