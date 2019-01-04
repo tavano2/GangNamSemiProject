@@ -39,7 +39,7 @@ public class InsertReviewServlet extends HttpServlet {
 			int maxSize = 1024*1024*10;
 			
 			String root = request.getSession().getServletContext().getRealPath("/");
-			System.out.println(root);
+			//System.out.println(root);
 			String filePath=root+"views/images/InsertReview_uploadFiles/";
 			//System.out.println(filePath);
 			
@@ -71,7 +71,7 @@ public class InsertReviewServlet extends HttpServlet {
 			String productCode = multiRequest.getParameter("productCode");	//상품코드
 
 			for(int i=0;i<selectOptionArray.length;i++) {
-				System.out.println("잘오닌ㅇ"+selectOptionArray[i]);
+				//System.out.println("잘오닌ㅇ"+selectOptionArray[i]);
 			}
 			
 			

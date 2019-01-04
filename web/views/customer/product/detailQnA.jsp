@@ -75,8 +75,8 @@ margin-left:150px;
 	<%if(selectfileList.size()>0){ 
 		
 		for(Attachment a : selectfileList) { 
-		System.out.println("이거"+a.getFilePath()+a.getChangeName());
-		System.out.println("이거ss"+selectfileList);
+		//System.out.println("이거"+a.getFilePath()+a.getChangeName());
+		//System.out.println("이거ss"+selectfileList);
 
 		%>
 	<div class="attDiv" align="center">
@@ -87,7 +87,7 @@ margin-left:150px;
 	<hr>
 
 	<%}}else{%>
-
+			
 	<%} %>
 
             <!--//////////////////////////////////////////////////////////////  -->

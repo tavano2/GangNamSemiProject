@@ -55,23 +55,21 @@ public class UpdateQnAServlet extends HttpServlet {
 			
 			while(files.hasMoreElements()) {
 				String name=files.nextElement();
-				System.out.println(name+"name");
-				
-				saveFiles.add(multiRequest.getFilesystemName(name));
-				orginFiles.add(multiRequest.getOriginalFileName(name));
-				
-			/*	System.out.println("fileSystem name : "+multiRequest.getFilesystemName(name));
-				System.out.println("orginFile name : "+multiRequest.getOriginalFileName(name));
-				*/
+			//	System.out.println(name+"name");
+				if(multiRequest.getFilesystemName(name)!=null) {
+					saveFiles.add(multiRequest.getFilesystemName(name));
+					orginFiles.add(multiRequest.getOriginalFileName(name));
+				}
 			}
 			
 			String multiTitle = multiRequest.getParameter("title");
 			String multiContent = multiRequest.getParameter("content");
 			String userId = String.valueOf(((Member)(request.getSession().getAttribute("loginUser"))).getUserId());
-			String atstatus = multiRequest.getParameter("atstatus");
+			String atstatus = multiRequest.getParameter("atstatus")==null?"":multiRequest.getParameter("atstatus");
 			String pQnABoardId = multiRequest.getParameter("pQnABoardId");
 			String num = multiRequest.getParameter("pQnABoardnum");
 			String deleteChangeName = multiRequest.getParameter("deleteChangeName");
+			String insertAtt = multiRequest.getParameter("insertAtt")==null?"":multiRequest.getParameter("insertAtt");
 		/*	
 			System.out.println("서블릿"+multiTitle);
 			System.out.println("서블릿"+multiContent);
@@ -96,7 +94,8 @@ public class UpdateQnAServlet extends HttpServlet {
 			/*System.out.println("서블릿"+fileList);
 			System.out.println("서블릿"+updateQnABoard);
 			*/
-			int result = new ProductService().updateQnA(updateQnABoard,fileList,pQnABoardId,atstatus);
+			//System.out.println("업데이트"+fileList);
+			int result = new ProductService().updateQnA(updateQnABoard,fileList,pQnABoardId,atstatus,insertAtt);
 			
 			if(result>0) {
 				response.sendRedirect(request.getContextPath()+"/SelectOneQnA.no?num="+num+"&pQnABoardId="+pQnABoardId);

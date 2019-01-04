@@ -11,7 +11,7 @@
 	ArrayList<Product> SelectReplyList = (ArrayList<Product>)request.getAttribute("SelectReplyList");
 	ArrayList<Attachment> selectfileList = (ArrayList<Attachment>)request.getAttribute("selectfileList");
 	
-	System.out.print("sdf"+SelectOneQnA);
+	//System.out.print("sdf"+SelectOneQnA);
 
 %>
 <!DOCTYPE html>
@@ -121,8 +121,8 @@
 				<%if(selectfileList.size()>0){ 
 		
 				for(Attachment a : selectfileList) { 
-				System.out.println("이거"+a.getFilePath()+a.getChangeName());
-				System.out.println(selectfileList);
+				///System.out.println("이거"+a.getFilePath()+a.getChangeName());
+				//System.out.println(selectfileList);
 				%>
 					<td>첨부파일</td>
 					
@@ -136,7 +136,7 @@
 				<%}}else{ %>
 					<td>첨부파일</td>
 					<td>
-					<input type="hidden" name="atstatus" value="n" id="atstatus">
+					<input type="hidden" name="insertAtt" value="y" id="insertAtt">
 					<input type="file" name="file">
 					</td>
 				<%} %>
