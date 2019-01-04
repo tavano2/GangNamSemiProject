@@ -11,15 +11,14 @@ import static com.kh.semi.customer.common.JDBCTemplate.*;
 public class AdminBoardService {
 
 	//게시판-쪽지 검색하기
-	public ArrayList<Msg> adminNoteSearch(String contentSearch, Date startDate, Date endDate) {
+		public ArrayList<Msg> adminNoteSearch(String contentSearch, Date startDate, Date endDate,String BoardSearch) {
 
-		Connection con= getConnection();
-		
-		ArrayList<Msg> msgList = new AdminBoardDao().adminNoteSearch(con,contentSearch,startDate,endDate);
-		
-		close(con);
-		
-		return msgList;
-	}
-
+			Connection con= getConnection();
+			
+			ArrayList<Msg> msgList = new AdminBoardDao().adminNoteSearch(con,contentSearch,startDate,endDate,BoardSearch);
+			
+			close(con);
+			
+			return msgList;
+		}
 }
