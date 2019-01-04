@@ -65,20 +65,28 @@ public class InsertOrderListServlet extends HttpServlet {
 		String couponProductCode = request.getParameter("couponProduct");
 		//옵션 번호 배열
 		String[] optionNumber = request.getParameterValues("optionNum");
-		for(String msg : optionNumber) {
-			System.out.println(msg);
-		}
-		
+		//구매 수량 배열
 		String[] amounts = request.getParameterValues("amount");
-		for(String amount : amounts) {
-			System.out.println(amount);
-		}
-		
-		
+		//구매 코드 배열
 		String[] pdCodes = request.getParameterValues("pdCode");
-		for(String code : pdCodes) {
-			System.out.println(code);
+
+		//가공 처리를 위한 어레이 리스트,해쉬맵 생성
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();
+		HashMap<String, Object> hmap = null;
+		
+		
+		for(int i = 0 ; i < pdCodes.length; i++) {
+			String[] optionNumOne = optionNumber[i].split(",");
+			for(int j = 0; j < optionNumOne.length; j++) {
+				hmap = new HashMap<String,Object>();
+				hmap.put("product_code", pdCodes[i]);
+				hmap.put("option_num", optionNumOne[j]);
+				hmap.put("amount", amounts[i]);
+				list.add(hmap);
+			}
 		}
+		
+		
 		
 		response.setContentType("json/application");
 		response.setCharacterEncoding("UTF-8");
