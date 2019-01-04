@@ -144,8 +144,8 @@
 				<form method="post" name="searchFrom">
 					<input type="hidden" name="categ" id="categ" value="<%= categ %>">
 					<div class="ui action input">
-						<input type="text" placeholder="Search..." name="search" value="<%= search %>">
-						<button class="ui button" onclick="seatchBtn();">Search</button>
+						<input type="text" placeholder="검색..." name="search" value="<%= search %>">
+						<button class="ui button" onclick="seatchBtn();">검색</button>
 					</div>
 				</form>
 			</div>
