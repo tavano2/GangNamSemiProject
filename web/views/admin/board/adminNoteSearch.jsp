@@ -1,3 +1,4 @@
+<%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -103,11 +104,11 @@
 
 	                                <div class="date-range">
 	                                	<div class="ui input">
-		                                	<input type="date" id="startDate" name="startDate">
+		                                	<input type="date" id="startDate" name="startDate" value="<%=String.format("%tY-%<tm-%<td", Calendar.getInstance())%>">
 		                                </div>
 		                                <span>~</span>
 		                                <div class="ui input">
-		                                	<input type="date" id="endDate" name="endDate">
+		                                	<input type="date" id="endDate" name="endDate" value="<%=String.format("%tY-%<tm-%<td", Calendar.getInstance())%>">
 		                                </div>
 	                                </div>
 						</td>
@@ -117,13 +118,13 @@
 						<td>게시글 찾기</td>
 						<td>
 							<div class="ui selection dropdown">
-								<input type="hidden" name="BoardSearch">
+								<input type="hidden" name="BoardSearch" value="0">
 								<i class="dropdown icon"></i>
-								<div class="default text">제목</div>
+								<div class="default text">전체 조회</div>
 								<div class="menu">
-									<div class="item" data-value="0">제목</div>
-									<div class="item" data-value="1">내용</div>
-									<div class="item" data-value="2">아이디</div>
+									<div class="item" data-value="MSG_TITLE">제목</div>
+									<div class="item" data-value="MSG_CONTENT">내용</div>
+									<div class="item" data-value="USER_ID">아이디</div>
 								</div>
 							</div>
 							<div class="ui input">
@@ -133,30 +134,7 @@
 						</td>
 					</tr>
 
-					<tr>
-						<td>수신회원</td>
-						<td><div class="ui input">
-								<input type="text" placeholder="내용을 입력해주세요" name="MemberSearch">
-							</div></td>
-					</tr>
-					<tr>
-						<td>게시판 종류</td>
-						<td>
-							<div class="ui selection dropdown">
-								<input type="hidden" name="BoardType"> 
-								<i class="dropdown icon"></i>
-								<div class="default text">전체목록</div>
-								<div class="menu">
-									<div class="item" data-value="0">전체목록</div>
-									<div class="item" data-value="1">공지사항</div>
-									<div class="item" data-value="2">Q&A(이용안내)</div>
-									<div class="item" data-value="3">Q&A(상품상세)</div>
-									<div class="item" data-value="4">리뷰게시판</div>
-								</div>
-							</div>
-
-						</td>
-					</tr>
+					
 
 				</table>
 				
@@ -192,8 +170,8 @@
 						<tr>
 							<th></th>
 							<th class="center aligned">번호</th>
-							<th class="center aligned">게시판 종류</th>
 							<th class="center aligned">제목</th>
+							<th class="center aligned">내용</th>
 							<th class="center aligned">수신자</th>
 							<th class="center aligned">작성일</th>
 						</tr>
@@ -204,8 +182,8 @@
 									<input type="checkbox" name="example"><label></label>
 								</div></td>
 							<td>1</td>
-							<td>Q&A (이용안내)</td>
 							<td>문의합니당</td>
+							<td>문의합니당내영</td>
 							<td>홍길동</td>
 							<td>20181122</td>
 						</tr>
@@ -305,6 +283,112 @@
 		$('.content-box .ui.menu .item').on('click', function() { //컨텐츠 박스의 메뉴 아이템 클릭시 active
 			$('.ui .item').removeClass('active');
 			$(this).addClass('active');
+		});
+		
+		// 기간 선택 메뉴 클릭시 active 및 날짜 변경
+		$('#selDate .item').on('click', function() {
+			$('#selDate .item').removeClass('active');
+			$(this).addClass('active');
+
+			var today = new Date();
+			var todayStr = today.getFullYear() + '-'
+					+ ('0' + (today.getMonth() + 1)).slice(-2) + '-'
+					+ ('0' + today.getDate()).slice(-2);
+			var startDate;
+			
+			switch ($(this).text()) {
+			case "오늘":
+				startDate = today;
+				break;
+			case "어제":
+				var startDateTime = today.getTime() - (1000 * 60 * 60 * 24);
+				startDate = new Date(startDateTime);
+				break;
+			case "3일":
+				var startDateTime = today.getTime() - (1000 * 60 * 60 * 24 * 3);
+				startDate = new Date(startDateTime);
+				break;
+			case "7일":
+				var startDateTime = today.getTime() - (1000 * 60 * 60 * 24 * 7);
+				startDate = new Date(startDateTime);
+				break;
+			case "15일":
+				var startDateTime = today.getTime() - (1000 * 60 * 60 * 24 * 15);
+				startDate = new Date(startDateTime);
+				break;
+			case "1개월":
+				var startDateTime = today.getTime() - (1000 * 60 * 60 * 24 * 30);
+				startDate = new Date(startDateTime);
+				break;
+			case "3개월":
+				var startDateTime = today.getTime() - (1000 * 60 * 60 * 24 * 91);
+				startDate = new Date(startDateTime);
+				break;
+			case "6개월":
+				var startDateTime = today.getTime() - (1000 * 60 * 60 * 24 * 183);
+				startDate = new Date(startDateTime);
+				break;
+			}
+			
+			var startDateStr = startDate.getFullYear() + '-'
+					+ ('0' + (startDate.getMonth() + 1)).slice(-2)
+					+ '-' + ('0' + (startDate.getDate())).slice(-2);
+			
+			$('#startDate').val(startDateStr);
+			$('#endDate').val(todayStr);
+		});
+
+		// 기간 임의 선택시 기간 잘 정했는지 확인하고 기간 선택 메뉴 active 풀기
+		$(function() {
+			var prevDate;
+
+			$('#startDate').click(function() {	//클릭시
+				prevDate = new Date($(this).val());	//선택 전의 날짜 백업
+			}).change(function() {					//값 변경시
+				var currDate = new Date($(this).val());
+				var endDate = new Date($("#endDate").val());
+
+				if (currDate.getTime() <= endDate.getTime()) {
+					$('#selDate .item').removeClass('active');	//기간 선택에서 active 제거
+				} else {
+					var dateStr = prevDate.getFullYear() + '-'
+							+ ('0' + (prevDate.getMonth() + 1)).slice(-2) + '-'
+							+ ('0' + (prevDate.getDate())).slice(-2);
+					$('#startDate').val(dateStr);	//선택 전의 날짜로 변경
+					
+					$('#startDate').popup({	//팝업 요소 생성
+						html : '<span style="color: red;">기간을 잘못 입력했습니다.</span>',
+						on: 'click',	//클릭할때 보여짐
+						onHidden: () => {	//팝업창 히든시 팝업 요소 제거
+							$('#startDate').popup('destroy');
+					    }
+					}).popup('show');	//팝업 보이기
+				}
+			});
+
+			$('#endDate').click(function() {
+				prevDate = new Date($(this).val());
+			}).change(function() {
+				var currDate = new Date($(this).val());
+				var startDate = new Date($("#startDate").val());
+
+				if (currDate.getTime() >= startDate.getTime()) {
+					$('#selDate .item').removeClass('active');
+				} else {
+					var dateStr = prevDate.getFullYear() + '-'
+							+ ('0' + (prevDate.getMonth() + 1)).slice(-2) + '-'
+							+ ('0' + (prevDate.getDate())).slice(-2);
+					$('#endDate').val(dateStr);
+					
+					$('#endDate').popup({
+						html : '<span style="color: red;">기간을 잘못 입력했습니다.</span>',
+						on: 'click',
+						onHidden: () => {
+							$('#endDate').popup('destroy');
+					    }
+					}).popup('show');
+				}
+			});
 		});
 	</script>
 
