@@ -542,28 +542,45 @@ public class PromotionDao {
 	}
 
 	// 쿠폰번호와 쿠폰사용기간을 바탕으로 쿠폰을 검색해서 ArrayList로 리턴하는 함수
-	public ArrayList<HashMap<String, Object>> couponLookUp(Connection con, String couponNum, int couponExp) {
+	public ArrayList<HashMap<String, Object>> couponLookUp(Connection con, String couponNum, int couponExp, int currentPage, int limit) {
 		ArrayList<HashMap<String, Object>> couponList = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> map = null;
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		String query = "";
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
 		// 번호와 기간을 입력안했을때 전체 검색을 실시
 		if ((couponNum.equals("")) && (couponExp == 0)) {
 			query = prop.getProperty("couponAllLookUp");
-		} else {
+			//기간만 입력했을때
+		} else if((couponNum.equals("")) && !(couponExp == 0)) {
+			query = prop.getProperty("couponExpLookUp");
+			//쿠폰코드만 입력했을때
+		}else if(!(couponNum.equals("")) && (couponExp == 0)) {
+			query = prop.getProperty("couponNumLookUp");
+			// 둘 다 입력했을때
+		}else {
 			query = prop.getProperty("couponLookUp");
 		}
 		try {
-			System.out.println(query);
 			pstmt = con.prepareStatement(query);
 			if ((couponNum.equals("")) && (couponExp == 0)) {
-
-			} else {
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+			}else if((couponNum.equals("")) && !(couponExp == 0)){
+				pstmt.setInt(1, couponExp);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}else if(!(couponNum.equals("")) && (couponExp == 0)) {
+				pstmt.setString(1, couponNum);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}else {
 				pstmt.setString(1, couponNum);
 				pstmt.setInt(2, couponExp);
-			//	pstmt.setInt(3, );
-			//	pstmt.setInt(4, );
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, endRow);
 			}
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
@@ -584,6 +601,40 @@ public class PromotionDao {
 			close(rset);
 		}
 		return couponList;
+	}
+	//검색된 쿠폰의 개수를 가져오는 함수(페이징 처리를 위함)
+	public int getcouponList(Connection con, String couponNum, int couponExp) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String query = "";
+		int result = 0;
+		// 번호와 기간을 입력안했을때 전체 검색을 실시
+		if ((couponNum.equals("")) && (couponExp == 0)) {
+			query = prop.getProperty("getAllcouponList");
+		} else {
+			query = prop.getProperty("getcouponList");
+		}
+		try {
+			pstmt = con.prepareStatement(query);
+			if ((couponNum.equals("")) && (couponExp == 0)) {
+
+			} else {
+				pstmt.setString(1, couponNum);
+				pstmt.setInt(2, couponExp);
+			}
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		System.out.println(result); // 잘나오나 테스트
+		return result;
 	}
 
 }

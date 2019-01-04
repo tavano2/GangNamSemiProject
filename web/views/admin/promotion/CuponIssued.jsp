@@ -298,6 +298,8 @@
 			$('.ui .item').removeClass('active');
 			$(this).addClass('active');
 		});
+		
+	
 	</script>
 </body>
 

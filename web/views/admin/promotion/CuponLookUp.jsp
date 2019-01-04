@@ -140,7 +140,7 @@
 							<td class="cuponTd" 	>발급</td>
 						</tr>
 					</tbody>
-					<tbody>
+					<tbody id="selectCoupon">
 						<tr align="center">
 							<td colspan="6" >
 								쿠폰을 검색해주세요
@@ -172,7 +172,7 @@
 		$("#couponSelectBtn").click(function(){
 			console.log($("#couponNum").val()); //쿠폰 번호에 들어온 값을 읽어들임
 			console.log($("#couponExp").val());//쿠폰 사용기간 값을 읽어들임
-			
+			selectResult(1);
 			$.ajax({
 				url:"<%=request.getContextPath()%>/couponLookUp.pm",
 				type:"get",
@@ -186,6 +186,117 @@
 			});
 			
 		})
+		
+	
+
+		//페이징 처리를 위한 함수
+		var  selectResult = function(inputCurrentPage){
+			currentPage = inputCurrentPage;
+			var $tbody=$("#selectCoupon");
+			$.ajax({
+				url : "<%=request.getContextPath()%>/couponLookUp.pm",
+				type : "get",
+				data:{couponNum:$("#couponNum").val(),couponExp:$("#couponExp").val(),currentPage:currentPage},
+				success : function(data) {							
+					console.log(data);
+					$tbody.empty();
+					console.log(data["couponList"].length);
+					if(data["couponList"].length==0){
+						var $tr = $("<tr align='center'>")
+						var $td=$("<td colspan=6>").text("검색 결과가 없습니다.");
+						$tr.append($td);
+						$tbody.append($tr);
+					}
+					for(var i = 0; i < data["couponList"].length; i++){
+							var $tr = $("<tr align='center'>");
+							var $couponCode = $("<td>").text(data["couponList"][i].couponCode);
+							var $couponName = $("<td>").text(data["couponList"][i].couponName);
+							var $couponExp = $("<td>").text(data["couponList"][i].couponExp);
+							var $couponIssue=$("<button>").addClass("ui small secondary button").text("발급");
+							var $couponIssueTd = $("<td>");
+							$couponIssueTd.append($couponIssue); //버튼을 tr에 담는다.
+							
+							if(data["couponList"][i].couponType==1){
+								var $couponDiscountOption = $("<td>").text("할인율");
+								var $couponDiscount = $("<td>").text(data["couponList"][i].couponRDiscount);
+							}else{
+								var $couponDiscountOption = $("<td>").text("할인금액");
+								var $couponDiscount = $("<td>").text(data["couponList"][i].couponPDiscount);
+							}
+						
+							
+							$tr.append($couponCode);
+							$tr.append($couponName);
+							$tr.append($couponDiscountOption);
+							$tr.append($couponDiscount);
+							$tr.append($couponExp);
+							$tr.append($couponIssueTd);
+							$tbody.append($tr);												 					
+					}
+					var $pageDiv=$("<div>").addClass("ui pagination menu");
+					var $aDl = $("<a>").addClass("icon item").click(function(){
+						selectResult(1);
+					});
+					var $iDl = $("<i>").addClass("angle double left icon");
+					
+					$aDl.append($iDl);
+					$pageDiv.append($aDl);
+					
+					
+
+					var $aL = $("<a>").addClass("icon item").click(function(){
+						if(currentPage==1){
+							
+						}else{
+							selectResult(currentPage-1);
+						}
+					});
+					var $iL = $("<i>").addClass("angle left icon");						
+					$aL.append($iL);
+					$pageDiv.append($aL);
+		
+					for(var p = data["pi"].startPage; p <= data["pi"].endPage; p++){
+							var $P = $("<a>").addClass("item").text(p).click(function(){
+								selectResult($(this).text());
+							});
+							$pageDiv.append($P);
+					}
+					
+					var $aR = $("<a>").addClass("icon item").click(function(){
+						if(currentPage>=data["pi"].endPage){
+							
+						}else{
+							selectResult(currentPage+1);
+						}
+					});
+					var $iR = $("<i>").addClass("angle right icon");
+					$aR.append($iR);
+					$pageDiv.append($aR);
+					
+					var $aDr = $("<a>").addClass("icon item").click(function(){
+						if(data["pi"].endPage==0){
+							
+						}else{
+							selectResult(data["pi"].endPage);
+						}						
+					});
+					var $iDr = $("<i>").addClass("angle double right icon");
+					
+					$aDr.append($iDr);
+					$pageDiv.append($aDr);
+					
+					var $pageTd=$("<td colspan='6'>").text(" ");
+					var $pageTr=$("<tr align='center'>");						
+					
+					$pageTd.append($pageDiv);
+					$pageTr.append($pageTd);
+					$tbody.append($pageTr);								
+				},
+				error : function(data) {
+					console.log("실패")
+				}
+			});			
+		}
 	</script>
 </body>
 
