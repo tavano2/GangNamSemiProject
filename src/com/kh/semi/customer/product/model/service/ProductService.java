@@ -1,4 +1,4 @@
-/*package com.kh.semi.customer.product.model.service;
+package com.kh.semi.customer.product.model.service;
 
 import static com.kh.semi.customer.common.JDBCTemplate.close;
 import static com.kh.semi.customer.common.JDBCTemplate.commit;
@@ -19,6 +19,7 @@ import com.kh.semi.customer.product.model.vo.Product;
 import com.kh.semi.customer.product.model.vo.ReviewList;
 import com.kh.semi.customer.product.model.vo.ReviewOption;
 import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
+import com.kh.semi.customer.promotion.model.dao.PromotionDao;
 
 public class ProductService {
 
@@ -138,25 +139,12 @@ public class ProductService {
 
 	// ------ProductService.java---------------------------장바구니 : 조회 | selectCartList------------------------------------------------
 
-	public ArrayList<ShoppingCartPd> selectCartList(ShoppingCartPd cartList,  String userId) {
-			// #0 selectCartList Method 는 HashMap<String, Object> 를 반환하고, String userId 를 매개변수로 받는다.
-			// #1 먼저 Connection 객체를 생성하고, 다음으로 con 과 userId 를 Dao 로 넘긴다.
+	public HashMap<String, Object> selectCartList(String userId) {
 		Connection con = getConnection();
 		HashMap<String, Object> hmap = new ProductDao().selectCartList(con, userId);
-		return null;
 		
-			 ProductService.java 에서 ProductDao 로 이동한다. 
-		
-		
-		ArrayList<ShoppingCartPd> cart = new ProductDao().SelectShoppingCartServlet(con, cartList);
 		close(con);
-		return cart;
-		
-	}
-	
-	public HashMap<String, Object> selectCartList(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		return hmap;
 	}
 
 	
@@ -171,7 +159,7 @@ public class ProductService {
 		System.out.println("Service Result : " + result);
 		if(result>0) {
 			commit(con);
-			cartList = new ProductDao().insertCartList(con,cart);
+			//cartList = new ProductDao().insertCartList(con,cart);
 			
 		}else {
 			rollback(con);
@@ -398,4 +386,3 @@ public class ProductService {
 
 
 
-*/

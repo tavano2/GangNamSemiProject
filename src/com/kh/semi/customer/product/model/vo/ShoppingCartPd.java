@@ -76,11 +76,9 @@ public class ShoppingCartPd{
 
 	@Override
 	public String toString() {
-		/*return super.toString();*/
-		return "ShoppingCart [cartNum=" + cartNum + ", productCode=" + productCode + ", userId=" + userId + ", optionNum=" + optionNum + ", amount="+ amount + "]";
+		return "ShoppingCartPd [cartNum=" + cartNum + ", productCode=" + productCode + ", userId=" + userId
+				+ ", optionNum=" + optionNum + ", amount=" + amount + "]";
 	}
-
-	
 
 	
 }
