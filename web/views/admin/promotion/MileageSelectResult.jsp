@@ -305,8 +305,6 @@ span {
 													<%
 														}
 													%>
-
-
 													<%
 														for (int p = startPage; p <= endPage; p++) {
 
@@ -321,12 +319,9 @@ span {
 													<%
 														}
 													%>
-
 													<%
 														}
 													%>
-
-
 													<%
 														if (currentPage >= maxPage) {
 													%>
@@ -340,7 +335,6 @@ span {
 													<%
 														}
 													%>
-
 													<a class="icon item"
 														onclick="location.href='<%=request.getContextPath()%>/selectUser.pm?currentPage=<%=maxPage%>&&userClass=<%=suv.getUserClass()%>&selectUserId=<%=suv.getUserId()%>&startDate=<%=suv.getStartDate()%>&endDate=<%=suv.getEndDate()%>' "><i
 														class="angle double right icon"></i></a>
@@ -408,7 +402,7 @@ span {
 			}%>
 			$("#userClass").val("<%=suv.getUserClass()%>");
 			$("div[name=allUserClass]").html("<%=suv.getUserClass().toUpperCase()%>").css("color","black");
-			$("div[name=selectResult3]").html("증가 3 / 차감 3 씩 보기").css("color","black");
+			$("div[name=selectResult3]").html("증가 1 / 차감 1 씩 보기").css("color","black");
 			
 			$("#selectUserId").val("<%=suv.getUserId()%>");
 			$("#startDate").val("<%=suv.getStartDate()%>");

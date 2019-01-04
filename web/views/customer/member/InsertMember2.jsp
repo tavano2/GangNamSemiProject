@@ -133,11 +133,9 @@ th>div {
 	<script>
 		$(function() {
 			userId2="";
-			$("#checkIdBtn")
-					.click(
+			$("#checkIdBtn").click(
 							function() {
 								var userId = $("#userId").val();
-
 								//정규식 생성				
 								var idCheck = /^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{3,5}$/;
 								var idCheckResult = idCheck.test(userId);
