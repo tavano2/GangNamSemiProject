@@ -79,7 +79,7 @@
 			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">SHOPPING
 			CART</div>
 		<br> <br>
-
+		
 		<!-- 이하 장바구니 내역  -->
 		<table class="ui single line table">
 			<thead>
@@ -106,7 +106,7 @@
 					<td><img
 						src="<%=atList.get(cartList.get(i).getProductCode()).getFilePath() + atList.get(cartList.get(i).getProductCode()).getChangeName()%>"
 						width="50" height="50"></td>
-					<td><span><%=pdList.get(cartList.get(i).getProductCode()).getProductName()%></span>&nbsp;&nbsp;(
+					<td><span><%=pdList.get(cartList.get(i).getProductCode()).getProductName()%></span>&nbsp;&nbsp;&nbsp;(
 						<%
 						for (int j = i; j < i + count.get(String.valueOf(cartList.get(i).getCartNum())); j++) {
 					%>
@@ -114,10 +114,10 @@
 						<%
 							}
 						%> )</td>
-					<td><%=cartList.get(i).getAmount()%></td>
-					<!-- 장바구니 수량  -->
 					<td><%=pdList.get(cartList.get(i).getProductCode()).getProductPrice()%></td>
 					<!-- 상품 목록에서 상품 코드와 가격(상품 정보) 가져오기. | 단일 수량 -->
+					<td><%=cartList.get(i).getAmount()%></td>
+					<!-- 장바구니 수량  -->
 					<td><%=pdList.get(cartList.get(i).getProductCode()).getProductPrice() * cartList.get(i).getAmount()%></td>
 					<!-- 상품 목록에서 상품 코드와 가격(상품 정보) 가져오기. | 복수 수량 -->
 				</tr>
@@ -129,13 +129,12 @@
 			</tbody>
 
 			<tfoot>
-				<th colspan="4">
-					 <!-- 작성하기는 관리자만 가능하다.  -->
+				<th colspan="6" class="right aligned">
+					배송비 : 2500원
 				</th>
 			</tfoot>
 		</table>
-		<p>배송비 : 2500원</p>
-		<!-- 배송비는 2,500원 고정이므로 페이지 하단부에 별도로 표기한다. -->
+		
 		<table>
 			<div align="center">
 				<p class="ui single line table"></p>
