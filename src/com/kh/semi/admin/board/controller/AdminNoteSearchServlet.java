@@ -2,6 +2,7 @@ package com.kh.semi.admin.board.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
@@ -10,8 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.semi.admin.board.model.service.AdminBoardService;
+import com.kh.semi.admin.board.model.vo.Msg;
 
-@WebServlet("/adminNoticeSearch.bo")
+
+@WebServlet("/adminNoteSearch.bo")
 public class AdminNoteSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,10 +37,17 @@ public class AdminNoteSearchServlet extends HttpServlet {
 		Date startDate =new Date(new GregorianCalendar(Integer.parseInt(startDateArr[0]), Integer.parseInt(startDateArr[1])-1, Integer.parseInt(startDateArr[2])).getTimeInMillis());
 		Date endDate = new Date(new GregorianCalendar(Integer.parseInt(endDateArr[0]),Integer.parseInt(endDateArr[1])-1,Integer.parseInt(endDateArr[2])).getTimeInMillis());
 		
-		System.out.println("서블릿게시판타입"+BoardSearch);
+	/*	System.out.println("서블릿게시판타입"+BoardSearch);
 		System.out.println("서블릿content내용"+contentSearch);
 		System.out.println("서블릿startDate"+startDate);
-		System.out.println("서블릿endDate"+endDate);
+		System.out.println("서블릿endDate"+endDate);*/
+		
+		
+		
+		ArrayList<Msg> msgList = new AdminBoardService().adminNoteSearch(contentSearch,startDate,endDate);
+	
+		
+	
 	}
 
 
