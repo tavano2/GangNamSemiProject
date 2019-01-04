@@ -1,4 +1,4 @@
-/*package com.kh.semi.customer.product.model.dao;
+package com.kh.semi.customer.product.model.dao;
 
 import static com.kh.semi.customer.common.JDBCTemplate.close;
 
@@ -358,7 +358,7 @@ public class ProductDao {
 
 
   
-  	public int deleteWishList(Connection con, String msg, String userId) {
+  	/*public int deleteWishList(Connection con, String msg, String userId) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("deleteWishList");
@@ -373,7 +373,7 @@ public class ProductDao {
 			close(pstmt);
 		}
 		return result;
-	}
+	}*/
 
 
   	
@@ -420,18 +420,7 @@ public class ProductDao {
   	
   	
   		// ------ProductDAO.java---------------------------장바구니 : 조회 | selectCartList------------------------------------------------
-	
-  	 Ref. (5)
-  	private int cartNum;//TYPE : NUMBER | PK
-	private String productCode;//TYPE : VARCHAR2 | PK | FK
-	private String userId;//TYPE : VARCHAR2 | PK | FK
-	private String optionNum;//TYPE : VARCHAR2 | PK | FK
-	private int amount;//TYPE : NUMBER
-  	 	
-  
-  	
-	public ArrayList<ShoppingCartPd> selectCartList(ArrayList<ShoppingCartPd> cartList) throws SQLException {
-
+	public HashMap<String, Object> selectCartList(Connection con, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null; //ResultSet  for "SELECT"
 		HashMap<String, Object> hmap = null;
@@ -482,10 +471,10 @@ public class ProductDao {
 		  		    
 				atList.put(rset.getString("PRODUCT_CODE"), at);
 		  		    
-				if (count.containsKey(rset.getString("PRODUCT_CODE"))) {
-					count.put(rset.getString("PRODUCT_CODE"), count.get(rset.getString("PRODUCT_CODE")) + 1);
+				if (count.containsKey(rset.getString("CART_NUM"))) {
+					count.put(rset.getString("CART_NUM"), count.get(rset.getString("CART_NUM")) + 1);
 					} else {
-						count.put(rset.getString("PRODUCT_CODE"), 1);
+						count.put(rset.getString("CART_NUM"), 1);
 						}
 				}
 		
@@ -502,50 +491,8 @@ public class ProductDao {
 				close(pstmt);
 			}
 			return hmap;
-			
-			
-			
-		//--------------------------------------------------------------------------------------------------------
-		
-		// ProductDao.java 에서 shoppingCart.jsp 로 이동한다.
-		
-		Connection con  = null;
-		PreparedStatement pstmt = null;// PreparedStatement : An object that represents a pre-compiled SQL statement. 
-		ResultSet rset = null;																																																					
-		cartList = null;
-		
-		String query = prop.getProperty("selectCartList");// "selectCartList" > text.properties (sql-product-QUERY)											
-		// prop :	▲ private Properties prop = new Properties();
-		try {
-			
-			con = JDBCTemplate.getConnection();
-			pstmt = con.prepareStatement(query);
-			rset = pstmt.executeQuery(query);
-			
-			cartList = new ArrayList<ShoppingCartPd>();
-			
-		while(rset.next()) { // #1 cartPd //next() : Moves the cursor forward one row from its current position.
-				ShoppingCartPd cartPd = new ShoppingCartPd(); // ShoppingCartPd > VO. The Result.
-				
-				cartPd.setProductCode(rset.getInt("PRODUCT_CODE"));
-			//	cartPd.setUserId(rset.getInt("USER_ID"));
-				cartPd.setOptionNum(rset.getInt("OPTION_NUM"));
-				cartPd.setAmount(rset.getInt("AMOUNT"));
-				
-				cartList.add(cartPd); // Add "cartProDuct" into "cart" // ▲ ArrayList<ShoppingCartPd> cart = null;
-			}
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}		
-		
-		
-		return cartList;
 	}
+	
 	
 	public ArrayList<ShoppingCartPd> SelectShoppingCartServlet(Connection con, ShoppingCartPd cartList, int currentPage,
 			int limit) {
@@ -553,10 +500,6 @@ public class ProductDao {
 		return null;
 	}
 	
-	public HashMap<String, Object> selectCartList(Connection con, String userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	
 
@@ -578,9 +521,9 @@ public class ProductDao {
 		try {
 			con = JDBCTemplate.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, cartList.getProductCode());
+			//pstmt.setInt(1, cartList.getProductCode());
 		//	pstmt.setInt(2, cartList.getUserId());
-			pstmt.setInt(3, cartList.getOptionNum());
+			//pstmt.setInt(3, cartList.getOptionNum());
 			pstmt.setInt(4, cartList.getAmount());
 			result = pstmt.executeUpdate();// int result = 0;
 		} catch (SQLException e) {
@@ -608,9 +551,9 @@ public class ProductDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, cartList.getProductCode());
+			//pstmt.setInt(1, cartList.getProductCode());
 		//	pstmt.setInt(2, cartList.getUserId());
-			pstmt.setInt(3, cartList.getOptionNum());
+			//pstmt.setInt(3, cartList.getOptionNum());
 			pstmt.setInt(4, cartList.getAmount());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -629,8 +572,8 @@ public class ProductDao {
 		
 		
     
-     * 
-     * public int deleteWishList(Connection con, String msg, String userId) {
+     
+      public int deleteWishList(Connection con, String msg, String userId) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("deleteWishList");
@@ -777,7 +720,7 @@ public class ProductDao {
 		ResultSet rset = null;
 		HashMap<String, Object> hmap = null;
 		String query = prop.getProperty("resultClassNameAndStandardPrice");
-		String query = "SELECT CLASS_NAME,STANDARD_PRICE FROM USER_CLASS WHERE STANDARD_PRICE > "+totalPirce;
+		//String query = "SELECT CLASS_NAME,STANDARD_PRICE FROM USER_CLASS WHERE STANDARD_PRICE > "+totalPirce;
 		try {
 			pstmt = con.prepareStatement(query);
 			//pstmt.setInt(1, totalPirce);
@@ -1352,10 +1295,7 @@ public class ProductDao {
 		return result;
 	}
 
-	public HashMap<String, Object> selectCartList(Connection con, String userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 
 
@@ -1403,4 +1343,3 @@ public class ProductDao {
 
 
 
-*/
