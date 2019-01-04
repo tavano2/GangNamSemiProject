@@ -92,10 +92,10 @@
 					<table class="ui celled table" id="cuponTable">
 						<tbody>
 							<tr>
-								<td>쿠폰 검색</td>
+								<td width="200px">쿠폰 번호</td>
 								<td>
 									<div class="ui input focus cuponNameInput">
-										<input type="text">
+										<input type="text" id="couponNum">
 									</div>
 								</td>
 							</tr>
@@ -103,16 +103,9 @@
 								<td>사용기간</td>
 								<td>
 									<div class="ui input focus cuponLookUp">
-										<input type="text">
+										<input type="text" id="couponExp">
 									</div>
-									<div class="cuponLookUp">
-										<i class=" th icon"></i>
-									</div>&nbsp; <span> ~ </span>&nbsp;
-									<div class="ui input focus cuponLookUp">
-										<input type="text">
-									</div>
-									<div class="cuponLookUp">
-										<i class=" th icon"></i>
+									
 									</div>
 								</td>
 							</tr>
@@ -122,7 +115,7 @@
 				<br>
 
 				<div class="cuponSearch">
-					<button class="midium ui secondary button">검 &nbsp;색</button>
+					<button class="midium ui secondary button" id="couponSelectBtn">검 &nbsp;색</button>
 				</div>
 				<br> <br> <br>
 				<div>
@@ -131,37 +124,27 @@
 				<br>
 				<table class="ui celled table" id="cuponTable">
 					<tbody>
-						<tr class="cuponBtn">
-							<td colspan="6">
-								<div>
-									<span>선택할 쿠폰을 &nbsp;</span>
-									<button class="ui small secondary button">수정</button>
-									<button class="ui small secondary button">삭제</button>
-									<button class="ui small secondary button">복사</button>
+						<tr class="cuponBtn" >
+							<td colspan="6" height="50px">
+								<div >
+									
 								</div>
 							</td>
 						</tr>
-						<tr>
-							<td class="cuponTd" width="50px"></td>
-							<td class="cuponTd" width="110px;" style="text-align: center">쿠폰번호</td>
-							<td class="cuponTd" width="210px;" style="text-align: center">쿠폰명</td>
-							<td class="cuponTd" width="110px;" style="text-align: center">혜택</td>
-							<td class="cuponTd" width="210px;" style="text-align: center">사용기간</td>
-							<td class="cuponTd" width="110px;" style="text-align: center">발급</td>
+						<tr align="center">
+							<td class="cuponTd"  >쿠폰번호</td>
+							<td class="cuponTd" >쿠폰명</td>
+							<td class="cuponTd" >혜택</td>
+							<td class="cuponTd" >금액/률</td>
+							<td class="cuponTd" >사용기간</td>
+							<td class="cuponTd" 	>발급</td>
 						</tr>
-						<tr>
-							<td class="cuponTd" width="50px">&nbsp;</td>
-							<td class="cuponTd" width="110px;" style="text-align: center">&nbsp;</td>
-							<td class="cuponTd" width="210px;" style="text-align: center">&nbsp;</td>
-							<td class="cuponTd" width="110px;" style="text-align: center">&nbsp;</td>
-							<td class="cuponTd" style="text-align: center"></td>
-							<td class="cuponTd" style="text-align: center">
-								<button class="ui small secondary button"
-									onclick="location.href='/semi/views/admin/promotion/CuponIssued.jsp' ">발급</button>
+					</tbody>
+					<tbody>
+						<tr align="center">
+							<td colspan="6" >
+								쿠폰을 검색해주세요
 							</td>
-						</tr>
-						<tr>
-							<td colspan="6">테이블 페이지넣을곳</td>
 						</tr>
 					</tbody>
 				</table>
@@ -184,6 +167,25 @@
 			$('.ui .item').removeClass('active');
 			$(this).addClass('active');
 		});
+		
+		//쿠폰 검색을 눌렀을때 실행시키는 함수(쿠폰 검색)
+		$("#couponSelectBtn").click(function(){
+			console.log($("#couponNum").val()); //쿠폰 번호에 들어온 값을 읽어들임
+			console.log($("#couponExp").val());//쿠폰 사용기간 값을 읽어들임
+			
+			$.ajax({
+				url:"<%=request.getContextPath()%>/couponLookUp.pm",
+				type:"get",
+				data:{couponNum:$("#couponNum").val(),couponExp:$("#couponExp").val()},
+				success:function(data){
+					console.log(data);
+				},
+				error:function(data){
+					console.log("실패");
+				}
+			});
+			
+		})
 	</script>
 </body>
 
