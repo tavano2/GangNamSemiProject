@@ -44,6 +44,21 @@
 	#tableId{
 		table-layout:fixed;
 	}
+	#imgTable{
+		table-layout:fixed;
+	}
+	#mainImg , div[name=subImg]{
+		width:150px;
+		height:150px;
+		border:1px dashed darkgray;
+		text-align:center;
+		display:inline-block;
+		vertical-align:middle;
+		margin-left:20px;
+	}
+	div[name=subImg]{
+		margin-top:20px;
+	}
 </style>
 </head>
 
@@ -201,14 +216,27 @@
             </table><br>
             <hr>
             <h2 class="ui header">이미지 정보</h2>
-        	<table class="ui celled table first-col">
+        	<table class="ui celled table first-col" id="imgTable">
         	<tr>
-        		<td>상품 이미지</td>
-        		<td>
-        			<img class="ui small image" src="/images/wireframe/image.png"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - 권장이미지 : 500px * 500px / 5M 이하 / gif, jpg, png<br>
-        			<button class="ui black button" id="imgBtn">등록</button>
+        		<td width="200">상품 이미지</td>
+        		<td id="imgPlus">
+        			<div id="mainImg">
+        				<img id="titleImg" width="150" height="150">
+        			</div>
+        			&nbsp;&nbsp;&nbsp; * 메인 이미지를 선택하세요.
+        			</br></br></br></br>
+        			&nbsp;&nbsp;&nbsp;&nbsp; * 상세 이미지를 선택하세요.
+        			</br>
+        			<!-- <div name="subImg">
+        				<img name="detailImg" width="150" height="150">
+        			</div> -->
                 </td>
+            </tr>
             </table><br>
+            <div id="fileArea">
+            	<input type="file" id="thumbnailImg" onchange="loadImg(this,1)">
+            	<!-- <input type="file" name="imgList" onchange="loadImg(this,2)"> -->
+            </div>
 
         	<div class="productAddBtn">
         		<button class="ui blue button" id="addBtn">상품등록</button>
@@ -383,12 +411,61 @@
 			});
 	}
 	
+	$(function(){
+		$("#fileArea").hide();
+		
+		$("#mainImg").click(function(){
+			$("#thumbnailImg").click();
+		});
+		
+		var size = $("div[name=subImg]").length;
+		for(var i = 0 ; i < size; i++){
+			$("div[name=subImg]").eq(i).click(function(){
+				$("#fileArea").children("input[name=imgList]").eq(i).click();
+				console.log("ad");
+			});
+		}
+	});
 	
 	
-	
-	
-	
-	
+	var cnt2 = 1;
+	function loadImg(value,num){
+		var size = $("div[name=subImg]").length;
+		
+		if(value.files && value.files[0]){
+			var reader = new FileReader();
+			reader.onload = function(e){
+				/* switch(num){
+					case 1 : $("#titleImg").attr("src",e.target.result); break;
+					for(var i = 0; i < size; i++){
+						cnt2 ++;
+						case cnt2 : $("img[name=detailmg]").eq(i).attr("src",e.target.result); break;
+					}
+				} */
+				if(num == 1){
+					$("#titleImg").attr("src",e.target.result);
+				}else{
+					for(var i = 0 ; i < size; i++){
+						if(num == cnt2){
+							$("img[name=detailmg]").eq(i).attr("src",e.target.result);
+						}else{
+							cnt2 ++;
+						}
+					}
+				}
+			}
+			reader.readAsDataURL(value.files[0]);
+			cnt2 ++;
+			var $imgPlus = $("#imgPlus");
+			var $div = $("<div name='subImg'>");
+			var $img = $("<img name='detailImg' width='150' height='150'>");
+			$div.append($img);
+			$imgPlus.append($div);
+			var $fileArea = $("#fileArea");
+			var $input = $("<input type='file' name='imgList' onchange='loadImg(this."+cnt2+")'>");
+			$fileArea.append($input);
+		}
+	}
     </script>
     
 </body>
