@@ -106,7 +106,7 @@
 						<%if(hmap.get("change_name") != null) { %>
 				<tr>
 						<td><input type="hidden" value="<%=hmap.get("option_num")%>" class="product_optionNumber">
-						<input type="hidden" value="<%=hmap.get("product_code")%>" class="product_code">
+						<input type="hidden" value="<%=hmap.get("product_code")%>" class="product_code1">
 						<img src="/semi/image/customer/product/<%=hmap.get("change_name")%>" style="height: 200px; width: 200px;"></td>
 						<%}else{ %>
 						<td><input type="hidden" value="<%=hmap.get("option_num")%>" class="product_optionNumber">
@@ -590,7 +590,7 @@
 		var couponValue = "";
 		var discount = 0;
 		var currentPageJs = 1;
-		
+		var couponPd = "";
 		
 		
 		function showCouponPage(data){
@@ -619,8 +619,10 @@
 						$tr.append($radioTd);
 						
 						var $couponUserIdTd = $("<td>").text(data.couponList[key].user_id);
+						var $hideProductCodeInput = $("<input type='hidden' class='couponPd' value=\""+data.couponList[key].product_code+"\">")
 						var $couponNameTd = $("<td>").text(data.couponList[key].coupon_name);
 						var $couponAccessPnTd = $("<td>").text(data.couponList[key].product_name);
+						$couponUserIdTd.append($hideProductCodeInput);
 						$tr.append($couponUserIdTd);
 						$tr.append($couponNameTd);
 						$tr.append($couponAccessPnTd);
@@ -717,9 +719,13 @@
 				
 			// 모달 확인창을 눌렀을때 쿠폰 코드와 할인 금액/률이 담김.
 			var pdiscountResult = 0;
+			// 선택한 쿠폰 프로덕트 코드 구해오기
+			
 			$("#couponOkBtn").click(function(){
 				couponValue = $(".couponRadio:checked").val();
 				discount = $(".couponRadio:checked").parent().parent().parent().find(".disCount").text();
+				couponPd = $(".couponRadio:checked").parent().parent().parent().find(".couponPd").val();
+				
 				
 				if(discount > 100){
 					$("#discountPirce1").text(discount+"원");
@@ -911,7 +917,7 @@
 					console.log(recPhone);
 					console.log(sayDeliveryMan);
 					console.log(couponValue);
-					
+					console.log(couponPd);
 					
 					var lnumCode = data.lnum;
 					
@@ -932,7 +938,27 @@
 					    buyer_postcode: postCode
 					}, function (rsp) { // callback
 					    if (rsp.success) {
-					    	var infoData = {orderLnum:lnumCode,
+					    	
+					    	var optionNum = [];
+					    	$(".product_optionNumber").each(function(){
+					    		optionNum.push($(this).val());
+					    	});
+					    	var amount = [];
+					    	$(".amount_class1").each(function(){
+					    		amount.push($(this).text());
+					    	});
+					    	
+					    	var pdCode = []
+					    	$(".product_code1").each(function(){
+					    		pdCode.push($(this).val());
+					    	});
+					   
+					    	$.ajax({
+					    		url : "<%=request.getContextPath()%>/insertOrderList.or",
+					    		type : "post",
+					    		traditional : true,
+					    		data : {
+					    			orderLnum:lnumCode,
 									imp_uid:rsp.imp_uid,
 			    					totalPirce:totalPriceResult,
 			    					byerName:name1,
@@ -944,19 +970,12 @@
 			    					recieverTel:recTel,
 			    					recieverPhone:recPhone,
 			    					memo:sayDeliveryMan,
-			    					couponValue:couponValue};
-					    	var infoArr = []
-					    	infoArr.push(infoData);
-					    	
-					    	
-					    	var jsonArr2 = JSON.stringify(infoArr);
-					    	jQuery.ajaxSettings.traditional = true;
-					    	$.ajax({
-					    		url : "<%=request.getContextPath()%>/insertOrderList.or",
-					    		type : "post",
-					    		data : JSON.stringify(productList),
-					    		datatype: 'json',
-					    		contentType: "application/json",
+			    					couponValue:couponValue,
+			    					couponProduct:couponPd,
+			    					optionNum:optionNum,
+			    					amount:amount,
+			    					pdCode:pdCode
+					    		},
 					    		success : function(data){
 					    			console.log(data);
 					    		},
