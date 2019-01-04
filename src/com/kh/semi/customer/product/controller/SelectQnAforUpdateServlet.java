@@ -34,11 +34,11 @@ public class SelectQnAforUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String num = request.getParameter("num");
-		System.out.println("num"+num);
+		//System.out.println("num"+num);
 		String pQnABoardId = request.getParameter("pQnABoardId");
 		
 
-		System.out.println("pQnABoardId : "+pQnABoardId);
+		//System.out.println("pQnABoardId : "+pQnABoardId);
 		//상세페이징 뿌려주깅
 		Product SelectOneQnA = new ProductService().SelectOneQnA(num);
 		
@@ -49,7 +49,7 @@ public class SelectQnAforUpdateServlet extends HttpServlet {
 		ArrayList<Attachment> selectfileList = new ProductService().selectfileList(pQnABoardId);
 		
 		
-		System.out.println(SelectOneQnA);
+		//System.out.println(SelectOneQnA);
 		//System.out.println("SelectReplyList"+SelectReplyList);
 		//System.out.println("selectfileList"+selectfileList.get(0).getOriginName());
 		//System.out.println(selectfileList.get(0).getChangeName());

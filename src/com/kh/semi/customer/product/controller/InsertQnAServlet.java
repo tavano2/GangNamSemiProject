@@ -30,17 +30,9 @@ public class InsertQnAServlet extends HttpServlet {
 
     }
 
-    //review insert!
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		String file = request.getParameter("file");
-		
-		System.out.println("널이뜰수밖엥"+title);
-		//System.out.println(content);
-		//System.out.println(file);
-		
 		if(ServletFileUpload.isMultipartContent(request)) {
 			int maxSize = 1024*1024*10;
 			
@@ -64,21 +56,23 @@ public class InsertQnAServlet extends HttpServlet {
 			while(files.hasMoreElements()) {
 				String name = files.nextElement();
 				System.out.println("name"+name);
+				if(multiRequest.getFilesystemName(name)!=null) {
+					saveFiles.add(multiRequest.getFilesystemName(name));
+					orginFiles.add(multiRequest.getOriginalFileName(name));
+					//System.out.println("fileSystem name : "+multiRequest.getFilesystemName(name));
+					//System.out.println("orginFile name : "+multiRequest.getOriginalFileName(name));
+					
+				}
 				
-				saveFiles.add(multiRequest.getFilesystemName(name));
-				orginFiles.add(multiRequest.getOriginalFileName(name));
-				
-				System.out.println("fileSystem name : "+multiRequest.getFilesystemName(name));
-				System.out.println("orginFile name : "+multiRequest.getOriginalFileName(name));
 				
 			}
 			
 			String multiTitle = multiRequest.getParameter("title");
 			String multiContent = multiRequest.getParameter("content");
 			
-			System.out.println();
-			System.out.println(multiTitle);
-			System.out.println(multiContent);
+			//System.out.println();
+			//System.out.println(multiTitle);
+			//System.out.println(multiContent);
 			
 			Board insertQnAboard = new Board();
 			insertQnAboard.setBoardTitle(multiTitle);
@@ -88,6 +82,8 @@ public class InsertQnAServlet extends HttpServlet {
 			
 			
 			ArrayList<Attachment> fileList = new ArrayList<Attachment>();
+			
+	
 			for(int i = orginFiles.size() -1; i>=0; i--) {
 				Attachment at = new Attachment();
 				at.setFilePath(filePath);
@@ -95,9 +91,11 @@ public class InsertQnAServlet extends HttpServlet {
 				at.setChangeName(saveFiles.get(i));
 				
 				fileList.add(at);
-			}
-			System.out.println(fileList);
-			System.out.println(insertQnAboard);
+				}
+			
+			//System.out.println(fileList);
+			//System.out.println(insertQnAboard);
+			
 			
 		int result = new ProductService().insertQnA(insertQnAboard,fileList);
 		
@@ -113,7 +111,7 @@ public class InsertQnAServlet extends HttpServlet {
 			}
 			
 			
-			request.setAttribute("msg", "사진 게시판 등록 실팽 ㅠ");
+			request.setAttribute("msg", "상품문의 등록 실팽 ㅠ");
 			request.getRequestDispatcher("views/customer/common/errorPage.jsp").forward(request, response);
 		}
 		

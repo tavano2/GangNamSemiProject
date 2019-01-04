@@ -85,7 +85,7 @@
 
 				<H2>쪽지 검색</H2>
 				<H4>쪽지 검색하기</H4>
-			<form action="<%=request.getContextPath() %>/adminNoticeSearch.bo" method="post">
+			<form action="<%=request.getContextPath() %>/adminNoteSearch.bo" method="post">
 				<table class="ui celled table border_table_1">
 		
 					<tr>

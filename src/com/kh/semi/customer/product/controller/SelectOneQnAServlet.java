@@ -50,7 +50,7 @@ public class SelectOneQnAServlet extends HttpServlet {
 		//System.out.println("selectfileList"+selectfileList.get(0).getOriginName());
 		//System.out.println(selectfileList.get(0).getChangeName());
 		//System.out.println(selectfileList.get(0).getFilePath());
-		System.out.println(selectfileList);
+		//System.out.println(selectfileList);
 		
 		String page="";
 		if(SelectOneQnA!=null) {

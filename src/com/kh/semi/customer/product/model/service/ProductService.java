@@ -91,7 +91,7 @@ public class ProductService {
 		ArrayList<Product> replyList = null;
 		
 		int result = new ProductDao().insertQnAReply(con,pReply);
-		System.out.println("service result : " + result);
+		//System.out.println("service result : " + result);
 		if(result>0) {
 			commit(con);
 			replyList = new ProductDao().selectQnAReply(con,pReply.getBoardId());
@@ -261,17 +261,19 @@ public class ProductService {
 		int result1= new ProductDao().insertQnA(con,insertQnAboard);
 
 		if(result1>0) {
+		
 			int boardId = new ProductDao().selectCurrval(con);
 			
 			for(int i=0; i<fileList.size();i++) {
 				fileList.get(i).setBoardId(boardId);
 			}
+			
 		}
-		
-		
+		//System.out.println("fileLiST : : "+fileList);
 		int result2 = new ProductDao().insertQnAAttachment(con,fileList);
 		
-		if(result1>0 && result2>0) {
+		
+		if(result1>0) {
 			commit(con);
 			result = 1;
 		}else {
@@ -362,16 +364,34 @@ public class ProductService {
 	
 	
 	//qna수정하기
-		public int updateQnA(Board updateQnABoard, ArrayList<Attachment> fileList,String pQnABoardId,String atstatus) {
+		public int updateQnA(Board updateQnABoard, ArrayList<Attachment> fileList,String pQnABoardId,String atstatus,String insertAtt) {
 			Connection con = getConnection();
 			int result=0;
+			int result2=0;
 			
 			int result1 = new ProductDao().updateQnA(con,updateQnABoard,pQnABoardId);
 			
-		
-			int result2=0;
+			
+			
+			//원래 사진이있을시 삭제하고 update
 			if(atstatus.equals("y")) {
-				result2 = new ProductDao().updateQnAAttachment(con,fileList,pQnABoardId);			
+				result2 = new ProductDao().updateQnAAttachment(con,fileList,pQnABoardId);		
+				
+			}else {
+				result2=1;
+			}
+			
+			if(result1>0) {
+				
+				for(int i=0; i<fileList.size();i++) {
+					fileList.get(i).setBoardId(Integer.parseInt(pQnABoardId));
+				}
+				
+			}
+			
+			//원래 사진이 없을시 insert
+			if(insertAtt.equals("y")) {
+				 result2 = new ProductDao().insertQnAAttachment(con,fileList);
 			}else {
 				result2=1;
 			}

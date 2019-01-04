@@ -29,21 +29,25 @@ public class SelectReviewOptionServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if(request.getSession().getAttribute("loginUser")!=null) {
+			
 		String productCode = request.getParameter("productCode");
-		System.out.println(productCode);
+		//System.out.println(productCode);
 		String boardId = request.getParameter("boardId");
-		System.out.println(boardId);
+		//System.out.println(boardId);
+		
 		
 		//사용자 아이딩!
 		String userId = (String.valueOf(((Member)(request.getSession().getAttribute("loginUser"))).getUserId()));
 
-		System.out.println(userId);
+		//System.out.println(userId);
 		
 
 		ArrayList<ReviewOption> reviewOption = ProductService.selectReviewOption(productCode,userId);
 		
 		
-		System.out.println(reviewOption);
+		//System.out.println(reviewOption);
 		////////////////////////////////////////////////////////////////////////////////////////////
 		
 
@@ -60,8 +64,11 @@ public class SelectReviewOptionServlet extends HttpServlet {
 		
 		RequestDispatcher view= request.getRequestDispatcher(page);
 		view.forward(request, response);
+		}else {
+			response.sendRedirect("views/customer/member/memberLogin.jsp");
+		}
 	}
-
+	
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
