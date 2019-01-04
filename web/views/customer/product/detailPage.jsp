@@ -264,7 +264,7 @@
 								<button class="ui brown button buyBtn">By it Now</button>
 							</div> -->
 							<div class="cartBtnDiv">
-								<button class="ui grey basic button cartBtn">CART</button>
+								<button class="ui grey basic button cartBtn" onclick="insertCart();">CART</button>
 								&nbsp;&nbsp;
 								<button class="ui grey basic button cartBtn"
 									onclick="wishListBtn();">♡WISH LIST</button>
@@ -645,6 +645,14 @@
 		
 		}
 	
+	</script>
+	
+	
+	<!-- 카트로 -->
+	<script>
+		function insertCart(){
+			
+		}
 	</script>
 	
 </body>
