@@ -465,14 +465,14 @@ public class AdminDeliveryDao {
 					private String receiverAddr;	RECEIVER_ADDR
 					private String receiverMsg;	RECEIVER_MSG*/
 					
-					bi.setBuyerCode(rset.getString("BUYER_CODE"));
-					bi.setBuyerName(rset.getString("BUYER_NAME"));
+					bi.setBuyerCode(rset.getString("BUYER_CODE") == null ? "" : rset.getString("BUYER_CODE"));
+					bi.setBuyerName(rset.getString("BUYER_NAME") == null ? "" : rset.getString("BUYER_NAME"));
 					bi.setBuyerTel1(rset.getString("BUYER_TEL1") == null ? "" : rset.getString("BUYER_TEL1"));
-					bi.setBuyerTel2(rset.getString("BUYER_TEL2"));
-					bi.setReceiverName(rset.getString("RECEIVER_NAME"));
+					bi.setBuyerTel2(rset.getString("BUYER_TEL2") == null ? "" : rset.getString("BUYER_TEL2"));
+					bi.setReceiverName(rset.getString("RECEIVER_NAME") == null ? "" : rset.getString("RECEIVER_NAME"));
 					bi.setReceiverTel1(rset.getString("RECEIVER_TEL1") == null ? "" : rset.getString("RECEIVER_TEL1"));
-					bi.setReceiverTel2(rset.getString("RECEIVER_TEL2"));
-					bi.setReceiverAddr(rset.getString("RECEIVER_ADDR"));
+					bi.setReceiverTel2(rset.getString("RECEIVER_TEL2") == null ? "" : rset.getString("RECEIVER_TEL2"));
+					bi.setReceiverAddr(rset.getString("RECEIVER_ADDR") == null ? "" : rset.getString("RECEIVER_ADDR"));
 					bi.setReceiverMsg(rset.getString("RECEIVER_MSG") == null ? "" : rset.getString("RECEIVER_MSG"));
 				}
 				
@@ -489,14 +489,14 @@ public class AdminDeliveryDao {
 					private String receiverAddr;	RECEIVER_ADDR_DE
 					private String deliveryMsg;	DELIVERY_MSG*/
 					
-					de.setDeliveryNum(rset.getString("DELIVERY_NUM"));
-					de.setDeliveryCo(rset.getString("DELIVERY_CO"));
-					de.setPostnum(rset.getString("POSTNUM"));
+					de.setDeliveryNum(rset.getString("DELIVERY_NUM") == null ? "" : rset.getString("DELIVERY_NUM"));
+					de.setDeliveryCo(rset.getString("DELIVERY_CO") == null ? "" : rset.getString("DELIVERY_CO"));
+					de.setPostnum(rset.getString("POSTNUM") == null ? "" : rset.getString("POSTNUM"));
 					de.setPostDate(rset.getDate("POST_DATE"));
-					de.setReceiverName(rset.getString("RECEIVER_NAME_DE"));
+					de.setReceiverName(rset.getString("RECEIVER_NAME_DE") == null ? "" : rset.getString("RECEIVER_NAME_DE"));
 					de.setReceiverTel1(rset.getString("RECEIVER_TEL1_DE") == null ? "" : rset.getString("RECEIVER_TEL1_DE"));
-					de.setReceiverTel2(rset.getString("RECEIVER_TEL2_DE"));
-					de.setReceiverAddr(rset.getString("RECEIVER_ADDR_DE"));
+					de.setReceiverTel2(rset.getString("RECEIVER_TEL2_DE") == null ? "" : rset.getString("RECEIVER_TEL2_DE"));
+					de.setReceiverAddr(rset.getString("RECEIVER_ADDR_DE") == null ? "" : rset.getString("RECEIVER_ADDR_DE"));
 					de.setDeliveryMsg(rset.getString("DELIVERY_MSG") == null ? "" : rset.getString("DELIVERY_MSG"));
 					
 					deliveryList.put(rset.getString("DELIVERY_NUM"), de);
