@@ -84,13 +84,12 @@
 		<table class="ui single line table">
 			<thead>
 				<tr>
-					<th><input type="checkbox" name="all" class="check-all"
-						id="chkBox"></th>
-					<th>이미지</th>
+					<th><div class="ui fitted checkbox"><input type="checkbox" name="all" class="check-all" id="chkBox"><label></label></div></th>
+					<th class="center aligned">이미지</th>
 					<th>상품정보</th>
-					<th>판매가</th>
-					<th>수량</th>
-					<th>합계</th>
+					<th class="center aligned">판매가</th>
+					<th class="center aligned">수량</th>
+					<th class="center aligned">합계</th>
 					<!-- <th>회원 할인가</th> -->
 					<!--(+할인가, 적립금은 쿼리문이 다소 복잡해지므로 다음에 여유가 되면 추가 예정.)-->
 					<!-- <th>적립금</th> -->
@@ -102,8 +101,12 @@
 					for (int i = 0; i < cartList.size(); i++) {
 				%>
 				<tr>
-					<td width="auto"><!--  align="center" --><input type="checkbox"  name="chkBox01" class="class" id="chkBox"></td>
-					<td><img
+					<td width="30px"><!--  align="center" -->
+						<div class="ui fitted checkbox">
+                            <input type="checkbox"  name="chkBox" class="class" id="chkBox" name="cartNum" value="<%= cartList.get(i).getCartNum() %>"><label></label>
+                        </div>
+					</td>
+					<td class="center aligned"><img
 						src="<%=atList.get(cartList.get(i).getProductCode()).getFilePath() + atList.get(cartList.get(i).getProductCode()).getChangeName()%>"
 						width="50" height="50"></td>
 					<td><span><%=pdList.get(cartList.get(i).getProductCode()).getProductName()%></span>&nbsp;&nbsp;&nbsp;(
@@ -114,23 +117,27 @@
 						<%
 							}
 						%> )</td>
-					<td><%=pdList.get(cartList.get(i).getProductCode()).getProductPrice()%></td>
+					<td class="center aligned"><%=pdList.get(cartList.get(i).getProductCode()).getProductPrice()%></td>
 					<!-- 상품 목록에서 상품 코드와 가격(상품 정보) 가져오기. | 단일 수량 -->
-					<td><%=cartList.get(i).getAmount()%></td>
+					<td class="center aligned"><%=cartList.get(i).getAmount()%></td>
 					<!-- 장바구니 수량  -->
-					<td><%=pdList.get(cartList.get(i).getProductCode()).getProductPrice() * cartList.get(i).getAmount()%></td>
+					<td class="center aligned"><%=pdList.get(cartList.get(i).getProductCode()).getProductPrice() * cartList.get(i).getAmount()%></td>
 					<!-- 상품 목록에서 상품 코드와 가격(상품 정보) 가져오기. | 복수 수량 -->
 				</tr>
 				<%	
 					i += count.get(String.valueOf(cartList.get(i).getCartNum())) - 1;
 				}
 				%>
-
+				
+				<%if(cartList.size() == 0) { %>
+				<tr class="center aligned"><td colspan="6" >장바구니에 담긴 상품이 없습니다.</td></tr>
+				<%} %>
+				
 			</tbody>
 
 			<tfoot>
 				<th colspan="6" class="right aligned">
-					배송비 : 2500원
+					<%if(cartList.size() > 0) { %>배송비 : 2500원<%} %>&nbsp;
 				</th>
 			</tfoot>
 		</table>
