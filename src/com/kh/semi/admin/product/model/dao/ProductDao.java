@@ -5,12 +5,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
 import com.kh.semi.admin.product.model.vo.Attachment;
+import com.kh.semi.admin.product.model.vo.Category;
 import com.kh.semi.admin.product.model.vo.Product;
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
 public class ProductDao {
 	private Properties prop = new Properties();
@@ -24,7 +27,7 @@ public class ProductDao {
 			e.printStackTrace();
 		}
 	}
-	public int insertProduct(Connection con, Product pro) {
+	public int insertProduct(Connection con, Attachment pro) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("insertProduct");
@@ -45,7 +48,7 @@ public class ProductDao {
 			close(pstmt);
 		}
 		
-		return 0;
+		return result;
 	}
 	public int insertProductOption(Connection con, String[] optionCode) {
 		PreparedStatement pstmt = null;
@@ -92,6 +95,62 @@ public class ProductDao {
 		}
 		
 		return result;
+	}
+	public ArrayList<Category> selectBigCate(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Category> list = null;
+		String query = prop.getProperty("selectBigCate");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			list = new ArrayList<Category>();
+			
+			while(rset.next()) {
+				Category cate = new Category();
+				cate.setCateCode(rset.getString("CATEG_CODE"));
+				cate.setCateName(rset.getString("CATEG_NAME"));
+				
+				list.add(cate);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
+	public ArrayList<Category> selectMiddleCate(Connection con, String pCode) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Category> list = null;
+		String query = prop.getProperty("selectMiddleCate");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, pCode);
+			rset = pstmt.executeQuery();
+			list = new ArrayList<Category>();
+			
+			while(rset.next()) {
+				Category cate = new Category();
+				cate.setCateCode(rset.getString("CATEG_CODE"));
+				cate.setCateName(rset.getString("CATEG_NAME"));
+				
+				list.add(cate);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
 	}
 
 }

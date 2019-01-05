@@ -60,7 +60,7 @@
                    		<td>검색분류</td>
                    		<td>
                    			<div class="ui selection dropdown">
-                                <!-- <input type="hidden" name="gender"> -->
+                                <input type="hidden" name="select">
                                 <i class="dropdown icon"></i>
                                 <div class="default text">상품명</div>
                                 <div class="menu">
@@ -69,84 +69,21 @@
                                     <div class="item" data-value="2">카테고리</div>
                                 </div>
                             </div>
-                            <input type="text" size="30">
-                            <button class="ui white button"><span class="productPlus">-</span></button>
-                            <button class="ui white button"><span class="productPlus">+</span></button>
-                   		</td>
-                   </tr>
-                   <tr>
-                   		<td>상품구분</td>
-                   		<td>
-                   			<div class="ui form">
-                             <div class="inline fields">
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="productDivision" checked="" tabindex="0" class="hidden">
-                                            <label>전체</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="productDivision" tabindex="0" class="hidden">
-                                            <label>기본상품</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="productDivision" tabindex="0" class="hidden">
-                                            <label>세트상품</label>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
+                            <input type="text" size="30" style="height:30px;" name="selectInput">
                    		</td>
                    </tr>
                    <tr>
                    		<td>상품분류</td>
-                   		<td>
-                   			<div class="ui fitted checkbox">
-                                    <input type="checkbox" name="example">
-                                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;전체 상품분류 보기</label>
-                                </div>
-                                <br><br>
-                                <div class="ui selection dropdown">
-                                <!-- <input type="hidden" name="gender"> -->
+                   		<td id="catePlus">
+                            <div class="ui selection dropdown">
+                                <input type="hidden" name="bigCate" onchange="middleChoice(this.value)">
                                 <i class="dropdown icon"></i>
                                 <div class="default text">-대분류 선택</div>
-                                <div class="menu">
-                                    <div class="item" data-value="0">-대분류 선택</div>
-                                    <div class="item" data-value="1">리</div>
-                                    <div class="item" data-value="2">뇽</div>
+                                <div class="menu" id="bigCateSelect">
+
                                 </div>
                             </div>
-                            <div class="ui selection dropdown">
-                                <!-- <input type="hidden" name="gender"> -->
-                                <i class="dropdown icon"></i>
-                                <div class="default text">-중분류 선택</div>
-                                <div class="menu">
-                                    <div class="item" data-value="0">-중분류 선택</div>
-                                    <div class="item" data-value="1">짱</div>
-                                    <div class="item" data-value="2">짱</div>
-                                </div>
-                            </div>
-                            <div class="ui selection dropdown">
-                                <!-- <input type="hidden" name="gender"> -->
-                                <i class="dropdown icon"></i>
-                                <div class="default text">-상세분류 선택</div>
-                                <div class="menu">
-                                    <div class="item" data-value="0">-상세분류 선택</div>
-                                    <div class="item" data-value="1">?</div>
-                                    <div class="item" data-value="2">??</div>
-                                </div>
-                            </div>
-                              <div class="ui fitted checkbox">
-                                    <input type="checkbox" name="example">
-                                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;하위분류 포함검색</label>
-                                </div>
-                                <div class="ui fitted checkbox">
-                                    <input type="checkbox" name="example">
-                                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;분류 미등록상품 검색</label>
-                                </div>
+                            
                    		</td>
                    </tr>
                    <tr>
@@ -180,19 +117,19 @@
                              <div class="inline fields">
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productOrderby" checked="" tabindex="0" class="hidden">
+                                            <input type="radio" name="productDisplay" checked="" tabindex="0" class="hidden" value="0">
                                             <label>전체</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productOrderby" tabindex="0" class="hidden">
+                                            <input type="radio" name="productDisplay" tabindex="0" class="hidden" value="D">
                                             <label>진열함</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productOrderby" tabindex="0" class="hidden">
+                                            <input type="radio" name="productDisplay" tabindex="0" class="hidden" value="E">
                                             <label>진열안함</label>
                                         </div>
                                     </div>
@@ -207,20 +144,47 @@
                              <div class="inline fields">
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productSale" checked="" tabindex="0" class="hidden">
+                                            <input type="radio" name="productSell" checked="" tabindex="0" class="hidden" value="0">
                                             <label>전체</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productSale" tabindex="0" class="hidden">
+                                            <input type="radio" name="productSell" tabindex="0" class="hidden" value="D">
                                             <label>판매함</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productSale" tabindex="0" class="hidden">
+                                            <input type="radio" name="productSell" tabindex="0" class="hidden" value="E">
                                             <label>판매안함</label>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                   		</td>
+                   </tr>
+                   <tr>
+                   		<td>삭제상태</td>
+                   		<td>
+                   			<div class="ui form">
+                             <div class="inline fields">
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="productDel" checked="" tabindex="0" class="hidden" value="0">
+                                            <label>전체</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="productDel" tabindex="0" class="hidden" value="D">
+                                            <label>삭제함</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="productDel" tabindex="0" class="hidden" value="E">
+                                            <label>삭제안함</label>
                                         </div>
                                     </div>
                                 </div>
@@ -229,39 +193,19 @@
                    </tr>
                 </table>
                 <div class="productAddBtn">
-        		<button class="ui blue button">검색</button>
-        		<button class="ui white button">초기화</button>
-        	
+        		<button class="ui blue button" id="selectProduct">검색</button>
         	</div>
         	<br>
         	<hr>
 			<h2 class="ui header">상품 검색 목록</h2>
 			<h4>[ 총 <span class="productCount">1</span>개 ]</h4>
-			<div class="productListOrderBy">
-				<div class="ui selection dropdown">
-                                <!-- <input type="hidden" name="gender"> -->
-                                <i class="dropdown icon"></i>
-                                <div class="default text">등록일 역순</div>
-                                <div class="menu">
-                                    <div class="item" data-value="0">등록일 역순</div>
-                                    <div class="item" data-value="1">등록일 순</div>
-                                    <div class="item" data-value="2">상품명 순</div>
-                                    <div class="item" data-value="3">상품명 역순</div>
-                                    <div class="item" data-value="4">판매가 순</div>
-                                    <div class="item" data-value="5">판매가 역순</div>
-                                </div>
-                            </div>
-			</div>
-	        	<button class="ui black button">진열/판매 수정</button>
+	        	<button class="ui black button" disabled>진열/판매 수정</button>
 	        	<button class="ui white button">진열함</button>
 	        	<button class="ui white button">진열안함</button>
 	        	<button class="ui white button">판매함</button>
 	        	<button class="ui white button">판매안함</button>
 	        	<button class="ui white button">삭제</button>
-	        	<button class="ui white button">분류수정</button>
-	        	<button class="ui white button">메인진열수정</button>
-	        	<button class="ui white button">메인진열관리</button>
-	        	<button class="ui white button">분류별진열관리</button>
+	        	<button class="ui white button">복구</button>
 	        	
 	        	<table class="ui celled table order-result">
                     <!-- 검색 결과 테이블 -->
@@ -270,12 +214,10 @@
                             <th><div class="ui fitted checkbox">
                                     <input type="checkbox" name="example"><label></label>
                                 </div></th>
-                            <th>No</th>
-                            <th>상품구분</th>
                             <th>상품코드</th>
                             <th>상품명</th>
+                            <th>카테고리</th>
                             <th>판매가</th>
-                            <th>할인가</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -285,8 +227,6 @@
                                     <input type="checkbox" name="example"><label></label>
                                 </div>
                             </td>
-                            <td>1</td>
-                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -305,7 +245,7 @@
 
 
     <!-- J-query CDN -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <!-- jQuery Custom Scroller CDN -->
@@ -327,6 +267,67 @@
     });
     $('.ui.radio.checkbox')
   .checkbox();
+    
+    $(function(){
+    	$.ajax({
+    		url:"/semi/selectBigCate.product",
+    		type:"post",
+    		success:function(data){
+    			var $bigCateSelect = $("#bigCateSelect");
+    			
+    			for(var key in data){
+    				var $div = $("<div class='item' data-value='"+data[key].cateCode+"'>").text(data[key].cateName);
+    				
+    				$bigCateSelect.append($div);
+    			}
+    		},
+    		error:function(){
+    			console.log("실패");
+    		}
+    	});
+    });
+    
+    var cnt = 0;
+    function middleChoice(obj){
+    	if(cnt == 0){
+    		var $catePlus = $("#catePlus");
+			var $div1 = $("<div class='ui selection dropdown'>");
+			var $input = $("<input type='hidden' name='middleCate'>");
+			var $i = $("<i class='dropdown icon'>");
+			var $div2 = $("<div class='default text'>").text("-중분류 선택");
+			var $div3 = $("<div class='menu' id='middleCateSelect'>");
+			
+			$div1.append($input);
+			$div1.append($i);
+			$div1.append($div2);
+			$div1.append($div3);
+			$catePlus.append($div1);
+    	}
+    	cnt++;
+    	console.log(obj);
+			var pCode = obj;
+    		$.ajax({
+    		url:"/semi/selectMiddleCate.product",
+    		type:"post",
+    		data:{pCode : pCode},
+    		success:function(data){
+    			
+					
+				var $middleCateSelect = $("#middleCateSelect");
+	    		for(var key in data){
+	    			var $div4 = $("<div class='item' data-value='"+data[key].cateCode+"'>").text(data[key].cateName);
+	    				
+	    			$middleCateSelect.append($div4);
+				}
+    			$('.content-box .ui.dropdown').dropdown();
+    			},
+    			error:function(){
+    				console.log("실패");
+    			}
+    	});
+    		
+    }
+    
     
     </script>
 </body>

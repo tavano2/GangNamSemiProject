@@ -2,6 +2,7 @@ package com.kh.semi.admin.product.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 
 import javax.servlet.ServletException;
@@ -29,40 +30,68 @@ public class InsertProductServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String productName = request.getParameter("productName");
-		String productMemo = request.getParameter("productMemo");
-		String productDmemo = request.getParameter("productDmemo");
-		String productPrice = request.getParameter("productPrice");
-		String productAmount = request.getParameter("productAmount");
-		String productDisplay = request.getParameter("productDisplay");
-		String productSell = request.getParameter("productSell");
-		String cateCode = request.getParameter("cateCode");
-		String optionCode1 = request.getParameter("optionCode");
-		String[] optionCode = optionCode1.split(",");
-		
-		Product pro = new Product();
-		pro.setProductName(productName);
-		pro.setProductMemo(productMemo);
-		pro.setProductDmemo(productDmemo);
-		pro.setProductPrice(Integer.parseInt(productPrice));
-		pro.setProductAmount(Integer.parseInt(productAmount));
-		pro.setDisplayS(productDisplay);
-		pro.setSellS(productSell);
-		pro.setCategoryCode(cateCode);
-		
-		int result1 = new ProductService().insertProduct(pro);
-
-		OptionProduct opp = new OptionProduct();
-		
-		int result2 = new ProductService().insertProductOption(optionCode);
+		response.setCharacterEncoding("utf-8");
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
+		
 			int maxSize = 1024 * 1024 * 10;
 			
 			String root = request.getSession().getServletContext().getRealPath("/");
 			String filePath = root + "views/images/products/";
 			
 			MultipartRequest multiRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8",new MyFileRenamePolicy());
+			
+					String productName = multiRequest.getParameter("productName");
+					String productMemo = multiRequest.getParameter("productMemo");
+					String productDmemo = multiRequest.getParameter("productDmemo");
+					String productPrice = multiRequest.getParameter("productPrice");
+					String productAmount = multiRequest.getParameter("productAmount");
+					String productDisplay1 = multiRequest.getParameter("productDisplay");
+					String productSell1 = multiRequest.getParameter("productSell");
+					String categoryCode = multiRequest.getParameter("categoryCode");
+					String[] optionSet1 = multiRequest.getParameterValues("optionSet");
+					String productDisplay;
+					String productSell;
+					
+					if(productDisplay1.equals("0")) {
+						productDisplay = "D";
+					}else {
+						productDisplay = "E";
+					}
+					if(productSell1.equals("0")) {
+						productSell = "D";
+					}else {
+						productSell = "E";
+					}
+					
+					String[] optionSet2 = (String[]) optionSet1;
+					String optionSet3 = Arrays.toString(optionSet2);
+					System.out.println(optionSet3);
+					
+					/*if (optionSet1 instanceof String[]) {
+						String[] strArray = (String[]) optionSet1; 
+						System.out.println(Arrays.toString(strArray));
+						System.out.println(optionSet1);
+					}*/
+					
+					
+					/*String cateCode = request.getParameter("cateCode");
+						String optionCode1 = request.getParameter("optionCode");
+						String[] optionCode = optionCode1.split(",");*/
+					
+					
+					Attachment at = new Attachment();
+					at.setProductName(productName);
+					at.setProductMemo(productMemo);
+					at.setProductDmemo(productDmemo);
+					at.setProductPrice(Integer.parseInt(productPrice));
+					at.setProductAmount(Integer.parseInt(productAmount));
+					at.setDisplayS(productDisplay);
+					at.setSellS(productSell);
+					at.setCategoryCode(categoryCode);
+			
+			
+			
 			
 			// 다중 파일을 묶어서 업로드 하기 위해 컬렉션 사용
 			// 저장한 파일의 이름을 저장할 arrayList 생성
@@ -84,20 +113,19 @@ public class InsertProductServlet extends HttpServlet {
 			// Attachment 객체 생성하여 arrayList 객체 생성
 			ArrayList<Attachment> fileList = new ArrayList<Attachment>();
 			for(int i = originFiles.size() -1; i >= 0; i--) {
-				Attachment at = new Attachment();
 				at.setFilePath(filePath);
 				at.setOriginName(originFiles.get(i));
 				at.setChangeName(saveFiles.get(i));
 				
 				fileList.add(at);
 			}
-			
-			int result3 = new ProductService().insertAttachment(fileList);
+			/*
+			int result = new ProductService().insertProductOption(fileList,at,optionCode);
 					
-			if(result1 > 0 && result2 > 0 && result3 >0) {
+			if(result > 0) {
 				response.setContentType("application/json");
-				new Gson().toJson(1, response.getWriter());
-			}
+				new Gson().toJson(result, response.getWriter());
+			}*/
 		}
 	}
 
