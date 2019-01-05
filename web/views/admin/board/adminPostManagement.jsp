@@ -1,3 +1,4 @@
+<%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -56,166 +57,123 @@
 
 		<div class="content">
 			<div class="content-box">
+				<form method="post" id="searchBox">
 
 				<H2>게시판 관리</H2>
 				<H4>게시물 검색</H4>
-				<table class="ui celled table first-col">
+					<table class="ui celled table first-col">
 
-					<tr>
-						<td>작성일</td>
-						<td>
-							<div class="ui pagination menu" id="selDate">
-								<a class="item active">오늘</a> <a class="item">어제</a> <a
-									class="item">3일</a> <a class="item">7일</a> <a class="item">15일</a>
-								<a class="item">1개월</a> <a class="item">3개월</a> <a class="item">6개월</a>
-							</div>
+						<tr>
+							<td>작성일</td>
+							<td>
+								<div class="ui pagination menu" id="selDate">
+									<a class="item active">오늘</a> <a class="item">어제</a> <a
+										class="item">3일</a> <a class="item">7일</a> <a class="item">15일</a>
+									<a class="item">1개월</a> <a class="item">3개월</a> <a class="item">6개월</a>
+								</div>
 
-							<div class="date-range">
+								<div class="date-range">
+									<div class="ui input">
+		                               	<input type="date" id="startDate" name="startDate" value="<%=String.format("%tY-%<tm-%<td", Calendar.getInstance())%>">
+									</div>
+									<span>~</span>
+									<div class="ui input">
+		                                <input type="date" id="endDate" name="endDate" value="<%=String.format("%tY-%<tm-%<td", Calendar.getInstance())%>">
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>게시판 선택</td>
+							<td>
+								<!-- 드롭다운 -->
+								<div class="ui selection dropdown">
+									 <input type="hidden" name="BoardSelect">
+									<i class="dropdown icon"></i>
+									<div class="default text">전체 목록</div>
+									<div class="menu">
+										<!-- <div class="item" data-value="1">FAQ</div> -->
+								
+										<div class="item" data-value="1">FAQ</div>
+										<div class="item" data-value="2">공지사항</div>
+										<div class="item" data-value="3">이벤트</div>
+										<div class="item" data-value="4">상품문의</div>
+										<div class="item" data-value="5">리뷰게시판</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>스팸 관리</td>
+							<td>
+								<div class="ui selection dropdown">
+									 <input type="hidden" name="spanSelect"> 
+									<i class="dropdown icon"></i>
+									<div class="default text">기본</div>
+									<div class="menu">
+										<div class="item" data-value="E">기본</div>
+										<div class="item" data-value="S">스팸글만</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+					
+							<td>게시글 찾기</td>
+							<td>
+								<div class="ui selection dropdown">
+									 <input type="hidden" name="TitleSelect"> 
+									<i class="dropdown icon"></i>
+									<div class="default text">제목</div>
+									<div class="menu">
+										<div class="item" data-value="BOARD_TITLE">제목</div>
+										<div class="item" data-value="BOARD_CONTENT">내용</div>
+										<div class="item" data-value="USER_ID">작성자</div>
+										<div class="item" data-value="PRODUCT_RCODE">리뷰 상품코드</div>
+										<div class="item" data-value="PRODUCT_QCODE">QnA 상품코드</div>
+										
+									</div>
+								</div>
 								<div class="ui input">
-									<input type="date" id="startDate" name="startDate">
+									<input type="text" placeholder="내용을 입력해주세요" name="contentSearch">
 								</div>
-								<span>~</span>
-								<div class="ui input">
-									<input type="date" id="endDate" name="endDate">
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>게시판 선택</td>
-						<td>
-							<!-- 드롭다운 -->
-							<div class="ui selection dropdown">
-								<!-- <input type="hidden" name="gender"> -->
-								<i class="dropdown icon"></i>
-								<div class="default text">전체 목록</div>
-								<div class="menu">
-									<div class="item" data-value="0">전체목록</div>
-									<div class="item" data-value="1">공지사항</div>
-									<div class="item" data-value="2">Q&A(이용안내)</div>
-									<div class="item" data-value="3">Q&A(상품상세)</div>
-									<div class="item" data-value="4">리뷰게시판</div>
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>스팸 관리</td>
-						<td>
-							<div class="ui selection dropdown">
-								<!-- <input type="hidden" name="gender"> -->
-								<i class="dropdown icon"></i>
-								<div class="default text">스팸글 포함</div>
-								<div class="menu">
-									<div class="item" data-value="0">스팸글 제외</div>
-									<div class="item" data-value="1">스팸글 포함</div>
-									<div class="item" data-value="2">스팸글만</div>
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>게시글 찾기</td>
-						<td>
-							<div class="ui selection dropdown">
-								<!-- <input type="hidden" name="gender"> -->
-								<i class="dropdown icon"></i>
-								<div class="default text">제목</div>
-								<div class="menu">
-									<div class="item" data-value="0">내용</div>
-									<div class="item" data-value="1">작성자</div>
-									<div class="item" data-value="2">상품명</div>
-									<div class="item" data-value="3">아이디</div>
-								</div>
-							</div>
-							<div class="ui input">
-								<input type="text" placeholder="내용을 입력해주세요">
-							</div>
-						</td>
-					</tr>
+							</td>
+						</tr>
 
-					<tr>
-						<td>답변 상태</td>
-						<td>
-							<div class="ui form">
-								<div class="inline fields">
-									<div class="field">
-										<div class="ui radio checkbox">
-											<input type="radio" name="fruit" checked="" tabindex="0"
-												class="hidden"> <label>전체보기</label>
+						<tr>
+							<td>답변 상태</td>
+							<td>
+								<div class="ui form">
+									<div class="inline fields">
+										<div class="field">
+											<div class="ui radio checkbox">
+												<input type="radio" value="%%"  name="replyStatus" checked="" tabindex="0"
+													class="hidden"> <label>전체보기</label>
+											</div>
+										</div>
+										<div class="field">
+											<div class="ui radio checkbox">
+												<input type="radio" value="D" name="replyStatus" tabindex="0" class="hidden">
+												<label>답변 전</label>
+											</div>
+										</div>
+										<div class="field">
+											<div class="ui radio checkbox">
+												<input type="radio" value="E" name="replyStatus" tabindex="0" class="hidden">
+												<label>답변 완료</label>
+											</div>
 										</div>
 									</div>
-									<div class="field">
-										<div class="ui radio checkbox">
-											<input type="radio" name="fruit" tabindex="0" class="hidden">
-											<label>답변 전</label>
-										</div>
-									</div>
-									<div class="field">
-										<div class="ui radio checkbox">
-											<input type="radio" name="fruit" tabindex="0" class="hidden">
-											<label>답변 완료</label>
-										</div>
-									</div>
-								</div>
-						</td>
-					</tr>
-					<tr>
-						<td>첨부파일 여부</td>
-						<td>
-							<div class="ui form">
-								<div class="inline fields">
-									<div class="field">
-										<div class="ui radio checkbox">
-											<input type="radio" name="fruit" checked="" tabindex="0"
-												class="hidden"> <label>전체보기</label>
-										</div>
-									</div>
-									<div class="field">
-										<div class="ui radio checkbox">
-											<input type="radio" name="fruit" tabindex="0" class="hidden">
-											<label>있음</label>
-										</div>
-									</div>
-									<div class="field">
-										<div class="ui radio checkbox">
-											<input type="radio" name="fruit" tabindex="0" class="hidden">
-											<label>없음</label>
-										</div>
-									</div>
-								</div>
-						</td>
-					</tr>
-					<tr>
-						<td>글보기 설정</td>
-						<td>
-							<div class="ui form">
-								<div class="inline fields">
-									<div class="field">
-										<div class="ui radio checkbox">
-											<input type="radio" name="fruit" checked="" tabindex="0"
-												class="hidden"> <label>전체보기</label>
-										</div>
-									</div>
-									<div class="field">
-										<div class="ui radio checkbox">
-											<input type="radio" name="fruit" tabindex="0" class="hidden">
-											<label>대표 관리글 보기</label>
-										</div>
-									</div>
-									<div class="field">
-										<div class="ui radio checkbox">
-											<input type="radio" name="fruit" tabindex="0" class="hidden">
-											<label>부 운영자 글 보기</label>
-										</div>
-									</div>
-								</div>
-						</td>
-					</tr>
-				</table>
-				<div class="ui container center aligned search-box">
-					<button class="ui black button">검색</button>
-				</div>
+							</td>
+						</tr>
+						
+
+					</table>
+					<div class="ui container center aligned search-box">
+						<button type="submit" onclick="searchBtn(); return false;" class="ui black button">검색</button>
+					</div>
+
+				</form>
 				<hr>
 				&nbsp;
 
@@ -233,76 +191,19 @@
 						<tr>
 							<th></th>
 							<th>번호</th>
-							<th>분류</th>
 							<th>카테고리</th>
 							<th>제목</th>
 							<th>답변상태</th>
 							<th>작성자</th>
 							<th>작성일</th>
 							<th>적립금</th>
+							<th>스팸여부</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>
-								<div class="ui fitted checkbox">
-									<input type="checkbox" name="example"><label></label>
-								</div>
-							</td>
-							<td>1</td>
-							<td>Q&A (이용안내)</td>
-							<td>1:1문의</td>
-							<td>상품 배송 문의</td>
-							<td>미등록</td>
-							<td>홍길동</td>
-							<td>20181122</td>
-							<td>900P</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="ui fitted checkbox">
-									<input type="checkbox" name="example"><label></label>
-								</div>
-							</td>
-							<td>2</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>
-								<div class="ui fitted checkbox">
-									<input type="checkbox" name="example"><label></label>
-								</div>
-							</td>
-							<td>3</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>
-								<div class="ui fitted checkbox">
-									<input type="checkbox" name="example"><label></label>
-								</div>
-							</td>
-							<td>4</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
+					<tbody class="center aligined" id="tbodyBox">
+						<!-- 데이터넣을곳 -->
+
+
 					</tbody>
 				</table>
 				<!-- 페이징 넘버 -->
@@ -349,9 +250,9 @@
 
 
 	<!-- J-query CDN -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
+		    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
 	<!-- Semantic UI JS CDN -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
@@ -380,6 +281,67 @@
 	</script>
 	<!-- Delivery JS -->
 	<script src="/semi/js/admin/delivery/adminDelivery.js"></script>
+	
+	
+	<script>
+		function searchBtn(){
+			var searchCondition = $("#searchBox").serialize();
+			
+			
+			$.ajax({
+				url:'<%=request.getContextPath()%>/adminPostSearch.bo',
+				data:searchCondition,
+				type:'post',
+				success:function(data){
+					console.log(data);
+					
+					searchResult = data;
+					
+					var $tbody = $("#tbodyBox");
+					$tbody.html('');
+					
+					for(var i=0; i<searchResult.length;i++){
+
+							var $tr = $("<tr>");
+							var $td = $("<td>");
+							var $tdtd = $("<td>").text(i+1);
+							
+							
+
+							var $td1 = $("<td>").text(searchResult[i].boardType);
+							var $td2 = $("<td>").text(searchResult[i].boardTitle);
+							var $td3 = $("<td>").text(searchResult[i].replyStatus);
+							var $td4 = $("<td>").text(searchResult[i].userId);
+							var $td5 = $("<td>").text(searchResult[i].modifyDate);
+							var $td6 = $("<td>").text(searchResult[i].userPoint);
+							var $td7 = $("<td>").text(searchResult[i].status);
+
+							$tr.append($td);
+							
+							$tr.append($tdtd);
+							$tr.append($td1);
+							$tr.append($td2);
+							$tr.append($td3);
+							$tr.append($td4);
+							$tr.append($td5);
+							$tr.append($td6);
+							$tr.append($td7);
+
+							$tbody.append($tr);
+					
+					}
+					
+				},error:function(){
+					console.log('실패');
+				}
+			});
+		};
+	
+	
+	</script>
+	
+	
+	
 
 </body>
 

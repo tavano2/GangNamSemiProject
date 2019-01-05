@@ -105,7 +105,6 @@
 	                                <div class="date-range">
 	                                	<div class="ui input">
 		                                	<input type="date" id="startDate" name="startDate" value="<%=String.format("%tY-%<tm-%<td", Calendar.getInstance())%>">
-		                                </div>
 		                                <span>~</span>
 		                                <div class="ui input">
 		                                	<input type="date" id="endDate" name="endDate" value="<%=String.format("%tY-%<tm-%<td", Calendar.getInstance())%>">
