@@ -15,6 +15,7 @@ public class Product implements Serializable{
 	String bestS;
 	String sellS;
 	String displayS;
+	String status;
 	
 	public Product() {}
 
@@ -23,11 +24,12 @@ public class Product implements Serializable{
 		return "Product [productCode=" + productCode + ", productName=" + productName + ", productMemo=" + productMemo
 				+ ", productDmemo=" + productDmemo + ", categoryCode=" + categoryCode + ", productAmount="
 				+ productAmount + ", productPrice=" + productPrice + ", productDate=" + productDate + ", bestS=" + bestS
-				+ ", sellS=" + sellS + ", displayS=" + displayS + "]";
+				+ ", sellS=" + sellS + ", displayS=" + displayS + ", status=" + status + "]";
 	}
 
 	public Product(String productCode, String productName, String productMemo, String productDmemo, String categoryCode,
-			int productAmount, int productPrice, Date productDate, String bestS, String sellS, String displayS) {
+			int productAmount, int productPrice, Date productDate, String bestS, String sellS, String displayS,
+			String status) {
 		super();
 		this.productCode = productCode;
 		this.productName = productName;
@@ -40,6 +42,7 @@ public class Product implements Serializable{
 		this.bestS = bestS;
 		this.sellS = sellS;
 		this.displayS = displayS;
+		this.status = status;
 	}
 
 	public String getProductCode() {
@@ -129,6 +132,15 @@ public class Product implements Serializable{
 	public void setDisplayS(String displayS) {
 		this.displayS = displayS;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	
 	
 }

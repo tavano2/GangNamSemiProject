@@ -151,42 +151,7 @@
                         <td>
                             <div class="ui input"><input type="text" name="cateMemo" size="100"></div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>상품진열</td>
-                        <td>
-                        
-                       
-                            <div class="ui selection dropdown">
-                                <!-- <input type="hidden" name="gender"> -->
-                                <i class="dropdown icon"></i>
-                                <div class="default text">최근 등록상품이 위로</div>
-                                <div class="menu">
-                                    <div class="item latelyOrderby" data-value="0">최근 등록상품이 위로</div>
-                                    <div class="item latelyOrderby" data-value="1">판매량이 높은순</div>
-                                    <div class="item latelyOrderby" data-value="2">가격이 낮은순</div>
-                                    <div class="item latelyOrderby" data-value="3">가격이 높은순</div>
-                                    <div class="item latelyOrderby" data-value="4">상품명 가나다순</div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>품절상품진열</td>
-                        <td>
-                            <div class="ui selection dropdown">
-                                <!-- <input type="hidden" name="gender"> -->
-                                <i class="dropdown icon"></i>
-                                <div class="default text">품절상품 상관없음</div>
-                                <div class="menu">
-                                    <div class="item soldOut" data-value="0">최근 등록상품이 위로</div>
-                                    <div class="item soldOut" data-value="1">품절상품 맨 뒤로</div>
-                                    <div class="item soldOut" data-value="2">품절상품 맨 앞으로</div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    
+                    </tr>                    
                     <tr>
                         <td>표시상태</td>
                         <td>
@@ -280,6 +245,12 @@
          $("input[name=cateUrl]").val(url);
          $("input[name=cateName]").val(name);
          $("input[name=cateMemo]").val(memo);
+         
+         if(status == "E"){
+        	 $("input:radio[name=status]:input[value='E']").attr("checked",true);
+         }else{
+        	 $("input:radio[name=status]:input[value='D']").attr("checked",true);
+         }
       });
    });
       

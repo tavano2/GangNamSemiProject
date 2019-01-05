@@ -71,6 +71,9 @@
     	<!-- 상단 네비바 -->
         <%@ include file = "/views/admin/common/adminNavi.jsp" %>
 
+
+
+	<form action="<%= request.getContextPath() %>/insertProduct.product" method="post" encType="multipart/form-data" id="addForm">
           <div class="content">
         	<div class="content-box">
         	<h2 class="ui header">상품등록</h2>
@@ -190,6 +193,7 @@
                 					</table>
                 				</td>
                 				<td>
+                					<input type="hidden" name="categoryCode"> 
                 					<table id="middleCate">
                 					
                 					</table>
@@ -216,6 +220,7 @@
             </table><br>
             <hr>
             <h2 class="ui header">이미지 정보</h2>
+            
         	<table class="ui celled table first-col" id="imgTable">
         	<tr>
         		<td width="200">상품 이미지</td>
@@ -239,11 +244,11 @@
             </div>
 
         	<div class="productAddBtn">
-        		<button class="ui blue button" id="addBtn">상품등록</button>
+        		<button class="ui blue button" id="addBtn" onclick="addProduct();">상품등록</button>
         	</div>
         	</div>
         </div>
-
+		</form>
 		
 		<!-- Footer -->
        <%@ include file = "/views/admin/common/adminFooter.jsp" %>
@@ -304,6 +309,7 @@
     			$(".middleCate").css({"background":"white"});
     			$(this).css({"background":"lightgray"});
 				cateCode1 = $(this).siblings("input[name='code']").val();
+				$("input[name='categoryCode']").val(cateCode1);
     		});
     	});
     });
@@ -417,7 +423,7 @@
 	}
 	
 	// 상품등록
-	$(function(){
+	/* $(function(){
 		$("#addBtn").click(function(){
 			var productName = $("#productName").val();
 			var productMemo = $("#productMemo").val();
@@ -438,13 +444,14 @@
 					optionCode += "," + optionCode1;
 				}
 			}
+			
 			$.ajax({
 				url:"/semi/insertProduct.product",
 				data:{productName : productName,
 					  productMemo : productMemo,
 					  productDmemo : productDmemo,
 					  productPrice : productPrice,
-					  productAmont : productAmount,
+					  productAmount : productAmount,
 					  productDisplay : productDisplay,
 					  productSell : productSell,
 					  cateCode : cateCode,
@@ -458,7 +465,11 @@
 				}
 			});
 		});
-	});
+	}); */
+	
+	function addProduct(){
+		$("#addForm").submit();
+	}
     </script>
     
 </body>

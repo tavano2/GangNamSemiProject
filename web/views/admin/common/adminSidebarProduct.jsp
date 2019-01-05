@@ -13,7 +13,7 @@
         <a class="item" href="/semi/views/admin/product/adminSetManagement.jsp">세트관리</a>
         <a class="item" href="<%=request.getContextPath()%>/selectCateInProduct.product">상품등록</a>
         <a class="item" href="/semi/views/admin/product/adminProductList.jsp">상품조회</a>
-        <a class="item" href="/semi/views/admin/product/adminMainProductExhibition.jsp">진열관리</a>
-        <a class="item" href="/semi/views/admin/product/adminDeleteList.jsp">삭제상품조회</a>
+        <!-- <a class="item" href="/semi/views/admin/product/adminMainProductExhibition.jsp">진열관리</a>
+        <a class="item" href="/semi/views/admin/product/adminDeleteList.jsp">삭제상품조회</a> -->
         </div>
     </nav>
