@@ -190,6 +190,10 @@
     <script src="/semi/js/customer/common/main.js"></script>
     
     <script>
+	    $('#cate_nav').sticky({
+	    	context: '.content'
+	    });
+    
     	$(function(){
     		$("#movedetailPage").click(function(){
     			location.href="<%=request.getContextPath()%>/reviewNoticeList.no?code=PD000003";

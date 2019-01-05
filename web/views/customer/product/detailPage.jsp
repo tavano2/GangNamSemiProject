@@ -607,6 +607,10 @@
 			action : 'select'
 		});
 		$('.menu .item').tab();
+		
+		$('#cate_nav').sticky({
+			context: '.content'
+		});
 	</script>
 
 	<script>
