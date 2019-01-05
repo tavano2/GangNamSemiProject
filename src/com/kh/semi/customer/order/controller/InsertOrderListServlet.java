@@ -48,6 +48,7 @@ public class InsertOrderListServlet extends HttpServlet {
 		String buyerTel = request.getParameter("byerTel");
 		//주문자 핸드폰번호
 		String buyerPhone = request.getParameter("byerPhone");
+		System.out.println(buyerPhone);
 		//주문자 이메일
 		String email = request.getParameter("email");
 		//수령자 이름
@@ -60,6 +61,10 @@ public class InsertOrderListServlet extends HttpServlet {
 		String recieverPhone = request.getParameter("recieverPhone");
 		//수령자 메모사항(택배기사에게)
 		String memo = request.getParameter("memo");
+		//개인정보 삭제 기한
+		String deleteInfoDate= request.getParameter("deleteByerInfoDate");
+		int deleteInfoBuyerDate = Integer.parseInt(deleteInfoDate);
+		
 		//쿠폰 사용시 쿠폰 코드
 		String couponValue = request.getParameter("couponValue");
 		//쿠폰 사용시 쿠폰코드에 대한 상품코드
@@ -70,13 +75,34 @@ public class InsertOrderListServlet extends HttpServlet {
 		String[] amounts = request.getParameterValues("amount");
 		//구매 코드 배열
 		String[] pdCodes = request.getParameterValues("pdCode");
-
+		
+		
+		//System.out.println(deleteByerInfoDate);
+		
+		
 		//가공 처리를 위한 어레이 리스트,해쉬맵 생성
-		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();
+		ArrayList<HashMap<String, Object>> list = null;
 		HashMap<String, Object> hmap = null;
+		ArrayList<ArrayList<HashMap<String, Object>>> resultList = new ArrayList<ArrayList<HashMap<String, Object>>>();
+		
+		//주문자 정보를 서비스단으로 보내기 위해 HashMap 생성
+		HashMap<String, Object> byer_info = new HashMap<String,Object>();
+		byer_info.put("buyerName", buyerName);
+		byer_info.put("buyerTel", buyerTel);
+		byer_info.put("buyerPhone", buyerPhone);
+		byer_info.put("email", email);
+		byer_info.put("recieverName", recieverName);
+		byer_info.put("recieverAdd", recieverAdd);
+		byer_info.put("recieverTel", recieverTel);
+		byer_info.put("recieverPhone", recieverPhone);
+		byer_info.put("memo", memo);
+		byer_info.put("deleteInfoBuyerDate", deleteInfoBuyerDate);
+		
+		
 		
 		
 		for(int i = 0 ; i < pdCodes.length; i++) {
+			list = new ArrayList<HashMap<String, Object>>();
 			String[] optionNumOne = optionNumber[i].split(",");
 			for(int j = 0; j < optionNumOne.length; j++) {
 				hmap = new HashMap<String,Object>();
@@ -85,18 +111,28 @@ public class InsertOrderListServlet extends HttpServlet {
 				hmap.put("amount", amounts[i]);
 				list.add(hmap);
 			}
+			resultList.add(list);
 		}
+		
+		
+		
 		
 		// 결과값
 		int result = 0;
 		if(couponValue != "") {
-			/*result = new OrderService().insert*/
+			result = new OrderService().insertOrderList(resultList,userId,lnum,imp_uid,totalPrice,couponValue,couponProductCode,byer_info,pdCodes);			
+		}else {
+			result = new OrderService().insertOrderList(resultList,userId,lnum,imp_uid,totalPrice,byer_info,pdCodes);
 		}
+		
 		
 		response.setContentType("json/application");
 		response.setCharacterEncoding("UTF-8");
-		new Gson().toJson("성공!",response.getWriter());
-		
+		if(result > 0) {
+			new Gson().toJson("성공",response.getWriter());
+		}else {
+			new Gson().toJson("실패",response.getWriter());
+		}
 	}
 
 

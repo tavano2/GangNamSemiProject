@@ -5,38 +5,33 @@
 <!DOCTYPE html>
 <%
 	// 가져온 객체 추출
-	ArrayList<HashMap<String,Object>> productList = null;
-	HashMap<String,Object> pointNDelivery = null;
+	ArrayList<HashMap<String, Object>> productList = null;
+	HashMap<String, Object> pointNDelivery = null;
 	// 총 상품 금액과 유저에 따라 배송비 책정
 	int totalPirce = 0;
 	int deliveryPrice = 0;
 	int totalPoint = 0;
-	
-	
 
-	
 	// 할인금액
 	int discountPirce = 0;
-	if(request.getAttribute("productList") != null){
-	productList = (ArrayList<HashMap<String,Object>>)request.getAttribute("productList");
-		
+	if (request.getAttribute("productList") != null) {
+		productList = (ArrayList<HashMap<String, Object>>) request.getAttribute("productList");
+
 	}
-	if(request.getAttribute("pointNDelivery") != null){
-	pointNDelivery = (HashMap<String,Object>)request.getAttribute("pointNDelivery");
-		
+	if (request.getAttribute("pointNDelivery") != null) {
+		pointNDelivery = (HashMap<String, Object>) request.getAttribute("pointNDelivery");
+
 	}
-	if(productList.size() > 0){
-		for(HashMap<String,Object> hmap : productList){
-			totalPirce += (int)hmap.get("product_price");
-			totalPoint += (int)(((double)((int)hmap.get("product_price")))*((double)pointNDelivery.get("point_rate")));
+	if (productList.size() > 0) {
+		for (HashMap<String, Object> hmap : productList) {
+			totalPirce += (int) hmap.get("product_price");
+			totalPoint += (int) (((double) ((int) hmap.get("product_price")))
+					* ((double) pointNDelivery.get("point_rate")));
 		}
-		if(pointNDelivery.get("free_delevery").equals("D")){
+		if (pointNDelivery.get("free_delevery").equals("D")) {
 			deliveryPrice = 2500;
 		}
 	}
-	
-	
-
 %>
 
 
@@ -48,7 +43,8 @@
 <title>Insert title here</title>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- Semantic UI CSS CDN -->
 <link rel="stylesheet"
@@ -61,7 +57,8 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 
 <!-- i am port api -->
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 
 </head>
@@ -100,47 +97,71 @@
 				</tr>
 			</thead>
 			<tbody>
-					<%
-					if(productList.size()> 0){
-					for(HashMap<String,Object> hmap : productList){ %>
-						<%if(hmap.get("change_name") != null) { %>
+				<%
+					if (productList.size() > 0) {
+						for (HashMap<String, Object> hmap : productList) {
+				%>
+				<%
+					if (hmap.get("change_name") != null) {
+				%>
 				<tr>
-						<td><input type="hidden" value="<%=hmap.get("option_num")%>" class="product_optionNumber">
-						<input type="hidden" value="<%=hmap.get("product_code")%>" class="product_code1">
-						<img src="/semi/image/customer/product/<%=hmap.get("change_name")%>" style="height: 200px; width: 200px;"></td>
-						<%}else{ %>
-						<td><input type="hidden" value="<%=hmap.get("option_num")%>" class="product_optionNumber">
-						<input type="hidden" value="<%=hmap.get("product_code")%>" class="product_code">
+					<td><input type="hidden" value="<%=hmap.get("option_num")%>"
+						class="product_optionNumber"> <input type="hidden"
+						value="<%=hmap.get("product_code")%>" class="product_code1">
+						<img
+						src="/semi/image/customer/product/<%=hmap.get("change_name")%>"
+						style="height: 200px; width: 200px;"></td>
+					<%
+						} else {
+					%>
+					<td><input type="hidden" value="<%=hmap.get("option_num")%>"
+						class="product_optionNumber"> <input type="hidden"
+						value="<%=hmap.get("product_code")%>" class="product_code">
 						이미지가 없습니다.</td>
-						<%} %>
-						
-						<td class= "product_name1"><%=hmap.get("product_name") %></td>
-						<td><%=hmap.get("option_name") %></td>
-						<td><%=hmap.get("product_price") %>원</td>
-						<td class=" amount_class1"><%=hmap.get("amount") %></td>
-						<td><%=(int)(((double)((int)hmap.get("product_price")))*((double)pointNDelivery.get("point_rate"))) %>원</td>
+					<%
+						}
+					%>
+
+					<td class="product_name1"><%=hmap.get("product_name")%></td>
+					<td><%=hmap.get("option_name")%></td>
+					<td><%=hmap.get("product_price")%>원</td>
+					<td class=" amount_class1"><%=hmap.get("amount")%></td>
+					<td><%=(int) (((double) ((int) hmap.get("product_price")))
+							* ((double) pointNDelivery.get("point_rate")))%>원</td>
 				</tr>
-					<%}
-					}else{%>
-					<tr><td colspan="5">장바구니에 담은 상품이 없습니다.</td></tr>
-					<%} %>
+				<%
+					}
+					} else {
+				%>
+				<tr>
+					<td colspan="5">장바구니에 담은 상품이 없습니다.</td>
+				</tr>
+				<%
+					}
+				%>
 			</tbody>
 		</table>
 		<br>
 		<div class="ui grid">
 			<div class="sixteen wide column" align="right">
-			<%if(productList.size() > 0) {%>
-			
-			상품 구매금액 <%=totalPirce %>원 + 배송비 <%=deliveryPrice %>원
+				<%
+					if (productList.size() > 0) {
+				%>
 
-				= 합계 : <%=(totalPirce+deliveryPrice) %>원
-				
-				<%}else{ %>
-					상품이 없습니다. 돌아가서 확인해주세요
-				<%} %>
-				<br>
-				<br>
-				</div>
+				상품 구매금액
+				<%=totalPirce%>원 + 배송비
+				<%=deliveryPrice%>원 = 합계 :
+				<%=(totalPirce + deliveryPrice)%>원
+
+				<%
+					} else {
+				%>
+				상품이 없습니다. 돌아가서 확인해주세요
+				<%
+					}
+				%>
+				<br> <br>
+			</div>
 		</div>
 		<br>
 		<hr>
@@ -168,7 +189,7 @@
 					</div>
 				</td>
 			</tr>
-			
+
 			<tr>
 				<td><b>일반 전화</b></td>
 				<td>
@@ -201,10 +222,12 @@
 				<td><b>이메일</b></td>
 				<td>
 					<div class="ui input">
-						<input type="text" style="width: 250px;" name="buyerEmail1" id="buyerEmail1" value="">
+						<input type="text" style="width: 250px;" name="buyerEmail1"
+							id="buyerEmail1" value="">
 					</div> @
 					<div class="ui input">
-						<input type="text" style="width: 250px;"name="buyerEmail2" id="buyerEmail2" value="">
+						<input type="text" style="width: 250px;" name="buyerEmail2"
+							id="buyerEmail2" value="">
 					</div> <br>
 					<ul>
 						<li>이메일을 통해 주문처리과정을 보내드립니다.</li>
@@ -253,19 +276,21 @@
 				<td>
 					<div class="ui input">
 						<input type="text" id="postCode" placeholder="우편번호">
-						<button class="ui brown basic mini button" onclick="selectAddress();">검색하기</button>
+						<button class="ui brown basic mini button"
+							onclick="selectAddress();">검색하기</button>
 					</div> <br>
 					<div class="ui input">
-						<input type="text" style="width: 400px;" id="address" placeholder="기본주소">
+						<input type="text" style="width: 400px;" id="address"
+							placeholder="기본주소">
 					</div> <br>
 					<div class="ui input">
-						<input type="text" style="width: 400px;" id="detailAddress" placeholder="상세주소">
-					</div>
-					<br>
+						<input type="text" style="width: 400px;" id="detailAddress"
+							placeholder="상세주소">
+					</div> <br>
 					<div class="ui input">
-					<input type="text" id="extraAddress" placeholder="참고항목">
+						<input type="text" id="extraAddress" placeholder="참고항목">
 					</div>
-					
+
 				</td>
 			</tr>
 			<tr>
@@ -301,7 +326,8 @@
 				<td>배송 메세지</td>
 				<td>
 					<div class="ui input">
-						<input type="text" placeholder="기사님에게 한마디." style="width: 500px;" id="sayDeliveryMan">
+						<input type="text" placeholder="기사님에게 한마디." style="width: 500px;"
+							id="sayDeliveryMan">
 					</div>
 
 
@@ -313,12 +339,26 @@
 		</table>
 		<br>
 		<hr>
+		<br> 쿠폰조회 :
+		<button class="ui brown basic button" onclick="showCouponPage();">조회하기</button>
+		<br> <br> 쿠폰 사용시 해당되는 할인율만큼 구매금액이 차감됩니다. <br> <br>
+		<hr>
+		<br> <br> <b>개인정보 삭제 기한 선택</b>&nbsp; (3개월,6개월,12개월) &nbsp;: &nbsp;&nbsp;&nbsp;
+		<div class="ui radio checkbox test3">
+		<input type="radio" name="deleteByerInfo" id="threeMonth" value="90"> <label>3개월</label>
+		</div>
+		<div class="ui radio checkbox test3">
+		<input type="radio" name="deleteByerInfo" id="sixMonth" value="180"> <label>6개월</label>
+		</div>
+		<div class="ui radio checkbox test3">
+		<input type="radio" name="deleteByerInfo" id="twelveMonth" value="365"> <label>12개월</label>
+		</div>
+		 <br>
 		<br>
-		쿠폰조회 : <button class="ui brown basic button" onclick="showCouponPage();">조회하기</button>
-		<br>
-		<br>
-		쿠폰 사용시 해당되는 할인율만큼 구매금액이 차감됩니다.	
-		<br>
+		<ul>
+			<li>개인정보는 수령자 정보만 삭제됩니다.</li>
+			<li>아직 잘 모르겠다리 월요일날 바꿔라리</li>
+		</ul>
 		<br>
 		<hr>
 		<b>결제 예정 금액</b>
@@ -333,11 +373,12 @@
 					<td style="text-align: center; border-left: white;">총 결제예정 금액</td>
 				</tr>
 				<tr>
-					<td style="text-align: center; border-right: white;"><%=(totalPirce+deliveryPrice) %>원</td>
+					<td style="text-align: center; border-right: white;"><%=(totalPirce + deliveryPrice)%>원</td>
 					<td
-						style="text-align: center; border-left: white; border-right: white;" id="discountPirce1">?원
-					</td>
-					<td style="text-align: center; border-left: white;" id="totalPirce1"><%=(totalPirce+deliveryPrice) %>원</td>
+						style="text-align: center; border-left: white; border-right: white;"
+						id="discountPirce1">?원</td>
+					<td style="text-align: center; border-left: white;"
+						id="totalPirce1"><%=(totalPirce + deliveryPrice)%>원</td>
 				</tr>
 				<tr>
 					<td><b>총 할인금액</b></td>
@@ -368,10 +409,10 @@
 					<td rowspan="3"><div align="right">
 							<b>카드결제 </b>: 최종 결제 금액
 						</div> <br>
-						<div align="center" style="color: olive; font-size: 20px;" id="resultByPrice"><%=(totalPirce+deliveryPrice) %>원</div>
-						<br>
+						<div align="center" style="color: olive; font-size: 20px;" id="resultByPrice"><%=(totalPirce + deliveryPrice)%>원</div><br>
 						<div align="center" style="">
-							<button class="ui brown basic button"  type="submit" style="width: 100px;" onclick = "showOrderPage();">결제하기</button>
+							<button class="ui brown basic button" type="submit"
+								style="width: 100px;" onclick="showOrderPage();">결제하기</button>
 						</div></td>
 				</tr>
 				<tr>
@@ -397,7 +438,8 @@
 				<tr>
 
 					<td>&nbsp;&nbsp;&nbsp;</td>
-					<td>총 적립예정금액 : <%=totalPoint%>won</td>
+					<td>총 적립예정금액 : <%=totalPoint%>won
+					</td>
 				</tr>
 				<tr>
 					<td></td>
@@ -410,11 +452,9 @@
 		</table>
 
 		<hr>
-		<br>
-		<br>
-		<br>
+		<br> <br> <br>
 
-		
+
 
 
 
@@ -423,57 +463,49 @@
 
 
 	<!-- 모달 -->
-	
-    <div class="ui fullscreen longer modal test">
-        <i class="close icon"></i>
-        <div class="header">
-            쿠폰 조회
-        </div>
-        <div class="image content">
-          <div class="description">
-          <table class="ui single line table">
-          		<thead>
-				<tr>
-					<th></th>
-					<th>쿠폰 소유자명</th>
-					<th>쿠폰명</th>
-					<th>쿠폰 적용 상품</th>
-					<th>할인 퍼센트/금액</th>
-					<th>쿠폰 만기일</th>
-				</tr>
-			</thead>
-          <tbody id="couponTbody">
-          
-          
-          </tbody>
-          
-          
-          </table>
-          
-            
-            <br>
-            <br>
-            <br>
-            <br>
-          </div>
-        </div>
-        <div class="actions">
-          <div class="ui black deny button">
-            취소
-          </div>
-          <div class="ui positive right labeled icon button" id="couponOkBtn">
-            확인
-            <i class="checkmark icon"></i>
-          </div>
-        </div>
-      </div>
+
+	<div class="ui fullscreen longer modal test">
+		<i class="close icon"></i>
+		<div class="header">쿠폰 조회</div>
+		<div class="image content">
+			<div class="description">
+				<table class="ui single line table">
+					<thead>
+						<tr>
+							<th></th>
+							<th>쿠폰 소유자명</th>
+							<th>쿠폰명</th>
+							<th>쿠폰 적용 상품</th>
+							<th>할인 퍼센트/금액</th>
+							<th>쿠폰 만기일</th>
+						</tr>
+					</thead>
+					<tbody id="couponTbody">
+
+
+					</tbody>
+
+
+				</table>
+
+
+				<br> <br> <br> <br>
+			</div>
+		</div>
+		<div class="actions">
+			<div class="ui black deny button">취소</div>
+			<div class="ui positive right labeled icon button" id="couponOkBtn">
+				확인 <i class="checkmark icon"></i>
+			</div>
+		</div>
+	</div>
 
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
 
 
 	<!-- J-query CDN -->
-	
+
 	<!-- Semantic UI JS CDN -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
@@ -483,8 +515,8 @@
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
-	
-	
+
+
 	<script type="text/javascript">
 	
 		var name1 = "";
@@ -729,16 +761,16 @@
 				
 				if(discount > 100){
 					$("#discountPirce1").text(discount+"원");
-					$("#totalPirce1").text((<%=(totalPirce+deliveryPrice)%>-discount)+"원");
+					$("#totalPirce1").text((<%=(totalPirce + deliveryPrice)%>-discount)+"원");
 					$("#resultDiscount").text(discount+"원");
-					$("#resultByPrice").text((<%=(totalPirce+deliveryPrice)%>-discount)+"원");
+					$("#resultByPrice").text((<%=(totalPirce + deliveryPrice)%>-discount)+"원");
 				}else{
-					$("#discountPirce1").text((<%=(totalPirce+deliveryPrice)%>*discount));
+					$("#discountPirce1").text((<%=(totalPirce + deliveryPrice)%>*discount));
 					pdiscountResult = $("#discountPirce1").text();
-					$("#discountPirce1").text((<%=(totalPirce+deliveryPrice)%>*discount)+"원");
-					$("#totalPirce1").text((<%=(totalPirce+deliveryPrice)%>-pdiscountResult)+"원");
-					$("#resultDiscount").text((<%=(totalPirce+deliveryPrice)%>*discount)+"원");
-					$("#resultByPrice").text((<%=(totalPirce+deliveryPrice)%>-pdiscountResult)+"원");
+					$("#discountPirce1").text((<%=(totalPirce + deliveryPrice)%>*discount)+"원");
+					$("#totalPirce1").text((<%=(totalPirce + deliveryPrice)%>-pdiscountResult)+"원");
+					$("#resultDiscount").text((<%=(totalPirce + deliveryPrice)%>*discount)+"원");
+					$("#resultByPrice").text((<%=(totalPirce + deliveryPrice)%>-pdiscountResult)+"원");
 				}
 			});
 
@@ -827,7 +859,7 @@
 			//기사님에게 한마디
 			sayDeliveryMan = $("#sayDeliveryMan").val();
 	 		
- 			//주문자 이름 정규 표현식
+			//주문자 이름 정규 표현식
 			var regExp1 = /^[가-힣]{2,10}$/;
 			if(!regExp1.test(name1)){
 				alert("주문자 이름을 정확하게 입력해주세요.(한글2~10자)");
@@ -871,9 +903,17 @@
 				alert("수령자 일반 번호를 정확하게 입력해주세요.");
 				$("#receiptTel1").select();
 				return false;
-			} 
+			}  
 			
-			 
+			
+			if($("input:radio[name='deleteByerInfo']").is(":checked") == false){
+				alert("개인 정보 삭제 기한을 정해주세요");
+				return false;
+			}
+
+			
+			
+			
 			
 			
 			$.ajax({
@@ -891,7 +931,7 @@
 					// 프로덕트 코드,옵션명,수량
 					var productList = [];
 					
-					<%for(HashMap<String,Object> hmap : productList){%>
+					<%for (HashMap<String, Object> hmap : productList) {%>
 						var object = {product_code:"<%=hmap.get("product_code")%>",
 						option_num : "<%=hmap.get("option_num")%>",	
 						amount : "<%=hmap.get("amount")%>"
@@ -918,6 +958,10 @@
 					console.log(sayDeliveryMan);
 					console.log(couponValue);
 					console.log(couponPd);
+					
+					//체크된 라디오 버튼 밸류
+					var deleteByerInfoDate = $("input:radio[name='deleteByerInfo']:checked").val();
+				
 					
 					var lnumCode = data.lnum;
 					
@@ -955,57 +999,55 @@
 					   
 					    	$.ajax({
 					    		url : "<%=request.getContextPath()%>/insertOrderList.or",
-					    		type : "post",
-					    		traditional : true,
-					    		data : {
-					    			orderLnum:lnumCode,
-									imp_uid:rsp.imp_uid,
-			    					totalPirce:totalPriceResult,
-			    					byerName:name1,
-			    					byerTel:delTel,
-			    					byerPhone:delPhone,
-			    					email:email,
-			    					recieverName:name2,
-			    					recieverAdd:paymentAddress,
-			    					recieverTel:recTel,
-			    					recieverPhone:recPhone,
-			    					memo:sayDeliveryMan,
-			    					couponValue:couponValue,
-			    					couponProduct:couponPd,
-			    					optionNum:optionNum,
-			    					amount:amount,
-			    					pdCode:pdCode
-					    		},
-					    		success : function(data){
-					    			console.log(data);
-					    		},
-					    		error:function(data){
-					    			console.log("데이터 통신 실패");
-					    		}
-					    		
-					    	});
-					    	//아임 포트 고유 거래번호
-					        //console.log(rsp.imp_uid);
-					        
-					        
-					        
-					        
-					    } else {
-					        // 결제 실패 시 로직,
-					        //alert("결제 실패!");
-					        
-					    }
-					});  
+																type : "post",
+																traditional : true,
+																data : {
+																	orderLnum : lnumCode,
+																	imp_uid : rsp.imp_uid,
+																	totalPirce : totalPriceResult,
+																	byerName : name1,
+																	byerTel : delTel,
+																	byerPhone : delPhone,
+																	email : email,
+																	recieverName : name2,
+																	recieverAdd : paymentAddress,
+																	recieverTel : recTel,
+																	recieverPhone : recPhone,
+																	memo : sayDeliveryMan,
+																	couponValue : couponValue,
+																	couponProduct : couponPd,
+																	optionNum : optionNum,
+																	amount : amount,
+																	pdCode : pdCode,
+																	deleteByerInfoDate:deleteByerInfoDate
+																},
+																success : function(data) {
+																	if(data == "성공"){
+																		location.href = '<%=request.getContextPath()%>/orderSuccess.or'
+																	}else{
+																		location.href = '<%=request.getContextPath()%>/orderFail.or'
+																	}
+																},
+																error : function(data) {
+																	console.log("데이터 통신 실패");
+																}
 
-				},
-				error : function(){
-					alert("코드 조회 실패!");
-					return false;
-				}
-				
-			});	
+															});
+												} else {
+													// 결제 실패 시 로직,
+													location.href = '<%=request.getContextPath()%>/paymentdeclined.or'
+
+												}
+											});
+
+						},
+						error : function() {
+							alert("코드 조회 실패!");
+							return false;
+						}
+
+					});
 		}
-		
 	</script>
 
 </body>

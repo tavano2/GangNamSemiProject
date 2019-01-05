@@ -799,7 +799,7 @@ public class ProductDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		HashMap<String, Object> hmap = null;	//전체 담아줄 것
-		String productCode="PD000003";
+		String productCode=code;
 		
 		//키-맵
 		//product - p
@@ -870,7 +870,7 @@ public class ProductDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Option> detailOptionList = null;			//옵션 리스트
-		String productCode="PD000003";
+		String productCode=code;
 		
 		Option op = null;			//옵션
 		

@@ -27,7 +27,7 @@ public class OrderDao {
 		}
 	}
 
-	public ArrayList<HashMap<String, Object>> selectOrderProductList(Connection con, String productCode,
+	public ArrayList<HashMap<String, Object>> selectOrderProductList(Connection con, String cartnum,
 			String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -37,7 +37,7 @@ public class OrderDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, userId);
-			pstmt.setString(2, productCode);
+			pstmt.setInt(2, Integer.parseInt(cartnum));
 			rset = pstmt.executeQuery();
 			if( rset != null) {
 				list = new ArrayList<HashMap<String, Object>>();
@@ -181,7 +181,181 @@ public class OrderDao {
 		}
 		return hmap;
 	}
+
+	public int insertByerInfo(Connection con, HashMap<String, Object> byer_info) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertByerInfo");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, (String)byer_info.get("buyerName"));
+			pstmt.setString(2, (String)byer_info.get("buyerPhone"));
+			pstmt.setString(3, (String)byer_info.get("buyerTel"));
+			pstmt.setString(4, (String)byer_info.get("recieverName"));
+			pstmt.setString(5, (String)byer_info.get("recieverPhone"));
+			pstmt.setString(6, (String)byer_info.get("recieverTel"));
+			pstmt.setString(7, (String)byer_info.get("recieverAdd"));
+			pstmt.setString(8, (String)byer_info.get("memo"));
+			pstmt.setInt(9, (int)byer_info.get("deleteInfoBuyerDate"));
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public String selectBuyerCode(Connection con) {
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectBuyerCode");
+		String buyerCode = "";
+		try {
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				buyerCode = rset.getString("BUYER_CODE");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return buyerCode;
+	}
+
+	public String selectOrderDnum(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String dnum = null;
+		String query = prop.getProperty("selectOrderDnum");
+		try {
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				dnum = rset.getString("ORDER_DNUM");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return dnum;
+	}
+
 	
+	//쿠폰 사용된 상품에 들어갈 데이터
+	public int insertOrderDetailTable(Connection con, String orderDnum, String userId, String product_code, String option_num, String amount, String couponValue) {
+		PreparedStatement pstmt = null;
+		int result = 0 ;
+		String query = prop.getProperty("insertOrderDetailTableUseCoupon");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, orderDnum);
+			pstmt.setString(2, product_code);
+			pstmt.setString(3, option_num);
+			pstmt.setString(4, userId);
+			pstmt.setInt(5, Integer.parseInt(amount));
+			pstmt.setString(6, couponValue);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	//쿠폰 미사용시,미사용된 상품에 들어갈 데이터
+	public int insertOrderDetailTable(Connection con, String orderDnum, String userId, String product_code, String option_num,
+			String amount) {
+		PreparedStatement pstmt = null;
+		int result = 0 ;
+		String query = prop.getProperty("insertOrderDetailTableNotUseCoupon");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, orderDnum);
+			pstmt.setString(2, product_code);
+			pstmt.setString(3, option_num);
+			pstmt.setString(4, userId);
+			pstmt.setInt(5, Integer.parseInt(amount));
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	
+	
+	
+	
+	
+	public int insertOrderListTable(Connection con, String lnum, String orderDnum, String userId, String buyerCode,
+			String imp_uid, String option_num) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertOrderListTable");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, lnum);
+			pstmt.setString(2, orderDnum);
+			pstmt.setString(3, option_num);
+			pstmt.setString(4, userId);
+			pstmt.setString(5, buyerCode);
+			pstmt.setString(6, imp_uid);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteCart(Connection con, String product_code, String option_num) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteCart");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, product_code);
+			pstmt.setString(2, option_num);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateUseCoupon(Connection con, String userId, String couponValue) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateUseCoupon");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, couponValue);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
+
 	
 	
 	
