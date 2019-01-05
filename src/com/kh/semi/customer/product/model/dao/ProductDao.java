@@ -494,11 +494,13 @@ public class ProductDao {
 	}
 	
 	
+/*
 	public ArrayList<ShoppingCartPd> SelectShoppingCartServlet(Connection con, ShoppingCartPd cartList, int currentPage,
 			int limit) {
 		
 		return null;
 	}
+*/
 	
 
 	
@@ -507,7 +509,8 @@ public class ProductDao {
 	
 	 //------------------------ DAO ---------------- Access *directly*. ------------------------------------------------------------------------------------------------
 	// 장바구니 | Shopping Cart > 품목 추가 | insertCartList (named in DAO) 
-    
+	
+/*    
 		public int insertCartList(Connection con, ShoppingCartPd cartList) {
 			
 			PreparedStatement pstmt = null;
@@ -534,13 +537,60 @@ public class ProductDao {
 		}
 			return result;//cartList
 	}
-	
+*/	
 
 		
 
 		// ------------------------ ▼ deleteCartList ------------------------------------------------------------------------------------------------------------------
 		
-	   // 장바구니 | Shopping Cart > 삭제 | deleteCartList (named in DAO)
+		public int deleteCartNum(Connection con, String cart) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = prop.getProperty("deleteCartNum");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, cart);
+				
+				result = pstmt.executeUpdate();
+				
+				if(result > 0) {
+					result = 1;
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
+		}
+		
+		public int updateCartNumAmount(Connection con, String cartNum, String amount) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = prop.getProperty("updateCartNumAmount");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, amount);
+				pstmt.setString(2, cartNum);
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
+		}
+		
+		
+/*	   // 장바구니 | Shopping Cart > 삭제 | deleteCartList (named in DAO)
 		public int deleteCartList(Connection con, ShoppingCartPd cartList, String[] product_code, String userId) {
 			
 			PreparedStatement pstmt = null;
@@ -564,7 +614,7 @@ public class ProductDao {
 		}
 			return 0;
 	}
-		
+*/	
 	
 	 // ------------------------ ▲ deleteCartList ------------------------------------------------------------------------------------------------------------------
     
@@ -1294,6 +1344,10 @@ public class ProductDao {
 		
 		return result;
 	}
+
+
+
+
 
 	
 

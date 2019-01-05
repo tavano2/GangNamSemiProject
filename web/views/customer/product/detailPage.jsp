@@ -137,7 +137,7 @@
 	text-align: center;
 }
 
-.second-col tr, td {
+.second-col tr, .second-col td {
 	text-align: center;
 	/* border:none; */
 	border: 1px solid white;
@@ -158,6 +158,14 @@
 	font-weight:bold;
 	font-famaily:Sans-Serif;
 }
+
+
+.upDown {
+	width: 50px;
+	bottom: 6%;
+	right: 3%;
+	position: fixed;
+}
 </style>
 
 </head>
@@ -166,6 +174,15 @@
 
 	<%@ include file="/views/customer/common/mainNav.jsp"%>
 
+	<div class="upDown">
+		<button class="big circular ui icon button" style="margin-bottom: 10px;" onclick="scrollUp();">
+		  	<i class="chevron up icon"></i>
+		</button>
+		<button class="big circular ui icon button" onclick="scrollDown();">
+		  	<i class="chevron down icon"></i>
+		</button>
+	</div>
+	
 
 	<div class="content">
 		<div class="contextBox">
@@ -196,7 +213,7 @@
 							사이즈  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<div class="ui selection dropdown">
-								<!-- <input type="hidden" name="gender"> -->
+								<input type="hidden" name="gender">
 								<i class="dropdown icon"></i>
 								<div class="default text">[필수]옵션을 선택해 주세요</div>
 								<div class="menu">
@@ -416,15 +433,15 @@
 				<!-- 페이징 넘버 -->
 				<div class="ui container center aligned">
 					<div aria-label="Pagination Navigation" role="navigation"
-						class="ui pagination menu">
+						class="ui pagination menu reviewPaging">
 						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=1'">«</a>
+							value="1" aria-label="First item" type="firstItem" class="icon item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=1'"><i class="angle double left icon"></i></a>
 
 
 						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=<%=currentPage - 1%>'"><</a>
+							value="1" aria-label="First item" type="firstItem" class="icon item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=<%=currentPage - 1%>'"><i class="angle left icon"></i></a>
 						<%
 							for (int p = startPage; p <= endPage; p++) {
 						%>
@@ -437,12 +454,12 @@
 						%>
 
 						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=<%=currentPage + 1%>'">></a>
+							value="1" aria-label="First item" type="firstItem" class="icon item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=<%=currentPage + 1%>'"><i class="angle right icon"></i></a>
 
 						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=<%=maxPage%>'">»</a>
+							value="1" aria-label="First item" type="firstItem" class="icon item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=<%=maxPage%>'"><i class="angle double right icon"></i></a>
 					</div>
 				</div>
 
@@ -498,15 +515,15 @@
 					<!-- 페이징 넘버 -->
 				<div class="ui container center aligned">
 					<div aria-label="Pagination Navigation" role="navigation"
-						class="ui pagination menu">
+						class="ui pagination menu QnAPaging">
 						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=1'">«</a>
+							value="1" aria-label="First item" type="firstItem" class="icon item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=1'"><i class="angle double left icon"></i></a>
 
 
 						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=currentPageQnA - 1%>'"><</a>
+							value="1" aria-label="First item" type="firstItem" class="icon item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=currentPageQnA - 1%>'"><i class="angle left icon"></i></a>
 						<%
 							for (int p = startPageQnA; p <= endPageQnA; p++) {
 						%>
@@ -519,12 +536,12 @@
 						%>
 
 						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=currentPageQnA + 1%>'">></a>
+							value="1" aria-label="First item" type="firstItem" class="icon item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=currentPageQnA + 1%>'"><i class="angle right icon"></i></a>
 
 						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=maxPageQnA%>'">»</a>
+							value="1" aria-label="First item" type="firstItem" class="icon item"
+							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=maxPageQnA%>'"><i class="angle double right icon"></i></a>
 					</div>
 				</div>
 				
@@ -571,9 +588,7 @@
 
 
 	<!-- J-query CDN -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- Semantic UI JS CDN -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
@@ -592,6 +607,10 @@
 			action : 'select'
 		});
 		$('.menu .item').tab();
+		
+		$('#cate_nav').sticky({
+			context: '.content'
+		});
 	</script>
 
 	<script>
@@ -611,8 +630,13 @@
 	</script>
 	<!-- QnA상세보기  -->
 	<script>
+	
 		$(function(){
-			$("#QnAlistArea td").click(function(){
+			$("#QnAlistArea td").mouseenter(function(){
+				$(this).parent().css({'background':'darkgray', 'cursor':'pointer'})
+			}).mouseout(function(){
+				$(this).parent().css({'background':'white'})
+			}).click(function(){
 				var num = $(this).parent().children().eq(0).text();
 				var pQnABoardId = $(this).parent().find("input").val();
 
@@ -625,7 +649,11 @@
 			});
 			
 			//리뷰 상세페이징
-			$("#ReviewlistArea td").click(function(){
+			$("#ReviewlistArea td").mouseenter(function(){
+				$(this).parent().css({'background':'darkgray', 'cursor':'pointer'})
+			}).mouseout(function(){
+				$(this).parent().css({'background':'white'})
+			}).click(function(){
 				var reviewRum =$(this).parent().find("input").val();
 				
 			
@@ -633,9 +661,12 @@
 				
 				location.href="<%=request.getContextPath()%>/selectReview.pd?reviewRum="+reviewRum;
 			
-			
-			
 			})
+			
+			
+			//페이지버튼 Active
+			$(".reviewPaging").children().eq(<%= currentPage + 1 %>).addClass('active');
+			$(".QnAPaging").children().eq(<%= currentPageQnA + 1 %>).addClass('active');
 		});
 		
 		//review 작성하기
@@ -655,6 +686,20 @@
 		}
 	</script>
 	
+	<script>
+		//스크롤 이동
+		function scrollUp(){
+			$("html,body").animate({ scrollTop: 0 }, "slow");
+		}
+			
+		
+		function scrollDown(){
+			$("html,body").animate({ scrollTop: $(document).height() }, "slow");
+		}
+	</script>
+	
 </body>
+
+
 
 </html>

@@ -150,7 +150,7 @@ public class ProductService {
 	
 	// ------ProductService.java---------------------------장바구니 : 품목 추가 | insertCartList------------------------------------------------
 	
-	public ArrayList<ShoppingCartPd> insertCartList(ShoppingCartPd cart) {
+	/*public ArrayList<ShoppingCartPd> insertCartList(ShoppingCartPd cart) {
 		
 		Connection con = getConnection();
 		ArrayList<ShoppingCartPd> cartList  = null;
@@ -168,12 +168,45 @@ public class ProductService {
 		close(con);
 		
 		return cartList;
-	}
+	}*/
 	
 	// ------ProductService.java---------------------------장바구니 : 품목 삭제 | deleteCartList------------------------------------------------
 	
+	public int deleteCartNum(String[] cartNum) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		for(String cart : cartNum) {
+			result += new ProductDao().deleteCartNum(con, cart);
+		}
+		
+		if(result == cartNum.length) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
 	
-	public ArrayList<ShoppingCartPd> deleteCartList(int currentPage, int limit) {
+
+	public int updateCartNumAmount(String cartNum, String amount) {
+		Connection con = getConnection();
+		int result = new ProductDao().updateCartNumAmount(con, cartNum, amount);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+	
+	
+	/*public ArrayList<ShoppingCartPd> deleteCartList(int currentPage, int limit) {
 		
 		return null;
 	}
@@ -194,7 +227,7 @@ public class ProductService {
 		}
 		close(con);
 		return result;
-	}
+	}*/
 	
 	// ------------------ CART ----------------------------------------------------------------------------------------------------------
 
@@ -408,6 +441,8 @@ public class ProductService {
 			
 			return result;
 		}
+
+
 
 
 }

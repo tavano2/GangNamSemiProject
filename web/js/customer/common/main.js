@@ -34,5 +34,7 @@ $(function () {
 });
 
 /* 네비바 */
-$('#cate_nav').sticky();
+/*$('#cate_nav').sticky({
+	context: '.content'
+});*/
 $('#cate_nav .ui.dropdown').dropdown({action: 'select'});

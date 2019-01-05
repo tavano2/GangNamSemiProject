@@ -14,14 +14,14 @@
 
     <!-- 사이드바 -->
     <nav id="sidebar">
-        <div id="dismiss">
+        <!-- <div id="dismiss">
             <i class="chevron left icon"></i>
-        </div>
+        </div> -->
 
         <div class="sidebar-header">
             <div class="sidebar-login">
             	<%if(loginUser == null)  { %>
-                <button class="ui button" onclick="location.href='/semi/views/customer/member/memberLogin.jsp'">로그인</button>
+                <button class="ui button" onclick="location.href='/semi/views/customer/member/memberLogin.jsp'" style="margin-top:0;">로그인</button>
                 <table>
                     <tr>
                         <td><a href="#">아이디/비밀번호 찾기</a></td>
@@ -30,11 +30,12 @@
                 </table>
                 
                 <%} else{%>
-               	<div align = "center"> <%= arry[0] %>님 환영합니다! </div> 
+               	<div align="center" style="font-weight:bold;"> <%= arry[0] %> 님 <br> </div> 
                 <br>
                 <table>
                     <tr>
-                        <td><a style="margin-left: 75px;" id="logoutMmeber" href="<%=request.getContextPath()%>/logout.me">로그아웃</a></td>
+                    	<td align="left" style="width: 77px;"><a href="<%=request.getContextPath()%>/selectMyPage.me">마이페이지</a></td>
+                        <td align="right" style="width: 77px;"><a id="logoutMmeber" href="<%=request.getContextPath()%>/logout.me">로그아웃</a></td>
                     </tr>
                 </table>
                 <%} %>
@@ -47,9 +48,8 @@
             <!-- <p>소제목</p> -->
             <li><a href="/semi/index.jsp">홈</a></li>
             <li><a href="/semi/views/customer/board/notice.jsp">공지사항</a></li>
-            <li><a href="<%=request.getContextPath()%>/selectMyPage.me">마이페이지</a></li>
             <li><a href="<%=request.getContextPath()%>/selectCartList.pd">장바구니</a></li>
-            <li><a href="/semi/views/customer/delivery/orderList.jsp">주문내역</a></li>
+            <li><a href="/semi/views/customer/delivery/orderList.jsp">주문</a></li>
             <li><a href="<%=request.getContextPath()%>/selectMessageAndCoupon.pm">쪽지/쿠폰함</a></li>
         </ul>
     </nav>
@@ -78,7 +78,7 @@
                 </a> 
                <%if(loginUser != null && loginUser.getUserId().equals("admin")) { %>
 		  		<a class="item" href="<%= request.getContextPath() %>/adminHomeInfo.bo">
-                       	관리자 페이지로 </a>
+                       	Administrator </a>
                  <%} %> 
                  <%if(loginUser == null) {%>
                 <a class="item" href="/semi/views/customer/member/memberLogin.jsp">
