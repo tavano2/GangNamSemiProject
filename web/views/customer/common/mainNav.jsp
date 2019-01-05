@@ -35,7 +35,7 @@
                 <table>
                     <tr>
                     	<td align="left" style="width: 77px;"><a href="<%=request.getContextPath()%>/selectMyPage.me">마이페이지</a></td>
-                        <td align="right"><a id="logoutMmeber" href="<%=request.getContextPath()%>/logout.me">로그아웃</a></td>
+                        <td align="right" style="width: 77px;"><a id="logoutMmeber" href="<%=request.getContextPath()%>/logout.me">로그아웃</a></td>
                     </tr>
                 </table>
                 <%} %>
