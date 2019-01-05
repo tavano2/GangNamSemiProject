@@ -66,6 +66,8 @@
 <body>
 
 	<%@ include file="/views/customer/common/mainNav.jsp"%>
+	
+	<%if(loginUser != null) {%>
 
 
 	<div class="content">
@@ -499,7 +501,15 @@
 			</div>
 		</div>
 	</div>
+	
+	<%}else{ 
+		request.setAttribute("msg", "잘못된 접근입니다. 로그인해주세요!");
+		request.getRequestDispatcher("views/customer/common/errorPage.jsp").forward(request, response);
+	
+	}%>
 
+
+	
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
 

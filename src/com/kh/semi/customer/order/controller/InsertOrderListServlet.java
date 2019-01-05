@@ -48,7 +48,6 @@ public class InsertOrderListServlet extends HttpServlet {
 		String buyerTel = request.getParameter("byerTel");
 		//주문자 핸드폰번호
 		String buyerPhone = request.getParameter("byerPhone");
-		System.out.println(buyerPhone);
 		//주문자 이메일
 		String email = request.getParameter("email");
 		//수령자 이름
@@ -67,8 +66,10 @@ public class InsertOrderListServlet extends HttpServlet {
 		
 		//쿠폰 사용시 쿠폰 코드
 		String couponValue = request.getParameter("couponValue");
+
 		//쿠폰 사용시 쿠폰코드에 대한 상품코드
 		String couponProductCode = request.getParameter("couponProduct");
+
 		//옵션 번호 배열
 		String[] optionNumber = request.getParameterValues("optionNum");
 		//구매 수량 배열
@@ -77,7 +78,7 @@ public class InsertOrderListServlet extends HttpServlet {
 		String[] pdCodes = request.getParameterValues("pdCode");
 		
 		
-		//System.out.println(deleteByerInfoDate);
+
 		
 		
 		//가공 처리를 위한 어레이 리스트,해쉬맵 생성
@@ -98,9 +99,6 @@ public class InsertOrderListServlet extends HttpServlet {
 		byer_info.put("memo", memo);
 		byer_info.put("deleteInfoBuyerDate", deleteInfoBuyerDate);
 		
-		
-		
-		
 		for(int i = 0 ; i < pdCodes.length; i++) {
 			list = new ArrayList<HashMap<String, Object>>();
 			String[] optionNumOne = optionNumber[i].split(",");
@@ -119,7 +117,7 @@ public class InsertOrderListServlet extends HttpServlet {
 		
 		// 결과값
 		int result = 0;
-		if(couponValue != "") {
+		if(couponValue != null) {
 			result = new OrderService().insertOrderList(resultList,userId,lnum,imp_uid,totalPrice,couponValue,couponProductCode,byer_info,pdCodes);			
 		}else {
 			result = new OrderService().insertOrderList(resultList,userId,lnum,imp_uid,totalPrice,byer_info,pdCodes);
@@ -140,25 +138,7 @@ public class InsertOrderListServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
-	
-/*	private String readJsonStringFromRequestBody(HttpServletRequest request) {
-		StringBuffer json = new StringBuffer();
-		String line = null;
-		
-		BufferedReader reader;
-		try {
-			reader = request.getReader();
-			while((line = reader.readLine()) != null) {
-				json.append(line);
-			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return json.toString();
-		
-	}*/
+
 	
 	
 }
