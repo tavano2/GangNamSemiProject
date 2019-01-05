@@ -32,6 +32,17 @@ public class InsertProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		
+		/*String productName = request.getParameter("productName");
+		String productMemo = request.getParameter("productMemo");
+		String productDmemo = request.getParameter("productDmemo");
+		String productPrice = request.getParameter("productPrice");
+		String productAmount = request.getParameter("productAmount");
+		String productDisplay = request.getParameter("productDisplay");
+		String productSell = request.getParameter("productSell");
+		String cateCode = request.getParameter("cateCode");
+		String optionCode1 = request.getParameter("optionCode");
+		String[] optionCode = optionCode1.split(",");*/
+		
 		if(ServletFileUpload.isMultipartContent(request)) {
 		
 			int maxSize = 1024 * 1024 * 10;
@@ -41,57 +52,28 @@ public class InsertProductServlet extends HttpServlet {
 			
 			MultipartRequest multiRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8",new MyFileRenamePolicy());
 			
-					String productName = multiRequest.getParameter("productName");
-					String productMemo = multiRequest.getParameter("productMemo");
-					String productDmemo = multiRequest.getParameter("productDmemo");
-					String productPrice = multiRequest.getParameter("productPrice");
-					String productAmount = multiRequest.getParameter("productAmount");
-					String productDisplay1 = multiRequest.getParameter("productDisplay");
-					String productSell1 = multiRequest.getParameter("productSell");
-					String categoryCode = multiRequest.getParameter("categoryCode");
-					String[] optionSet1 = multiRequest.getParameterValues("optionSet");
-					String productDisplay;
-					String productSell;
-					
-					if(productDisplay1.equals("0")) {
-						productDisplay = "D";
-					}else {
-						productDisplay = "E";
-					}
-					if(productSell1.equals("0")) {
-						productSell = "D";
-					}else {
-						productSell = "E";
-					}
-					
-					String[] optionSet2 = (String[]) optionSet1;
-					String optionSet3 = Arrays.toString(optionSet2);
-					System.out.println(optionSet3);
-					
-					/*if (optionSet1 instanceof String[]) {
-						String[] strArray = (String[]) optionSet1; 
-						System.out.println(Arrays.toString(strArray));
-						System.out.println(optionSet1);
-					}*/
-					
-					
-					/*String cateCode = request.getParameter("cateCode");
-						String optionCode1 = request.getParameter("optionCode");
-						String[] optionCode = optionCode1.split(",");*/
-					
-					
-					Attachment at = new Attachment();
-					at.setProductName(productName);
-					at.setProductMemo(productMemo);
-					at.setProductDmemo(productDmemo);
-					at.setProductPrice(Integer.parseInt(productPrice));
-					at.setProductAmount(Integer.parseInt(productAmount));
-					at.setDisplayS(productDisplay);
-					at.setSellS(productSell);
-					at.setCategoryCode(categoryCode);
+			String productName = multiRequest.getParameter("productName");
+			String productMemo = multiRequest.getParameter("productMemo");
+			String productDmemo = multiRequest.getParameter("productDmemo");
+			String productPrice = multiRequest.getParameter("productPrice");
+			String productAmount = multiRequest.getParameter("productAmount");
+			String productDisplay = multiRequest.getParameter("productDisplay");
+			String productSell = multiRequest.getParameter("productSell");
+			String cateCode = multiRequest.getParameter("categoryCode");
+			String[] optionCode1 = multiRequest.getParameterValues("optionSet");
 			
+			System.out.println(optionCode1);
+			System.out.println(optionCode1.length);
 			
-			
+			Attachment at = new Attachment();
+			at.setProductName(productName);
+			at.setProductMemo(productMemo);
+			at.setProductDmemo(productDmemo);
+			at.setProductPrice(Integer.parseInt(productPrice));
+			at.setProductAmount(Integer.parseInt(productAmount));
+			at.setDisplayS(productDisplay);
+			at.setSellS(productSell);
+			at.setCategoryCode(cateCode);
 			
 			// 다중 파일을 묶어서 업로드 하기 위해 컬렉션 사용
 			// 저장한 파일의 이름을 저장할 arrayList 생성
@@ -119,8 +101,8 @@ public class InsertProductServlet extends HttpServlet {
 				
 				fileList.add(at);
 			}
-			/*
-			int result = new ProductService().insertProductOption(fileList,at,optionCode);
+			
+			/*int result = new ProductService().insertProductOption(fileList,at,optionCode);
 					
 			if(result > 0) {
 				response.setContentType("application/json");

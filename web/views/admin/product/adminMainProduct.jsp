@@ -245,11 +245,12 @@
          $("input[name=cateUrl]").val(url);
          $("input[name=cateName]").val(name);
          $("input[name=cateMemo]").val(memo);
+         console.log(status);
          
          if(status == "E"){
-        	 $("input:radio[name=status]:input[value='E']").attr("checked",true);
+        	 $("input:radio[name=status]:input[value='E']").prop("checked",true);
          }else{
-        	 $("input:radio[name=status]:input[value='D']").attr("checked",true);
+        	 $("input:radio[name=status]:input[value='D']").prop("checked",true);
          }
       });
    });

@@ -72,8 +72,7 @@
         <%@ include file = "/views/admin/common/adminNavi.jsp" %>
 
 
-
-	<form action="<%= request.getContextPath() %>/insertProduct.product" method="post" encType="multipart/form-data" id="addForm">
+		<form action="<%= request.getContextPath() %>/insertProduct.product" method="post" encType="multipart/form-data" id="addForm">
           <div class="content">
         	<div class="content-box">
         	<h2 class="ui header">상품등록</h2>
@@ -125,13 +124,13 @@
                                     <div class="field">
                                     	-진열상태 &nbsp;&nbsp;&nbsp;
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productDisplay" checked="" tabindex="0" class="hidden" value="0">
+                                            <input type="radio" name="productDisplay" checked="" tabindex="0" class="hidden" value="E">
                                             <label>진열함</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productDisplay" tabindex="0" class="hidden" value="1">
+                                            <input type="radio" name="productDisplay" tabindex="0" class="hidden" value="D">
                                             <label>진열안함</label>
                                         </div>
                                     </div>
@@ -146,13 +145,13 @@
                                     <div class="field">
                                     	-판매상태 &nbsp;&nbsp;&nbsp;
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productSell" checked="" tabindex="0" class="hidden" value="0">
+                                            <input type="radio" name="productSell" checked="" tabindex="0" class="hidden" value="E">
                                             <label>판매함</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productSell" tabindex="0" class="hidden" value="1">
+                                            <input type="radio" name="productSell" tabindex="0" class="hidden" value="D">
                                             <label>판매안함</label>
                                         </div>
                                     </div>
@@ -220,7 +219,7 @@
             </table><br>
             <hr>
             <h2 class="ui header">이미지 정보</h2>
-            
+            <form action=method="post" encType="multipart/form-data" id="fileForm">
         	<table class="ui celled table first-col" id="imgTable">
         	<tr>
         		<td width="200">상품 이미지</td>
@@ -238,18 +237,18 @@
                 </td>
             </tr>
             </table><br>
+            </form>
             <div id="fileArea">
             	<input type="file" id="thumbnailImg" onchange="loadImg(this,1)">
             	<input type="file" name="imgList" onchange="loadImg(this,2)">
             </div>
 
         	<div class="productAddBtn">
-        		<button class="ui blue button" id="addBtn" onclick="addProduct();">상품등록</button>
+        		<button class="ui blue button" id="addBtn" onclick="addProduct">상품등록</button>
         	</div>
         	</div>
         </div>
 		</form>
-		
 		<!-- Footer -->
        <%@ include file = "/views/admin/common/adminFooter.jsp" %>
     </div>
@@ -423,7 +422,7 @@
 	}
 	
 	// 상품등록
-	/* $(function(){
+	 $(function(){
 		$("#addBtn").click(function(){
 			var productName = $("#productName").val();
 			var productMemo = $("#productMemo").val();
@@ -445,6 +444,8 @@
 				}
 			}
 			
+			var formData = $("#fileForm").serialize();
+			
 			$.ajax({
 				url:"/semi/insertProduct.product",
 				data:{productName : productName,
@@ -455,7 +456,8 @@
 					  productDisplay : productDisplay,
 					  productSell : productSell,
 					  cateCode : cateCode,
-					  optionCode : optionCode},
+					  optionCode : optionCode,
+					  formData : formData},
 				type:"post",
 				success:function(data){
 					console.log("성공");
@@ -465,7 +467,7 @@
 				}
 			});
 		});
-	}); */
+	}); 
 	
 	function addProduct(){
 		$("#addForm").submit();
