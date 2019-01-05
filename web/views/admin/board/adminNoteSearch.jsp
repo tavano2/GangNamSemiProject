@@ -85,7 +85,7 @@
 
 				<H2>쪽지 검색</H2>
 				<H4>쪽지 검색하기</H4>
-			<form action="<%=request.getContextPath() %>/adminNoteSearch.bo" method="post">
+			<form method="post" id="searchBox">
 				<table class="ui celled table border_table_1">
 		
 					<tr>
@@ -140,7 +140,7 @@
 				
 				
 				<div class="ui container center aligned search-box">
-					<button type="submit" class="ui black button">검색</button>
+	                    <button class="ui black button" onclick="searchBtn(); return false;">검색</button>
 				</div>
 
 </form>
@@ -176,47 +176,10 @@
 							<th class="center aligned">작성일</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td><div class="ui fitted checkbox">
-									<input type="checkbox" name="example"><label></label>
-								</div></td>
-							<td>1</td>
-							<td>문의합니당</td>
-							<td>문의합니당내영</td>
-							<td>홍길동</td>
-							<td>20181122</td>
-						</tr>
-						<tr>
-							<td><div class="ui fitted checkbox">
-									<input type="checkbox" name="example"><label></label>
-								</div></td>
-							<td>2</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td><div class="ui fitted checkbox">
-									<input type="checkbox" name="example"><label></label>
-								</div></td>
-							<td>3</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td><div class="ui fitted checkbox">
-									<input type="checkbox" name="example"><label></label>
-								</div></td>
-							<td>4</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
+					<tbody class="center aligned" id="tbodyBox">
+						<!-- 데이터 ajax로 넣깅 -->
+						
+						
 					</tbody>
 				</table>
 				
@@ -257,9 +220,8 @@
 
 
 	<!-- J-query CDN -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 	<!-- Semantic UI JS CDN -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
@@ -390,6 +352,86 @@
 				}
 			});
 		});
+		
+		
+	
+		
+		
+		
+	</script>
+	
+	<script>
+	
+		var searchResult = null;
+		var limit = 10;
+		var currentPage = 1;
+		var maxPage = 0;
+	
+	//검색버튼
+	 function searchBtn(){
+		var searchCondition=$("#searchBox").serialize();
+		
+		
+		$.ajax({
+			url: '<%=request.getContextPath()%>/adminNoteSearch.bo',
+			data:searchCondition,
+			type: 'post',
+			success:function(data){
+				console.log(data);
+				
+				//전역변수에 데이터 담기
+				searchResult = data;
+				
+				/* //각 변수 초기화
+				currentPage = 1;
+				var listCount = searchResult.length;
+				maxPage = Math.floor((listCount - 1) / limit) + 1;
+				
+				var startIdx = limit * (currentPage - 1);
+				var endIdx = startIdx + limit;
+				 */
+				//tbody안에 데이터 넣기
+				var $tbody = $("#tbodyBox");
+				$tbody.html('');
+				
+				for(var i=0; i<searchResult.length;i++){
+					
+						var $tr = $("<tr>");
+						var $td = $("<td>");
+						var $tdtd = $("<td>").text(i+1);
+						var $td1 = $("<td>").text(searchResult[i].msgTitle);
+						var $td2 = $("<td>").text(searchResult[i].msgContent);
+						var $td3 = $("<td>").text(searchResult[i].userId);
+						var $td4 = $("<td>").text(searchResult[i].msgDate);
+					
+						$tr.append($td);
+			
+						$tr.append($tdtd);
+						$tr.append($td1);
+						$tr.append($td2);
+						$tr.append($td3);
+						$tr.append($td4);
+						$tbody.append($tr);
+						
+				}
+						
+						
+						
+					
+			
+				
+				
+				
+			},error:function(){
+				console.log('실패');
+			}
+			
+		});
+		
+		
+	};
+	 
+	
 	</script>
 
 </body>
