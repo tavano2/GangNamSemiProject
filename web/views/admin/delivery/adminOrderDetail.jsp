@@ -103,10 +103,17 @@
 		                            </div>
 		                            
 	                                <div class="eight wide column right aligned">
-	                                	<button class="ui basic black button" type="button" onclick="">상품 취소</button>
-	                                	<button class="ui basic black button" type="button" onclick="">상품 교환</button>
-	                                	<button class="ui basic black button" type="button" onclick="">상품 반품</button>
-	                                	<button class="ui basic black button" type="button" onclick="">상품 환불</button>
+	                                	<div class="ui selection dropdown">
+		                                    <input type="hidden">
+		                                    <i class="dropdown icon"></i>
+		                                    <div class="default text">주문상태 변경</div>
+		                                    <div class="menu">
+		                                        <div class="item" data-value="1" onclick="changeStateBtn(this);">취소완료</div>
+		                                        <div class="item" data-value="2" onclick="changeStateBtn(this);">반품완료</div>
+		                                        <div class="item" data-value="3" onclick="changeStateBtn(this);">환불완료</div>
+		                                    </div>
+	                                    </div>
+	                                	<button class="ui basic black button" type="button" onclick="">환불</button>
 	                                </div>
                                 </div>
                             </th></tr>
@@ -154,7 +161,11 @@
 	                            <td></td>
 	                            <%} %>
 	                            <td><%= detail.getOrderSname() %></td>
-	                            <td><%= detail.getMemo() %></td>
+	                            <%if(detail.getMemo() == ""){ %>
+	                            <td><button class="ui icon button" onclick="memoUpdateBtn(this); return false;"><i class="edit icon"></i></button></td>
+	                            <%} else { %>
+	                            <td><a href="" onclick="memoUpdate(this); return false;"><%= detail.getMemo() %></a></td>
+	                            <%} %>
 	                        </tr>
 
 	                    	<%
@@ -246,6 +257,27 @@
        <%@ include file = "/views/admin/common/adminFooter.jsp" %>
     </div>
 
+	<div class="ui tiny modal">
+		<div class="header">
+	      	메모를 입력하세요.
+	    </div>
+	    <div class="content" style="width: auto; padding-left:0; padding-bottom:0;">
+	      	<div class="ui input big fluid transparent icon ">
+	        	<input type="text" name="orderMemo" placeholder="입력하세요." id="orderMemo">
+	        	<i class="edit icon"></i>
+	        </div>
+	    </div>
+	    <div class="actions">
+	      	<div class="ui negative button" onclick="memoCancel();">
+	       		취소
+	      	</div>
+	      	<div class="ui positive right labeled icon button" onclick="memoSave();">
+	        	저장
+	        	<i class="checkmark icon"></i>
+	      	</div>
+		</div>
+	</div>
+
     <!-- J-query CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
@@ -321,18 +353,41 @@
 			window.open("/semi/adminDelieryInfoSelect.de?deliveryNum="+a.innerText, popupname, "location=0, resizable=no, menubar=no, status=no, toolbar=no"
 					+ ", width=" + cw + ", height=" + ch + ", left=" + px + ", top=" + py);
 		}
-	
-		function productExchange(){
-			detailBox.target = '';
-			detailBox.action = '';
-			detailBox.submit();
+		
+		var orderDnum = "";
+		
+		function memoUpdate(a){
+			orderDnum = $(a).parents("tr").children().eq(0).find("input").val();
+			$("#orderMemo").val($(a).text());
+			
+			$('.tiny.modal').modal('show');
 		}
 		
-		function productReturn(){
-			detailBox.target = '';
-			detailBox.action = '';
-			detailBox.submit();
+		function memoUpdateBtn(btn){
+			orderDnum = $(btn).parents("tr").children().eq(0).find("input").val();
+			
+			$('.tiny.modal').modal('show');
 		}
+		
+		function memoCancel(){
+			$("#orderMemo").val('');
+		}
+		
+		function memoSave(){
+			var orderMemo = $("#orderMemo").val();
+			
+			$.ajax({
+				url: '<%=request.getContextPath() %>/adminOrderMemoUpdate.de',
+				type: 'post',
+				data: {orderMemo:orderMemo, orderDnum:orderDnum},
+				success: function(data){
+					location.reload();
+				}, error: function(){
+					console.log('실패ㅠㅠ');
+				}
+			});
+		}
+		
 	</script>
 	
 	<%} else {
