@@ -205,6 +205,35 @@ public class ProductService {
 		return result;
 	}
 	
+	public int insertCart(String productCode, String userId, String[] prodSelectOption, String[] prodSelectAmount) {
+		Connection con = getConnection();
+		int result = 0;
+		int result2 = 0;
+		
+		for(int i=0; i<prodSelectOption.length; i++) {
+			int cartNum = new ProductDao().getCartNum(con);
+			
+			if(cartNum > 0) {
+				for(String option : prodSelectOption[i].split(", ")) {
+					result2 += new ProductDao().insertCart(con, cartNum, productCode, userId, option, prodSelectAmount[i]);
+				}
+				
+				if(result2 == prodSelectOption[i].split(", ").length) {
+					result++;
+					result2 = 0;
+				}
+			}
+		}
+		
+		if(result == prodSelectOption.length) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
 	
 	/*public ArrayList<ShoppingCartPd> deleteCartList(int currentPage, int limit) {
 		
@@ -441,6 +470,8 @@ public class ProductService {
 			
 			return result;
 		}
+
+
 
 
 

@@ -119,7 +119,6 @@ public class ReviewNoticeListServlet extends HttpServlet {
 		
 		//상품코드 : PD1에있는값의 DB정보 불러오깅
 		HashMap<String, Object> hmap = new ProductService().selectOneDetailPage(code);
-		
 
 		//map에서 꺼내주기
 		ReallyProduct pro = (ReallyProduct)hmap.get("pro");

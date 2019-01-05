@@ -484,6 +484,13 @@ public class ProductDao {
 				hmap.put("opList", opList);
 				hmap.put("atList", atList);
 				hmap.put("count", count);
+				
+				/*for(ShoppingCartPd cart : cartList) System.out.println(cart);
+				for(String key : pdList.keySet()) System.out.println(pdList.get(key));
+				for(String key : opList.keySet()) System.out.println(opList.get(key));
+				for(String key : atList.keySet()) System.out.println(atList.get(key));
+				for(String key : count.keySet()) System.out.println(count.get(key));*/
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
@@ -589,6 +596,57 @@ public class ProductDao {
 			return result;
 		}
 		
+		public int getCartNum(Connection con) {
+			Statement stmt = null;
+			ResultSet rset = null;
+			int cartNum = 0;
+			
+			String query = prop.getProperty("getCartNum");
+			
+			try {
+				stmt = con.createStatement();
+				
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()) {
+					cartNum = rset.getInt("CART_NUM");
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			
+			
+			return cartNum;
+		}
+		
+		public int insertCart(Connection con, int cartNum, String productCode, String userId, String option, String amount) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = prop.getProperty("insertCart");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, cartNum);
+				pstmt.setString(2, productCode);
+				pstmt.setString(3, userId);
+				pstmt.setString(4, option);
+				pstmt.setString(5, amount);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
+		}
 		
 /*	   // 장바구니 | Shopping Cart > 삭제 | deleteCartList (named in DAO)
 		public int deleteCartList(Connection con, ShoppingCartPd cartList, String[] product_code, String userId) {
@@ -824,6 +882,7 @@ public class ProductDao {
 			
 			while(rset.next()) {
 				pro = new ReallyProduct();
+				pro.setProductCode(productCode);
 				pro.setProductMemo(rset.getString("PRODUCT_MEMO"));
 				pro.setProductDmemo(rset.getString("PRODUCT_DMEMO"));
 				pro.setProductPrice(rset.getInt("PRODUCT_PRICE"));
@@ -1344,6 +1403,10 @@ public class ProductDao {
 		
 		return result;
 	}
+
+
+
+
 
 
 
