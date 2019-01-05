@@ -25,11 +25,11 @@ public class SelectOrderProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String[] productNums = { "PD000001", "PD000002","PD000010" };
+		String[] cartNums = { "1", "2","3","4" };
 		String userId = String.format(((Member) request.getSession().getAttribute("loginUser")).getUserId());
 
 		// 전체 선택한 상품 리스트 조회
-		ArrayList<ArrayList<HashMap<String, Object>>> list = new OrderService().selectOrderProductList(productNums,
+		ArrayList<ArrayList<HashMap<String, Object>>> list = new OrderService().selectOrderProductList(cartNums,
 				userId);
 
 		// 상품코드와 옵션명 가공작업

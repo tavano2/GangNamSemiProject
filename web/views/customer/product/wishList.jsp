@@ -79,7 +79,7 @@
 						int post_price = 2500;
 					
 					%>
-					<tr>
+					<tr class= "wishListTr" onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=hmap.get("product_code")%>'">
 						<td><input type="checkbox" class="productChk" name="chkList" value="<%=hmap.get("product_code")%>"></td>
 						<td><img src = "/semi/image/customer/product/<%=hmap.get("change_name") %>" width="50px" height="50px"></td>
 						<td><%=hmap.get("product_name") %></td>
