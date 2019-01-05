@@ -780,4 +780,25 @@ public class AdminDeliveryDao {
 		return work;
 	}
 
+	public int updateMemo(Connection con, String orderDnum, String orderMemo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateMemo");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, orderMemo);
+			pstmt.setString(2, orderDnum);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }

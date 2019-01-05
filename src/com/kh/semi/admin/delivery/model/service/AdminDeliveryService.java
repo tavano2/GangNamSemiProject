@@ -141,4 +141,18 @@ public class AdminDeliveryService {
 		return om;
 	}
 
+	public int updateMemo(String orderDnum, String orderMemo) {
+		Connection con = getConnection();
+		int result = new AdminDeliveryDao().updateMemo(con, orderDnum, orderMemo);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
 }
