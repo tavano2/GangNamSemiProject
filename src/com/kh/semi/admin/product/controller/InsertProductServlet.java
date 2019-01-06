@@ -60,10 +60,8 @@ public class InsertProductServlet extends HttpServlet {
 			String productDisplay = multiRequest.getParameter("productDisplay");
 			String productSell = multiRequest.getParameter("productSell");
 			String cateCode = multiRequest.getParameter("categoryCode");
-			String[] optionCode1 = multiRequest.getParameterValues("optionSet");
-			
-			System.out.println(optionCode1);
-			System.out.println(optionCode1.length);
+			String optionCode1 = multiRequest.getParameter("optionSelected");
+			String[] optionCode = optionCode1.split(",");
 			
 			Attachment at = new Attachment();
 			at.setProductName(productName);
@@ -102,12 +100,11 @@ public class InsertProductServlet extends HttpServlet {
 				fileList.add(at);
 			}
 			
-			/*int result = new ProductService().insertProductOption(fileList,at,optionCode);
+			int result = new ProductService().insertProductOption(fileList,at,optionCode);
 					
 			if(result > 0) {
-				response.setContentType("application/json");
-				new Gson().toJson(result, response.getWriter());
-			}*/
+				response.sendRedirect(request.getContextPath()+"/selectCateInProduct.product");
+			}
 		}
 	}
 
