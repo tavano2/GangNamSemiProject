@@ -237,7 +237,7 @@ input[type="number"]::-webkit-inner-spin-button {
 		<div class="contextBox">
 		
 		<form action="" method="post" name="selectProduct" id="selectProduct">
-		
+			<input type="hidden" id="productCode" name="productCode" value="<%=pro.getProductCode()%>">
 			<table>
 				<tr>
 					<td rowspan="2"  style="vertical-align: top;">
@@ -249,11 +249,11 @@ input[type="number"]::-webkit-inner-spin-button {
 							<tr>
 								<td colspan="2" style="border-bottom: 1px solid lightgrey; padding-bottom: 10px;">
 	                        		<p class="productName" id="productName"><%=pro.getProductName() %></p>
-	                        		<input type="hidden" id="productCode" name="productCode" value="<%=pro.getProductCode()%>">
+	                        		
 	                        	<td>
 							</tr>
 							<tr>
-								<td colspan="2" style="padding-top: 30px; height: 180px; vertical-align: top; border-bottom: 1px solid lightgrey;">
+								<td colspan="2" style="padding-top: 20px; padding-bottom: 20px; height: 140px; vertical-align: top; border-bottom: 1px solid lightgrey;">
 									<%=pro.getProductMemo() %>
 								</td>
 							</tr>
@@ -322,12 +322,19 @@ input[type="number"]::-webkit-inner-spin-button {
 													<button class="ui brown button buyBtn">By it Now</button>
 												</div> -->
 												<div class="cartBtnDiv">
-													<button class="ui grey basic button cartBtn" onclick="insertCart(); return false;">CART</button>
+													<button class="ui grey basic button cartBtn" onclick="insertCart(); return false;">Add to CART</button>
 												</div>
 											</td>
 											<td>
 												<div class="cartBtnDiv">
 													<button class="ui grey basic button cartBtn" onclick="wishListBtn(); return false;">♡WISH LIST</button>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<div class="cartBtnDiv">
+													<button class="ui grey basic button cartBtn" style="width: 378px;" onclick="location.href='<%=request.getContextPath()%>/selectCartList.pd'; return false;">CART</button>
 												</div>
 											</td>
 										</tr>
@@ -470,6 +477,47 @@ input[type="number"]::-webkit-inner-spin-button {
 
 
 					</tbody>
+					
+					<tfoot>
+						<tr>
+							<th colspan="4">
+							
+								<!-- 페이징 넘버 -->
+								<div class="ui center aligned">
+									<div aria-label="Pagination Navigation" role="navigation"
+										class="ui pagination menu reviewPaging">
+										<a aria-current="false" aria-disabled="false" tabindex="0"
+											value="1" aria-label="First item" type="firstItem" class="icon item"
+											onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=pro.getProductCode()%>&currentPage=1'"><i class="angle double left icon"></i></a>
+				
+				
+										<a aria-current="false" aria-disabled="false" tabindex="0"
+											value="1" aria-label="First item" type="firstItem" class="icon item"
+											onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=pro.getProductCode()%>&currentPage=<%=currentPage - 1%>'"><i class="angle left icon"></i></a>
+										<%
+											for (int p = startPage; p <= endPage; p++) {
+										%>
+										<a aria-current="false" aria-disabled="false" tabindex="0"
+											value="1" aria-label="First item" type="firstItem" class="item"
+											onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=pro.getProductCode()%>&currentPage=<%=p%>'"><%=p%></a>
+				
+										<%
+											}
+										%>
+				
+										<a aria-current="false" aria-disabled="false" tabindex="0"
+											value="1" aria-label="First item" type="firstItem" class="icon item"
+											onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=pro.getProductCode()%>&currentPage=<%=currentPage + 1%>'"><i class="angle right icon"></i></a>
+				
+										<a aria-current="false" aria-disabled="false" tabindex="0"
+											value="1" aria-label="First item" type="firstItem" class="icon item"
+											onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=pro.getProductCode()%>&currentPage=<%=maxPage%>'"><i class="angle double right icon"></i></a>
+									</div>
+								</div>
+							
+							</th>
+						</tr>
+					</tfoot>
 				</table>
 				<div align="right">
 					<button class="ui brown basic mini button"
@@ -477,38 +525,7 @@ input[type="number"]::-webkit-inner-spin-button {
 					&nbsp;
 				</div>
 
-				<!-- 페이징 넘버 -->
-				<div class="ui container center aligned">
-					<div aria-label="Pagination Navigation" role="navigation"
-						class="ui pagination menu reviewPaging">
-						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="icon item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=1'"><i class="angle double left icon"></i></a>
-
-
-						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="icon item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=<%=currentPage - 1%>'"><i class="angle left icon"></i></a>
-						<%
-							for (int p = startPage; p <= endPage; p++) {
-						%>
-						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=<%=p%>'"><%=p%></a>
-
-						<%
-							}
-						%>
-
-						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="icon item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=<%=currentPage + 1%>'"><i class="angle right icon"></i></a>
-
-						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="icon item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPage=<%=maxPage%>'"><i class="angle double right icon"></i></a>
-					</div>
-				</div>
+				
 
 
 
@@ -550,6 +567,48 @@ input[type="number"]::-webkit-inner-spin-button {
 					
 						
 					</tbody>
+					
+					<tfoot>
+						<tr>
+							<th colspan="4">
+							
+								<!-- 페이징 넘버 -->
+								<div class="ui center aligned">
+									<div aria-label="Pagination Navigation" role="navigation"
+										class="ui pagination menu QnAPaging">
+										<a aria-current="false" aria-disabled="false" tabindex="0"
+											value="1" aria-label="First item" type="firstItem" class="icon item"
+											onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=pro.getProductCode()%>&currentPageQnA=1'"><i class="angle double left icon"></i></a>
+				
+				
+										<a aria-current="false" aria-disabled="false" tabindex="0"
+											value="1" aria-label="First item" type="firstItem" class="icon item"
+											onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=pro.getProductCode()%>&currentPageQnA=<%=currentPageQnA - 1%>'"><i class="angle left icon"></i></a>
+										<%
+											for (int p = startPageQnA; p <= endPageQnA; p++) {
+										%>
+										<a aria-current="false" aria-disabled="false" tabindex="0"
+											value="1" aria-label="First item" type="firstItem" class="item"
+											onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=pro.getProductCode()%>&currentPageQnA=<%=p%>'"><%=p%></a>
+				
+										<%
+											}
+										%>
+				
+										<a aria-current="false" aria-disabled="false" tabindex="0"
+											value="1" aria-label="First item" type="firstItem" class="icon item"
+											onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=pro.getProductCode()%>&currentPageQnA=<%=currentPageQnA + 1%>'"><i class="angle right icon"></i></a>
+				
+										<a aria-current="false" aria-disabled="false" tabindex="0"
+											value="1" aria-label="First item" type="firstItem" class="icon item"
+											onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=pro.getProductCode()%>&currentPageQnA=<%=maxPageQnA%>'"><i class="angle double right icon"></i></a>
+									</div>
+								</div>
+								
+							</th>
+						</tr>
+					</tfoot>
+					
 				</table>
 				
 			
@@ -559,38 +618,7 @@ input[type="number"]::-webkit-inner-spin-button {
 					&nbsp;
 				</div>
 
-					<!-- 페이징 넘버 -->
-				<div class="ui container center aligned">
-					<div aria-label="Pagination Navigation" role="navigation"
-						class="ui pagination menu QnAPaging">
-						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="icon item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=1'"><i class="angle double left icon"></i></a>
-
-
-						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="icon item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=currentPageQnA - 1%>'"><i class="angle left icon"></i></a>
-						<%
-							for (int p = startPageQnA; p <= endPageQnA; p++) {
-						%>
-						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=p%>'"><%=p%></a>
-
-						<%
-							}
-						%>
-
-						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="icon item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=currentPageQnA + 1%>'"><i class="angle right icon"></i></a>
-
-						<a aria-current="false" aria-disabled="false" tabindex="0"
-							value="1" aria-label="First item" type="firstItem" class="icon item"
-							onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?currentPageQnA=<%=maxPageQnA%>'"><i class="angle double right icon"></i></a>
-					</div>
-				</div>
+					
 				
 				
 				
@@ -639,10 +667,10 @@ input[type="number"]::-webkit-inner-spin-button {
 	    </div>
 	    <div class="content" style="width: auto; padding-left:0;">
 	      	<div class="ui input big fluid transparent">
-	        	<input type="text" id="cartMsg" style="text-align: center;">
+	        	<input type="text" id="cartMsg" style="text-align: center;" readonly>
 	        </div>
 	    </div>
-	    <div class="actions">
+	    <div class="actions" id="cartModalBtns">
 	    	<div class="ui grid">
 	    		<div class="eight wide column left aligned">
 		    		<div class="ui positive button">
@@ -651,7 +679,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	    		</div>
 	    		
 	    		<div class="eight wide column right aligned">
-	    			<div class="ui positive right labeled icon button" onclick="location.href='<%=request.getContextPath()%>/selectCartList.pd'">
+	    			<div class="ui positive right labeled icon button" id="cartModal" onclick="location.href='<%=request.getContextPath()%>/selectCartList.pd'">
 			        	장바구니로 이동
 			        	<i class="shopping cart icon"></i>
 			      	</div>
@@ -846,18 +874,42 @@ input[type="number"]::-webkit-inner-spin-button {
 		function insertCart(){
 			var selectProduct = $("#selectProduct").serialize();
 			
-			$.ajax({
-				url: "<%= request.getContextPath() %>/insertCart.pd",
-				type: "post",
-				data: selectProduct,
-				success: function(data){
-					$("#cartMsg").val(data);
-					
-					$('.tiny.modal').modal('show');
-				}, error: function(){
-					console.log("실패 ㅠㅠ");
-				}
-			});
+			if($(".prodSelectAmount").length > 0){
+				$.ajax({
+					url: "<%= request.getContextPath() %>/insertCart.pd",
+					type: "post",
+					data: selectProduct,
+					success: function(data){
+						if(data[0] == "Y"){
+							$("#cartMsg").val(data[1]);
+							$("#cartModal").show();
+							$("#cartModal").html("장바구니로 이동<i class='shopping cart icon'></i>");
+							$("#cartModal").off();
+							$("#cartModal").click(function(){
+								location.href = "<%=request.getContextPath()%>/selectCartList.pd";
+							});
+						} else {
+							$("#cartMsg").val(data[1]);
+							$("#cartModal").show();
+							$("#cartModal").html("로그인하기<i class='user icon'></i>");
+							$("#cartModal").off();
+							$("#cartModal").click(function(){
+								location.href = "<%=request.getContextPath()%>/views/customer/member/memberLogin.jsp";
+							});
+						}
+						
+						$('.tiny.modal').modal('show');
+					}, error: function(){
+						console.log("실패 ㅠㅠ");
+					}
+				});
+			} else {
+				$("#cartMsg").val("옵션을 선택하세요.");
+				$("#cartModal").hide();
+				
+				$('.tiny.modal').modal('show');
+			}
+			
 		}
 	</script>
 	
