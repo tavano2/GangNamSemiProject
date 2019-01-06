@@ -46,16 +46,22 @@ public class insertCartServlet extends HttpServlet {
 			if(result > 0) {
 				response.setContentType("application/json");
 				response.setCharacterEncoding("utf-8");
+				String[] msg = new String[] {"Y", "장바구니에 상품이 정상적으로 담겼습니다."};
 				
-				new Gson().toJson("장바구니에 상품이 정상적으로 담겼습니다.", response.getWriter());
+				new Gson().toJson(msg, response.getWriter());
 			} else {
 				response.setContentType("application/json");
 				response.setCharacterEncoding("utf-8");
+				String[] msg = new String[] {"Y", "상품을 담는 것에 실패하였습니다."};
 				
-				new Gson().toJson("상품을 담는 것에 실패하였습니다.", response.getWriter());
+				new Gson().toJson(msg, response.getWriter());
 			}
 		} else {
-			response.sendRedirect("views/customer/member/memberLogin.jsp");
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			String[] msg = new String[] {"N", "로그인 후에 담을 수 있습니다."};
+			
+			new Gson().toJson(msg, response.getWriter());
 		}
 		
 	}
