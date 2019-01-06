@@ -1,3 +1,5 @@
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="com.kh.semi.customer.product.model.vo.ReallyProduct"%>
 <%@page import="com.kh.semi.customer.product.model.vo.Option"%>
 <%@page import="com.kh.semi.customer.product.model.vo.Attachment"%>
@@ -27,7 +29,42 @@
  	ReallyProduct pro = (ReallyProduct)request.getAttribute("pro");
 	ArrayList<Attachment> detailAttachmentList = (ArrayList<Attachment>)request.getAttribute("detailAttachmentList");
 	ArrayList<Option> detailOptionList = (ArrayList<Option>)request.getAttribute("detailOptionList");
-	 
+	
+	//옵션 HashMap
+	HashMap<String, ArrayList<Option>> productOption = new HashMap<String, ArrayList<Option>>();
+	
+	for(Option op : detailOptionList){
+		if(!productOption.containsKey(op.getOptionSnum())){
+			productOption.put(op.getOptionMemo(), null);
+		}
+	}
+	
+	for(String key : productOption.keySet()){
+		ArrayList<Option> opList = new ArrayList<Option>();
+		
+		for(Option op : detailOptionList){
+			if(op.getOptionMemo().equals(key)){
+				Option opCopy = new Option();
+				
+				opCopy.setOptionSnum(op.getOptionSnum());
+				opCopy.setProductCode(op.getProductCode());
+				opCopy.setOptionMemo(op.getOptionMemo());
+				opCopy.setOptionNum(op.getOptionNum());
+				opCopy.setOptionName(op.getOptionName());
+				
+				opList.add(opCopy);
+			}
+		}
+		
+		productOption.put(key, opList);
+	}
+	
+	/* for(String key : productOption.keySet()){
+		for(Option op : productOption.get(key)){
+			System.out.println(op);
+		}
+	} */
+	
 	//상품이름, 판매가,상품상세글, 옵션12, 상품이미지1메인,2상품이미지 34
 	Attachment titleImg = detailAttachmentList.get(0);
 	Attachment detailImg1 = detailAttachmentList.get(1);
@@ -40,6 +77,12 @@
 	//Option option2 = detailOptionList.get(1);
 	
 	
+%>
+
+<%!
+	public String comma(int price){
+		return new DecimalFormat("#,###").format(price);
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -80,7 +123,6 @@
 	background-size: inherit;
 	margin-left: auto;
 	margin-right: auto;
-	margin-left: 100px;
 }
 
 .nine {
@@ -99,14 +141,14 @@
 }
 
 .cartBtn {
-	width: 190px;
+	width: 185px;
 	margin-right: auto;
 	margin-left: auto;
 }
 
 .contextTop {
 	width: 100%;
-	height: 600px;
+	/* height: 600px; */
 	text-align: center;
 	padding-top: 150px;
 	/*  border: 1px solid lightcoral; */
@@ -114,11 +156,13 @@
 
 .detailImg {
 	width: 100%;
+	text-align: center;
 	/*  border: 1px solid lightblue; */
 }
 
 .sizeChart {
 	width: 100%;
+	text-align: center;
 	/*  border: 1px solid lightgreen; */
 }
 
@@ -153,18 +197,23 @@
 	background-color: #f9fafb;
 }
 .productName{
-	color:lightgray;
+	color:gray;
 	font-size:30px;
 	font-weight:bold;
 	font-famaily:Sans-Serif;
 }
-
 
 .upDown {
 	width: 50px;
 	bottom: 6%;
 	right: 3%;
 	position: fixed;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+    margin: 0;
 }
 </style>
 
@@ -186,128 +235,126 @@
 
 	<div class="content">
 		<div class="contextBox">
-
-			<div class="ui equal width grid">
-
-				<div class="nine wide column">
-					<img src="<%=titleImg.getFilePath() %><%=titleImg.getChangeName() %>"
-						class="detailTopImgsize" width="400" height="500">
-
-
-				</div>
-
-				<div class="seven wide column">
-					<table class="ui celled table">
-						<tr>
+		
+		<form action="" method="post" name="selectProduct" id="selectProduct">
+		
+			<table>
+				<tr>
+					<td rowspan="2"  style="vertical-align: top;">
+						<img src="<%=titleImg.getFilePath() %><%=titleImg.getChangeName() %>"
+							class="detailTopImgsize" width="500" height="500">
+					</td>
+					<td style="vertical-align: top;">
+						<table style="margin-left: 45px; width: 400px;">
+							<tr>
+								<td colspan="2" style="border-bottom: 1px solid lightgrey; padding-bottom: 10px;">
+	                        		<p class="productName" id="productName"><%=pro.getProductName() %></p>
+	                        		<input type="hidden" id="productCode" name="productCode" value="<%=pro.getProductCode()%>">
+	                        	<td>
+							</tr>
+							<tr>
+								<td colspan="2" style="padding-top: 30px; height: 180px; vertical-align: top; border-bottom: 1px solid lightgrey;">
+									<%=pro.getProductMemo() %>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: bottom;">
+						<table id="optionTable" style="margin-left: 45px; width: 390px;">
+							<tr style="height:40px;">
+								<td style="width:160px;"><b>판매가</b></td>
+								<td style="text-align: right;"><%=comma(pro.getProductPrice()) %> won</td>
+							</tr>
+							<% for(String key : productOption.keySet()){ %>
+							<tr style="height:40px;">
+								<td>
+									<label class="optionMemo">
+										<%= productOption.get(key).get(0).getOptionMemo().split("\\[")[0] %>
+									</label>
+								</td>
+								<td>
+									<div class="ui selection fluid dropdown">
+	                                	<input type="hidden" name="optionNum" onchange="optionSelect();">
+	                                	<i class="dropdown icon"></i>
+	                                	<div class="default text">필수 선택</div>
+	                                	<div class="menu optionSel">
+	                                   		<% for(Option op : productOption.get(key)){ %>
+	                                   		<div class="item" data-value="<%= op.getOptionNum() %>"><%= op.getOptionName() %></div>
+	                                       	<% } %>
+	                      				</div>
+	                         		</div>
+	                    		</td>
+	          				</tr>
+							<% } %>
+							<tr><td colspan="2" style="height: 10px; border-bottom: 1px solid lightgrey;"></td></tr>
+							<tr><td colspan="2" style="height: 10px;"></td></tr>
 							
-                             
-						<br><br><br>
-                        	<p class="productName"><%=pro.getProductName() %></p>  
-						</tr>
-						<hr>
-						<tr>
-							
-								상품 간단 설명쓰 : <%=pro.getProductMemo() %> <br><br>
-							
-						<hr>
-							사이즈  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<div class="ui selection dropdown">
-								<input type="hidden" name="gender">
-								<i class="dropdown icon"></i>
-								<div class="default text">[필수]옵션을 선택해 주세요</div>
-								<div class="menu">
-								
-								
-								<!-- <%-- <% for(Option opp : detailOptionList){
-								int i=0;
-								if(		opp.getOptionNum().equals("OP000021")||opp.getOptionNum().equals("OP000022")||
-										opp.getOptionNum().equals("OP000023")||opp.getOptionNum().equals("OP000024")||
-										opp.getOptionNum().equals("OP000025")||opp.getOptionNum().equals("OP000026")||
-										opp.getOptionNum().equals("OP000027")||opp.getOptionNum().equals("OP000028")){ 
-								%>
-									
-
-									<div class="item" data-value="i"><%=opp.getOptionName() %></div>
-								<!-- 	<div class="item" data-value="1">화이트</div>
-									<div class="item" data-value="2">랜덤</div> -->
+							<tr>
+								<td colspan="2">
+									<table id="appendProduct" style="width: 390px;">
 										
-									<% i++;}%>   --%>-->
-								
-						<% for(Option opp : detailOptionList) {%>
-								<% int i=0; %>
-								<% if(opp.getOptionNum().equals("OP000021")||opp.getOptionNum().equals("OP000022")||
-										opp.getOptionNum().equals("OP000023")||opp.getOptionNum().equals("OP000024")||
-										opp.getOptionNum().equals("OP000025")||opp.getOptionNum().equals("OP000026")||
-										opp.getOptionNum().equals("OP000027")||opp.getOptionNum().equals("OP000028")){ %>
-								
-									<div class="item" data-value="i"><%=opp.getOptionName() %></div>
-								
+										<!-- 상품 추가 -->
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" style="height:50px; padding: 25px 0;">
+									<div class="ui grid">
+										<div class="eight wide column">
+											<b>총 금액</b>
+										</div>
+										<div class="eight wide column right aligned" id="totalPrice">
+											0 won
+										</div>
+									</div>
 									
-									<%}} %>
-									
-								</div>
-							</div>
-							<br> 색상  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<div class="ui selection dropdown">
-								 <input type="hidden" name="gender">  
-								<i class="dropdown icon"></i>
-								<div class="default text">[필수]옵션을 선택해 주세요</div>
-								<div class="menu">
-								<% for(Option opp2 : detailOptionList) {%>
-								<% int j=0; %>
-								<% if(opp2.getOptionNum().equals("OP000001")||opp2.getOptionNum().equals("OP000002")||
-										opp2.getOptionNum().equals("OP000003")||opp2.getOptionNum().equals("OP000004")||
-										opp2.getOptionNum().equals("OP000005")||opp2.getOptionNum().equals("OP000006")||
-										opp2.getOptionNum().equals("OP000007")||opp2.getOptionNum().equals("OP000008")||
-										opp2.getOptionNum().equals("OP000009")||opp2.getOptionNum().equals("OP000010")||
-										opp2.getOptionNum().equals("OP000011")||opp2.getOptionNum().equals("OP000012")||
-										opp2.getOptionNum().equals("OP000013")||opp2.getOptionNum().equals("OP000014")||
-										opp2.getOptionNum().equals("OP000015")||opp2.getOptionNum().equals("OP000016")||
-										opp2.getOptionNum().equals("OP000017")||opp2.getOptionNum().equals("OP000018")||
-										opp2.getOptionNum().equals("OP000019")||opp2.getOptionNum().equals("OP000020")
-										){ %>
-								
-									<div class="item" data-value="j"><%=opp2.getOptionName() %></div>
-									<%}} %>
-									
-								</div>
-							</div>
-							<br>
-							<hr><br>
-							<p align="center">퐁 금액 : <%=pro.getProductPrice() %>  won</p> &nbsp;&nbsp;&nbsp;&nbsp;<br>
-							<!-- <div class="buyBtnDiv">
-								<button class="ui brown button buyBtn">By it Now</button>
-							</div> -->
-							<div class="cartBtnDiv">
-								<button class="ui grey basic button cartBtn" onclick="insertCart();">CART</button>
-								&nbsp;&nbsp;
-								<button class="ui grey basic button cartBtn"
-									onclick="wishListBtn();">♡WISH LIST</button>
-							</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td colspan="2">
+									<table style="text-align: center; width: 390px;">
+										<tr>
+											<td>
+												<!-- <div class="buyBtnDiv">
+													<button class="ui brown button buyBtn">By it Now</button>
+												</div> -->
+												<div class="cartBtnDiv">
+													<button class="ui grey basic button cartBtn" onclick="insertCart(); return false;">CART</button>
+												</div>
+											</td>
+											<td>
+												<div class="cartBtnDiv">
+													<button class="ui grey basic button cartBtn" onclick="wishListBtn(); return false;">♡WISH LIST</button>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							
+						</table>
+					</td>
+				</tr>
+			</table>
+		</form>
 
-						</tr>
-					</table>
-				</div>
-			</div>
-
-			<hr>
 			<div class="contextTop">
 
-				상품상세 :  <%=pro.getProductDmemo() %> 
-				<input type="hidden" id="productCode" value=<%=pro.getProductCode() %>>
+				<%=pro.getProductDmemo() %>
 			</div>
 
 
 			<div class="detailImg">
 				<img src="<%=detailImg1.getFilePath() %><%=detailImg1.getChangeName() %>"
-					class="detailTopImgsize" width="700px">
+					class="detailTopImgsize" width="950px">
 			</div>
 
 			<div class="sizeChart">
 				<img src="<%=detailImg2.getFilePath() %><%=detailImg2.getChangeName() %>"
-					class="detailTopImgsize" width="700px">
+					class="detailTopImgsize" width="950px">
 				<table class="ui celled table first-col">
 
 					<tr>
@@ -586,6 +633,33 @@
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
 
+	<div class="ui tiny modal">
+		<div class="header">
+	      	알림
+	    </div>
+	    <div class="content" style="width: auto; padding-left:0;">
+	      	<div class="ui input big fluid transparent">
+	        	<input type="text" id="cartMsg" style="text-align: center;">
+	        </div>
+	    </div>
+	    <div class="actions">
+	    	<div class="ui grid">
+	    		<div class="eight wide column left aligned">
+		    		<div class="ui positive button">
+			       		쇼핑계속하기
+			      	</div>
+	    		</div>
+	    		
+	    		<div class="eight wide column right aligned">
+	    			<div class="ui positive right labeled icon button" onclick="location.href='<%=request.getContextPath()%>/selectCartList.pd'">
+			        	장바구니로 이동
+			        	<i class="shopping cart icon"></i>
+			      	</div>
+	    		</div>
+	    	</div>
+	      	
+		</div>
+	</div>
 
 	<!-- J-query CDN -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -598,7 +672,8 @@
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
-	
+	<!-- Comma js -->
+	<script src="/semi/js/common/common.js"></script>
 
 	<!-- 오더 리스트 스크립트 -->
 	<script type="text/javascript">
@@ -681,8 +756,108 @@
 	
 	<!-- 카트로 -->
 	<script>
-		function insertCart(){
+		function optionSelect(){
+			var chk = true;
+			var optionNum = $("input[name='optionNum']");
 			
+			for(var i=0; i<optionNum.length; i++){
+				if($(optionNum[i]).val() == ""){
+					chk = false;
+				}
+			}
+			
+			if(chk){
+				var option = "";
+				var optionNumStr = "";
+				
+				for(var i=0; i<optionNum.length; i++){
+					//console.log($(optionNum[i]).parent().find("[data-value='"+$(optionNum[i]).val()+"']").text());
+					option += $(optionNum[i]).parent().find("[data-value='"+$(optionNum[i]).val()+"']").text();
+					optionNumStr += $(optionNum[i]).val();
+					if(i<optionNum.length-1)  {
+						option += ", ";
+						optionNumStr += ", ";
+					}
+				}
+				//console.log(optionNumStr);
+				
+				var chk2 = true;
+				var prodSelectOption = $(".prodSelectOption");
+				for (var i=0; i<prodSelectOption.length; i++){
+					if($(prodSelectOption).val() == optionNumStr){
+						chk2 = false;
+					}
+				}
+				
+				if(chk2){
+					var $tr = $("<tr>")
+					var $td1 = $("<td style='width: 220px;'>").html("<span style='color:lightgray;'>"+ $("#productName").text() + "</span><br> - " + "<span style='color:gray;'>" + option + "</span>");
+					$td1.append($("<input type='hidden' class='prodSelectOption' name='prodSelectOption' value='"+optionNumStr+"'>"));
+					var $input = $("<div class='ui input'>").append("<input type='number' value='1' min='1' name='prodSelectAmount' class='prodSelectAmount' onchange='totalPriceCal();' style='width:30px; height: 30px; text-align: center; padding: 5px 5px; margin-right:5px;'>");
+					var $plusBtn = $("<button class='ui compact icon button' onclick='plusAmountBtn(this); return false;'>").append("<i class='plus icon'></i>");
+					var $minusBtn = $("<button class='ui compact icon button' onclick='minusAmountBtn(this); return false;'>").append("<i class='minus icon'></i>");
+					var $delBtn = $("<button class='ui compact icon button' onclick='delProdBtn(this); return false;'>").append("<i class='trash alternate icon'></i>");
+					var $td2 = $("<td align='right'>").append($input).append($plusBtn).append($minusBtn).append($delBtn);
+					
+					$tr.append($td1);
+					$tr.append($td2);
+					$("#appendProduct").append($tr);
+					
+					totalPriceCal();
+				} else {
+					alert("이미 같은 옵션을 추가하셨습니다.");
+				}
+				
+				$('#optionTable .ui.dropdown').dropdown('restore defaults');
+			}
+		}
+		
+		function delProdBtn(btn){
+			$(btn).parent().parent().remove();
+			totalPriceCal();
+		}
+		
+		function plusAmountBtn(btn){
+			var val = Number($(btn).parent().find(".prodSelectAmount").val())+1;
+			if(val < 100){
+				$(btn).parent().find(".prodSelectAmount").val(val);
+				totalPriceCal()
+			}
+		}
+		
+		function minusAmountBtn(btn){
+			var val = Number($(btn).parent().find(".prodSelectAmount").val())-1;
+			if(val > 0){
+				$(btn).parent().find(".prodSelectAmount").val(val);
+				totalPriceCal()
+			}
+		}
+		
+		function totalPriceCal(){
+			var totalAmount = 0;
+			
+			for(var i=0; i<$(".prodSelectAmount").length; i++){
+				totalAmount += Number($($(".prodSelectAmount")[i]).val());
+			}
+			
+			$("#totalPrice").text(numComma(totalAmount * Number(<%= pro.getProductPrice() %>)) + " won");
+		}
+		
+		function insertCart(){
+			var selectProduct = $("#selectProduct").serialize();
+			
+			$.ajax({
+				url: "<%= request.getContextPath() %>/insertCart.pd",
+				type: "post",
+				data: selectProduct,
+				success: function(data){
+					$("#cartMsg").val(data);
+					
+					$('.tiny.modal').modal('show');
+				}, error: function(){
+					console.log("실패 ㅠㅠ");
+				}
+			});
 		}
 	</script>
 	
