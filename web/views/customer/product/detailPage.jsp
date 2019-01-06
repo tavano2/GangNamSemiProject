@@ -719,7 +719,18 @@ input[type="number"]::-webkit-inner-spin-button {
 	<script>
 		$('.contextBox .ui.dropdown').dropdown(); //컨텐츠 박스의 드롭다운 실행
 		function wishListBtn() {
-			location.href = "/semi/views/customer/product/wishList.jsp";
+			var productCode = "<%= pro.getProductCode() %>";
+			
+			$.ajax({
+				url: "<%= request.getContextPath() %>/insertWishList.pd",
+				type: "post",
+				data: {productCode:productCode},
+				success: function(data){
+					alert(data);
+				}, error: function(){
+					console.log("실패");
+				}
+			});
 		}
 		function detailReview() {
 			location.href = "/semi/views/customer/product/detailReview.jsp";

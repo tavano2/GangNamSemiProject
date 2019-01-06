@@ -1404,6 +1404,56 @@ public class ProductDao {
 		return result;
 	}
 
+	public int hasProduct(Connection con, String userId, String productCode) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("hasProduct");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, productCode);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = 1;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertWishList(Connection con, String userId, String productCode) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertWishList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, productCode);
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 
 
 
