@@ -204,6 +204,7 @@
             </table><br>
 			<hr>
 			<h2 class="ui header">옵션설정</h2>
+			<input type="hidden" name="optionSelected">
         	<table class="ui celled table first-col">
         	<tr>
         		<td width="150">상품옵션설정</td>
@@ -336,6 +337,18 @@
 	// 상품옵션 추가
 	var cnt = 0;
 	function optionChoice(obj){
+		var optionCode = "";
+		
+		var size = $("input[name=optionSet]").length;
+		for(var i = 0; i < size; i ++){
+			var optionCode1 = $("input[name=optionSet]").eq(i).val();
+			if(optionCode == ""){
+				optionCode += optionCode1;
+			}else{
+				optionCode += "," + optionCode1;
+			}
+		}
+		$("input[name=optionSelected]").val(optionCode);
 			cnt ++;
 			if(cnt >= 4){
 				return;
@@ -422,7 +435,7 @@
 	}
 	
 	// 상품등록
-	 $(function(){
+	/*  $(function(){
 		$("#addBtn").click(function(){
 			var productName = $("#productName").val();
 			var productMemo = $("#productMemo").val();
@@ -467,7 +480,7 @@
 				}
 			});
 		});
-	}); 
+	});  */
 	
 	function addProduct(){
 		$("#addForm").submit();
