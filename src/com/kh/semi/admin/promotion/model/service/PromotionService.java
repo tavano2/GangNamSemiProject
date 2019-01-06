@@ -134,15 +134,16 @@ public class PromotionService {
 		int result = 0;
 		Connection con = getConnection();
 		result = new PromotionDao().createCouponAllPrice(con, map);
-		System.out.println(result);
 		if(result>0) {
 			result += new PromotionDao().createCouponPPrice(con, productList);
 		}
 		
 		if(result>1) {
 			commit(con);
+			result = 1;
 		}else {
 			rollback(con);
+			result = 0;
 		}
 		
 		close(con);
@@ -154,7 +155,6 @@ public class PromotionService {
 		int result = 0;
 		Connection con = getConnection();
 		result = new PromotionDao().createCouponCRate(con, map);
-		System.out.println("test");
 		if(result>0) {
 			result += new PromotionDao().createCouponCRate(con, bigCategList, middleCategList);
 		}
@@ -199,6 +199,25 @@ public class PromotionService {
 	public int getcouponList(String couponNum, int couponExp) {
 		Connection con = getConnection(); //connection 생성
 		int result = new PromotionDao().getcouponList(con, couponNum, couponExp);
+		return result;
+	}
+
+	public ArrayList<String> allUserList() {
+		 ArrayList<String> allUserList = null;
+		 Connection con = getConnection();
+		 allUserList = new PromotionDao().allUserList(con);
+		return allUserList;
+	}
+
+	public int allUserCouponIssue(String couponCode, String couponExp, ArrayList<String> allUserId) {
+		Connection con = getConnection();
+		int result = 0;
+		result = new PromotionDao().allUserCouponIssue(con, couponCode, couponExp, allUserId);
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
 		return result;
 	}
 	
