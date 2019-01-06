@@ -686,4 +686,167 @@ public class PromotionDao {
 		return result;
 	}
 
+	public ArrayList<String> ajaxGetUserClass(Connection con) {
+		ArrayList<String> getUserClassList = new ArrayList<String>();
+		ResultSet rset = null;
+		Statement stmt = null;
+		String query = prop.getProperty("ajaxGetUserClass");
+		try {
+			stmt = con.createStatement();
+			rset= stmt.executeQuery(query);
+			while(rset.next()) {
+				getUserClassList.add(rset.getString("CLASS_NAME"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(stmt);
+			close(rset);
+		}
+		return getUserClassList;
+	}
+
+	public ArrayList<String> classUserList(Connection con, String userClass) {
+		ArrayList<String> classUserList = new ArrayList<String>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("classUserList");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userClass);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				classUserList.add(rset.getString("USER_ID"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return classUserList;
+	}
+
+	public int dIssuedUserList(Connection con, String userId, String userClass, String able) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("dIssuedUserList");
+		int dIssuedUserList = 0;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userClass);
+			rset=pstmt.executeQuery();
+			if(rset.next()){
+				dIssuedUserList = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		return dIssuedUserList;
+	}
+
+	public int eIssuedUserList(Connection con, String userId, String userClass, String able) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("eIssuedUserList");
+		int eIssuedUserList = 0;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userClass);
+			rset=pstmt.executeQuery();
+			if(rset.next()){
+				eIssuedUserList = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		return eIssuedUserList;
+	}
+//목록
+	public ArrayList<HashMap<String, Object>> dIssuedUserList(Connection con, String userId, String userClass,
+			int currentPage, int limit) {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> map = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("dIssuedUserListArr");
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userClass);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			rset = pstmt.executeQuery();
+			while(rset.next()){
+				 map = new HashMap<String,Object>();
+				 map.put("couponCode", rset.getString("COUPON_CODE"));
+				 map.put("userId", rset.getString("USER_ID"));
+				 map.put("userClass",rset.getString("CLASS_NAME"));
+				 map.put("useDate",rset.getDate("ORDER_DATE"));
+				 map.put("orderLNum",rset.getString("ORDER_LNUM"));
+				 list.add(map);
+				 System.out.println(list);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}	
+		return list;
+	}
+
+	public ArrayList<HashMap<String, Object>> EIssuedUserList(Connection con, String userId, String userClass,
+			int currentPage, int limit) {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> map = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("eIssuedUserListArr");
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userClass);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			rset = pstmt.executeQuery();
+			while(rset.next()){
+				 map = new HashMap<String,Object>();
+				 map.put("couponCode", rset.getString("COUPON_CODE"));
+				 map.put("userId", rset.getString("USER_ID"));
+				 map.put("userClass",rset.getString("CLASS_NAME"));
+				 map.put("useDate","");
+				 map.put("orderLNum","");
+				 list.add(map);
+			}
+			System.out.println("사용"+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}	
+		return list;
+	}
+
+
+
 }

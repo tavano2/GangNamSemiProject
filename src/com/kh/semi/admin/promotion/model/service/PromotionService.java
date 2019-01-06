@@ -220,6 +220,54 @@ public class PromotionService {
 		}
 		return result;
 	}
+
+	public ArrayList<String> ajaxGetUserClass() {
+		Connection con = getConnection();
+		ArrayList<String> getUserClassList = null;
+		getUserClassList = new PromotionDao().ajaxGetUserClass(con);
+		close(con);
+		return getUserClassList;
+	}
+
+	public ArrayList<String> classUserList(String userClass) {
+		Connection con = getConnection();
+		ArrayList<String> userClassList = null;
+		userClassList = new PromotionDao().classUserList(con, userClass);
+		close(con);
+		return userClassList;
+	}
+//발급한 회원 페이징 처리를 위한 전체 리스트 count 불러오는 함수
+	public int dIssuedUserList(String userId, String userClass, String able) {
+		Connection con = getConnection();
+		int dIssuedUserList = new PromotionDao().dIssuedUserList(con, userId, userClass, able);
+		close(con);
+		return dIssuedUserList;
+	}
+
+	public int eIssuedUserList(String userId, String userClass, String able) {
+		Connection con = getConnection();
+		int eIssuedUserList = new PromotionDao().eIssuedUserList(con, userId, userClass, able);
+		close(con);
+		return eIssuedUserList;
+	}
+
+	public ArrayList<HashMap<String, Object>> dIssuedUserList(String userId, String userClass, int currentPage,
+			int limit) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> list  = null;
+		list = new PromotionDao().dIssuedUserList(con, userId, userClass, currentPage, limit);
+		close(con);
+		return list;
+	}
+
+	public ArrayList<HashMap<String, Object>> EIssuedUserList(String userId, String userClass, int currentPage,
+			int limit) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> list  = null;
+		list = new PromotionDao().EIssuedUserList(con, userId, userClass, currentPage, limit);
+		close(con);
+		return list;
+	}
 	
 
 	
