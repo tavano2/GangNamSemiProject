@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 import com.kh.semi.customer.delivery.model.dao.DeliveryDao;
 
+import oracle.net.aso.l;
+
 public class DeliveryService {
 
 	public DeliveryService() {
@@ -23,9 +25,16 @@ public class DeliveryService {
 	}
 
 	public ArrayList<HashMap<String, Object>> searchOrderStatus(String userId, String searchOrderStatus,
-			int resultDay, int currentPage, int limit) {
+			int resultDay) {
 		Connection con = getConnection();
-		ArrayList<HashMap<String, Object>> list = new DeliveryDao().searchOrderStatus(con,userId,searchOrderStatus,resultDay,currentPage,limit);
+		ArrayList<HashMap<String, Object>> list = new DeliveryDao().searchOrderStatus(con,userId,searchOrderStatus,resultDay);
+		close(con);
+		return list;
+	}
+
+	public ArrayList<HashMap<String, Object>> selectDetailOrderList(String lnum, String userId) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> list = new DeliveryDao().selectDetailOrderList(con,lnum,userId);
 		close(con);
 		return list;
 	}

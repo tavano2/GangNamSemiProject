@@ -41,14 +41,83 @@ public class SelectCusotmerOrderStatusServlet extends HttpServlet {
 		int startPage;
 		int endPage;
 		
+		//가공처리 전 리스트
+		ArrayList<HashMap<String, Object>> list = new DeliveryService().searchOrderStatus(userId,searchOrderStatus,resultDay);
+	
+		//가공처리 작업
+		ArrayList<ArrayList<HashMap<String, Object>>> resultList = new ArrayList<ArrayList<HashMap<String,Object>>>();
+		ArrayList<HashMap<String, Object>> secondList = new ArrayList<HashMap<String,Object>>();
+		HashMap<String, Object> threeHmap = new HashMap<String,Object>();
+		ArrayList<String> lnumArray = new ArrayList<String>();
+		
+		String lnum = "";
+		ArrayList<String> productsName = new ArrayList<String>();
+		int totalAmount = 0;
+		int totalPrice = 0;
+		String orderSname = "";
+		int count = 0;
+		String productResultNmae = "";
+		
+		
+		for(HashMap<String, Object> hmap : list) {
+			if(productsName.size() > 0) {
+				if(!lnumArray.get(lnumArray.size()-1).equals((String)hmap.get("order_lnum"))) {
+					productResultNmae = productsName.get(0) +" 외 " + (count-1)+"개";
+					// 가공 처리 해준것들을 새로운 해쉬맵(3단계)에 넣음
+					threeHmap.put("order_lnum", lnum);
+					threeHmap.put("product_name", productResultNmae);
+					threeHmap.put("order_amount", totalAmount);
+					threeHmap.put("product_price", totalPrice);
+					threeHmap.put("order_sname", orderSname);
+					// 새로운 해쉬맵(3단계)을 2단계에 삽입
+					secondList.add(threeHmap);
+					//2단계를 1단계에 삽입
+					resultList.add(secondList);
+					
+					//초기화 작업
+					lnumArray = new ArrayList<String>();
+					lnum = "";
+					productsName = new ArrayList<String>();
+					totalAmount = 0;
+					totalPrice = 0;
+					orderSname = "";
+					count = 0;
+					productResultNmae = "";
+					threeHmap = new HashMap<String,Object>();
+					secondList = new ArrayList<HashMap<String, Object>>();
+				}
+			}
+			lnumArray.add((String)hmap.get("order_lnum"));
+			lnum = (String)hmap.get("order_lnum");
+			productsName.add((String)hmap.get("product_name"));
+			totalAmount += (int)hmap.get("order_amount");
+			totalPrice += (int)hmap.get("product_price");
+			orderSname = (String)hmap.get("order_sname");
+			++count;
+		}
+		if(productsName.size() > 0) {
+		productResultNmae = productsName.get(0) +" 외 " + (count-1)+"개";
+		}
+		// 가공 처리 해준것들을 새로운 해쉬맵(3단계)에 넣음
+		threeHmap.put("order_lnum", lnum);
+		threeHmap.put("product_name", productResultNmae);
+		threeHmap.put("order_amount", totalAmount);
+		threeHmap.put("product_price", totalPrice);
+		threeHmap.put("order_sname", orderSname);
+		// 새로운 해쉬맵(3단계)을 2단계에 삽입
+		secondList.add(threeHmap);
+		//2단계를 1단계에 삽입
+		resultList.add(secondList);
+		
+			
+			
 		currentPage =1;
 		if(request.getParameter("currentPage") != null) {
 			currentPage= Integer.parseInt(request.getParameter("currentPage"));
 		}
 		int listCount = 0;
 		limit = 10;
-		DeliveryService del = new DeliveryService();
-		listCount = del.orderStatusListCount(resultDay,searchOrderStatus,userId);
+		listCount = resultList.size();
 
 		
 		maxPage = listCount/limit +(listCount % limit == 0 ? 0 : 1);
@@ -58,28 +127,15 @@ public class SelectCusotmerOrderStatusServlet extends HttpServlet {
 			endPage=maxPage;
 		}
 		
-		
-		
-		
-		
-		//가공처리 전 리스트
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		ArrayList<HashMap<String, Object>> list = new DeliveryService().searchOrderStatus(userId,searchOrderStatus,resultDay,currentPage,limit);
+		
 	
-		//가공처리 작업
-		ArrayList<HashMap<String, Object>> resultList = new ArrayList<HashMap<String,Object>>();
-		
-		
-		
-		
-		
-		
 		
 		HashMap<String, Object> result = null;
 		if(pi != null && list != null) {
 		result = new HashMap<String,Object>();
 		result.put("pi", pi);
-		result.put("list", list);		
+		result.put("list", resultList);		
 		}		
 		
 		// 담은것 gson으로 처리
@@ -87,7 +143,7 @@ public class SelectCusotmerOrderStatusServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		new Gson().toJson(result, response.getWriter());
 		
-		
+	
 		
 	}
 
