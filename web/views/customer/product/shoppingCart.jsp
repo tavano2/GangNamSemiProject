@@ -210,18 +210,6 @@
 			}
 		}
 		
-		function allOrder(){
-			$("input:checkbox").prop("checked", true);
-			
-			cartList.action = "<%= request.getContextPath() %>/selectOrderProduct.or";
-			cartList.submit();
-		}
-		
-		function selectOrder(){
-			cartList.action = "<%= request.getContextPath() %>/selectOrderProduct.or";
-			cartList.submit();
-		}
-		
 		function amountUp(btn){
 			var cartNum = $(btn).parents("tr").find("input:checkbox").val();
 			var amount = Number($(btn).parents("tr").find(".amount").text()) + 1;
@@ -254,6 +242,18 @@
 					}
 				})
 			}
+		}
+		
+		function allOrder(){
+			$("input:checkbox").prop("checked", true);
+			
+			cartList.action = "<%= request.getContextPath() %>/selectOrderProduct.or";
+			cartList.submit();
+		}
+		
+		function selectOrder(){
+			cartList.action = "<%= request.getContextPath() %>/selectOrderProduct.or";
+			cartList.submit();
 		}
 		
 	</script>
