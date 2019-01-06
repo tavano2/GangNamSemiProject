@@ -112,16 +112,19 @@
 	                        </div>
 						</td>
 						<td class="center aligned">
-							<img src="<%=atList.get(cartList.get(i).getProductCode()).getFilePath() + atList.get(cartList.get(i).getProductCode()).getChangeName()%>" width="100" height="100">
+							<a href="<%=request.getContextPath()%>/reviewNoticeList.no?code=<%= cartList.get(i).getProductCode() %>"><img src="<%=atList.get(cartList.get(i).getProductCode()).getFilePath() + atList.get(cartList.get(i).getProductCode()).getChangeName()%>"
+							width="100" height="100"></a>
 						</td>
 						<td class="center aligned">
-							<span><%=pdList.get(cartList.get(i).getProductCode()).getProductName()%></span>&nbsp;&nbsp;&nbsp;(
-							<% for (int j = i; j < i + count.get(String.valueOf(cartList.get(i).getCartNum())); j++) { %>
-							<span><%=opList.get(cartList.get(j).getOptionNum())%></span>
-								<% if(j != i + count.get(String.valueOf(cartList.get(i).getCartNum())) - 1){ %>
-									, 
-								<%}
-							}%>)
+							<a href="<%=request.getContextPath()%>/reviewNoticeList.no?code=<%= cartList.get(i).getProductCode() %>" >
+								<span><%=pdList.get(cartList.get(i).getProductCode()).getProductName()%></span>&nbsp;&nbsp;&nbsp;(
+								<% for (int j = i; j < i + count.get(String.valueOf(cartList.get(i).getCartNum())); j++) { %>
+								<span><%=opList.get(cartList.get(j).getOptionNum())%></span>
+									<% if(j != i + count.get(String.valueOf(cartList.get(i).getCartNum())) - 1){ %>
+										, 
+									<%}
+								}%>)
+							</a>
 						</td>
 						<td class="center aligned"><%=comma(pdList.get(cartList.get(i).getProductCode()).getProductPrice())%></td>
 						<!-- 상품 목록에서 상품 코드와 가격(상품 정보) 가져오기. | 단일 수량 -->
@@ -210,18 +213,6 @@
 			}
 		}
 		
-		function allOrder(){
-			$("input:checkbox").prop("checked", true);
-			
-			cartList.action = "<%= request.getContextPath() %>/selectOrderProduct.or";
-			cartList.submit();
-		}
-		
-		function selectOrder(){
-			cartList.action = "<%= request.getContextPath() %>/selectOrderProduct.or";
-			cartList.submit();
-		}
-		
 		function amountUp(btn){
 			var cartNum = $(btn).parents("tr").find("input:checkbox").val();
 			var amount = Number($(btn).parents("tr").find(".amount").text()) + 1;
@@ -254,6 +245,18 @@
 					}
 				})
 			}
+		}
+		
+		function allOrder(){
+			$("input:checkbox").prop("checked", true);
+			
+			cartList.action = "<%= request.getContextPath() %>/selectOrderProduct.or";
+			cartList.submit();
+		}
+		
+		function selectOrder(){
+			cartList.action = "<%= request.getContextPath() %>/selectOrderProduct.or";
+			cartList.submit();
 		}
 		
 	</script>
