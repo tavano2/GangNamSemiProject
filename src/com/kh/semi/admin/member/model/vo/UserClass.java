@@ -18,11 +18,12 @@ public class UserClass {
 	private String freeDelevery;
 	private int standardPrice;
 	private String status;
+	private int memberCount;
 	
 	public UserClass() {}
 
 	public UserClass(String classCode, String className, String classMemo, double dicountRate, double pointRate,
-			String freeDelevery, int standardPrice, String status) {
+			String freeDelevery, int standardPrice, String status, int memberCount) {
 		super();
 		this.classCode = classCode;
 		this.className = className;
@@ -32,6 +33,7 @@ public class UserClass {
 		this.freeDelevery = freeDelevery;
 		this.standardPrice = standardPrice;
 		this.status = status;
+		this.memberCount = memberCount;
 	}
 
 	public String getClassCode() {
@@ -98,11 +100,19 @@ public class UserClass {
 		this.status = status;
 	}
 
+	public int getMemberCount() {
+		return memberCount;
+	}
+
+	public void setMemberCount(int memberCount) {
+		this.memberCount = memberCount;
+	}
+
 	@Override
 	public String toString() {
 		return "UserClass [classCode=" + classCode + ", className=" + className + ", classMemo=" + classMemo
 				+ ", dicountRate=" + dicountRate + ", pointRate=" + pointRate + ", freeDelevery=" + freeDelevery
-				+ ", standardPrice=" + standardPrice + ", status=" + status + "]";
+				+ ", standardPrice=" + standardPrice + ", status=" + status + ", memberCount=" + memberCount + "]";
 	}
 	
 }

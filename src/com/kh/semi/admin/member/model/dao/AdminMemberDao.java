@@ -88,7 +88,6 @@ public class AdminMemberDao {
 			pstmt.setString(7, searchCondition.getBlacklist());
 			pstmt.setString(8, searchCondition.getSpam());
 			
-			System.out.println("black: "+searchCondition.getBlacklist()+", spam: "+searchCondition.getSpam());
 			
 			rset = pstmt.executeQuery();
 			
@@ -121,5 +120,233 @@ public class AdminMemberDao {
 		
 		return userList;
 	}
+
+
+	public int userStatusUpdate(Connection con, String userId, String changeCondition, String changeStatus) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "";
+		
+		try {
+			switch(changeCondition) {
+				case "cert": query = prop.getProperty("userStatusUpdateCert"); break;
+				case "black": query = prop.getProperty("userStatusUpdateBlack"); break;
+				case "spam": query = prop.getProperty("userStatusUpdateSpam"); break;
+			}
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, changeStatus);
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public int userPlusUpdate(Connection con, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("userPlusUpdate");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public int userDeleteUpdate(Connection con, String userId, String deleteReason) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("userDeleteUpdate");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, deleteReason);
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public ArrayList<UserClass> userClassListSelect(Connection con, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<UserClass> classList = null;
+		
+		String query = prop.getProperty("userClassListSelect");
+		
+		try {
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			classList = new ArrayList<UserClass>();
+			
+			while(rset.next()) {
+				UserClass uc = new UserClass();
+				
+				uc.setClassCode(rset.getString("CLASS_CODE"));
+				uc.setClassName(rset.getString("CLASS_NAME"));
+				uc.setClassMemo(rset.getString("CLASS_MEMO"));
+				uc.setDicountRate(rset.getDouble("DICOUNT_RATE"));
+				uc.setPointRate(rset.getDouble("POINT_RATE"));
+				uc.setFreeDelevery(rset.getString("FREE_DELEVERY"));
+				uc.setStandardPrice(rset.getInt("STANDARD_PRICE"));
+				uc.setStatus(rset.getString("STATUS"));
+				uc.setMemberCount(rset.getInt("MEMBER_COUNT"));
+				
+				classList.add(uc);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return classList;
+	}
+
+
+	public int getClassListCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		
+		String query = prop.getProperty("getClassListCount");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				listCount = rset.getInt("COUNT");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return listCount;
+	}
+	
+	public int insertUserClass(Connection con, UserClass uc) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertUserClass");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, uc.getClassName());
+			pstmt.setString(2, uc.getClassMemo());
+			pstmt.setDouble(3, uc.getDicountRate());
+			pstmt.setDouble(4, uc.getPointRate());
+			pstmt.setString(5, uc.getFreeDelevery());
+			pstmt.setInt(6, uc.getStandardPrice());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public int changeClassStatus(Connection con, String originClassCode, String status) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("changeClassStatus");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			if(status.equals("E")) {
+				pstmt.setString(1, "D");
+			} else {
+				pstmt.setString(1, "E");
+			}
+			pstmt.setString(2, originClassCode);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	
+	public int changeMemberClass(Connection con, String originClassCode, String changeClassCode) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("changeMemberClass");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, changeClassCode);
+			pstmt.setString(2, originClassCode);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+
+
+
+
+
 
 }

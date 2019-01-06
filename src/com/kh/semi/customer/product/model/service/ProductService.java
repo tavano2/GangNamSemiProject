@@ -471,6 +471,25 @@ public class ProductService {
 			return result;
 		}
 
+		public int[] insertWishList(String userId, String productCode) {
+			Connection con = getConnection();
+			int[] result = {0, 0};
+			
+			result[0] = new ProductDao().hasProduct(con, userId, productCode);
+			
+			if(result[0] == 0) {
+				result[1] = new ProductDao().insertWishList(con, userId, productCode);
+				
+				if(result[1] > 0) {
+					commit(con);
+				} else {
+					rollback(con);
+				}
+			}
+			
+			return result;
+		}
+
 
 
 

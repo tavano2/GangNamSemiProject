@@ -150,7 +150,7 @@
 					%>
 					
 					<%if(cartList.size() == 0) { %>
-					<tr class="center aligned"><td colspan="6" >장바구니에 담긴 상품이 없습니다.</td></tr>
+					<tr class="center aligned"><td colspan="7" >장바구니에 담긴 상품이 없습니다.</td></tr>
 					<%} %>
 					
 				</tbody>
@@ -167,7 +167,7 @@
 								<input type="text" value="배송비 :    2,500 원" readonly style="border: none; background-color: transparent; text-align: right;">
 							</div>
 						</th>
-						<%} else {%><th colspan="6">&nbsp;</th><%} %>
+						<%} else {%><th colspan="7">&nbsp;</th><%} %>
 					</tr>
 				</tfoot>
 			</table>
