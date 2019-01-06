@@ -89,11 +89,9 @@ public class OrderService {
 				int insertOrderDetailTable = 0;
 				//od에 들어갈 쿠폰코드(상품코드로 비교)
 				if(couponProductCode.equals((String)hmap.get("product_code"))) {
-					System.out.println("서비스 : 쿠폰 번호 있을시");
 					insertOrderDetailTable = new OrderDao().insertOrderDetailTable(con,OrderDnum,userId,(String)hmap.get("product_code")
 							,(String)hmap.get("option_num"),(String)hmap.get("amount"),couponValue);
 				}else {
-					System.out.println("서비스 : 쿠폰 번호 없을시");
 					insertOrderDetailTable = new OrderDao().insertOrderDetailTable(con,OrderDnum,userId,(String)hmap.get("product_code")
 							,(String)hmap.get("option_num"),(String)hmap.get("amount"));
 				}
@@ -103,13 +101,11 @@ public class OrderService {
 					
 				//정상적으로 od와 장바구니가 실행 되었을시 오더 리스트 테이블 삽입
 				if(insertOrderDetailTable > 0 && deleteCart > 0) {
-					insertOrderListTable  =+ new OrderDao().insertOrderListTable(con,lnum,OrderDnum,userId,buyerCode,imp_uid,(String)hmap.get("option_num"));
+					insertOrderListTable  += new OrderDao().insertOrderListTable(con,lnum,OrderDnum,userId,buyerCode,imp_uid,(String)hmap.get("option_num"));
 					count ++;
 				}
 			}
 		}
-		System.out.println("카운트 숫자" + count);
-		System.out.println("ol 숫자" + insertOrderListTable);
 		//쿠폰 발급 사용완료로 업데이트
 		int updateUseCoupon = 0;
 		if(count == insertOrderListTable) {
@@ -147,7 +143,6 @@ public class OrderService {
 		// 오더 디테일 테이블  삽입
 		for(ArrayList<HashMap<String, Object>> list1 : resultList) {
 			String OrderDnum = new OrderDao().selectOrderDnum(con);
-			System.out.println("dnum : " + OrderDnum);
 			for(HashMap<String, Object> hmap : list1) {
 				int insertOrderDetailTable = 0;
 				insertOrderDetailTable = new OrderDao().insertOrderDetailTable(con,OrderDnum,userId,(String)hmap.get("product_code")
@@ -157,7 +152,7 @@ public class OrderService {
 					
 				//정상적으로 od와 장바구니가 실행 되었을시 오더 리스트 테이블 삽입
 				if(insertOrderDetailTable > 0 && deleteCart > 0) {
-					insertOrderListTable  =+ new OrderDao().insertOrderListTable(con,lnum,OrderDnum,userId,buyerCode,imp_uid,(String)hmap.get("option_num"));
+					insertOrderListTable  += new OrderDao().insertOrderListTable(con,lnum,OrderDnum,userId,buyerCode,imp_uid,(String)hmap.get("option_num"));
 					count ++;
 				}
 			}
