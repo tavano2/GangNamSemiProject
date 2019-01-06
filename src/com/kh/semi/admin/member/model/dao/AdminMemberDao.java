@@ -88,7 +88,6 @@ public class AdminMemberDao {
 			pstmt.setString(7, searchCondition.getBlacklist());
 			pstmt.setString(8, searchCondition.getSpam());
 			
-			System.out.println("black: "+searchCondition.getBlacklist()+", spam: "+searchCondition.getSpam());
 			
 			rset = pstmt.executeQuery();
 			
@@ -120,6 +119,80 @@ public class AdminMemberDao {
 		}
 		
 		return userList;
+	}
+
+
+	public int userStatusUpdate(Connection con, String userId, String changeCondition, String changeStatus) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "";
+		
+		try {
+			switch(changeCondition) {
+				case "cert": query = prop.getProperty("userStatusUpdateCert"); break;
+				case "black": query = prop.getProperty("userStatusUpdateBlack"); break;
+				case "spam": query = prop.getProperty("userStatusUpdateSpam"); break;
+			}
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, changeStatus);
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public int userPlusUpdate(Connection con, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("userPlusUpdate");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public int userDeleteUpdate(Connection con, String userId, String deleteReason) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("userDeleteUpdate");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, deleteReason);
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }

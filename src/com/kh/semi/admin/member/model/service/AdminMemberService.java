@@ -28,4 +28,50 @@ public class AdminMemberService {
 		return userList;
 	}
 
+	public int userStatusUpdate(String[] resultChk, String changeCondition, String changeStatus) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		for(String userId : resultChk) {
+			result += new AdminMemberDao().userStatusUpdate(con, userId, changeCondition, changeStatus);
+		}
+		
+		if(result == resultChk.length) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
+	public int userPlusUpdate(String userId) {
+		Connection con = getConnection();
+		int result = new AdminMemberDao().userPlusUpdate(con, userId);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
+	public int userDeleteUpdate(String userId, String deleteReason) {
+		Connection con = getConnection();
+		int result = new AdminMemberDao().userDeleteUpdate(con, userId, deleteReason);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
 }

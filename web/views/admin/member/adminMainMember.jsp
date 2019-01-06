@@ -284,13 +284,14 @@
         		 <!-- <br/> -->
                    
                    <form action="" method="post" id="resultBox" name="resultBox">
-                   		<input type="hidden">
+                   		<input type="hidden" name="changeCondition" id="changeCondition">
+                   		<input type="hidden" name="changeStatus" id="changeStatus">
 	        			<table class="ui celled table member-result">
        						<!-- <button class="ui white button">X 삭제</button> -->
        						<!--  DROPD	OWN IS NEE-->
 	        			<thead>
 	        				<tr>
-	        					<th class="right aligned" colspan="9">
+	        					<th class="right aligned" colspan="10">
 	        						<div class="ui selection dropdown">
 			                             	<input type="hidden" name="resultLimit" id="resultLimit">
 			                                <i class="dropdown icon"></i>
@@ -306,14 +307,12 @@
 			                            </div>
 	        					</th>
 	        				</tr>
-	        				<tr><th colspan="9">
+	        				<tr><th colspan="10">
                             	<div class="ui grid">
 		                            <div class="eight wide column">
 		                            	<input type="hidden" name="changeState" id="changeState">
-		                            	<button class="ui black button" type="button" onclick="userCertUpdate('E'); return false;">인증 처리</button>
-		                                <button class="ui grey button" type="button" onclick="userCertUpdate('D'); return false;">인증 취소</button>
-		                                <button class="ui grey button" type="button" onclick="userDeleteUpdate('D'); return false;">탈퇴 처리</button>
-		                                <button class="ui black button" type="button" onclick="userDeleteUpdate('E'); return false;">탈퇴 취소</button>
+		                            	<button class="ui black button" type="button" onclick="userStatusUpdate('cert', 'E'); return false;">인증 처리</button>
+		                                <button class="ui grey button" type="button" onclick="userStatusUpdate('cert', 'D'); return false;">인증 취소</button>
 		                            </div>
 		                            
 	                                <div class="eight wide column right aligned">
@@ -322,8 +321,8 @@
 			                                <i class="dropdown icon"></i>
 			                                <div class="default text">블랙 처리</div><!-- .default text:gray; -->
 			                                <div class="menu"><!-- menu > accordion -->
-			                                    <div class="item" data-value="1" onclick="blackUpdate('E'); return false;">블랙 등록</div>
-			                                    <div class="item" data-value="2" onclick="blackUpdate('D'); return false;">블랙 취소</div>
+			                                    <div class="item" data-value="1" onclick="userStatusUpdate('black', 'E'); return false;">블랙 등록</div>
+			                                    <div class="item" data-value="2" onclick="userStatusUpdate('black', 'D'); return false;">블랙 취소</div>
 			                                </div>
 			                            </div>
 			                            <div class="ui selection dropdown">
@@ -331,8 +330,8 @@
 			                                <i class="dropdown icon"></i>
 			                                <div class="default text">스팸 처리</div><!-- .default text:gray; -->
 			                                <div class="menu"><!-- menu > accordion -->
-			                                    <div class="item" data-value="1" onclick="spamUpdate('E'); return false;">스팸 등록</div>
-			                                    <div class="item" data-value="2" onclick="spamUpdate('D'); return false;">스팸 취소</div>
+			                                    <div class="item" data-value="1" onclick="userStatusUpdate('spam', 'E'); return false;">스팸 등록</div>
+			                                    <div class="item" data-value="2" onclick="userStatusUpdate('spam', 'D'); return false;">스팸 취소</div>
 			                                </div>
 			                            </div>
 	                                </div>
@@ -347,7 +346,7 @@
 		                       	<th style="width: 80px">인증</th>
 		                       	<th style="width: 80px">블랙유저</th>
 		                       	<th style="width: 80px">스팸유저</th>
-		                       	<th style="width: 140px">탈퇴일자</th>
+		                       	<th colspan="2" style="width: 70px">탈퇴일자</th>
 		                       	<th>탈퇴사유</th>
 	                        </tr>
 	                    </thead>
@@ -357,7 +356,7 @@
 	                    
 	                    <tfoot>
 	                    	<tr>
-								<th colspan="9" class="center aligned">
+								<th colspan="10" class="center aligned">
 							    	<div class="ui pagination menu" id="paging">
 							    		<a class="icon item"><i class="angle double left icon"></i></a>
 								        <a class="icon item"><i class="angle left icon"></i></a>
@@ -385,6 +384,60 @@
        <%@ include file = "/views/admin/common/adminFooter.jsp" %>
     </div>
 
+	<div class="ui tiny modal modalAlert">
+		<div class="header">
+	      	알림
+	    </div>
+	    <div class="content" style="width: auto; padding-left:0; padding-bottom:0;">
+	      	<div class="ui input big fluid transparent">
+	        	<input type="text" id="alertMsg" style="text-align: center;" readonly>
+	        </div>
+	    </div>
+	    <div class="actions">
+	    	<div class="ui grid">
+	    		<div class="eight wide column left aligned">
+<!-- 	    			<div class="ui positive button" id="alertCancelBtn">
+			       		취소
+			      	</div> -->
+	    		</div>
+	    		
+	    		<div class="eight wide column right aligned">
+	    			<div class="ui positive right labeled icon button">
+			        	확인
+			        	<i class="paper plane outline icon"></i>
+			      	</div>
+	    		</div>
+	    	</div>
+		</div>
+	</div>
+	
+	<div class="ui tiny modal modalPrompt">
+		<div class="header">
+	      	회원 탈퇴
+	    </div>
+	    <div class="content" style="width: auto; padding-left:0; padding-bottom:0;">
+	    	<input type="hidden" id="deleteUserId">
+	      	<div class="ui input big fluid transparent">
+	        	<input type="text" id="deleteReason" placeholder="탈퇴 사유">
+	        </div>
+	    </div>
+	    <div class="actions">
+	    	<div class="ui grid">
+	    		<div class="eight wide column left aligned">
+	    			<div class="ui positive button">
+			       		취소
+			      	</div>
+	    		</div>
+	    		
+	    		<div class="eight wide column right aligned">
+	    			<div class="ui positive right labeled icon button" onclick="userDelete();">
+			        	확인
+			        	<i class="paper plane outline icon"></i>
+			      	</div>
+	    		</div>
+	    	</div>
+		</div>
+	</div>
 
     <!-- J-query CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -411,36 +464,76 @@
 	    
 	    
 	    //상태 변경
-	    function userCertUpdate(status){
-	    	
+	    function userStatusUpdate(condition, status){
+			var chkList = $(".member-result input[type='checkbox']:checked");
+			
+			if(chkList.length > 0 && confirm("상태를 변경하시겠습니까?")){
+		    	$("#changeCondition").val(condition);
+		    	$("#changeStatus").val(status);
+				
+				var resultBox = $("#resultBox").serialize();
+				
+				$.ajax({
+					url: "<%= request.getContextPath() %>/userStatusUpdate.me",
+					type: "post",
+					data: resultBox,
+					success: function(data){
+						$("#alertMsg").val("변경되었습니다.");
+						$('.modalAlert').modal('show');
+						
+						searchBtn();
+					}, error: function(){
+						console.log("실팽");
+					}
+				});
+			}
 	    }
 	    
-		function userDeleteUpdate(status){
-	    	
+	    //탈퇴
+	    function userDeleteUpdate(userId){
+	    	$("#deleteReason").val('');
+	    	$("#deleteUserId").val('');
+	    	$("#deleteUserId").val(userId);
+	    	$('.modalPrompt').modal('show');
 	    }
-		
-		function blackUpdate(status){
-			
-		}
-		
-		function spamUpdate(status){
-			
-		}
 	    
-		function statusAjax(urlAddr){
-			var resultBox = $("#resultBox").serialize();
-			
-			$.ajax({
-				url: urlAddr,
+	    function userDelete(){
+	    	var deleteReason = $("#deleteReason").val();
+	    	var userId = $("#deleteUserId").val();
+	    	
+	    	$.ajax({
+				url: "<%= request.getContextPath() %>/userDeleteUpdate.me",
 				type: "post",
-				data: resultBox,
+				data: {userId:userId, deleteReason:deleteReason},
 				success: function(data){
+					$("#alertMsg").val("탈퇴처리되었습니다.");
+					$('.modalAlert').modal('show');
 					
+					searchBtn();
 				}, error: function(){
 					console.log("실팽");
 				}
 			});
-		}
+	    }
+	    
+	    function userPlusUpdate(userId){
+	    	if(confirm("복구시키겠습니까?")){
+				$.ajax({
+					url: "<%= request.getContextPath() %>/userPlusUpdate.me",
+					type: "post",
+					data: {userId:userId},
+					success: function(data){
+						$("#alertMsg").val("복구되었습니다.");
+						$('.modalAlert').modal('show');
+						
+						searchBtn();
+					}, error: function(){
+						console.log("실팽");
+					}
+				});
+			}
+	    }
+	    
 	    
 	    //회원등급목록
 	    $(function(){
@@ -907,8 +1000,16 @@
 					var $td5 = $("<td>").html(searchResult[i].userCert == "E" ? "<i class='check icon'></i>" : "");
 					var $td6 = $("<td>").html(searchResult[i].blacklist == "E" ? "<i class='check icon'></i>" : "");
 					var $td7 = $("<td>").html(searchResult[i].spam == "E" ? "<i class='check icon'></i>" : "");
-					var $td8 = $("<td>").text(searchResult[i].deleteDate);
-					var $td9 = $("<td>").text(searchResult[i].deleteReason);
+					var $td8;
+					if(searchResult[i].status == "E"){
+						$td8 = $("<td>").css("width", "40px").html("<a class='ui icon button' onclick='userDeleteUpdate(\""+searchResult[i].userId+"\");'><i class='user times icon'></i></a>");
+					} else {
+						$td8 = $("<td>").css("width", "40px").html("<a class='ui black icon button' onclick='userPlusUpdate(\""+searchResult[i].userId+"\");'><i class='user plus icon'></i></a>");
+					}
+					
+					
+					var $td9 = $("<td style='width: 130px'>").text(searchResult[i].deleteDate);
+					var $td10 = $("<td>").text(searchResult[i].deleteReason);
 					
 					$tr.append($td1);
 					$tr.append($td2);
@@ -919,6 +1020,7 @@
 					$tr.append($td7);
 					$tr.append($td8);
 					$tr.append($td9);
+					$tr.append($td10);
 					
 					$tbody.append($tr);
 				} else break;
