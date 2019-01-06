@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.service.ProductService;
 
 /**
@@ -28,16 +29,23 @@ public class DeleteCartNumServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] cartNum = request.getParameterValues("cartNum");
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
-		int result = new ProductService().deleteCartNum(cartNum);
-		
-		if(result > 0) {
-		
+		if(loginUser != null) {
+			
+			String[] cartNum = request.getParameterValues("cartNum");
+			
+			int result = new ProductService().deleteCartNum(cartNum);
+			
+			if(result > 0) {
+			
+			} else {
+				System.out.println("장바구니 삭제 실패");
+			}
+			
 		} else {
-			System.out.println("장바구니 삭제 실패");
+			response.sendRedirect("views/customer/member/memberLogin.jsp");
 		}
-		
 	}
 
 	/**

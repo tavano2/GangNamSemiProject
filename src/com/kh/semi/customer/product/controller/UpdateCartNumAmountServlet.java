@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.service.ProductService;
 
 /**
@@ -28,15 +29,23 @@ public class UpdateCartNumAmountServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String cartNum = request.getParameter("cartNum");
-		String amount = request.getParameter("amount");
-
-		int result = new ProductService().updateCartNumAmount(cartNum, amount);
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
-		if(result > 0) {
+		if(loginUser != null) {
+		
+			String cartNum = request.getParameter("cartNum");
+			String amount = request.getParameter("amount");
+	
+			int result = new ProductService().updateCartNumAmount(cartNum, amount);
 			
+			if(result > 0) {
+				
+			} else {
+				System.out.println("장바구니 수량 증감 실패");
+			}
+		
 		} else {
-			System.out.println("장바구니 수량 증감 실패");
+			response.sendRedirect("views/customer/member/memberLogin.jsp");
 		}
 		
 	}
