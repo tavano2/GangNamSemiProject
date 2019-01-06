@@ -156,7 +156,7 @@
 				
 					//페이징 처리
 					$trPage = $("<tr>");
-					$tdPage = $("<td colspan='5' >");
+					$tdPage = $("<td colspan='6' >");
 					$centerDiv = $("<div align='center'>");
 					$paginationDiv = $("<div class='ui pagination menu'>");
 
@@ -281,7 +281,7 @@
 					
 						//페이징 처리
 						$trPage = $("<tr>");
-						$tdPage = $("<td colspan='5' >");
+						$tdPage = $("<td colspan='6' >");
 						$centerDiv = $("<div align='center'>");
 						$paginationDiv = $("<div class='ui pagination menu'>");
 

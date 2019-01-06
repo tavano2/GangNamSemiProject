@@ -62,7 +62,7 @@
 
 			</div>
 			<ul>
-				<li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li>
+				<li>기본적으로 최근 3개월간,상품 준비의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li>
 				<li>주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.</li>
 			</ul>
 			<br> <br> <b>주문 상품 정보</b>
@@ -80,15 +80,7 @@
 						<th>취소/교환/반품</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td>0502-0505</td>
-						<td>jhlilk22@yahoo.com</td>
-						<td>No</td>
-						<td>35000원</td>
-						<td>배송중</td>
-						<td></td>
-					</tr>
+				<tbody id="orderStatusTbody">
 				</tbody>
 			</table>
 			
@@ -104,7 +96,7 @@
 				
 	
 				<div class="ui simple dropdown item test2">
-			  <input type="hidden" name="return">
+
 			  <i class="dropdown icon"></i>
 			  <div class="default text">환불/취소/반품 상태</div>
 			  <div class="menu">
@@ -171,6 +163,49 @@
 	<br>
 	<br>
 	<br>
+	
+	
+	<!-- 주문 조회 모달 -->
+	<div class="ui fullscreen longer modal test1">
+		<i class="close icon"></i>
+		<div class="header">주문 내역 조회</div>
+		<div class="image content">
+			<div class="description">
+				<table class="ui single line table">
+					<thead>
+						<tr>
+							<th></th>
+							<th>주문 내역 번호</th>
+							<th>상품명</th>
+							<th>수량</th>
+							<th>판매가</th>
+							<th>주문 상태</th>
+						</tr>
+					</thead>
+					<tbody id="orderDetailTbody">
+
+
+					</tbody>
+
+
+				</table>
+
+
+				<br> <br> <br> <br>
+			</div>
+		</div>
+		<div class="actions">
+			<div class="ui black deny button">취소</div>
+			<div class="ui positive right labeled icon button">
+				확인 <i class="checkmark icon"></i>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
 
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
@@ -197,9 +232,9 @@
 		var returnday = 90;
 		
 		//주문 상태 드롭박스 초기화
-		var searchOrderStatus = "상품준비중";
+		var searchOrderStatus = "";
 		//환불 상태 드롭박스 초기화
-		var returnOrderStatus = "취소처리중";
+		var returnOrderStatus = "";
 		
 		
 		$('.tabular a').tab();
@@ -216,33 +251,189 @@
 		}
 		
 		
-		
+		var currentPageJs = 1;
 		// 주문 조회용 버튼 함수
-		function orderStatusBtn(){
+		function orderStatusBtn(data){
+			currentPageJs = data;
 			//드롭박스에서 선택한 데이터
 			searchOrderStatus = $('.ui.dropdown.test1').dropdown('get text');
-			console.log(searchday);
-			console.log(searchOrderStatus);
+			if(searchOrderStatus == '주문상태'){
+				searchOrderStatus = '상품준비중';
+			}
+
 			
 			$.ajax({
 				url : "<%=request.getContextPath()%>/selectCustomerOrderStatus.de",
-				data: {searchDay:searchday,searchOrderStatus:searchOrderStatus},
+				data: {searchDay:searchday,searchOrderStatus:searchOrderStatus,currentPage:currentPageJs},
 				type:"post",
 				success:function(data){
-					console.log(data);
-				},
-				error:function(data){
-					alert("데이터 통신 실패!");
-				}
-			});
+
+					
+					$tableBody = $("#orderStatusTbody");
+					$tableBody.html('');
+					
+					for(list in data.list){
+						for(list2 in data.list[list]){
+							
+							if(data.list[list][list2].order_lnum != ""){		
+								$tr = $("<tr>");	
+								$lnumTd = $("<td onclick='showDetailOrder(\""+ (data.list[list][list2].order_lnum) +"\")'>").text(decodeURIComponent(data.list[list][list2].order_lnum));
+								$productNameTd = $("<td>").text(decodeURIComponent(data.list[list][list2].product_name));
+								$orderAmountTd = $("<td>")	.text(data.list[list][list2].order_amount);
+								$orderPriceTd = $("<td>").text(data.list[list][list2].product_price);
+								$orderSnameTd = $("<td>").text(data.list[list][list2].order_sname);
+								$returnTd = $("<td>");
+								if(data.list[list][list2].order_sname == '상품준비중' 
+									|| data.list[list][list2].order_sname == '배송준비중'
+									|| data.list[list][list2].order_sname == '배송대기중'
+								){
+									$returnBtn = $("<button class='ui primary button' onclick='returnAnswer("+ data.list[list][list2].order_lnum + ")'>").text("클릭");
+									$returnTd.append($returnBtn);
+								}
+								$tr.append($lnumTd);
+								$tr.append($productNameTd);
+								$tr.append($orderAmountTd);
+								$tr.append($orderPriceTd);
+								$tr.append($orderSnameTd);
+								$tr.append($returnTd);
+								$tableBody.append($tr);
+							}else{
+								$tr = $("<tr>");
+								$nullTd = $("<td colspan ='6' style='text-align:center'>").text("검색된 결과가 없습니다.");
+								$tr.append($nullTd);
+								$tableBody.append($tr);
+							}
+							
+						}
+					}
+					//페이징 처리
+					$trPage = $("<tr>");
+					$tdPage = $("<td colspan='6' >");
+					$centerDiv = $("<div align='center'>");
+					$paginationDiv = $("<div class='ui pagination menu'>");
+
+					
+					$currentPageOne = $("<a class=\"icon item\" onclick=\"" +"osFirstPageMove("+ 1 + ");" +"\">");
+					$angleIcon = $("<i class='angle double left icon'>");
+					
+					$currentPageOne.append($angleIcon);
+					$paginationDiv.append($currentPageOne);
+					
+					if(data.pi.currentPage <= 1){
+						$leftIconDisable = $("<a class='icon item'>");
+						$angleIcon2 = $("<i class='angle left icon' >");
+						$leftIconDisable.append($angleIcon2);
+						$paginationDiv.append($leftIconDisable);
+					}else{ 
+						currentPageJs = (data.pi.currentPage-1);
+						$leftIconAble = $("<a class=\"icon item\" onclick=\"" +"osBeforePageMove("+ currentPageJs + ");" +"\">");
+						$angleIcon3 = $("<i class='angle left icon' >");
+						$leftIconAble.append($angleIcon3);
+						$paginationDiv.append($leftIconAble);
+					}
+					
+					for(var i = data.pi.startPage; i <= data.pi.endPage; i++){
+						if( i == data.pi.currentPage){
+							$item1 = $("<a class='item' >").text(i);
+							$paginationDiv.append($item1);
+						}else{
+							currentPageJs = i;
+							$item23 = $("<a class=\"icon item\" onclick=\"" +"osOnePageMove("+ i + ");" +"\">").text(i);
+							$paginationDiv.append($item23);
+						}
+					}
+					
+					if(data.pi.currentPage >= data.pi.maxPage){
+						$rightIconDisable = $("<a class='icon item'>");
+						$angleIcon4 = $("<i class='angle right icon' >");
+						$rightIconDisable.append($angleIcon4);
+						$paginationDiv.append($rightIconDisable);
+					}else{
+						currentPageJs = (data.pi.currentPage+1)
+						$rightIconAble = $("<a class=\"icon item\" onclick=\"" +"osNextPageMove("+ currentPageJs + ");" +"\">");
+						$angleIcon5 = $("<i class='angle right icon' >");
+						$rightIconAble.append($angleIcon5);
+						$paginationDiv.append($rightIconAble);
+					}
+					
+					$currentMaxPage = $("<a class=\"icon item\" onclick=\"" +"osLastPageMove("+ data.pi.maxPage + ");" +"\">");	
+					$angleIcon6 = $("<i class='angle double right icon'>");
+					$currentMaxPage.append($angleIcon6);
+					$paginationDiv.append($currentMaxPage);
+					$centerDiv.append($paginationDiv);
+					$tdPage.append($centerDiv);
+					$trPage.append($tdPage);
+					$tableBody.append($trPage);
+					
+					
+					},
+					error:function(data){
+						alert("데이터 통신 실패!");
+					}
+				});
+
 			
+
 			
 		}
 		
 		
+		//주문 조회 재귀호출
+		function osFirstPageMove(data){
+			orderStatusBtn(data);
+			
+		}		
+		function osBeforePageMove(data){
+			orderStatusBtn(data);
+		}
+		function osOnePageMove(data){
+			orderStatusBtn(data);
+		}
+		function osNextPageMove(data){
+			orderStatusBtn(data);
+		}
+		function osLastPageMove(data){
+			orderStatusBtn(data);
+		}
+		
+			
+			
+			//상세 주문내역 모달
+			function showDetailOrder(data){
+				olCode = data;
+				$.ajax({
+					url : "<%=request.getContextPath()%>/selectCustomerOrderDetail.de",
+					type:"post",
+					data:{num:olCode},
+					success:function(data){
+						console.log(data);
+						$('.test1').modal('show');
+					},
+					error:function(data){
+						console.log("실패얌");
+					}
+				});
+				
+				
+				
+				
+				
+			
+			
+				
+			}
+			
+			
+			
+			
+			
+		
 		function returnStatusBtn(){
 			// 환불 기간 조회 드롭박스에서 선택한 데이터
 			returnOrderStatus = $('.ui.dropdown.test2').dropdown('get text');
+			if(returnOrderStatus == '주문상태'){
+				returnOrderStatus = '상품준비중';
+			}
 			console.log(returnday);
 			console.log(returnOrderStatus);
 		}
