@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
 <!DOCTYPE html>
 <html>
 
@@ -212,7 +215,14 @@
 							var $couponCode = $("<td>").text(data["couponList"][i].couponCode);
 							var $couponName = $("<td>").text(data["couponList"][i].couponName);
 							var $couponExp = $("<td>").text(data["couponList"][i].couponExp);
-							var $couponIssue=$("<button>").addClass("ui small secondary button").text("발급");
+							var $couponIssue=$("<button>").addClass("ui small secondary button").text("발급").click(function(){
+								var parentCouponCode=($(this).parent().parent().children().eq(0).text());
+								var parentCouponName=($(this).parent().parent().children().eq(1).text());
+								var parentCouponDiscountOption=($(this).parent().parent().children().eq(2).text());
+								var parentCouponDiscountValue=($(this).parent().parent().children().eq(3).text());
+								var parentCouponExp = ($(this).parent().parent().children().eq(4).text());
+								var windowChild = window.open("<%=request.getContextPath()%>/views/admin/promotion/CuponIssued.jsp?parentCouponCode="+parentCouponCode+"&parentCouponName="+parentCouponName+"&parentCouponDiscountOption="+parentCouponDiscountOption+"&parentCouponDiscountValue="+parentCouponDiscountValue+"&parentCouponExp="+parentCouponExp, "쿠폰발급", "width=1250, height=1200, left=100, top=50"); 
+							});
 							var $couponIssueTd = $("<td>");
 							$couponIssueTd.append($couponIssue); //버튼을 tr에 담는다.
 							

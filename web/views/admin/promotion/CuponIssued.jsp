@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>	
+<%
+	request.setCharacterEncoding("UTF-8");
+	String parentCouponCode = request.getParameter("parentCouponCode");
+	String parentCouponName = request.getParameter("parentCouponName");
+	String parentCouponDiscountOption = request.getParameter("parentCouponDiscountOption");
+	String parentCouponDiscountValue= request.getParameter("parentCouponDiscountValue");
+	String parentCouponExp = request.getParameter("parentCouponExp");
+
+ %>
 <!DOCTYPE html>
 <html>
 
@@ -25,6 +34,9 @@
 
 <!-- Admin Common JS -->
 <script src="/semi/js/admin/common/adminMain.js"></script>
+
+<!-- alert CDN -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- alert CDN -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -108,23 +120,23 @@
 						<tbody>
 							<tr>
 								<td class="cuponTd">쿠폰번호</td>
-								<td></td>
+								<td id="couponCode"></td>
 							</tr>
 							<tr>
 								<td class="cuponTd">쿠폰이름</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td class="cuponTd">설명</td>
-								<td></td>
+								<td id="couponName"></td>
 							</tr>
 							<tr>
 								<td class="cuponTd">혜택</td>
-								<td></td>
+								<td id="couponDiscountOption"></td>
+							</tr>
+							<tr>
+								<td class="cuponTd">금액/률</td>
+								<td id="couponDiscountValue"></td>
 							</tr>
 							<tr>
 								<td class="cuponTd">사용기간</td>
-								<td></td>
+								<td id="couponExp"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -143,13 +155,13 @@
 										<div class="inline fields">
 											<div class="field">
 												<div class="ui radio checkbox">
-													<input type="radio" name="frequency" checked="checked">
+													<input type="radio" name="frequency" id="allUserCheck">
 													<label>회원 전체</label>
 												</div>
 											</div>
 											<div class="field inline fields">
 												<div class="ui radio checkbox">
-													<input type="radio" id="radioMember" name="frequency"><label>
+													<input type="radio" name="frequency" id="userClassCheck"><label>
 														&nbsp;</label>
 
 												</div>
@@ -166,7 +178,7 @@
 											</div>
 											<div class="field">
 												<div class="ui radio checkbox">
-													<input type="radio" name="frequency"> <label>회원
+													<input type="radio" name="frequency" id="userIdCheck"> <label>회원
 														선택</label>
 												</div>
 											</div>
@@ -185,7 +197,7 @@
 					</table>
 
 					<div class="cuponIssued">
-						<button class="midium ui secondary button">발&nbsp;급</button>
+						<button class="midium ui secondary button" id="couponIssuedBtn">발&nbsp;급</button>
 					</div>
 					<br> <br>
 					<!-- 세번째 내용 -->
@@ -299,7 +311,54 @@
 			$(this).addClass('active');
 		});
 		
+		$(function(){
+			$("#couponCode").text("<%=parentCouponCode%>");
+			$("#couponName").text("<%=parentCouponName%>");
+			$("#couponDiscountOption").text("<%=parentCouponDiscountOption%>");
+			$("#couponDiscountValue").text("<%=parentCouponDiscountValue%>");
+			$("#couponExp").text("<%=parentCouponExp%>");
+		});
+		
+		$("#couponIssuedBtn").click(function(){
+			if($("#allUserCheck").is(":checked")||$("#userClassCheck").is(":checked")||$("#userIdCheck").is(":checked")){
+				if($("#allUserCheck").is(":checked")){
+					$.ajax({
+						url:"<%=request.getContextPath()%>/allUserIssue.pm",
+						type:"get",
+						data:{
+							couponCode:"<%=parentCouponCode%>",
+							couponExp:"<%=parentCouponExp%>"
+						},
+						success:function(data){
+							if(data>0){
+								issueSeccess();
+							}else{
+								issueFail();
+							}
+						},
+						error:function(){
+							console.log("실패");
+						}
+					});
+				}
+			}else{
+				swal("발급대상을 선택해주세요!");
+			}
+		});
 	
+		
+		function issueSeccess(){
+			swal("쿠폰 발급 성공!", "확인 버튼을 눌러주세요.", "success")
+			.then((value) => {	
+				  location.reload();		
+			});
+		}
+		function issueFail(){
+			swal("쿠폰 발급 실패!")
+			.then((value) => {	
+				  location.reload();		
+			});			
+		}
 	</script>
 </body>
 
