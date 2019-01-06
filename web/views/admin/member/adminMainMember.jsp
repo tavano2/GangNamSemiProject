@@ -272,14 +272,14 @@
                 <br/>
                 
                  <div class="searchBtn" align="center">
-                <button class="ui white button" onclick="searchBtn(); return false;"><!-- onclick="location.href='/semi/views/admin/'" -->검색</button>
+                <button class="ui black button" onclick="searchBtn(); return false;"><!-- onclick="location.href='/semi/views/admin/'" -->검색</button>
                 </div>
                 
                 <br/>
                 <br/>
                 <br/>
                 
-                <div class="ui divider"></div>
+                
         		<h2 class="ui header">회원목록</h2><!--  MAKE A CELL TABLE. -->
         		 <!-- <br/> -->
                    

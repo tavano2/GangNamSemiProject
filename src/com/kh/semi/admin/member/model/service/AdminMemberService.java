@@ -74,4 +74,62 @@ public class AdminMemberService {
 		return result;
 	}
 
+	public ArrayList<UserClass> userClassListSelect(int currentPage, int limit) {
+		Connection con = getConnection();
+		ArrayList<UserClass> classList = new AdminMemberDao().userClassListSelect(con, currentPage, limit);
+		
+		close(con);
+		return classList;
+	}
+
+	public int getClassListCount() {
+		Connection con = getConnection();
+		int listCount = new AdminMemberDao().getClassListCount(con);
+		
+		close(con);
+		return listCount;
+	}
+
+	public int changeMemberClass(String originClassCode, String changeClassCode) {
+		Connection con = getConnection();
+		int result = new AdminMemberDao().changeMemberClass(con, originClassCode, changeClassCode);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
+	public int changeClassStatus(String originClassCode, String status) {
+		Connection con = getConnection();
+		int result = new AdminMemberDao().changeClassStatus(con, originClassCode, status);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
+	public int insertUserClass(UserClass uc) {
+		Connection con = getConnection();
+		int result = new AdminMemberDao().insertUserClass(con, uc);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
 }
