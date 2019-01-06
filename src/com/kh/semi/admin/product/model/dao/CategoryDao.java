@@ -115,8 +115,8 @@ public class CategoryDao {
          pstmt.setString(1, cate.getCateUrl());
          pstmt.setString(2, cate.getCateName());
          pstmt.setString(3, cate.getCateMemo());
-         pstmt.setString(4, cate.getCateCode());
-         pstmt.setString(5, cate.getStatus());
+         pstmt.setString(4, cate.getStatus());
+         pstmt.setString(5, cate.getCateCode());
          
          result = pstmt.executeUpdate();
       } catch (SQLException e) {

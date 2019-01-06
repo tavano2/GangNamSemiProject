@@ -28,6 +28,7 @@ public class UpdateCategoryServlet extends HttpServlet {
       String cateMemo = request.getParameter("cateMemo");
       String status = request.getParameter("status");
       
+      
       Category cate = new Category();
       cate.setCateCode(cateCode);
       cate.setCateUrl(cateUrl);
