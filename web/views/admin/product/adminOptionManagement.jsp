@@ -50,7 +50,7 @@
                  <div class="ui selection dropdown">
                  	<input type="hidden" name="option" id="option">
                        <i class="dropdown icon"></i>
-                        <div class="default text">옵션코드</div>
+                        <div class="default text">옵션검색</div>
                         <div class="menu">
                             <div class="item" data-value="0">옵션코드</div>
                             <div class="item" data-value="1">옵션명</div>
@@ -138,6 +138,7 @@
 		    			success:function(data){
 		    				console.log("성공");
 		    				var $selectBody = $("#selectBody");
+		    				$selectBody.html('');
 		    				for(var key in data){
 		    					var $tr = $("<tr class='selectTr'>");
 		    					var $checkTd = $("<div class='checkCss'><div class='ui fitted checkbox'><input type='checkbox' name='optionCheck'><label></label></div></div>");

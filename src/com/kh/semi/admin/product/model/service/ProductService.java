@@ -49,4 +49,28 @@ public class ProductService {
 		
 		return list;
 	}
+
+	public ArrayList<Attachment> selectProductName(String selectInput) {
+		Connection con = getConnection();
+		ArrayList<Attachment> list = new ProductDao().selectProductName(con,selectInput);
+		close(con);
+		
+		return list;
+	}
+
+	public ArrayList<Attachment> selectProductCode(String selectInput) {
+		Connection con = getConnection();
+		ArrayList<Attachment> list = new ProductDao().selectProductCode(con,selectInput);
+		close(con);
+		
+		return list;
+	}
+
+	public ArrayList<Attachment> selectProductCate(String selectInput) {
+		Connection con = getConnection();
+		ArrayList<Attachment> list = new ProductDao().selectProductCate(con,selectInput);
+		close(con);
+		
+		return list;
+	}
 }
