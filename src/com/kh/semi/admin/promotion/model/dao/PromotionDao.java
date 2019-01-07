@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
@@ -796,7 +797,7 @@ public class PromotionDao {
 				 map.put("couponCode", rset.getString("COUPON_CODE"));
 				 map.put("userId", rset.getString("USER_ID"));
 				 map.put("userClass",rset.getString("CLASS_NAME"));
-				 map.put("useDate",rset.getDate("ORDER_DATE"));
+				 map.put("useDate",new SimpleDateFormat("yyyy-MM-dd").format(rset.getDate("ORDER_DATE")));
 				 map.put("orderLNum",rset.getString("ORDER_LNUM"));
 				 list.add(map);
 				 System.out.println(list);

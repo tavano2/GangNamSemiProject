@@ -241,7 +241,9 @@
 				function() {
 					$table = $("<table>").addClass("ui celled table").attr(
 							"id", "slectedCateg");
-					$table.append($tbody);
+					$table.append($tbody.children().each(function(){
+						$(this).removeClass("active");
+					}));
 					window.opener.$("#selectedValue").append($table);
 					window.self.close();
 				})

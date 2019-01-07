@@ -153,7 +153,11 @@ span {
 												<input type="text" name="couponDiscount" id="couponDiscount">
 											</div>
 											<div class="cuponSpan">
-												<span>&nbsp;원 / %</span>
+												
+													<span><i class="won sign icon"></i><span style="font-weight: bold;font-size: 25px">/</span>
+													<i class="percent icon"></i>
+													</span>
+												
 											</div>
 										</td>
 									</tr>
