@@ -1,6 +1,8 @@
 package com.kh.semi.admin.board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.semi.admin.board.model.service.AdminBoardService;
+import com.kh.semi.admin.board.model.vo.Msg;
 
 
 @WebServlet("/AdminNoteSend.bo")
@@ -37,7 +40,9 @@ public class AdminNoteSendServlet extends HttpServlet {
 		if(!noteMember.equals("selectUser")) {
 			 cnt = new AdminBoardService().adminNoteSend(noteMember);
 		}
-		//System.out.println(cnt);
+
+		//등급일시 해당 등급 userId 가져오깅
+	//	ArrayList<Msg> msg
 		
 		//회원수만큼  쪽지 insert!
 		int insertNoteSend = new AdminBoardService().insertAdminNoteSend(noteTitle,noteUser,noteMember,noteContent,cnt);

@@ -614,7 +614,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			
 				<div align="right">
 					<button class="ui brown basic mini button"
-						onclick="location.href='/semi/views/customer/product/reviewInsertBoard.jsp';">작성하기</button>
+						onclick="location.href='/semi/views/customer/product/reviewInsertBoard.jsp?code=<%=pro.getProductCode()%>';">작성하기</button>
 					&nbsp;
 				</div>
 
@@ -758,7 +758,7 @@ input[type="number"]::-webkit-inner-spin-button {
 				console.log(pQnABoardId);
 				
 				//글번호와 함께
-				location.href="<%=request.getContextPath()%>/SelectOneQnA.no?num="+num+"&pQnABoardId="+pQnABoardId+"&productCode=PD000003";
+				location.href="<%=request.getContextPath()%>/SelectOneQnA.no?num="+num+"&pQnABoardId="+pQnABoardId+"&productCode=<%=pro.getProductCode()%>";
 
 			});
 			
@@ -786,7 +786,7 @@ input[type="number"]::-webkit-inner-spin-button {
 		//review 작성하기
 		function ReviewClick(){
 <%-- 			location.href="<%=request.getContextPath()%>/selectReviewOption.pd?product=<%=pro.getProductCode()%>"; --%>	
-				location.href="<%=request.getContextPath()%>/selectReviewOption.pd?productCode=PD000003&boardId=420";
+				location.href="<%=request.getContextPath()%>/selectReviewOption.pd?productCode=<%=pro.getProductCode()%>&boardId=420";
 		
 		}
 	
