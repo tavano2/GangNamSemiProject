@@ -70,7 +70,7 @@ public class ProductDao {
 	}
 
 	////상품상세페이지-리뷰게시판 리스트
-	public ArrayList<Product> reviewNoticeList(Connection con, int currentPage, int limit) {
+	public ArrayList<Product> reviewNoticeList(Connection con, int currentPage, int limit,String code) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Product> list = null;
@@ -83,8 +83,9 @@ public class ProductDao {
 			int startRow = (currentPage -1)* limit +1;
 			int endRow = startRow +limit -1;
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setString(1, code);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 
 			
@@ -133,7 +134,7 @@ public class ProductDao {
 
 	
 	//QnA 리스트 조회 
-	public ArrayList<Product> QnANoticeList(Connection con, int currentPageQnA, int limitQnA) {
+	public ArrayList<Product> QnANoticeList(Connection con, int currentPageQnA, int limitQnA,String code) {
 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -147,8 +148,9 @@ public class ProductDao {
 			int startRow = (currentPageQnA - 1) * limitQnA + 1;
 			int endRow = startRow + limitQnA - 1;
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setString(1, code);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -986,7 +988,7 @@ public class ProductDao {
 	}
 
 	//qna 상품 뮨의작성하기-제목,내용 저장!
-	public int insertQnA(Connection con, Board insertQnAboard) {
+	public int insertQnA(Connection con, Board insertQnAboard,String productCode) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -996,11 +998,12 @@ public class ProductDao {
 			pstmt.setString(1,insertQnAboard.getBoardTitle());
 			pstmt.setString(2, insertQnAboard.getBoardContent());
 			pstmt.setString(3, insertQnAboard.getUserId());
+			pstmt.setString(4, productCode);
 			
-			System.out.println("!!!"+insertQnAboard.getBoardTitle());
+			/*System.out.println("!!!"+insertQnAboard.getBoardTitle());
 			System.out.println("!!!"+insertQnAboard.getBoardContent());
 			System.out.println("!!!"+insertQnAboard.getUserId());
-			
+			*/
 			result = pstmt.executeUpdate();
 			
 			
@@ -1065,6 +1068,7 @@ public class ProductDao {
 			e.printStackTrace();
 		}finally {
 			close(stmt);
+			close(rset);
 		}
 		return boardId;
 	}
@@ -1225,7 +1229,7 @@ public class ProductDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			close(con);
+			close(pstmt);
 		}
 
 		return result;
