@@ -50,5 +50,33 @@ public class OptionSetService {
 		
 		return list;
 	}
+
+	public int deleteOptionSet(String[] optionCode) {
+		Connection con = getConnection();
+		int result = new OptionSetDao().deleteOptionSet(con, optionCode);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		
+		return result;
+	}
+
+	public int deleteOptionSetMM(String[] optionCode) {
+		Connection con = getConnection();
+		int result = new OptionSetDao().deleteOptionSetMM(con, optionCode);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		
+		return result;
+	}
 	
 }

@@ -126,4 +126,25 @@ public class OptionDao {
 		return list;
 	}
 
+	public int deleteOption(Connection con, String[] optionCode) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteOption");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			for(int i = 0; i < optionCode.length; i++) {
+				pstmt.setString(1, optionCode[i]);
+				
+				result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 }
