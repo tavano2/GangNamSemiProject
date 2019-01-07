@@ -66,7 +66,7 @@
 		</div>
 		<br>
 		
-		<form action="<%=request.getContextPath() %>/insertQnA.pd" method="post" encType="multipart/form-data">
+		<form action="<%=request.getContextPath() %>/insertQnA.pd?code=<%=request.getParameter("code") %>" method="post" encType="multipart/form-data">
 		<table class="ui celled table first-col">
 
 		<tbody>
