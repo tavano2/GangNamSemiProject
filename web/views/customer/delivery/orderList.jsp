@@ -79,7 +79,6 @@
 						<th>수량</th>
 						<th>상품 구매 금액</th>
 						<th>주문 상태</th>
-						<th>취소/교환/반품</th>
 					</tr>
 				</thead>
 				<tbody id="orderStatusTbody">
@@ -176,7 +175,7 @@
 				<table class="ui single line table">
 					<thead>
 						<tr>
-							<th></th>
+							<th>취소/교환/반품</th>
 							<th>주문 내역 번호</th>
 							<th>상품명</th>
 							<th>수량</th>
@@ -296,20 +295,13 @@
 								$orderAmountTd = $("<td>")	.text(data.list[list][list2].order_amount);
 								$orderPriceTd = $("<td>").text(numComma(data.list[list][list2].product_price)+"원");
 								$orderSnameTd = $("<td>").text(data.list[list][list2].order_sname);
-								$returnTd = $("<td>");
-								if(data.list[list][list2].order_sname == '상품준비중' 
-									|| data.list[list][list2].order_sname == '배송준비중'
-									|| data.list[list][list2].order_sname == '배송대기중'
-								){
-									$returnBtn = $("<button class='ui primary button' onclick='returnAnswer("+ data.list[list][list2].order_lnum + ")'>").text("클릭");
-									$returnTd.append($returnBtn);
-								}
+
+
 								$tr.append($lnumTd);
 								$tr.append($productNameTd);
 								$tr.append($orderAmountTd);
 								$tr.append($orderPriceTd);
 								$tr.append($orderSnameTd);
-								$tr.append($returnTd);
 								$tableBody.append($tr);
 							}else{
 								$tr = $("<tr>");

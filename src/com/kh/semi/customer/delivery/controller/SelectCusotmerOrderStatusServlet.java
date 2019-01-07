@@ -62,7 +62,11 @@ public class SelectCusotmerOrderStatusServlet extends HttpServlet {
 		for(HashMap<String, Object> hmap : list) {
 			if(productsName.size() > 0) {
 				if(!lnumArray.get(lnumArray.size()-1).equals((String)hmap.get("order_lnum"))) {
-					productResultNmae = productsName.get(0) +" 외 " + (count-1)+"개";
+					if(productsName.size() ==1 ) {
+						productResultNmae = productsName.get(0);
+					}else {
+						productResultNmae = productsName.get(0) +" 외 " + (count-1)+"개";						
+					}
 					// 가공 처리 해준것들을 새로운 해쉬맵(3단계)에 넣음
 					threeHmap.put("order_lnum", lnum);
 					threeHmap.put("product_name", productResultNmae);
@@ -96,7 +100,11 @@ public class SelectCusotmerOrderStatusServlet extends HttpServlet {
 			++count;
 		}
 		if(productsName.size() > 0) {
-		productResultNmae = productsName.get(0) +" 외 " + (count-1)+"개";
+			if(productsName.size() ==1) {
+				productResultNmae = productsName.get(0);
+			}else {
+				productResultNmae = productsName.get(0) +" 외 " + (count-1)+"개";
+			}
 		}
 		// 가공 처리 해준것들을 새로운 해쉬맵(3단계)에 넣음
 		threeHmap.put("order_lnum", lnum);

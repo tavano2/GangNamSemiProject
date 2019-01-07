@@ -116,12 +116,12 @@
         <!-- 사이트명 -->
         <div class="titlePage"><a href="/semi/index.jsp">SIEMPRE</a></div>
 
-        <!-- 카테고리 네비 -->
+   <!-- 카테고리 네비 -->
         <div class="ui text menu" id="cate_nav">
             <div class="item">
                 <a class="item" style="color: rgb(231, 76, 60)"> Best </a>
             </div>
-            <% for (Category c : list){ %>
+<%--             <% for (Category c : list){ %>
             <% if(c.getCateLevel() == 0){ %>
 	            <div class="ui dropdown item">
 	            <%=c.getCateName() %>
@@ -135,8 +135,8 @@
             <% } %>
                 </div>
             </div>
-            <% } %>
-            <!-- <div class="ui dropdown item">
+            <% } %>  --%>
+            <div class="ui dropdown item">
                 OUTER
                 <i class="dropdown icon"></i>
                 <div class="menu">
@@ -181,7 +181,7 @@
                     <a class="item">MINI</a>
                     <a class="item">LONG</a>
                 </div>
-            </div> -->
+            </div> 
 
             <div class="right menu">
                 <div class="item search-box">
