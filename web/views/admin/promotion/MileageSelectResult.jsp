@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="com.kh.semi.customer.member.model.vo.Member"%>
 <%@page import="com.kh.semi.admin.promotion.model.vo.SelectUserVo"%>
 <%@page import="com.kh.semi.admin.promotion.model.vo.PageInfo"%>
@@ -17,6 +18,11 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	Member loginUser = (Member)session.getAttribute("loginUser");
+%>
+<%!
+	public String comma(Number price){
+		return new DecimalFormat("#,###").format(price);
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -210,9 +216,9 @@ span {
 											}
 									%>
 									<tr>
-										<td><%=plusPoint%></td>
-										<td><%=minusPoint%></td>
-										<td><%=(plusPoint - minusPoint)%></td>
+										<td><%=comma(plusPoint)%></td>
+										<td><%=comma(minusPoint)%></td>
+										<td><%=comma(plusPoint - minusPoint)%></td>
 									</tr>
 									<%
 										} else {
@@ -256,20 +262,19 @@ span {
 											적립금 증가</td>
 										<td class="mileageTd" width="130px" style="text-align: center">가용
 											적립금 차감</td>
-
 										<td class="mileageTd" width="150px" style="text-align: center">관련주문/추천인</td>
 										<td class="mileageTd" style="text-align: center">내용</td>
 										<td class="mileageTd" width="100px" style="text-align: center">처리자</td>
 									</tr>
 									<%
-										if (selectUserList.size() != 0) {
+										if (selectUserList.size()!= 0) {
 											for (HashMap<String, Object> map : selectUserList) {
 									%>
 									<tr>
 										<td><%=map.get("date")%></td>
 										<td><%=map.get("userId")%></td>
-										<td><%=map.get("plusP")%></td>
-										<td><%=map.get("minusP")%></td>
+										<td><%=comma(Integer.parseInt((String)map.get("plusP")))%></td>
+										<td><%=comma(Integer.parseInt((String)map.get("minusP")))%></td>
 
 										<td><%=map.get("orderDNum")%></td>
 										<td> 내용없음</td>

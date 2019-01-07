@@ -140,6 +140,7 @@ th>div {
 								var idCheck = /^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{3,5}$/;
 								var idCheckResult = idCheck.test(userId);
 								if (($("#userId").val() == "")) {
+									$("#userId").css({"color":"red","border-color":"red"});
 									swal("아이디를 입력해주세요.");
 								} else if (idCheckResult) {
 									$.ajax({
@@ -148,14 +149,14 @@ th>div {
 										type : "post",
 										success : function(data) {
 											if(data=="true"){
+												$("#userId").css({"color":"red","border-color":"red"});
 												swal("이미 사용중인 아이디 입니다.");
 											}else{
+												$("#userId").css({"color":"blue","border-color":"blue"});
 												swal("사용 가능한 아이디 입니다.");
 												//히든에 중복체크할 당시의 ID저장
 												 $("#checkIdInput").val(userId);
-												userId2= $("#checkIdInput").val()
-												console.log(userId2);
-
+												userId2= $("#checkIdInput").val();
 											}
 										},
 										error : function() {
@@ -163,7 +164,7 @@ th>div {
 										}
 									})
 								} else {
-									swal("아이디 길이가 적절하지 않습니다.");
+									swal("아이디가 부적절 합니다. 이메일 형식을 확인해주세요.");
 								}
 							})
 							
@@ -173,21 +174,32 @@ th>div {
 					var userPwd2 = $("#userPwd2").val();
 					var userPwdCheck = /[a-zA-Z0-9]{10,15}/g;
 					userPwdResult = userPwdCheck.test(userPwd1);
-					
+					//아이디를 비밀번호로 못쓰게 만드는 코드
+					var userIdArr = new Array();
+					userIdArr = userId.split("@");
+					var userIdPwd = new RegExp(userIdArr[0],"g");
 					if (($("#userId").val() == "")) {
+						$("#userId").css({"color":"red","border-color":"red"});
 						swal("아이디를 입력해주세요.");
 					}
-					console.log(userId);
-					console.log(userId2);
 					if(userId==userId2){	
 						if(userPwd1==userPwd2){
 							if(userPwdResult){
-								$("#insertMemberForm").submit();
+								if(userIdPwd.test(userPwd1)){
+									console.log(userIdPwd.test(userPwd1));
+									$("#userPwd1").css("border-color","red");
+									swal("아이디는 비밀번호로 사용할 수 없습니다.");
+								}else{
+									insertSeccess();
+								}
 							}else{
-								swal("비밀번호를 확인해주세요")
+								$("#userPwd1").css("border-color","red");
+								swal("비밀번호 양식이 맞지 않습니다.")
 							}										
 						}else{
 							swal("비밀번호와 비밀번호 확인이 일치하지 않습니다.\n 비밀번호를 확인해주세요.");
+							$("#userPwd1").css("border-color","red");
+							$("#userPwd2").css("border-color","red");
 						}
 					}else{
 						swal("아이디 중복확인을 눌러주세요.");
@@ -195,6 +207,23 @@ th>div {
 							
 				});
 		})
+		$("#userId").change(function(){
+			$("#userId").css({"color":"black","border-color":"black"});
+		})
+		$("#userPwd2").change(function(){
+			$("#userPwd1").css({"color":"black","border-color":"black"});
+			$("#userPwd2").css({"color":"black","border-color":"black"});
+		})
+		$("#userPwd1").change(function(){
+			$("#userPwd1").css({"color":"black","border-color":"black"});
+			$("#userPwd2").css({"color":"black","border-color":"black"});
+		})
+		function insertSeccess(){
+			swal("회원가입 성공!", "확인 버튼을 눌러주세요.", "success")
+			.then((value) => {	
+				$("#insertMemberForm").submit();		
+			});
+		}
 	</script>
 
 </body>

@@ -190,7 +190,10 @@
 			
 		})
 		
-	
+		function numComma(num){
+		var numStr = String(num);
+		return numStr.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,"$1,");
+		}
 
 		//페이징 처리를 위한 함수
 		var  selectResult = function(inputCurrentPage){
@@ -221,7 +224,8 @@
 								var parentCouponDiscountValue=($(this).parent().parent().children().eq(3).text());
 								var parentCouponExp = ($(this).parent().parent().children().eq(4).text());
 								//인코딩처리
-								var uri ="parentCouponCode="+parentCouponCode+"&parentCouponName="+parentCouponName+"&parentCouponDiscountOption="+parentCouponDiscountOption+"&parentCouponDiscountValue="+parentCouponDiscountValue+"&parentCouponExp="+parentCouponExp;
+								var uri ="parentCouponCode="+parentCouponCode+"&parentCouponName="+parentCouponName+"&parentCouponDiscountOption="
+								+parentCouponDiscountOption+"&parentCouponDiscountValue="+parentCouponDiscountValue+"&parentCouponExp="+parentCouponExp;
 								var enURIC = encodeURI(uri);
 								var windowChild = window.open("<%=request.getContextPath()%>/views/admin/promotion/CuponIssued.jsp?"+enURIC, "쿠폰발급", "width=1250, height=1200, left=100, top=50"); 
 							});
@@ -230,10 +234,10 @@
 							
 							if(data["couponList"][i].couponType==1){
 								var $couponDiscountOption = $("<td>").text("할인율");
-								var $couponDiscount = $("<td>").text(data["couponList"][i].couponRDiscount);
+								var $couponDiscount = $("<td>").text(data["couponList"][i].couponRDiscount*100+" %");
 							}else{
 								var $couponDiscountOption = $("<td>").text("할인금액");
-								var $couponDiscount = $("<td>").text(data["couponList"][i].couponPDiscount);
+								var $couponDiscount = $("<td>").text(numComma(data["couponList"][i].couponPDiscount)+" 원");
 							}
 						
 							
