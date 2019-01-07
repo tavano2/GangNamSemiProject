@@ -527,6 +527,16 @@ public class ProductService {
 			return cartList;
 		}
 
+		//QnA 삭제하깅
+		public int deleteQnA(String num, String pQnABoardId) {
+
+			Connection con = getConnection();
+			int result = new ProductDao().deleteQnA(con,num,pQnABoardId);
+			
+			close(con);
+			return result;
+		}
+
 
 
 

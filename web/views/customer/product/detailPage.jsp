@@ -9,7 +9,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	ArrayList<Product> list = (ArrayList<Product>) request.getAttribute("list");
+	ArrayList<Product> listReview = (ArrayList<Product>) request.getAttribute("list");
 	PageInfo propi = (PageInfo) request.getAttribute("propi");
 	int listCount = propi.getListCount();
 	int currentPage = propi.getCurrentPage();
@@ -65,17 +65,18 @@
 		}
 	} */
 	
+	if(detailAttachmentList.size()>0){
+		
 	//상품이름, 판매가,상품상세글, 옵션12, 상품이미지1메인,2상품이미지 34
 	Attachment titleImg = detailAttachmentList.get(0);
 	Attachment detailImg1 = detailAttachmentList.get(1);
 	Attachment detailImg2 = detailAttachmentList.get(2);
 	Attachment detailImg3 = detailAttachmentList.get(3);
 	
-	
-	
+
+	}
 	//Option option1 = detailOptionList.get(0);
 	//Option option2 = detailOptionList.get(1);
-	
 	
 %>
 
@@ -244,8 +245,16 @@ input[type="number"]::-webkit-inner-spin-button {
 			<table>
 				<tr>
 					<td rowspan="2"  style="vertical-align: top;">
+					
+				<% if(detailAttachmentList.size()>0){
+					Attachment titleImg = detailAttachmentList.get(0);
+
+					%>
+	
 						<img src="<%=titleImg.getFilePath() %><%=titleImg.getChangeName() %>"
 							class="detailTopImgsize" width="500" height="500">
+							
+							<%} %>
 					</td>
 					<td style="vertical-align: top;">
 						<table style="margin-left: 45px; width: 400px;">
@@ -358,13 +367,30 @@ input[type="number"]::-webkit-inner-spin-button {
 
 
 			<div class="detailImg">
+			
+			
+	
+				<% if(detailAttachmentList.size()>0){
+					Attachment detailImg1 = detailAttachmentList.get(1);
+
+					%>
 				<img src="<%=detailImg1.getFilePath() %><%=detailImg1.getChangeName() %>"
-					class="detailTopImgsize" width="950px">
+					class="detailTopImgsize" width="950px"> 
+					
+				<%} %>
 			</div>
 
 			<div class="sizeChart">
+			
+				<% if(detailAttachmentList.size()>0){
+					Attachment detailImg2 = detailAttachmentList.get(2);
+
+					%>
+			
 				<img src="<%=detailImg2.getFilePath() %><%=detailImg2.getChangeName() %>"
 					class="detailTopImgsize" width="950px">
+					
+					<%} %>
 				<table class="ui celled table first-col">
 
 					<tr>
@@ -447,8 +473,15 @@ input[type="number"]::-webkit-inner-spin-button {
 					</tr>
 
 				</table>
-				<img src="<%=detailImg3.getFilePath() %><%=detailImg3.getChangeName() %>" width="100%">
+				
+			
+	
+				<% if(detailAttachmentList.size()>0){
+					Attachment detailImg3 = detailAttachmentList.get(3);
 
+					%>
+				<img src="<%=detailImg3.getFilePath() %><%=detailImg3.getChangeName() %>" width="100%">
+				<%} %>
 			</div>
 			<div class="detailBottom1">
 				<h3>리뷰게시판</h3>
@@ -463,7 +496,7 @@ input[type="number"]::-webkit-inner-spin-button {
 					</thead>
 					<tbody>
 						<%
-							for (Product ppp : list) {
+							for (Product ppp : listReview) {
 								//System.out.print("다 불러와라 ㅠㅠ" + ppp);
 						%>
 						<tr>

@@ -184,7 +184,9 @@ margin-left:150px;
       	}
       %>
 			&nbsp;
-			<button class="ui brown basic mini button">삭제하기</button> 
+			<button class="ui brown basic mini button"
+				onclick="location.href='<%=request.getContextPath() %>/deleteQnA.pd?num=<%=num %>&QnABoardId=<%=pQnABoardId %>'"
+			>삭제하기</button> 
 		</div>
       <br> <br>
 
