@@ -1,3 +1,5 @@
+<%@page import="com.kh.semi.admin.product.model.vo.Category"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.kh.semi.customer.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -8,6 +10,9 @@
     	 	arry = userId.split("@");
     	}
     %>
+<%
+	ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("list4");
+%>
 
     <!-- 사이드바 오픈시 오버레이 -->
     <div class="overlay"></div>
@@ -116,19 +121,22 @@
             <div class="item">
                 <a class="item" style="color: rgb(231, 76, 60)"> Best </a>
             </div>
-            <div class="ui dropdown item">
-                COUPLE
+            <% for (Category c : list){ %>
+            <% if(c.getCateLevel() == 0){ %>
+	            <div class="ui dropdown item">
+	            <%=c.getCateName() %>
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <a href="/semi/views/customer/member/category.jsp" class="item">TEE</a>
-                    <a class="item">SHIRT</a>
-                    <a class="item">KNIT</a>
-                    <a class="item">PANTS</a>
-                    <a class="item">OUTER</a>
-                    <a class="item">TRAINING</a>
+            <% } else{ continue;} %>
+            <% for(Category ca : list){ %>
+            <% if(ca.getCateLevel() == 1 && ca.getCateRefCode().equals(c.getCateCode())){ %>
+            	<a class="item" name="middleCate"><%=ca.getCateName() %></a>
+            <% } else {continue;} %>
+            <% } %>
                 </div>
             </div>
-            <div class="ui dropdown item">
+            <% } %>
+            <!-- <div class="ui dropdown item">
                 OUTER
                 <i class="dropdown icon"></i>
                 <div class="menu">
@@ -173,7 +181,7 @@
                     <a class="item">MINI</a>
                     <a class="item">LONG</a>
                 </div>
-            </div>
+            </div> -->
 
             <div class="right menu">
                 <div class="item search-box">
@@ -188,6 +196,5 @@
                 </button>
             </div>
         </div>
-        
         
       

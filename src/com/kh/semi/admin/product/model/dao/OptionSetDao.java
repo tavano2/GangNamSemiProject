@@ -149,4 +149,44 @@ public class OptionSetDao {
 		return list;
 	}
 
+	public int deleteOptionSet(Connection con, String[] optionCode) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteOptionSet");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			for(int i = 0; i < optionCode.length; i++) {
+				pstmt.setString(1, optionCode[i]);
+				
+				result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteOptionSetMM(Connection con, String[] optionCode) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteOptionSetMM");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			for(int i = 0; i < optionCode.length; i++) {
+				pstmt.setString(1, optionCode[i]);
+				result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

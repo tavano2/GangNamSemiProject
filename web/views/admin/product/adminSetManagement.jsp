@@ -69,13 +69,12 @@
                     <thead>
                         <tr>
                             <th colspan="3">
-                                <button class="ui black button">선택 항목</button>
-                                <button class="ui black button">삭제</button>
+                                <button class="ui white button" id="deleteOption">선택항목 삭제</button>
                             </th>
                         </tr>
                         <tr>
                             <th><div class="ui fitted checkbox">
-                                    <input type="checkbox" name="example"><label></label>
+                                    <input type="checkbox" name="allCheck"><label></label>
                                 </div></th>
                             <th>옵션세트코드</th>
                             <th>옵션세트설명</th>
@@ -141,13 +140,15 @@
     				$selectBody.html('');
     				for(var key in data){
     					var $tr = $("<tr class='selectTr'>");
-    					var $checkTd = $("<div class='checkCss'><div class='ui fitted checkbox'><input type='checkbox' name='optionCheck'><label></label></div></div>");
+    					var $checkTd = $("<td><div class='checkCss'><div class='ui fitted checkbox'><input type='checkbox' name='optionCheck'><label></label></div></div>");
     					var $sNumTd = $("<td>").text(data[key].optionSnum);
     					var $memoTd = $("<td>").text(data[key].optionMemo);
+    					var $inputTd = $("<td><input type='hidden' value='"+ data[key].optionSnum +"' name='optionCode1'>");
     					
     					$tr.append($checkTd);
     					$tr.append($sNumTd);
     					$tr.append($memoTd);
+    					$tr.append($inputTd);
     					$selectBody.append($tr);
     				}
     			},
@@ -157,6 +158,46 @@
     		});
     	});
   });
+    
+    $(function(){
+		$("#allCheck").click(function(){
+			var checkStatus = $(this).is(":checked");
+			if(checkStatus){
+				$("input:checkbox[name=optionCheck]").prop("checked",true);
+			}else{
+				$("input:checkbox[name=optionCheck]").prop("checked",false);
+			}
+		});
+	});
+	
+	$(function(){
+		$("#deleteOption").click(function(){
+			var size = $("input:checkbox[name=optionCheck]").length;
+			var optionCode = "";
+			
+			for(var i = 0; i < size; i++){
+				var checkStatus = $("input:checkbox[name=optionCheck]").eq(i).is(":checked");
+				if(checkStatus){
+					if(optionCode == ""){
+						optionCode += $("input[name=optionCode1]").eq(i).val();
+					}else{
+						optionCode += "," + $("input[name=optionCode1]").eq(i).val();
+					}
+				}
+			}
+			$.ajax({
+				url:"/semi/deleteOptionSet.product",
+				type:"post",
+				data:{optionCode : optionCode},
+				success:function(data){
+					console.log("성공");
+				},
+				error:function(){
+					console.log("실패");
+				}
+			});
+		});
+	})
     </script>
     
 </body>

@@ -48,4 +48,18 @@ public class OptionService {
 		return list;
 	}
 
+	public int deleteOption(String[] optionCode) {
+		Connection con = getConnection();
+		int result = new OptionDao().deleteOption(con, optionCode);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		
+		return result;
+	}
+
 }
