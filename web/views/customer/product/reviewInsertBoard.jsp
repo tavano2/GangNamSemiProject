@@ -8,6 +8,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- alert CDN -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 <!-- Semantic UI CSS CDN -->
 <link rel="stylesheet"
@@ -66,7 +69,7 @@
 		</div>
 		<br>
 		
-		<form action="<%=request.getContextPath() %>/insertQnA.pd?code=<%=request.getParameter("code") %>" method="post" encType="multipart/form-data">
+		<form id="insertQnAForm" action="<%=request.getContextPath() %>/insertQnA.pd?code=<%=request.getParameter("code") %>" method="post" encType="multipart/form-data">
 		<table class="ui celled table first-col">
 
 		<tbody>
@@ -74,7 +77,7 @@
 				<td>제목</td>
 				<td>
 					<div class="ui input">
-						<input type="text" name="title">
+						<input type="text" id="titleId" name="title">
 						
 					</div>
 				</td>
@@ -93,7 +96,7 @@
 				<td>
 					<div class="ui form">
 						<div class="field">
-							<textarea name = "content"></textarea>
+							<textarea id="contentId" name = "content"></textarea>
 						</div>
 
 					</div>
@@ -111,7 +114,7 @@
 		</table>
 
 		<div align="center">
-			<button type="submit" class="ui secondary button">등록하기</button>
+			<button type="button" id="insertBtn" class="ui secondary button">등록하기</button>
 			<button type="reset" class="ui button">취소하기</button>
 
 		</div>
@@ -151,6 +154,23 @@
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
+	<script>
+		$("#insertBtn").click(function(){
+			if($("#contentId").val()==""){
+				swal("내용을 입력해주세요!");
+				if($("#titleId").val()==""){
+					swal("제목을 입력해주세요");
+				}
+			}else{
+				swal("상품문의 등록이 되었습니다^^")
+				.then((value) => {	
+				$("#insertQnAForm").submit();
+			});
+			}
+			
+		})
+	
+	</script>
 
 </body>
 

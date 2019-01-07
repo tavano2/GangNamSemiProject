@@ -33,10 +33,10 @@ public class ProductService {
 	}
 
 	//리뷰 게시판 조회
-	public ArrayList<Product> reviewNoticeList(int currentPage, int limit) {
+	public ArrayList<Product> reviewNoticeList(int currentPage, int limit,String code) {
 		Connection con = getConnection();
 		
-		ArrayList<Product> list = new ProductDao().reviewNoticeList(con,currentPage,limit);
+		ArrayList<Product> list = new ProductDao().reviewNoticeList(con,currentPage,limit,code);
 		
 		close(con);
 		
@@ -45,10 +45,10 @@ public class ProductService {
 	}
 
 	//QnA 게시판 조회
-	public ArrayList<Product> QnANoticeList(int currentPageQnA, int limitQnA) {
+	public ArrayList<Product> QnANoticeList(int currentPageQnA, int limitQnA,String code) {
 		Connection con = getConnection();
 		
-		ArrayList<Product> listQnA = new ProductDao().QnANoticeList(con,currentPageQnA,limitQnA);
+		ArrayList<Product> listQnA = new ProductDao().QnANoticeList(con,currentPageQnA,limitQnA,code);
 		
 		close(con);
 
@@ -316,11 +316,11 @@ public class ProductService {
 
 
 
-	public int insertQnA(Board insertQnAboard, ArrayList<Attachment> fileList) {
+	public int insertQnA(Board insertQnAboard, ArrayList<Attachment> fileList,String productCode) {
 		Connection con = getConnection();
 		int result = 0;
 		
-		int result1= new ProductDao().insertQnA(con,insertQnAboard);
+		int result1= new ProductDao().insertQnA(con,insertQnAboard,productCode);
 
 		if(result1>0) {
 		
@@ -395,7 +395,7 @@ public class ProductService {
 		
 		//1.board넣깅(제목,내용)
 		int result1 = new ProductDao().insertReviewTitleContent(con,title,content,boardId,userId,productCode);
-		
+
 		int bid= new ProductDao().selectCurrval(con);
 		if(result1>0) {
 			
@@ -406,6 +406,11 @@ public class ProductService {
 		
 		//2.attachment(사진3개)
 		int result2 = new ProductDao().insertReviewAttachment(con,fileList);
+		
+		
+		if(fileList.size()==0) {
+			result2=1;
+		}
 		
 		//3.review테이블(키,몸무게,평소사이즈,옵션번호,파일번호)
 		int result3 = new ProductDao().insertReviewT(con,youWeight,youSize,youHeight,selectOptionArray,bid,userProductNum,userId);

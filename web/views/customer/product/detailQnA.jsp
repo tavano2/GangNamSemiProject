@@ -121,7 +121,7 @@ margin-left:150px;
             <div class="comment">
                <a class="avatar"> <img src="/semi/views/images/products/person1.JPG">
                </a>
-               <div class="content">
+               <div class="content" id="adminContent">
                   <a class="author" id="author"><%=p.getBoardContent() %></a>
                   <br>
                  <input type="hidden" id="replyhiddenId" value="<%=SelectOneQnA.getBoardId() %>">
@@ -164,11 +164,9 @@ margin-left:150px;
             </div>
          </div>
       </div>
-      
       <%
       	}
       %>
-      
         <div id="replySelectArea">
 					<table id="rereply" border="1" align=""></table>
 		</div>
@@ -176,10 +174,15 @@ margin-left:150px;
       <br><br>
       <hr>
       <div class="updateDeleteBtn" align="right">
-					
-			 <button class="ui brown basic mini button" 
+      
+			 <%
+      	if(loginUser !=null && !loginUser.getUserId().equals("admin")&& SelectReplyList.size()==0){
+      %>		
+			 <button class="ui brown basic mini button" id="QnAupdateBtn"
 			 onclick="location.href='<%=request.getContextPath()%>/selectforUpdate.pd?num=<%=num %>&pQnABoardId=<%=pQnABoardId%>'">수정하기</button>
-			 
+ 		<%
+      	}
+      %>
 			&nbsp;
 			<button class="ui brown basic mini button">삭제하기</button> 
 		</div>
@@ -211,8 +214,10 @@ margin-left:150px;
    			$("#replyBtn").click(function(){
    				var replyContent = $("#replyContent").val();
    				var replyhiddenId= $("#replyhiddenId").val();
+   				var adminContent = $("#adminContent");
    				console.log(replyContent);
    				console.log(replyhiddenId);
+   				console.log("관리자쓰"+adminContent);
    				
    			 	$.ajax({
    					url:"/semi/insertReply.re",
@@ -228,6 +233,7 @@ margin-left:150px;
    						var $replyContent = $("#replyContent");
    						$testtest.html('');
    						$replyContent.val('');
+   						
    						
    						for(var key in data){
    							
@@ -255,6 +261,7 @@ margin-left:150px;
    							
    							 $testtest.append($detailQnAText);
 
+   							
    						}
    						
    					},error:function(){
@@ -265,9 +272,21 @@ margin-left:150px;
    				
    			});
    		});
+   		
+   	
    
    
    </script>
+   
+   <script>
+   
+
+   
+   
+   </script>
+
+
+
 
 </body>
 

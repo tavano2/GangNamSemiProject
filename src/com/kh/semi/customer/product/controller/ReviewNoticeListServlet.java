@@ -31,6 +31,8 @@ public class ReviewNoticeListServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String code = request.getParameter("code");
+
 		int currentPage;
 		int limit;
 		int maxPage;
@@ -60,7 +62,7 @@ public class ReviewNoticeListServlet extends HttpServlet {
 		PageInfo propi = new PageInfo(currentPage,listCount,limit,maxPage,startPage,endPage);
 		
 		//상품상세페이지-리뷰게시판 리스트
-		ArrayList<Product> list = new ProductService().reviewNoticeList(currentPage,limit);
+		ArrayList<Product> list = new ProductService().reviewNoticeList(currentPage,limit,code);
 	
 		/*System.out.println(propi.getCurrentPage());
 		System.out.println(propi.getEndPage());
@@ -108,13 +110,12 @@ public class ReviewNoticeListServlet extends HttpServlet {
 		//필요한 객체 하나로 만들궁
 		PageInfo piQnA = new PageInfo(currentPageQnA,listCountQnA,limitQnA,maxPageQnA,startPageQnA,endPageQnA);
 		
-		ArrayList<Product> listQnA = new ProductService().QnANoticeList(currentPageQnA,limitQnA);
+		ArrayList<Product> listQnA = new ProductService().QnANoticeList(currentPageQnA,limitQnA,code);
 		
 		//System.out.println("ListQnA"+listQnA);
 		
 		
 		////////////////////////////////////상품상세페이지 이름,가격 이미지 /////////////////////////////////////////////////
-		String code = request.getParameter("code");
 		//System.out.println("상품코드:"+code);
 		
 		//상품코드 : PD1에있는값의 DB정보 불러오깅
