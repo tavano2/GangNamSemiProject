@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="com.kh.semi.customer.board.model.vo.PageInfo"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
@@ -17,6 +18,14 @@
 	
 	
 %>
+
+<%!
+	public String comma(Number price){
+		return new DecimalFormat("#,###").format(price);
+	}
+%>
+
+
 
 <html>
 
@@ -63,7 +72,6 @@
 						<th>이미지</th>
 						<th>상품정보</th>
 						<th>판매가</th>
-						<th>회원 할인가</th>
 						<th>적립금</th>
 						<th>합계</th>
 					</tr>
@@ -81,14 +89,9 @@
 						<td><input type="checkbox" class="productChk" name="chkList" value="<%=hmap.get("product_code")%>"></td>
 						<td><img src = "/semi/image/customer/product/<%=hmap.get("change_name") %>" width="50px" height="50px"></td>
 						<td><%=hmap.get("product_name") %></td>
-						<td><%=hmap.get("product_price") %>원</td>
-						<td><%=hmap.get("discount") %>원</td>
-						<td><%=hmap.get("point") %>원</td>					
-						<%if(!hmap.get("class_name").equals("GOLD")){ %>
-						<td><%=price+post_price %>원</td>
-						<%}else{ %>
-						<td><%=price %>원</td>
-						<%} %>
+						<td><%=comma((int)hmap.get("product_price")) %>원</td>
+						<td><%=comma((int)hmap.get("point")) %>원</td>					
+						<td><%=comma(price) %>원</td>
 					</tr>
 					<%	} %>
 					<%}else{ %>		

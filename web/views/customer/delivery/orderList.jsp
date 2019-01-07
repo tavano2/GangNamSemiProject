@@ -232,6 +232,14 @@
 	<!-- 오더 리스트 스크립트 -->
 	<script type="text/javascript">
 	
+	//천단위 찍는 함수
+	function numComma(num){
+		var numStr = String(num);
+		return numStr.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,"$1,");
+	}
+	
+	
+	
 		//주문 상태 일 초기화
 		var searchday = 90;
 		//반품 상태 일 초기화
@@ -286,7 +294,7 @@
 								$lnumTd = $("<td onclick='showDetailOrder(\""+ (data.list[list][list2].order_lnum) +"\")'>").text(decodeURIComponent(data.list[list][list2].order_lnum));
 								$productNameTd = $("<td>").text(decodeURIComponent(data.list[list][list2].product_name));
 								$orderAmountTd = $("<td>")	.text(data.list[list][list2].order_amount);
-								$orderPriceTd = $("<td>").text(data.list[list][list2].product_price);
+								$orderPriceTd = $("<td>").text(numComma(data.list[list][list2].product_price)+"원");
 								$orderSnameTd = $("<td>").text(data.list[list][list2].order_sname);
 								$returnTd = $("<td>");
 								if(data.list[list][list2].order_sname == '상품준비중' 

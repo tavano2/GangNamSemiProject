@@ -27,7 +27,12 @@ public class DeliveryService {
 	public ArrayList<HashMap<String, Object>> searchOrderStatus(String userId, String searchOrderStatus,
 			int resultDay) {
 		Connection con = getConnection();
-		ArrayList<HashMap<String, Object>> list = new DeliveryDao().searchOrderStatus(con,userId,searchOrderStatus,resultDay);
+		ArrayList<HashMap<String, Object>> list  = null;
+		if(resultDay == 1) {
+			list = new DeliveryDao().searchOrderStatusToday(con,userId,searchOrderStatus,resultDay);
+		}else {
+			list = new DeliveryDao().searchOrderStatus(con,userId,searchOrderStatus,resultDay);
+		}
 		close(con);
 		return list;
 	}

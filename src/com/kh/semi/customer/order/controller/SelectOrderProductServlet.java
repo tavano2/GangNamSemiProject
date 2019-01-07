@@ -25,7 +25,7 @@ public class SelectOrderProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String[] cartNums = { "1", "2","3","4" };
+		String[] cartNums = request.getParameterValues("cartNum");
 		String userId = String.format(((Member) request.getSession().getAttribute("loginUser")).getUserId());
 
 		// 전체 선택한 상품 리스트 조회

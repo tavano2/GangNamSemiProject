@@ -55,13 +55,15 @@ public class DeliveryDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<HashMap<String, Object>> list = null;
-		HashMap<String, Object> hmap = null;
-		String query = "SELECT DISTINCT(OL.ORDER_LNUM),P.PRODUCT_NAME,OD.ORDER_AMOUNT,P.PRODUCT_PRICE,OS.ORDER_SNAME FROM ORDER_DETAIL OD JOIN ORDER_LIST OL ON (OD.ORDER_DNUM = OL.ORDER_DNUM AND OD.OPTION_NUM = OL.OPTION_NUM) JOIN ORDER_STATUS OS ON (OL.ORDER_SCODE = OS.ORDER_SCODE) JOIN PRODUCT P ON (OD.PRODUCT_CODE=P.PRODUCT_CODE) WHERE OL.USER_ID = ? "
-				+ "AND OS.ORDER_SNAME='"+searchOrderStatus+ "' AND OL.ORDER_DATE <= SYSDATE-?";
+		HashMap<String, Object> hmap = null;		
+		
+		String query = prop.getProperty("orderStatus"); 		
+		
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, userId);
-			pstmt.setInt(2, resultDay);
+			pstmt.setString(2, searchOrderStatus);
+			pstmt.setInt(3, resultDay);
 			rset = pstmt.executeQuery();
 			if(rset != null) {
 				list = new ArrayList<HashMap<String, Object>>();
@@ -84,6 +86,46 @@ public class DeliveryDao {
 		return list;
 	}
 
+	public ArrayList<HashMap<String, Object>> searchOrderStatusToday(Connection con, String userId,
+			String searchOrderStatus, int resultDay) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HashMap<String, Object>> list = null;
+		HashMap<String, Object> hmap = null;		
+		
+		String query = prop.getProperty("orderStatusToday"); 		
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, searchOrderStatus);
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while(rset.next()) {
+					hmap = new HashMap<String,Object>();
+					hmap.put("order_lnum", rset.getString("ORDER_LNUM"));
+					hmap.put("product_name", rset.getString("PRODUCT_NAME"));
+					hmap.put("order_amount", rset.getInt("ORDER_AMOUNT"));
+					hmap.put("product_price", rset.getInt("PRODUCT_PRICE"));
+					hmap.put("order_sname", rset.getString("ORDER_SNAME"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	
+	
+	
+	
+	
 	public ArrayList<HashMap<String, Object>> selectDetailOrderList(Connection con, String lnum, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -115,5 +157,7 @@ public class DeliveryDao {
 		}
 		return list;
 	}
+
+
 
 }

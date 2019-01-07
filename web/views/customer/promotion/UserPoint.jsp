@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.kh.semi.customer.board.model.vo.PageInfo"%>
@@ -54,6 +55,14 @@
 	
 %>
 
+
+<%!
+	public String comma(Number price){
+		return new DecimalFormat("#,###").format(price);
+	}
+%>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -97,7 +106,7 @@
 						<td
 							style="text-align: right; border-bottom: white; border-left: white;">
 
-							<%=totalPoint%>원
+							<%=comma(totalPoint)%>원
 						</td>
 						<%
 							} else {
@@ -114,7 +123,7 @@
 							if (contentList != null) {
 						%>
 						<td
-							style="text-align: right; border-bottom: white; border-left: white;"><p><%=currentPoint%>원
+							style="text-align: right; border-bottom: white; border-left: white;"><p><%=comma(currentPoint)%>원
 							</p></td>
 						<%
 							} else {
@@ -132,7 +141,7 @@
 							if (contentList != null) {
 						%>
 						<td
-							style="text-align: right; border-top: white; border-bottom: white; border-left: white;"><%=minusPoint%>원</td>
+							style="text-align: right; border-top: white; border-bottom: white; border-left: white;"><%=comma(minusPoint)%>원</td>
 						<%
 							} else {
 						%>
@@ -206,7 +215,7 @@
 
 					<tr>
 						<td><%=pointMap.get("order_date")%></td>
-						<td><%=pointMap.get("plus_p")%></td>
+						<td><%=comma((int)pointMap.get("plus_p"))%>원</td>
 						<td><%=pointMap.get("order_lnum")%></td>
 					</tr>
 					<%

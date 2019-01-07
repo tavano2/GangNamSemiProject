@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -33,6 +34,13 @@
 		}
 	}
 %>
+
+<%!
+	public String comma(Number price){
+		return new DecimalFormat("#,###").format(price);
+	}
+%>
+
 
 
 <html>
@@ -126,10 +134,10 @@
 
 					<td class="product_name1"><%=hmap.get("product_name")%></td>
 					<td><%=hmap.get("option_name")%></td>
-					<td><%=hmap.get("product_price")%>원</td>
+					<td><%=comma((int)hmap.get("product_price"))%>원</td>
 					<td class=" amount_class1"><%=hmap.get("amount")%></td>
-					<td><%=(int) (((double) ((int) hmap.get("product_price")))
-							* ((double) pointNDelivery.get("point_rate")))%>원</td>
+					<td><%=comma((int) (((double) ((int) hmap.get("product_price")))
+								* ((double) pointNDelivery.get("point_rate"))))%>원</td>
 				</tr>
 				<%
 					}
@@ -375,12 +383,12 @@
 					<td style="text-align: center; border-left: white;">총 결제예정 금액</td>
 				</tr>
 				<tr>
-					<td style="text-align: center; border-right: white;"><%=(totalPirce + deliveryPrice)%>원</td>
+					<td style="text-align: center; border-right: white;"><%=comma((totalPirce + deliveryPrice))%>원</td>
 					<td
 						style="text-align: center; border-left: white; border-right: white;"
 						id="discountPirce1">?원</td>
 					<td style="text-align: center; border-left: white;"
-						id="totalPirce1"><%=(totalPirce + deliveryPrice)%>원</td>
+						id="totalPirce1"><%=comma((totalPirce + deliveryPrice))%>원</td>
 				</tr>
 				<tr>
 					<td><b>총 할인금액</b></td>
@@ -411,7 +419,7 @@
 					<td rowspan="3"><div align="right">
 							<b>카드결제 </b>: 최종 결제 금액
 						</div> <br>
-						<div align="center" style="color: olive; font-size: 20px;" id="resultByPrice"><%=(totalPirce + deliveryPrice)%>원</div><br>
+						<div align="center" style="color: olive; font-size: 20px;" id="resultByPrice"><%=comma((totalPirce + deliveryPrice))%>원</div><br>
 						<div align="center" style="">
 							<button class="ui brown basic button" type="submit"
 								style="width: 100px;" onclick="showOrderPage();">결제하기</button>
@@ -528,6 +536,14 @@
 
 
 	<script type="text/javascript">
+	
+	//천단위 찍는 함수
+	function numComma(num){
+		var numStr = String(num);
+		return numStr.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,"$1,");
+	}
+	
+	
 	
 		var name1 = "";
 		var delTel1 = "";
@@ -673,7 +689,7 @@
 							$tr.append($couponPdiscountTd);
 						}
 						if(data.couponList[key].coupon_rdiscount != 0){
-							var $couponRdiscountTd = $("<td class='disCount'>").text(data.couponList[key].coupon_rdiscount);
+							var $couponRdiscountTd = $("<td class='disCount'>").text((data.couponList[key].coupon_rdiscount*100));
 							$tr.append($couponRdiscountTd);
 						}
 						var $endDateTd = $("<td>").text(data.couponList[key].end_date);
@@ -765,22 +781,21 @@
 			
 			$("#couponOkBtn").click(function(){
 				couponValue = $(".couponRadio:checked").val();
-				discount = $(".couponRadio:checked").parent().parent().parent().find(".disCount").text();
 				couponPd = $(".couponRadio:checked").parent().parent().parent().find(".couponPd").val();
-				
-				
+				discount = $(".couponRadio:checked").parent().parent().parent().find(".disCount").text();
+				var discount2 = discount*0.01;
 				if(discount > 100){
 					$("#discountPirce1").text(discount+"원");
-					$("#totalPirce1").text((<%=(totalPirce + deliveryPrice)%>-discount)+"원");
+					$("#totalPirce1").text(numComma((<%=(totalPirce + deliveryPrice)%>-discount))+"원");
 					$("#resultDiscount").text(discount+"원");
-					$("#resultByPrice").text((<%=(totalPirce + deliveryPrice)%>-discount)+"원");
+					$("#resultByPrice").text(numComma((<%=(totalPirce + deliveryPrice)%>-discount))+"원");
 				}else{
-					$("#discountPirce1").text((<%=(totalPirce + deliveryPrice)%>*discount));
+					$("#discountPirce1").text((<%=(totalPirce + deliveryPrice)%>*discount2));
 					pdiscountResult = $("#discountPirce1").text();
-					$("#discountPirce1").text((<%=(totalPirce + deliveryPrice)%>*discount)+"원");
-					$("#totalPirce1").text((<%=(totalPirce + deliveryPrice)%>-pdiscountResult)+"원");
-					$("#resultDiscount").text((<%=(totalPirce + deliveryPrice)%>*discount)+"원");
-					$("#resultByPrice").text((<%=(totalPirce + deliveryPrice)%>-pdiscountResult)+"원");
+					$("#discountPirce1").text(numComma((<%=(totalPirce + deliveryPrice)%>*discount2))+"원");
+					$("#totalPirce1").text(numComma((<%=(totalPirce + deliveryPrice)%>-pdiscountResult))+"원");
+					$("#resultDiscount").text(numComma((<%=(totalPirce + deliveryPrice)%>*discount2))+"원");
+					$("#resultByPrice").text(numComma((<%=(totalPirce + deliveryPrice)%>-pdiscountResult))+"원");
 				}
 			});
 
@@ -949,26 +964,10 @@
 						productList.push(object);
 					
 					<%}%>
-					console.log(productList);
+
 					//총 결제 금액
-					var totalPriceResult = $("#resultByPrice").text().replace("원","");
-									
-					
-					//주문자 정보
-					console.log(name1);
-					console.log(delTel);
-					console.log(delPhone);
-					console.log(email);
-					
-					// 수령자 정보
-					console.log(name2);
-					console.log(paymentAddress);
-					console.log(recTel);
-					console.log(recPhone);
-					console.log(sayDeliveryMan);
-					console.log(couponValue);
-					console.log(couponPd);
-					
+					var totalPriceResult2 = $("#resultByPrice").text().replace("원","");
+					var totalPriceResult = totalPriceResult2.replace(",","");
 					//체크된 라디오 버튼 밸류
 					var deleteByerInfoDate = $("input:radio[name='deleteByerInfo']:checked").val();
 				
@@ -1006,7 +1005,7 @@
 					    	$(".product_code1").each(function(){
 					    		pdCode.push($(this).val());
 					    	});
-					   
+					    	
 					    	$.ajax({
 					    		url : "<%=request.getContextPath()%>/insertOrderList.or",
 																type : "post",
