@@ -220,7 +220,10 @@
 								var parentCouponDiscountOption=($(this).parent().parent().children().eq(2).text());
 								var parentCouponDiscountValue=($(this).parent().parent().children().eq(3).text());
 								var parentCouponExp = ($(this).parent().parent().children().eq(4).text());
-								var windowChild = window.open("<%=request.getContextPath()%>/views/admin/promotion/CuponIssued.jsp?parentCouponCode="+parentCouponCode+"&parentCouponName="+parentCouponName+"&parentCouponDiscountOption="+parentCouponDiscountOption+"&parentCouponDiscountValue="+parentCouponDiscountValue+"&parentCouponExp="+parentCouponExp, "쿠폰발급", "width=1250, height=1200, left=100, top=50"); 
+								//인코딩처리
+								var uri ="parentCouponCode="+parentCouponCode+"&parentCouponName="+parentCouponName+"&parentCouponDiscountOption="+parentCouponDiscountOption+"&parentCouponDiscountValue="+parentCouponDiscountValue+"&parentCouponExp="+parentCouponExp;
+								var enURIC = encodeURI(uri);
+								var windowChild = window.open("<%=request.getContextPath()%>/views/admin/promotion/CuponIssued.jsp?"+enURIC, "쿠폰발급", "width=1250, height=1200, left=100, top=50"); 
 							});
 							var $couponIssueTd = $("<td>");
 							$couponIssueTd.append($couponIssue); //버튼을 tr에 담는다.
