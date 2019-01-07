@@ -39,7 +39,6 @@
 					<th><input type="checkbox" id = "reviewCheckBoxReader"></th>
 					<th>게시글 번호</th>
 					<th>게시글 제목</th>
-					<th>작성자</th>
 					<th>조회수</th>
 					<th>작성일</th>
 				</tr>
@@ -65,7 +64,6 @@
 				<th><input type="checkbox" id="qnaCheckBoxReader"></th>
 					<th>게시글 번호</th>
 					<th>게시글 제목</th>
-					<th>작성자</th>
 					<th>조회수</th>
 					<th>작성일</th>
 				</tr>
@@ -143,14 +141,14 @@
 					var $chk = $("<input type='checkbox' class='reviewChk' value='"  +  "'>");
 					var $boardNoTd = 	$("<td>").text(data.resultList[key].board_num);
 					var $boardTitleTd = $("<td>").text(decodeURIComponent(data.resultList[key].board_title));
-					var $boardUserIdTd = $("<td>").text(decodeURIComponent(data.resultList[key].user_id));
+/* 					var $boardUserIdTd = $("<td>").text(decodeURIComponent(data.resultList[key].user_id)); */
 					var $boardCountTd = $("<td>").text(decodeURIComponent(data.resultList[key].board_count));
 					var $boardDateTd = $("<td>").text(data.resultList[key].board_date);
 					$chkTd.append($chk);
 					$tr.append($chkTd);
 					$tr.append($boardNoTd);
 					$tr.append($boardTitleTd);
-					$tr.append($boardUserIdTd);
+					/* $tr.append($boardUserIdTd); */
 					$tr.append($boardCountTd);
 					$tr.append($boardDateTd);
 					$tableBody.append($tr);
@@ -160,7 +158,7 @@
 				if(data.resultPi != null){
 					
 					$trPage = $("<tr>");
-					$tdPage = $("<td colspan='6' >");
+					$tdPage = $("<td colspan='5' >");
 					$centerDiv = $("<div align='center'>");
 					$paginationDiv = $("<div class='ui pagination menu'>");
 
@@ -278,14 +276,14 @@
 						var $chk = $("<input type='checkbox' class='qnaChk'>");
 						var $boardNoTd = 	$("<td>").text(data.qnaList[key].board_num);
 						var $boardTitleTd = $("<td>").text(decodeURIComponent(data.qnaList[key].board_title));
-						var $boardUserIdTd = $("<td>").text(decodeURIComponent(data.qnaList[key].user_id));
+						/* var $boardUserIdTd = $("<td>").text(decodeURIComponent(data.qnaList[key].user_id)); */
 						var $boardCountTd = $("<td>").text(decodeURIComponent(data.qnaList[key].board_count));
 						var $boardDateTd = $("<td>").text(data.qnaList[key].board_date);
 						$chkTd.append($chk);
 						$tr.append($chkTd);
 						$tr.append($boardNoTd);
 						$tr.append($boardTitleTd);
-						$tr.append($boardUserIdTd);
+					/* 	$tr.append($boardUserIdTd); */
 						$tr.append($boardCountTd);
 						$tr.append($boardDateTd);
 						$tableBody.append($tr);
@@ -293,7 +291,7 @@
 					
 						//페이징 처리
 						$trPage = $("<tr>");
-						$tdPage = $("<td colspan='6' >");
+						$tdPage = $("<td colspan='5' >");
 						$centerDiv = $("<div align='center'>");
 						$paginationDiv = $("<div class='ui pagination menu'>");
 

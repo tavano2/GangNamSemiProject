@@ -64,15 +64,11 @@ public class BoardDao {
 			query = prop.getProperty("eventUserIdCount");
 		}else {
 			query = prop.getProperty("eventBoardContentCount");
-		}
-		
-
-		//'%'||"+searchTextData+"||'%'
-		
+		}		
 		try {
 			pstmt = con.prepareStatement(query);
-			rset = pstmt.executeQuery();
 			pstmt.setString(1,searchTextData);
+			rset = pstmt.executeQuery();
 			if (rset.next()) {
 				listCount = rset.getInt(1);
 			}
@@ -93,7 +89,6 @@ public class BoardDao {
 		ResultSet rset = null;
 		HashMap<String, Object> hmap = null;
 		ArrayList<HashMap<String, Object>> list = null;
-
 		String query = prop.getProperty("selectEventPageList");
 		try {
 			pstmt = con.prepareStatement(query);
@@ -134,11 +129,6 @@ public class BoardDao {
 		HashMap<String, Object> hmap = null;
 		ArrayList<HashMap<String, Object>> list = null;
 		String query = "";
-/*		String query = 
-		"SELECT RNUM,BOARD_ID,BOARD_NUM,BOARD_TITLE,BOARD_CONTENT,USER_ID,BOARD_DATE,BOARD_COUNT,STATUS FROM (SELECT ROWNUM RNUM,BOARD_ID,BOARD_NUM,BOARD_TITLE,BOARD_CONTENT,USER_ID,BOARD_DATE,BOARD_COUNT,STATUS FROM "
-		+ "(SELECT B.BOARD_ID,B.BOARD_NUM,B.BOARD_TITLE,B.BOARD_CONTENT,M.USER_ID,B.BOARD_DATE,BOARD_COUNT,B.STATUS "
-		+ "FROM BOARD B JOIN MEMBER M ON (B.USER_ID = M.USER_ID) WHERE " +searchData+ " LIKE ? AND B.BOARD_TYPE = 3 AND B.STATUS = 'E' AND B.REPLY_LEVEL = 0 ORDER BY B.BOARD_ID DESC)) "
-				+ "WHERE RNUM BETWEEN ? AND ?";		*/
 		
 		if(searchData.equals("BOARD_TITLE")) {
 			 query = prop.getProperty("eventBoardTitle");
@@ -147,14 +137,11 @@ public class BoardDao {
 		}else {
 			query = prop.getProperty("eventBoardContent");
 		}
-		
-		System.out.println(query);
-
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;	
 		try {
 		 	pstmt = con.prepareStatement(query);
-			int startRow = (currentPage - 1) * limit + 1;
-			int endRow = startRow + limit - 1;
-			pstmt.setString(1, "'%'||"+searchTextData+"||'%'");
+			pstmt.setString(1, searchTextData);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
 			rset = pstmt.executeQuery();
@@ -171,9 +158,7 @@ public class BoardDao {
 					hmap.put("board_date", rset.getDate("BOARD_DATE"));
 					hmap.put("board_count", rset.getInt("BOARD_COUNT"));
 					hmap.put("status", rset.getString("STATUS"));
-					System.out.println(hmap.get("board_id"));
-					System.out.println(hmap.get("user_id"));
-					System.out.println(hmap.get("board_title"));
+
 					list.add(hmap);
 				}
 			}

@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -28,9 +29,11 @@
 	}
 	
 	//최근 12개월 구매액
+	int oneYearTotalPrice = 0;
 	HashMap<String,Object> beforePrice = null;
 	if(request.getAttribute("beforePrice") != null){
 		beforePrice = (HashMap<String,Object>)request.getAttribute("beforePrice");
+		oneYearTotalPrice = (int)beforePrice.get("oneYearTotalPrice");
 	}
 	
 	// 사용자 적립금, 총 적립금 , 사용 적립금
@@ -89,6 +92,16 @@
 	
 	
 	%>
+	
+<%!
+	public String comma(Number price){
+		return new DecimalFormat("#,###").format(price);
+	}
+%>
+
+
+
+	
 <!DOCTYPE html>
 <html>
 
@@ -144,12 +157,12 @@
 
 						<td style="border-bottom: white; border-top: white;">
 							<%if(nextClass != null) {%>
-							<p><%=nextClass.get("class_name") %> 까지 남은 구매금액은 <%=resultPirce %>원입니다.</p>
+							<p><%=nextClass.get("class_name") %> 까지 남은 구매금액은 <%=comma(resultPirce)%>원입니다.</p>
 							<%} else {%>
 							<p>축하합니다! 마지막 등급입니다.</p>
 							<%} %>
 							<%if(beforePrice != null) {%>
-							<p> (최근 12개월 동안 구매금액 : <%=beforePrice.get("oneYearTotalPrice") %>원 )</p>
+							<p> (최근 12개월 동안 구매금액 : <%=comma(oneYearTotalPrice)%>원 )</p>
 							<%}else{ %>
 								<p>(최근 12개월 동안 구매금액 : 0원 )</p>
 							<%} %>
@@ -174,7 +187,7 @@
 						<td
 							style="text-align: left; border-bottom: white; border-right: white;">가용적립금</td>
 						<td
-							style="text-align: right; border-bottom: white; border-left: white;"><%=currentPoint %>원&nbsp;
+							style="text-align: right; border-bottom: white; border-left: white;"><%=comma(currentPoint)%>원&nbsp;
 							<button class="ui grey basic mini button" onclick="location.href='<%=request.getContextPath()%>/selectPointAndMemberClassList.pd' ">
 								<i class="chevron left icon"></i> 조회
 							</button>
@@ -184,21 +197,21 @@
 							적립금</td>
 						<td
 							style="text-align: right; border-bottom: white; border-left: white;">
-							<p><%=totalPoint %>원</p>
+							<p><%=comma(totalPoint)%>원</p>
 						</td>
 					</tr>
 					<tr>
 						<td
 							style="text-align: left; border-top: white; border-bottom: white; border-right: white;">사용적립금</td>
 						<td
-							style="text-align: right; border-top: white; border-bottom: white; border-left: white;"><%=minusPoint %>원
+							style="text-align: right; border-top: white; border-bottom: white; border-left: white;"><%=comma(minusPoint) %>원
 						</td>
 						<td
 							style="text-align: left; border-top: white; border-bottom: white; border-right: white;">쿠폰</td>
 						<td
 							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">
 							<%if(countCoupon != 0) {%>
-							<%=countCoupon %>개&nbsp;
+							<%=comma(countCoupon)%>개&nbsp;
 							<%}else{ %>
 							0개&nbsp;
 							<%} %>
@@ -211,7 +224,7 @@
 						<td
 							style="text-align: right; border-top: white; border-bottom: white; border-left: white;">
 							
-							<%=totalByPrice %>원
+							<%=comma(totalByPrice)%>원
 							<%if(totalByCount > 0) {%>
 							(<%=totalByCount %>회)
 							<%}else{ %>
