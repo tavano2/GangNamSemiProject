@@ -132,7 +132,7 @@
 												<div class="ui selection dropdown">
 													<input type="hidden" name="gender" id="selectMiddleCateg">
 													<i class="dropdown icon"></i>
-													<div class="default text">중분류</div>
+													<div class="default text" id="resetMiddleCateg">중분류</div>
 													<div class="menu" id="middleCateg"></div>
 												</div> <br>
 												<div class="ui selection dropdown">
@@ -175,11 +175,6 @@
 													<div class="ui selection dropdown">
 														<input type="hidden" name="gender" id="select"> <i
 															class="dropdown icon"></i>
-														<div class="default text">정렬기준</div>
-														<div class="menu">
-															<div class="item" data-value="1">다이아</div>
-															<div class="item" data-value="0">플레티넘</div>
-														</div>
 													</div>
 												</div>
 											</td>
@@ -412,6 +407,8 @@
 			
 			
 			$("#selectBigCateg").change(function(){
+				$("#resetMiddleCateg").text("중분류").addClass("default");
+				$("#selectMiddleCateg").val("");
 				$.ajax({
 					url:"<%=request.getContextPath()%>/selectMiddleCateg.pm",
 					type : "get",

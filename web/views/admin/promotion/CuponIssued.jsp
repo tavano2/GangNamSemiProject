@@ -305,6 +305,7 @@
 		});
 		
 		$(function(){
+			console.log(decodeURI("<%=parentCouponCode%>"));
 			$("#couponCode").text("<%=parentCouponCode%>");
 			$("#couponName").text("<%=parentCouponName%>");
 			$("#couponDiscountOption").text("<%=parentCouponDiscountOption%>");
@@ -415,8 +416,7 @@
 				  location.reload();		
 			});			
 		}
-		$("#searchBtn").click(function(){
-			
+		$("#searchBtn").click(function(){		
 			if($("#enable").is(":checked")||$("#disable").is(":checked")){
 				if($("#enable").is(":checked")){
 					able = "D";

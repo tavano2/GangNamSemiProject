@@ -69,6 +69,7 @@ public class InsertQnAServlet extends HttpServlet {
 			
 			String multiTitle = multiRequest.getParameter("title");
 			String multiContent = multiRequest.getParameter("content");
+			String productCode = multiRequest.getParameter("code");
 			
 			//System.out.println();
 			//System.out.println(multiTitle);
@@ -100,7 +101,9 @@ public class InsertQnAServlet extends HttpServlet {
 		int result = new ProductService().insertQnA(insertQnAboard,fileList);
 		
 		if(result>0) {
-			response.sendRedirect(request.getContextPath()+"/reviewNoticeList.no?code=PD000003");
+
+			response.sendRedirect(request.getContextPath()+"/reviewNoticeList.no?code="+productCode);
+
 			//response.sendRedirect(request.getContextPath()+"/SelectOneQnA.no");
 		}else {
 			//실패시 저장된 사진 삭제
