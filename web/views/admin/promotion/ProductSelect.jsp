@@ -132,7 +132,7 @@
 												<div class="ui selection dropdown">
 													<input type="hidden" name="gender" id="selectMiddleCateg">
 													<i class="dropdown icon"></i>
-													<div class="default text">중분류</div>
+													<div class="default text" id="resetMiddleCateg">중분류</div>
 													<div class="menu" id="middleCateg"></div>
 												</div> <br>
 												<div class="ui selection dropdown">
@@ -175,11 +175,6 @@
 													<div class="ui selection dropdown">
 														<input type="hidden" name="gender" id="select"> <i
 															class="dropdown icon"></i>
-														<div class="default text">정렬기준</div>
-														<div class="menu">
-															<div class="item" data-value="1">다이아</div>
-															<div class="item" data-value="0">플레티넘</div>
-														</div>
 													</div>
 												</div>
 											</td>
@@ -412,6 +407,8 @@
 			
 			
 			$("#selectBigCateg").change(function(){
+				$("#resetMiddleCateg").text("중분류").addClass("default");
+				$("#selectMiddleCateg").val("");
 				$.ajax({
 					url:"<%=request.getContextPath()%>/selectMiddleCateg.pm",
 					type : "get",
@@ -471,7 +468,9 @@
 		$("#saveBtn").click(function(){		
 			$table=$("<table>").addClass("ui celled table").attr("id","slectedProduct"); // tbody를 담을 table을 생성
 			$("#selectedProductList").prepend($("#titleTr")); //상품코드, 상품명, 판매가를 적을 tr을 selectedProductList의 맨 앞부분에 삽입함
-			$table.append($("#selectedProductList")); // table에 selectedProductList를 append함
+			$table.append($("#selectedProductList").children().each(function(){
+				$(this).removeClass("active");
+			})); // table에 selectedProductList를 append함
 			window.opener.$("#selectedValue").append($table); // window.opener를 이용하여 부모 페이지의 selectedValue를 선택하여 table을 삽입
 			window.self.close(); //팝업 창을 닫는다
 		})

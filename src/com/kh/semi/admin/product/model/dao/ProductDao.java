@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import com.kh.semi.admin.product.model.vo.Attachment;
 import com.kh.semi.admin.product.model.vo.Category;
+import com.kh.semi.admin.product.model.vo.Option;
 import com.kh.semi.admin.product.model.vo.Product;
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
@@ -143,6 +144,96 @@ public class ProductDao {
 				list.add(cate);
 			}
 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
+	public ArrayList<Attachment> selectProductName(Connection con, String selectInput) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Attachment> list = null;
+		String query = prop.getProperty("selectProductName");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, selectInput);
+			rset = pstmt.executeQuery();
+			list = new ArrayList<Attachment>();
+			
+			while(rset.next()) {
+				Attachment at = new Attachment();
+				at.setProductCode(rset.getString("PRODUCT_CODE"));
+				at.setProductName(rset.getString("PRODUCT_NAME"));
+				at.setCategoryName(rset.getString("CATEG_NAME"));
+				at.setProductPrice(rset.getInt("PRODUCT_PRICE"));
+				
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
+	public ArrayList<Attachment> selectProductCode(Connection con, String selectInput) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Attachment> list = null;
+		String query = prop.getProperty("selectProductCode");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, selectInput);
+			rset = pstmt.executeQuery();
+			list = new ArrayList<Attachment>();
+			
+			while(rset.next()) {
+				Attachment at = new Attachment();
+				at.setProductCode(rset.getString("PRODUCT_CODE"));
+				at.setProductName(rset.getString("PRODUCT_NAME"));
+				at.setCategoryName(rset.getString("CATEG_NAME"));
+				at.setProductPrice(rset.getInt("PRODUCT_PRICE"));
+				
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
+	public ArrayList<Attachment> selectProductCate(Connection con, String selectInput) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Attachment> list = null;
+		String query = prop.getProperty("selectProductCate");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, selectInput);
+			rset = pstmt.executeQuery();
+			list = new ArrayList<Attachment>();
+			
+			while(rset.next()) {
+				Attachment at = new Attachment();
+				at.setProductCode(rset.getString("PRODUCT_CODE"));
+				at.setProductName(rset.getString("PRODUCT_NAME"));
+				at.setCategoryName(rset.getString("CATEG_NAME"));
+				at.setProductPrice(rset.getInt("PRODUCT_PRICE"));
+				
+				list.add(at);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

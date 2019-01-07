@@ -83,7 +83,6 @@ public class SelectOrderProductServlet extends HttpServlet {
 				}
 			}
 			// 이미지,상품정보,판매가,수량 정상 출력 완료 (상품 옵션은 숨겨서 insert시 추가)
-			//System.out.println(pCodeOptionList);
 			
 			//적립금 , 배송비 구해오기
 			HashMap<String, Object> pointNDeliveryHmap = new OrderService().selectPointNDelivery(userId);

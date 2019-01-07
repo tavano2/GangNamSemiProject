@@ -240,7 +240,7 @@
             </table><br>
             </form>
             <div id="fileArea">
-            	<input type="file" id="thumbnailImg" onchange="loadImg(this,1)">
+            	<input type="file" id="thumbnailImg" name="thumbnailImg" onchange="loadImg(this,1)">
             	<input type="file" name="imgList" onchange="loadImg(this,2)">
             </div>
 

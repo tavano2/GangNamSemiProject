@@ -108,7 +108,7 @@
 										<div class="ui selection dropdown">
 											<input type="hidden" name="gender" id="selectMiddleCateg">
 											<i class="dropdown icon"></i>
-											<div class="default text">중분류</div>
+											<div class="default text" id="resetMiddleCateg">중분류</div>
 											<div class="menu" id="middleCateg"></div>
 										</div>
 										<div class="ui selection dropdown">
@@ -203,6 +203,8 @@
 			});		
 			
 			$("#selectBigCateg").change(function(){
+				$("#resetMiddleCateg").text("중분류").addClass("default");
+				$("#selectMiddleCateg").val("");
 				$.ajax({
 					url:"<%=request.getContextPath()%>/selectMiddleCateg.pm",
 					type : "get",
@@ -239,7 +241,9 @@
 				function() {
 					$table = $("<table>").addClass("ui celled table").attr(
 							"id", "slectedCateg");
-					$table.append($tbody);
+					$table.append($tbody.children().each(function(){
+						$(this).removeClass("active");
+					}));
 					window.opener.$("#selectedValue").append($table);
 					window.self.close();
 				})

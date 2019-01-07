@@ -153,7 +153,11 @@ span {
 												<input type="text" name="couponDiscount" id="couponDiscount">
 											</div>
 											<div class="cuponSpan">
-												<span>&nbsp;원 / %</span>
+												
+													<span><i class="won sign icon"></i><span style="font-weight: bold;font-size: 25px">/</span>
+													<i class="percent icon"></i>
+													</span>
+												
 											</div>
 										</td>
 									</tr>
@@ -280,71 +284,90 @@ span {
 			console.log($("#couponDiscount").val())//쿠폰할인율
 			console.log($("#startDate").val());//시작일
 			console.log($("#endDate").val());//만기일
-			//$("#createCouponForm").submit();
-			if($("#allSelect").is(":checked")){
-				$.ajax({
-					url:"<%=request.getContextPath()%>/createCouponAll.pm",
-					type:"get",
-					data:{couponName:$("#couponName").val(),couponExp:$("#couponExp").val(),discountMethod:$("div[name=discountMethod]").html(),couponDiscount:$("#couponDiscount").val(),couponDate:$("#couponDate").val()},
-					success:function(data){
-						if(data>1){
-							insertSeccess();
+			if(!($("#couponName").val()=="")){
+				if(!($("#couponExp").val()=="")){
+					if(!($("div[name=discountMethod]").text()=="")){
+						if(!($("#couponDiscount").val()=="")){
+							if(!($("#couponDate").val()=="")){
+								if($("#allSelect").is(":checked")){
+									$.ajax({
+										url:"<%=request.getContextPath()%>/createCouponAll.pm",
+										type:"get",
+										data:{couponName:$("#couponName").val(),couponExp:$("#couponExp").val(),discountMethod:$("div[name=discountMethod]").html(),couponDiscount:$("#couponDiscount").val(),couponDate:$("#couponDate").val()},
+										success:function(data){
+											if(data>1){
+												insertSeccess();
+											}else{
+												insertFail();
+											}
+										},
+										error:function(data){
+											console.log("실패")
+										}
+									});
+								}else if($("#productSelect").is(":checked")){
+									var productArr = new Array;
+									console.log($("#slectedProduct").children().children());
+									$("#slectedProduct").children().children().each(function(index, item){
+										productArr[index] = $(this).children("td").eq(0).text();
+										console.log(productArr[index]);
+									})
+									$.ajax({
+										url:"<%=request.getContextPath()%>/createCouponPRange.pm",
+										type:"get",
+										data:{productArr:productArr,couponName:$("#couponName").val(),couponExp:$("#couponExp").val(),discountMethod:$("div[name=discountMethod]").html(),couponDiscount:$("#couponDiscount").val(),couponDate:$("#couponDate").val()},
+										success:function(data){
+											if(data>1){
+												insertSeccess();
+											}else{
+												insertFail();
+											}
+										},
+										error:function(){
+											console.log("실패");
+										}
+									});			
+								}else if($("#categorySelect").is(":checked")){
+									var bigCategArr = new Array;
+									var middleCategArr = new Array;
+									$("#slectedCateg").children().children().each(function(index,item){
+										bigCategArr[index]=$(this).children("td").eq(0).text();
+										middleCategArr[index]=$(this).children("td").eq(1).text();
+									});
+									$.ajax({
+										url:"<%=request.getContextPath()%>/createCouponCRange.pm",
+										type:"get",
+										data:{bigCategArr:bigCategArr,middleCategArr:middleCategArr,couponName:$("#couponName").val(),couponExp:$("#couponExp").val(),discountMethod:$("div[name=discountMethod]").html(),couponDiscount:$("#couponDiscount").val(),couponDate:$("#couponDate").val()},
+										success:function(data){
+											console.log(data);
+											if(data>2){
+												insertSeccess();
+											}else{
+												insertFail();
+											}
+										},
+										error:function(){
+											console.log("실패");
+										}
+									});	
+								}else{
+									swal("적용범위를 선택해주세요!");
+								}
+							}else{
+								swal("사용기간을 입력해주세요")
+							}
 						}else{
-							insertFail();
+							swal("할인금액/할인률을 입력하세요!")
 						}
-					},
-					error:function(data){
-						console.log("실패")
+					}else{
+						swal("할인금액/할인률을 선택하세요!")
 					}
-				});
-			}else if($("#productSelect").is(":checked")){
-				var productArr = new Array;
-				console.log($("#slectedProduct").children().children());
-				$("#slectedProduct").children().children().each(function(index, item){
-					productArr[index] = $(this).children("td").eq(0).text();
-					console.log(productArr[index]);
-				})
-				$.ajax({
-					url:"<%=request.getContextPath()%>/createCouponPRange.pm",
-					type:"get",
-					data:{productArr:productArr,couponName:$("#couponName").val(),couponExp:$("#couponExp").val(),discountMethod:$("div[name=discountMethod]").html(),couponDiscount:$("#couponDiscount").val(),couponDate:$("#couponDate").val()},
-					success:function(data){
-						if(data>1){
-							insertSeccess();
-						}else{
-							insertFail();
-						}
-					},
-					error:function(){
-						console.log("실패");
-					}
-				});			
-			}else if($("#categorySelect").is(":checked")){
-				var bigCategArr = new Array;
-				var middleCategArr = new Array;
-				$("#slectedCateg").children().children().each(function(index,item){
-					bigCategArr[index]=$(this).children("td").eq(0).text();
-					middleCategArr[index]=$(this).children("td").eq(1).text();
-				});
-				$.ajax({
-					url:"<%=request.getContextPath()%>/createCouponCRange.pm",
-					type:"get",
-					data:{bigCategArr:bigCategArr,middleCategArr:middleCategArr,couponName:$("#couponName").val(),couponExp:$("#couponExp").val(),discountMethod:$("div[name=discountMethod]").html(),couponDiscount:$("#couponDiscount").val(),couponDate:$("#couponDate").val()},
-					success:function(data){
-						console.log(data);
-						if(data>2){
-							insertSeccess();
-						}else{
-							insertFail();
-						}
-					},
-					error:function(){
-						console.log("실패");
-					}
-				});	
+				}else{
+					swal("쿠폰 설명을 입력하세요!")
+				}
 			}else{
-				swal("적용범위를 선택해주세요!");
-			}
+				swal("쿠폰이름을 입력하세요!")
+			}		
 		});
 
 		$("#allSelect").change(function() {

@@ -833,7 +833,7 @@ public class ProductDao {
 		//String query = "SELECT CLASS_NAME,STANDARD_PRICE FROM USER_CLASS WHERE STANDARD_PRICE > "+totalPirce;
 		try {
 			pstmt = con.prepareStatement(query);
-			//pstmt.setInt(1, totalPirce);
+			pstmt.setInt(1, totalPirce);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				hmap = new HashMap<String,Object>();

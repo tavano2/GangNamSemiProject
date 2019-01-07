@@ -138,6 +138,7 @@
     			success:function(data){
     				console.log("성공");
     				var $selectBody = $("#selectBody");
+    				$selectBody.html('');
     				for(var key in data){
     					var $tr = $("<tr class='selectTr'>");
     					var $checkTd = $("<div class='checkCss'><div class='ui fitted checkbox'><input type='checkbox' name='optionCheck'><label></label></div></div>");
