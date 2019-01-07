@@ -487,10 +487,32 @@ public class ProductService {
 				}
 			}
 			
+			close(con);
 			return result;
 		}
 
-
+		public int hasWishList(String userId, String productCode) {
+			Connection con = getConnection();
+			int result = new ProductDao().hasProduct(con, userId, productCode);
+			
+			close(con);
+			return result;
+		}
+		
+		//상품 상세 페이지에서 위시 리스트 삭제
+		public int deleteWishList(String userId, String productCode) {
+			Connection con = getConnection();
+			int result  = new ProductDao().deleteWishList(con, productCode, userId);
+				
+			if(result > 0) {
+				commit(con);
+			} else {
+				rollback(con);
+			}
+			
+			close(con);
+			return result;
+		}
 
 
 
