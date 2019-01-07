@@ -1,6 +1,9 @@
 package com.kh.semi.customer.product.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.kh.semi.customer.member.model.vo.Member;
 import com.kh.semi.customer.product.model.service.ProductService;
+import com.kh.semi.customer.product.model.vo.ShoppingCartPd;
 
 /**
  * Servlet implementation class insertCartServlet
@@ -40,6 +44,21 @@ public class insertCartServlet extends HttpServlet {
 			/*for(String s : prodSelectOption) System.out.println(s);
 			for(String s : prodSelectAmount) System.out.println(s);
 			System.out.println(productCode);*/
+			
+			ArrayList<ShoppingCartPd> cartList = new ProductService().selectCartListPd(userId, productCode);
+			HashMap<String, String> options = new HashMap<String, String>();
+			
+			/*if(cartList != null) {
+				for(ShoppingCartPd cart : cartList) {
+					if(options.containsKey(cart.getCartNum())) {
+						
+					}
+					options += cart.getOptionNum() + ", ";
+				}
+			}*/
+			
+			
+			
 			
 			int result = new ProductService().insertCart(productCode, userId, prodSelectOption, prodSelectAmount);
 			

@@ -330,7 +330,7 @@ input[type="number"]::-webkit-inner-spin-button {
 											</td>
 											<td>
 												<div class="cartBtnDiv">
-													<button class="ui grey basic button cartBtn" onclick="wishListBtn(); return false;">♡WISH LIST</button>
+													<button class="ui grey basic button cartBtn" id="addWishListBtn"><span><i class="heart outline icon"></i>WISH LIST</span></button>
 												</div>
 											</td>
 										</tr>
@@ -721,20 +721,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 	<script>
 		$('.contextBox .ui.dropdown').dropdown(); //컨텐츠 박스의 드롭다운 실행
-		function wishListBtn() {
-			var productCode = "<%= pro.getProductCode() %>";
-			
-			$.ajax({
-				url: "<%= request.getContextPath() %>/insertWishList.pd",
-				type: "post",
-				data: {productCode:productCode},
-				success: function(data){
-					alert(data);
-				}, error: function(){
-					console.log("실패");
-				}
-			});
-		}
+		
 		function detailReview() {
 			location.href = "/semi/views/customer/product/detailReview.jsp";
 		}
@@ -833,12 +820,14 @@ input[type="number"]::-webkit-inner-spin-button {
 						optionNumStr += ", ";
 					}
 				}
+				//console.log(option);
 				//console.log(optionNumStr);
 				
 				var chk2 = true;
-				var prodSelectOption = $(".prodSelectOption");
+				var prodSelectOption = $("[name='prodSelectOption']");
+				
 				for (var i=0; i<prodSelectOption.length; i++){
-					if($(prodSelectOption).val() == optionNumStr){
+					if($(prodSelectOption[i]).val() == optionNumStr){
 						chk2 = false;
 					}
 				}
@@ -937,6 +926,71 @@ input[type="number"]::-webkit-inner-spin-button {
 			}
 			
 		}
+		
+		
+		$(function(){
+			var productCode = "<%= pro.getProductCode() %>";
+			
+			$.ajax({
+				url: "<%= request.getContextPath() %>/selectWishList.pd",
+				type: "post",
+				data: {productCode:productCode},
+				success: function(result){
+					if(result > 0){
+						$("#addWishListBtn").html("<span style='color: red;'><i class='heart icon'></i>WISH LIST</span>");
+						
+						$("#addWishListBtn").click(deleteWishList);
+					} else {
+						$("#addWishListBtn").html("<span><i class='heart outline icon'></i>WISH LIST</span>");
+						
+						$("#addWishListBtn").click(insertWishList);
+					}
+				}, error: function(){
+					console.log("실패");
+				}
+			});
+		});
+		
+		var insertWishList = function() {
+			var productCode = "<%= pro.getProductCode() %>";
+			
+			$.ajax({
+				url: "<%= request.getContextPath() %>/insertWishList.pd",
+				type: "post",
+				data: {productCode:productCode},
+				success: function(data){
+					$("#addWishListBtn").html("<span style='color: red;'><i class='heart icon'></i>WISH LIST</span>");
+					
+					$("#addWishListBtn").off();
+					$("#addWishListBtn").click(deleteWishList);
+				}, error: function(){
+					console.log("실패");
+				}
+			});
+			
+			return false;
+		}
+		
+		var deleteWishList = function() {
+			var productCode = "<%= pro.getProductCode() %>";
+			
+			$.ajax({
+				url: "<%= request.getContextPath() %>/deleteWishListInDetail.pd",
+				type: "post",
+				data: {productCode:productCode},
+				success: function(data){
+					$("#addWishListBtn").html("<span><i class='heart outline icon'></i>WISH LIST</span>");
+					
+					$("#addWishListBtn").off();
+					$("#addWishListBtn").click(insertWishList);
+				}, error: function(){
+					console.log("실패");
+				}
+			});
+			
+			return false;
+		}
+		
 	</script>
 	
 	<script>
