@@ -27,6 +27,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- alert CDN -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 <!-- Semantic UI CSS CDN -->
 <link rel="stylesheet"
@@ -35,6 +38,8 @@
 <!-- Common css -->
 <link href="/semi/css/customer/common/main.css" rel="stylesheet">
 <style type="text/css">
+
+
 
 [type="date"] {
             background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
@@ -85,7 +90,7 @@
 		</div>
 		<br>
 		
-		<form action="<%=request.getContextPath() %>/insertReview.pd" method="post" encType="multipart/form-data">
+		<form action="<%=request.getContextPath() %>/insertReview.pd" method="post" encType="multipart/form-data" id="insertReviewForm">
 		<table class="ui celled table first-col">
 
 		<tbody>
@@ -128,7 +133,7 @@
 				<td>제목</td>
 				<td>
 					<div class="ui input">
-						<input type="text"  name="title" style="width:800px;">
+						<input type="text" id="titleId" name="title" style="width:800px;">
 					</div>
 				</td>
 			</tr>
@@ -137,7 +142,7 @@
 				<td>키</td>
 				<td>
 					<div class="ui input">
-						<input type="text" name="youHeight" style="width:300px;" placeholder="~cm(숫자만입력하세요 (제발))">
+						<input type="text" id="HeightId" name="youHeight" style="width:300px;" placeholder="~cm(숫자만입력하세요 (제발))">
 					</div>
 				</td>
 			</tr>
@@ -145,7 +150,7 @@
 				<td>몸무게</td>
 				<td>
 					<div class="ui input">
-						<input type="text" name="youWeight" style="width:300px;" placeholder="~kg(숫자만입력하세요 (제발))">
+						<input type="text" id="weightId" name="youWeight" style="width:300px;" placeholder="~kg(숫자만입력하세요 (제발))">
 					</div>
 				</td>
 			</tr>
@@ -153,7 +158,7 @@
 				<td>평소사이즈</td>
 				<td>
 					<div class="ui input">
-						<input type="text" name="youSize" style="width:300px;" placeholder="S/M/L">
+						<input type="text" id="sizeId" name="youSize" style="width:300px;" placeholder="S/M/L">
 					</div>
 				</td>
 			</tr>
@@ -163,7 +168,7 @@
 				<td>
 					<div class="ui form">
 						<div class="field">
-							<textarea name = "content"></textarea>
+							<textarea id="contentId" name = "content"></textarea>
 						</div>
 
 					</div>
@@ -188,7 +193,7 @@
 		</table>
 
 		<div align="center">
-			<button type="submit" class="ui secondary button">등록하기</button>
+			<button type="button" id="insertBtn" class="ui secondary button">등록하기</button>
 			<button type="reset" class="ui button">취소하기</button>
 
 		</div>
@@ -228,6 +233,37 @@
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
+	
+	<script>
+
+		$("#insertBtn").click(function(){
+		
+			if(($("#contentId").val()=="")){
+				swal("내용을 입력해주세요!");
+				if($("#sizeId").val()==""){
+					swal("사이즈를 입력해주세요!");
+					if($("#weightId").val()==""){
+						swal("몸무게을 입력해주세요!");
+						if($("#HeightId").val()==""){
+							swal("키를 입력해주세요!");
+							if($("#titleId").val()==""){
+								swal("제목을 입력해주세요!");
+							}
+						}
+					}
+				}
+				
+			}else{
+				swal("리뷰게시판 등록 감사합니다^_^")
+				.then((value) => {	
+				$("#insertReviewForm").submit();
+			});
+			}
+				
+			
+		});
+	
+	</script>
 
 </body>
 

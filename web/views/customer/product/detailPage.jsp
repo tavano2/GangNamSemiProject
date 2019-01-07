@@ -100,6 +100,9 @@
 <!-- Common css -->
 <link href="/semi/css/customer/common/main.css" rel="stylesheet">
 
+<!-- alert CDN -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 
 <style>
@@ -773,7 +776,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			
 				console.log(reviewRum);
 				
-				location.href="<%=request.getContextPath()%>/selectReview.pd?reviewRum="+reviewRum;
+				location.href="<%=request.getContextPath()%>/selectReview.pd?reviewRum="+reviewRum+"&productCode=<%=pro.getProductCode()%>";
 			
 			})
 			
@@ -786,7 +789,19 @@ input[type="number"]::-webkit-inner-spin-button {
 		//review 작성하기
 		function ReviewClick(){
 <%-- 			location.href="<%=request.getContextPath()%>/selectReviewOption.pd?product=<%=pro.getProductCode()%>"; --%>	
-				location.href="<%=request.getContextPath()%>/selectReviewOption.pd?productCode=<%=pro.getProductCode()%>&boardId=420";
+				
+				
+				$.ajax({
+					url:"<%=request.getContextPath()%>/hasOrderDnum.pd?productCode=<%=pro.getProductCode()%>",
+					success:function(data){
+						console.log(data);
+						if(data=="Y"){
+							location.href="<%=request.getContextPath()%>/selectReviewOption.pd?productCode=<%=pro.getProductCode()%>&boardId=420";
+						}else{
+							swal("주문자만 작성할 수 있습니다!");
+						}
+					}
+				});
 		
 		}
 	
