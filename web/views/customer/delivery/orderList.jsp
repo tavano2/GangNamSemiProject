@@ -56,7 +56,7 @@
 						class="ui label" onclick="orderStatusDropDownBtn(30)"> 1개월 </a> <a class="ui label" onclick="orderStatusDropDownBtn(90)"> 3개월 </a> <a
 						class="ui label" onclick="orderStatusDropDownBtn(180)"> 6개월 </a><a class="ui label" onclick="orderStatusDropDownBtn(365)"> 1년 </a>
 
-					<!-- 데이트 피커 와야됨 -->
+				
 
 					<a class="ui label" style="color: white; background: black;" onclick="orderStatusBtn();">
 						조회 </a>
@@ -175,7 +175,7 @@
 				<table class="ui single line table">
 					<thead>
 						<tr>
-							<th>취소/교환/반품</th>
+							<th><input type="checkbox" id="orderDeatilStatusChk"></th>
 							<th>주문 내역 번호</th>
 							<th>상품명</th>
 							<th>수량</th>
@@ -386,8 +386,7 @@
 		
 		//주문 조회 재귀호출
 		function osFirstPageMove(data){
-			orderStatusBtn(data);
-			
+			orderStatusBtn(data);		
 		}		
 		function osBeforePageMove(data){
 			orderStatusBtn(data);
