@@ -100,7 +100,7 @@ public class InsertQnAServlet extends HttpServlet {
 		int result = new ProductService().insertQnA(insertQnAboard,fileList);
 		
 		if(result>0) {
-			response.sendRedirect(request.getContextPath()+"/reviewNoticeList.no");
+			response.sendRedirect(request.getContextPath()+"/reviewNoticeList.no?code=PD000003");
 			//response.sendRedirect(request.getContextPath()+"/SelectOneQnA.no");
 		}else {
 			//실패시 저장된 사진 삭제

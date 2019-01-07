@@ -131,14 +131,16 @@
 				
 				$tableBody = $("#reviewTbody");
 				$tableBody.html('');
+				console.log(data);
 				
 				//테이블 리스트 구현
 				for(var key in data.resultList){
 					//tr 제이쿼리 변수
-					$tr = $("<tr class='reviewTr' >");
+					
+					/* $tr = $("<tr onclick=\"location.href='/semi/selectReview.pd?reviewRum="+data.resultList[key].board_num +" '\">"); */
+					var $tr = $("<tr>");
 					var $chkTd = $("<td>");
 					var $chk = $("<input type='checkbox' class='reviewChk' value='"  +  "'>");
-					console.log($chk);
 					var $boardNoTd = 	$("<td>").text(data.resultList[key].board_num);
 					var $boardTitleTd = $("<td>").text(decodeURIComponent(data.resultList[key].board_title));
 					var $boardUserIdTd = $("<td>").text(decodeURIComponent(data.resultList[key].user_id));
@@ -155,6 +157,8 @@
 				}
 				
 					//페이징 처리
+				if(data.resultPi != null){
+					
 					$trPage = $("<tr>");
 					$tdPage = $("<td colspan='6' >");
 					$centerDiv = $("<div align='center'>");
@@ -212,6 +216,14 @@
 					$tdPage.append($centerDiv);
 					$trPage.append($tdPage);
 					$tableBody.append($trPage);
+					
+				}else{
+					$tr = $("<tr>");
+					$td = $("<td colspan = '6' style='text-align:center'>").text("검색 결과가 없습니다.");
+					$tr.append($td);
+					$tableBody.append($tr);	
+				}	
+					
 			},
 			error:function(data){
 				console.log("데이터 통신 실패");
@@ -252,8 +264,8 @@
 				type : "get",
 				success : function(data){
 					console.log(data);
-					console.log(data.qnaList);
-					console.log(data.qnaPi);
+				/* 	console.log(data.qnaList);
+					console.log(data.qnaPi); */
 
 					$tableBody = $("#qnaTbody");
 					$tableBody.html('');
@@ -261,7 +273,7 @@
 					//테이블 리스트 구현
 					for(var key in data.qnaList){
 						$tr = $("<tr onclick=\"location.href='/semi/SelectOneQnA.no?num="+data.qnaList[key].board_num+"&pQnABoardId="+data.qnaList[key].board_id+"'\">");
-						console.log($tr);
+						
 						var $chkTd = $("<td>");
 						var $chk = $("<input type='checkbox' class='qnaChk'>");
 						var $boardNoTd = 	$("<td>").text(data.qnaList[key].board_num);

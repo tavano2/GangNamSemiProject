@@ -307,6 +307,14 @@ public class BoardService {
 	}
 
 
+	public int getListCount(int pageType, String userId) {
+		Connection con = getConnection();
+		int listCount = new BoardDao().getListCount(con,pageType,userId);
+		close(con);
+		return listCount;
+	}
+
+
 
 
 

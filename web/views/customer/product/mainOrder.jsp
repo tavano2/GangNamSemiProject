@@ -25,7 +25,7 @@
 	if (productList.size() > 0) {
 		for (HashMap<String, Object> hmap : productList) {
 			totalPirce += (int) hmap.get("product_price");
-			totalPoint += (int) (((double) ((int) hmap.get("product_price")))
+		 	totalPoint += (int) (((double) ((int) hmap.get("product_price")))
 					* ((double) pointNDelivery.get("point_rate")));
 		}
 		if (pointNDelivery.get("free_delevery").equals("D")) {
