@@ -23,6 +23,10 @@
 	.productListOrderBy{
 		text-align:right;
 	}
+	.checkCss{
+   		margin-left:10px;
+   		margin-top:10px;
+   }
 </style>
 </head>
 
@@ -62,7 +66,7 @@
                    			<div class="ui selection dropdown">
                                 <input type="hidden" name="select">
                                 <i class="dropdown icon"></i>
-                                <div class="default text">상품명</div>
+                                <div class="default text">검색분류 선택</div>
                                 <div class="menu">
                                     <div class="item" data-value="0">상품명</div>
                                     <div class="item" data-value="1">상품코드</div>
@@ -72,7 +76,7 @@
                             <input type="text" size="30" style="height:30px;" name="selectInput">
                    		</td>
                    </tr>
-                   <tr>
+<!--                    <tr>
                    		<td>상품분류</td>
                    		<td id="catePlus">
                             <div class="ui selection dropdown">
@@ -80,56 +84,24 @@
                                 <i class="dropdown icon"></i>
                                 <div class="default text">-대분류 선택</div>
                                 <div class="menu" id="bigCateSelect">
-
                                 </div>
                             </div>
-                            
                    		</td>
                    </tr>
-                   <tr>
-                   		<td>상품등록일</td>
-                   		<td>
-                   			<div class="ui pagination menu" id="selDate">
-	                                    <a class="item active">오늘</a>
-	                                    <a class="item">3일</a>
-	                                    <a class="item">7일</a>
-	                                    <a class="item">15일</a>
-	                                    <a class="item">1개월</a>
-	                                    <a class="item">3개월</a>
-	                                    <a class="item">6개월</a>
-	                                </div>
-									<br><br>
-	                                <div class="date-range">
-	                                	<div class="ui input">
-		                                	<input type="date" id="startDate" name="startDate">
-		                                </div>
-		                                <span>~</span>
-		                                <div class="ui input">
-		                                	<input type="date" id="endDate" name="endDate">
-		                                </div>
-	                                </div>
-                   		</td>
-                   </tr>
-                   <tr>
+ -->                   <tr>
                    		<td>진열상태</td>
                    		<td>
                    			<div class="ui form">
                              <div class="inline fields">
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productDisplay" checked="" tabindex="0" class="hidden" value="0">
-                                            <label>전체</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="productDisplay" tabindex="0" class="hidden" value="D">
+                                            <input type="radio" name="productDisplay" tabindex="0" class="hidden" checked="" value="E">
                                             <label>진열함</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productDisplay" tabindex="0" class="hidden" value="E">
+                                            <input type="radio" name="productDisplay" tabindex="0" class="hidden" value="D">
                                             <label>진열안함</label>
                                         </div>
                                     </div>
@@ -144,19 +116,13 @@
                              <div class="inline fields">
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productSell" checked="" tabindex="0" class="hidden" value="0">
-                                            <label>전체</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="productSell" tabindex="0" class="hidden" value="D">
+                                            <input type="radio" name="productSell" tabindex="0" class="hidden" checked="" value="E">
                                             <label>판매함</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productSell" tabindex="0" class="hidden" value="E">
+                                            <input type="radio" name="productSell" tabindex="0" class="hidden" value="D">
                                             <label>판매안함</label>
                                         </div>
                                     </div>
@@ -171,19 +137,13 @@
                              <div class="inline fields">
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productDel" checked="" tabindex="0" class="hidden" value="0">
-                                            <label>전체</label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
                                             <input type="radio" name="productDel" tabindex="0" class="hidden" value="D">
                                             <label>삭제함</label>
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="ui radio checkbox">
-                                            <input type="radio" name="productDel" tabindex="0" class="hidden" value="E">
+                                            <input type="radio" name="productDel" tabindex="0" class="hidden" checked="" value="E">
                                             <label>삭제안함</label>
                                         </div>
                                     </div>
@@ -221,16 +181,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div class="ui fitted checkbox">
-                                    <input type="checkbox" name="example"><label></label>
-                                </div>
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        <tr id="showProduct">
+                            
                         </tr>
                         
                     </tbody>
@@ -268,7 +220,7 @@
     $('.ui.radio.checkbox')
   .checkbox();
     
-    $(function(){
+  /*   $(function(){
     	$.ajax({
     		url:"/semi/selectBigCate.product",
     		type:"post",
@@ -287,36 +239,32 @@
     	});
     });
     
-    var cnt = 0;
     function middleChoice(obj){
-    	if(cnt == 0){
     		var $catePlus = $("#catePlus");
-			var $div1 = $("<div class='ui selection dropdown'>");
+			var $div1 = $("<div class='ui selection dropdown' id='middlePlus'>");
 			var $input = $("<input type='hidden' name='middleCate'>");
 			var $i = $("<i class='dropdown icon'>");
 			var $div2 = $("<div class='default text'>").text("-중분류 선택");
 			var $div3 = $("<div class='menu' id='middleCateSelect'>");
+			
+			$("#middlePlus").remove();
 			
 			$div1.append($input);
 			$div1.append($i);
 			$div1.append($div2);
 			$div1.append($div3);
 			$catePlus.append($div1);
-    	}
-    	cnt++;
-    	console.log(obj);
+
+			console.log(obj);
 			var pCode = obj;
     		$.ajax({
     		url:"/semi/selectMiddleCate.product",
     		type:"post",
     		data:{pCode : pCode},
     		success:function(data){
-    			
-					
 				var $middleCateSelect = $("#middleCateSelect");
 	    		for(var key in data){
 	    			var $div4 = $("<div class='item' data-value='"+data[key].cateCode+"'>").text(data[key].cateName);
-	    				
 	    			$middleCateSelect.append($div4);
 				}
     			$('.content-box .ui.dropdown').dropdown();
@@ -324,10 +272,46 @@
     			error:function(){
     				console.log("실패");
     			}
-    	});
+    		});
+   	 } */
+    $(function(){
+    	$("#selectProduct").click(function(){
+    		var select = $("input[name=select]");
+    		var selectInput = $("input[name=selectInput]");
+    		var productDisplay = $("input:radio[name=productDisplay]");
+    		var productSell = $("input:radio[name=productSell]");
+    		var productDel = $("input:radio[name=productDel]");
     		
-    }
-    
+    		$.ajax({
+    			url:"semi/selectProductList.product",
+    			type:"post",
+    			data:{select : select,
+    				  selectInput : selectInput,
+    				  productDisplay : productDisplay,
+    				  productSell : productSell,
+    				  productDel : productDel},
+    			success:function(data){
+    				var $showProduct = $("#showProduct");
+    				$showProduct.html('');
+    				
+    				var $check = $("<td><div class='checkCss'><div class='ui fitted checkbox'><input type='checkbox' name='example'><label>");
+    				var $productCode = $("<td>").text(data[key].productCode);
+    				var $productName = $("<td>").text(data[key].productName);
+    				var $productCate = $("<td>").text(data[key].productCate);
+    				var $productPrice = $("<td>").text(data[key].productPrice);
+    				
+    				$showProduct.append($check);
+    				$showProduct.append($productCode);
+    				$showProduct.append($productName);
+    				$showProduct.append($productCate);
+    				$showProduct.append($productPrice);
+    			},
+    			error:function(){
+    				console.log("실패");
+    			}
+    		});
+    	});
+    });
     
     </script>
 </body>

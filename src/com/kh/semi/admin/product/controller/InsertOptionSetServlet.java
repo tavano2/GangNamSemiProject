@@ -24,15 +24,17 @@ public class InsertOptionSetServlet extends HttpServlet {
 		// 옵션세트 추가
 		String memo = request.getParameter("optionSetMemo");
 		String submitNum1 = request.getParameter("submitNum1");
+		String submitName1 = request.getParameter("submitName1");
 		
+		memo = "[" + submitName1 + "]";
 		String[] optionNum = submitNum1.split(",");
+		
 		
 		OptionSet ops = new OptionSet();
 		
-		int result = new OptionSetService().insertOptionSet(memo);
-		int result1 = new OptionSetService().insertOptionSetMM(optionNum);
+		int result = new OptionSetService().insertOptionSet(memo,optionNum);
 		
-		if(result > 0 && result1 > 0) {
+		if(result > 0 ) {
 			response.setContentType("application/json");
 			new Gson().toJson(1, response.getWriter());
 		}

@@ -63,6 +63,15 @@ public class InsertProductServlet extends HttpServlet {
 			String optionCode1 = multiRequest.getParameter("optionSelected");
 			String[] optionCode = optionCode1.split(",");
 			
+			/*System.out.println(productName);
+			System.out.println(productMemo);
+			System.out.println(productDmemo);
+			System.out.println(productPrice);
+			System.out.println(productAmount);
+			System.out.println(productDisplay);
+			System.out.println(productSell);
+			System.out.println(cateCode);*/
+			
 			Attachment at = new Attachment();
 			at.setProductName(productName);
 			at.setProductMemo(productMemo);
@@ -86,8 +95,13 @@ public class InsertProductServlet extends HttpServlet {
 			while(files.hasMoreElements()) {
 				String name = files.nextElement();
 				
+				System.out.println("name : " + name);
+				
 				saveFiles.add(multiRequest.getFilesystemName(name));
 				originFiles.add(multiRequest.getOriginalFileName(name));
+				
+				System.out.println("fileSystem name : " + multiRequest.getFilesystemName(name));
+				System.out.println("originFile name : " + multiRequest.getOriginalFileName(name));
 			}
 			
 			// Attachment 객체 생성하여 arrayList 객체 생성

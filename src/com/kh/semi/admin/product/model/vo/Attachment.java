@@ -19,6 +19,7 @@ public class Attachment implements Serializable{
 	String productMemo;
 	String productDmemo;
 	String categoryCode;
+	String categoryName;
 	int productAmount;
 	int productPrice;
 	Date productDate;
@@ -36,16 +37,17 @@ public class Attachment implements Serializable{
 				+ productCode + ", originName=" + originName + ", changeName=" + changeName + ", filePath=" + filePath
 				+ ", uploadDate=" + uploadDate + ", fileLevel=" + fileLevel + ", downloadCount=" + downloadCount
 				+ ", aStatus=" + aStatus + ", productName=" + productName + ", productMemo=" + productMemo
-				+ ", productDmemo=" + productDmemo + ", categoryCode=" + categoryCode + ", productAmount="
-				+ productAmount + ", productPrice=" + productPrice + ", productDate=" + productDate + ", bestS=" + bestS
-				+ ", sellS=" + sellS + ", displayS=" + displayS + ", pStatus=" + pStatus + ", opSnum=" + opSnum + "]";
+				+ ", productDmemo=" + productDmemo + ", categoryCode=" + categoryCode + ", categoryName=" + categoryName
+				+ ", productAmount=" + productAmount + ", productPrice=" + productPrice + ", productDate=" + productDate
+				+ ", bestS=" + bestS + ", sellS=" + sellS + ", displayS=" + displayS + ", pStatus=" + pStatus
+				+ ", opSnum=" + opSnum + "]";
 	}
 
 	public Attachment(String fileId, int placeNum, int boardId, String productCode, String originName,
 			String changeName, String filePath, Date uploadDate, int fileLevel, int downloadCount, String aStatus,
-			String productName, String productMemo, String productDmemo, String categoryCode, int productAmount,
-			int productPrice, Date productDate, String bestS, String sellS, String displayS, String pStatus,
-			String opSnum) {
+			String productName, String productMemo, String productDmemo, String categoryCode, String categoryName,
+			int productAmount, int productPrice, Date productDate, String bestS, String sellS, String displayS,
+			String pStatus, String opSnum) {
 		super();
 		this.fileId = fileId;
 		this.placeNum = placeNum;
@@ -62,6 +64,7 @@ public class Attachment implements Serializable{
 		this.productMemo = productMemo;
 		this.productDmemo = productDmemo;
 		this.categoryCode = categoryCode;
+		this.categoryName = categoryName;
 		this.productAmount = productAmount;
 		this.productPrice = productPrice;
 		this.productDate = productDate;
@@ -192,6 +195,14 @@ public class Attachment implements Serializable{
 		this.categoryCode = categoryCode;
 	}
 
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
 	public int getProductAmount() {
 		return productAmount;
 	}
@@ -256,6 +267,7 @@ public class Attachment implements Serializable{
 		this.opSnum = opSnum;
 	}
 
+	
 	
 	
 	
