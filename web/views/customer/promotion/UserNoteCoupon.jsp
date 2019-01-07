@@ -68,7 +68,6 @@ table tbody>tr:hover {
 				<tr>
 					<th>쪽지 번호</th>
 					<th>쪽지제목</th>
-					<th>쪽지 수신자</th>
 					<th>쪽지 수신 날짜</th>
 				</tr>
 			</thead>
@@ -81,7 +80,6 @@ table tbody>tr:hover {
 				<tr onclick="location.href='<%=request.getContextPath()%>/selectDetailMsgAndCouponPage.pm?msgCouponNum=<%=hmap.get("msg_num")%>' ">
 					<td><%=hmap.get("msg_num")%></td>
 					<td><%=hmap.get("msg_title")%></td>
-					<td><%=arry[0]%>님</td>
 					<td><%=hmap.get("msg_date")%></td>
 				</tr>
 				<%

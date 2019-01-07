@@ -26,7 +26,9 @@ public class SelectMyPageServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getSession().getAttribute("loginUser") != null) {
 		String userId = String.format(((Member)request.getSession().getAttribute("loginUser")).getUserId());
+		
 		Member m = new Member();
 		m.setUserId(userId);
 		
@@ -73,6 +75,9 @@ public class SelectMyPageServlet extends HttpServlet {
 		}
 		
 		
+		}else {
+			response.sendRedirect("views/customer/member/memberLogin.jsp");
+		}
 	}
 
 

@@ -49,7 +49,7 @@ public class UserMyBoardReviewListServlet extends HttpServlet {
 		int listCount = 0;
 		limit = 10;
 		BoardService bs = new BoardService();
-		listCount = bs.getListCount(pageType);
+		listCount = bs.getListCount(pageType,userId);
 
 		
 		maxPage = listCount/limit +(listCount % limit == 0 ? 0 : 1);

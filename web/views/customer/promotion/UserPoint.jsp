@@ -196,7 +196,6 @@
 						<th>주문 날짜</th>
 						<th>적립금</th>
 						<th>관련 주문 번호</th>
-						<th>주문자 명</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -209,7 +208,6 @@
 						<td><%=pointMap.get("order_date")%></td>
 						<td><%=pointMap.get("plus_p")%></td>
 						<td><%=pointMap.get("order_lnum")%></td>
-						<td><%=pointMap.get("user_id")%></td>
 					</tr>
 					<%
 						}

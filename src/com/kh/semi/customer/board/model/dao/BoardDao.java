@@ -57,11 +57,22 @@ public class BoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int listCount = 0;
-		String query = "SELECT COUNT(*) FROM BOARD WHERE BOARD_TYPE = 3 AND " + searchData  + " LIKE " +" '%'||"+searchTextData+"||'%' ";
-		System.out.println(query);
+		String query = "";
+		if(searchData.equals("BOARD_TITLE")) {
+			 query = prop.getProperty("eventBoardTitleCount");
+		}else if(searchData.equals("USER_ID")) {
+			query = prop.getProperty("eventUserIdCount");
+		}else {
+			query = prop.getProperty("eventBoardContentCount");
+		}
+		
+
+		//'%'||"+searchTextData+"||'%'
+		
 		try {
 			pstmt = con.prepareStatement(query);
 			rset = pstmt.executeQuery();
+			pstmt.setString(1,searchTextData);
 			if (rset.next()) {
 				listCount = rset.getInt(1);
 			}
@@ -71,7 +82,6 @@ public class BoardDao {
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println("이벤트 리스트 카운트 : " + listCount);
 		return listCount;
 	}
 	
@@ -123,18 +133,28 @@ public class BoardDao {
 		ResultSet rset = null;
 		HashMap<String, Object> hmap = null;
 		ArrayList<HashMap<String, Object>> list = null;
-
-		String query = 
+		String query = "";
+/*		String query = 
 		"SELECT RNUM,BOARD_ID,BOARD_NUM,BOARD_TITLE,BOARD_CONTENT,USER_ID,BOARD_DATE,BOARD_COUNT,STATUS FROM (SELECT ROWNUM RNUM,BOARD_ID,BOARD_NUM,BOARD_TITLE,BOARD_CONTENT,USER_ID,BOARD_DATE,BOARD_COUNT,STATUS FROM "
 		+ "(SELECT B.BOARD_ID,B.BOARD_NUM,B.BOARD_TITLE,B.BOARD_CONTENT,M.USER_ID,B.BOARD_DATE,BOARD_COUNT,B.STATUS "
 		+ "FROM BOARD B JOIN MEMBER M ON (B.USER_ID = M.USER_ID) WHERE " +searchData+ " LIKE ? AND B.BOARD_TYPE = 3 AND B.STATUS = 'E' AND B.REPLY_LEVEL = 0 ORDER BY B.BOARD_ID DESC)) "
-				+ "WHERE RNUM BETWEEN ? AND ?";		
+				+ "WHERE RNUM BETWEEN ? AND ?";		*/
+		
+		if(searchData.equals("BOARD_TITLE")) {
+			 query = prop.getProperty("eventBoardTitle");
+		}else if(searchData.equals("USER_ID")) {
+			query = prop.getProperty("eventUserId");
+		}else {
+			query = prop.getProperty("eventBoardContent");
+		}
+		
+		System.out.println(query);
 
 		try {
 		 	pstmt = con.prepareStatement(query);
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;
-			pstmt.setString(1, "%"+searchTextData+"%");
+			pstmt.setString(1, "'%'||"+searchTextData+"||'%'");
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
 			rset = pstmt.executeQuery();
@@ -805,6 +825,28 @@ public class BoardDao {
 		}
 		
 		return result;
+	}
+
+	public int getListCount(Connection con, int pageType, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		String query = prop.getProperty("boardTypeListCount");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, pageType);
+			pstmt.setString(2, userId);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
 	}
 	
 

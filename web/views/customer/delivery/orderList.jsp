@@ -21,7 +21,9 @@
 <body>
 
 	<%@ include file="/views/customer/common/mainNav.jsp"%>
-
+	
+	<%if(loginUser != null) {%>
+	
 
 	<div class="content">
 		<br> <br>
@@ -204,9 +206,13 @@
 	
 	
 	
+	<%}else{ 
+		request.setAttribute("msg", "로그인 해주세요");
+		request.getRequestDispatcher("/views/customer/common/errorPage.jsp").forward(request, response);
+	}
+	%>
 	
 	
-
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
 

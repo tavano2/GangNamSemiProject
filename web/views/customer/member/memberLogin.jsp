@@ -69,7 +69,7 @@
 				</a>
 				<!-- 카카오 로그인 -->
 				<script>
-					Kakao.init('a2e36012b1a121ef998458a68ac59611');
+					Kakao.init('키값이오');
 					function loginWithKakao() {
 						Kakao.Auth.login({
 							success : function(authObj) {

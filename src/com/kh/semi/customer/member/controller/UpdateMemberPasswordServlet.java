@@ -30,7 +30,7 @@ public class UpdateMemberPasswordServlet extends HttpServlet {
 		m.setUserPwd1(userPwd1);
 		int result = new MemberService().updateMemberComplete(m);
 		if(result > 0) {
-			response.sendRedirect("views/customer/member/userMyPage.jsp");
+			response.sendRedirect("/semi/selectMyPage.me");
 		}else {
 			response.sendRedirect("views/customer/common/errorPageSendRd.jsp");
 		}
