@@ -1454,6 +1454,42 @@ public class ProductDao {
 		return result;
 	}
 
+	public ArrayList<ShoppingCartPd> selectCartListPd(Connection con, String userId, String productCode) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null; //ResultSet  for "SELECT"
+		ArrayList<ShoppingCartPd> cartList = null;
+		
+		String query = prop.getProperty("selectCartListPd"); // GET QUERY
+		
+		try {
+			pstmt = con.prepareStatement(query); // ERROR > con
+			pstmt.setString(1, userId); // ERROR > userId
+		
+			rset = pstmt.executeQuery();
+		
+			cartList = new ArrayList<ShoppingCartPd>();
+		
+			while(rset.next()){
+				//장바구니 담기
+				ShoppingCartPd cart = new ShoppingCartPd();
+				cart.setCartNum(rset.getInt("CART_NUM"));
+				cart.setProductCode(rset.getString("PRODUCT_CODE"));
+				cart.setUserId(rset.getString("USER_ID"));
+				cart.setOptionNum(rset.getString("OPTION_NUM"));
+				cart.setAmount(rset.getInt("AMOUNT"));
+		
+				cartList.add(cart);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return cartList;
+	}
+
 
 
 

@@ -301,14 +301,14 @@ public class AdminDeliveryDao {
 				search.setProductCode(rset.getString("PRODUCT_CODE"));
 				search.setCouponCode(rset.getString("COUPON_CODE"));
 				search.setOrderAmount(rset.getInt("ORDER_AMOUNT"));
-				search.setMemo(rset.getString("MEMO"));
+				search.setMemo(rset.getString("MEMO") == null ? "" : rset.getString("MEMO"));
 				search.setOptionName(rset.getString("OPTION_NAME"));
 				search.setProductName(rset.getString("PRODUCT_NAME"));
 				search.setProductPrice(rset.getInt("PRODUCT_PRICE"));
 				search.setCategName1(rset.getString("CATEG_NAME1"));
 				search.setCategName2(rset.getString("CATEG_NAME2"));
 				search.setCategName3(rset.getString("CATEG_NAME3"));
-				search.setPostnum(rset.getString("POSTNUM"));
+				search.setPostnum(rset.getString("POSTNUM") == null ? "" : rset.getString("POSTNUM"));
 				search.setPostPrice(rset.getInt("POST_PRICE"));
 				search.setCouponType(rset.getInt("COUPON_TYPE"));
 				search.setCouponPdiscount(rset.getInt("COUPON_PDISCOUNT"));

@@ -367,7 +367,7 @@
 					var $td9 = $("<td>").text(numComma(searchResult[i].deliveryPrice));
 					var $td10 = $("<td>").text(numComma(searchResult[i].payment));
 					var $td11 = $("<td>").text(searchResult[i].orderSname);
-					var $td12 = $("<td>").text(searchResult[i].memo);
+					var $td12 = $("<td>").html(searchResult[i].memo != "" ? "<i class='check icon'></i>" : searchResult[i].memo);
 					
 					$tr.append($td1);
 					$tr.append($td2);

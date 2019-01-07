@@ -151,6 +151,7 @@ public class AdminOrderSearchServlet extends HttpServlet {
 				if(i < searchResult.size()-1) {
 					if(searchResult.get(i).getOrderDnum().equals(searchResult.get(i+1).getOrderDnum())) {
 						searchResult.get(i+1).setOptionName(searchResult.get(i).getOptionName() + ", " + searchResult.get(i+1).getOptionName());
+						searchResult.get(i+1).setMemo(searchResult.get(i).getMemo() + searchResult.get(i+1).getMemo());
 					} else {
 						searchResultOpt.add(searchResult.get(i));
 					}
@@ -213,7 +214,7 @@ public class AdminOrderSearchServlet extends HttpServlet {
 						searchResultListTemp.get(i+1).setProduct(searchResultListTemp.get(i).getProduct());
 						cnt++;
 						searchResultListTemp.get(i+1).setPostnum(searchResultListTemp.get(i).getPostnum());
-						searchResultListTemp.get(i+1).setMemo(searchResultListTemp.get(i).getMemo());
+						searchResultListTemp.get(i+1).setMemo(searchResultListTemp.get(i+1).getMemo() + searchResultListTemp.get(i).getMemo());
 						
 						searchResultListTemp.get(i+1).setAmount(searchResultListTemp.get(i+1).getAmount() + searchResultListTemp.get(i).getAmount());
 						searchResultListTemp.get(i+1).setProductPrice(searchResultListTemp.get(i+1).getProductPrice() + searchResultListTemp.get(i).getProductPrice());
@@ -224,8 +225,8 @@ public class AdminOrderSearchServlet extends HttpServlet {
 							searchResultListTemp.get(i).setProduct(searchResultListTemp.get(i).getProduct() + " 외 " + cnt);
 							cnt = 0;
 						}
-						searchResultListTemp.get(i).setPostnum(searchResultListTemp.get(i).getPostnum() == null ? "" : searchResultListTemp.get(i).getPostnum());
-						searchResultListTemp.get(i).setMemo(searchResultListTemp.get(i).getMemo() == null ? "" : searchResultListTemp.get(i).getMemo());
+						searchResultListTemp.get(i).setPostnum(searchResultListTemp.get(i).getPostnum());
+						searchResultListTemp.get(i).setMemo(searchResultListTemp.get(i).getMemo());
 						searchResultList.add(searchResultListTemp.get(i));
 					}
 				} else {
@@ -233,8 +234,8 @@ public class AdminOrderSearchServlet extends HttpServlet {
 						searchResultListTemp.get(i).setProduct(searchResultListTemp.get(i).getProduct() + " 외 " + cnt);
 						cnt = 0;
 					}
-					searchResultListTemp.get(i).setPostnum(searchResultListTemp.get(i).getPostnum() == null ? "" : searchResultListTemp.get(i).getPostnum());
-					searchResultListTemp.get(i).setMemo(searchResultListTemp.get(i).getMemo() == null ? "" : searchResultListTemp.get(i).getMemo());
+					searchResultListTemp.get(i).setPostnum(searchResultListTemp.get(i).getPostnum());
+					searchResultListTemp.get(i).setMemo(searchResultListTemp.get(i).getMemo());
 					searchResultList.add(searchResultListTemp.get(i));
 				}
 			}

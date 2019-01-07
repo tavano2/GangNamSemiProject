@@ -514,6 +514,14 @@ public class ProductService {
 			return result;
 		}
 
+		public ArrayList<ShoppingCartPd> selectCartListPd(String userId, String productCode) {
+			Connection con = getConnection();
+			ArrayList<ShoppingCartPd> cartList = new ProductDao().selectCartListPd(con, userId, productCode);
+			
+			close(con);
+			return cartList;
+		}
+
 
 
 
