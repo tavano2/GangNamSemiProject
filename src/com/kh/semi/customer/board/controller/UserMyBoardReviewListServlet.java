@@ -62,7 +62,7 @@ public class UserMyBoardReviewListServlet extends HttpServlet {
 
 		
 		PageInfo reviewPi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		ArrayList<HashMap<String, Object>>	reviewList = new BoardService().selectEventPageList(currentPage,limit,pageType,userId);
+		ArrayList<HashMap<String, Object>>	reviewList = new BoardService().selectEventPageListNew(currentPage,limit,pageType,userId);
 		
 		
 

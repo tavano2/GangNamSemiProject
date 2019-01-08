@@ -418,14 +418,11 @@
 								$productNameTd = $("<td>").text(decodeURIComponent(data.list[list][list2].product_name));
 								$orderAmountTd = $("<td>")	.text(data.list[list][list2].order_amount);
 								$orderPriceTd = $("<td>").text(numComma(data.list[list][list2].product_price)+"원");
-								//$orderSnameTd = $("<td>").text(data.list[list][list2].order_sname);
-
 
 								$tr.append($lnumTd);
 								$tr.append($productNameTd);
 								$tr.append($orderAmountTd);
 								$tr.append($orderPriceTd);
-								//$tr.append($orderSnameTd);
 								$tableBody.append($tr);
 							}else{
 								$tr = $("<tr>");
