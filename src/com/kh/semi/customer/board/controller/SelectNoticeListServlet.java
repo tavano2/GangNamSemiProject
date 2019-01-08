@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class SelectNoticeBoardList
  */
-@WebServlet("/selectNoticeBoardList.bo")
-public class SelectNoticeBoardList extends HttpServlet {
+@WebServlet("/selectNoticeList.bo")
+public class SelectNoticeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectNoticeBoardList() {
+    public SelectNoticeListServlet() { // 공지사항 조회
         super();
         // TODO Auto-generated constructor stub
     }
