@@ -38,9 +38,6 @@
 <!-- alert CDN -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<!-- alert CDN -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 <style>
 .first-col td:first-child{
 	width: 200px;
@@ -263,7 +260,8 @@
 							<tr>
 								<td class="cuponTdGray" colspan="5"><span>선택할 쿠폰을
 										&nbsp;</span>
-									<button class="ui small secondary button">회수</button></td>
+									<button class="ui small secondary button" id="withDrawCouponBtn">회수</button>					
+									</td>
 							</tr>
 							<tr align="center">
 								<td class="cuponTd" >쿠폰코드</td>
@@ -305,7 +303,6 @@
 		});
 		
 		$(function(){
-			console.log(decodeURI("<%=parentCouponCode%>"));
 			$("#couponCode").text("<%=parentCouponCode%>");
 			$("#couponName").text("<%=parentCouponName%>");
 			$("#couponDiscountOption").text("<%=parentCouponDiscountOption%>");
@@ -372,13 +369,30 @@
 					});
 				}
 			}else if($("#userIdCheck").is(":checked")){
-			}
 				if($("#issuedObject").val()==""){
 					swal("발급할 회원 아이디를 입력해주세요!");
 				}else{
-					//페이징
-					
+					$.ajax({
+						url:"<%=request.getContextPath()%>/selectedUserIssue.pm",
+						type:"get",
+						data:{
+							couponCode:"<%=parentCouponCode%>",
+							couponExp:"<%=parentCouponExp%>",
+							userId:$("#issuedObject").val()
+						},
+						success:function(data){
+							if(data>0){
+								issueSeccess();
+							}else{
+								issueFail();
+							}
+						},
+						error:function(){
+							console.log("실패");
+						}
+					});	
 				}
+			}
 			}else{
 				swal("발급대상을 선택해주세요!");
 			}
@@ -416,6 +430,56 @@
 				  location.reload();		
 			});			
 		}
+				
+			  
+		$("#withDrawCouponBtn").click(function(){
+			if($("#selectIssue").children().hasClass("active")){
+				swal({
+					 title: "쿠폰을 회수하시겠습니까?",
+					  text: "쿠폰을 회수하면 복구할수 없습니다.",
+					  icon: "warning",
+					  buttons: true,
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {
+						  var couponArr = new Array();
+						  var userIdArr = new Array();
+						  $("#selectIssue").children().each(function(index,item){
+							  couponArr[index]="";
+							  userIdArr[index]="";
+							  if($(this).hasClass("active")){
+								  couponArr[index] = $(this).children().eq(0).text();
+								  userIdArr[index] = $(this).children().eq(1).text();
+							  }
+						  });
+						  $.ajax({
+							  url:"<%=request.getContextPath()%>/deleteIssuedCoupon",
+							  type:"get",
+							  data:{couponArr:couponArr,userIdArr:userIdArr},
+							  success:function(data){
+								  if(data>0){									  
+									  swal("쿠폰 회수 성공!", "확인 버튼을 눌러주세요.", "success")
+										.then((value) => {	
+											  location.reload();		
+										});
+								  }else{
+									  swal("쿠폰 회수 실패!");		
+								  }
+							  },
+							  error:function(data){
+								  console.log("실패");
+							  }
+						  })
+					  } else {
+						  swal("쿠폰 회수를 취소했습니다.");
+					  }
+					});
+			}else{
+				swal("회수할 쿠폰을 선택해주세요.");
+			}
+		})
+		
 		$("#searchBtn").click(function(){		
 			if($("#enable").is(":checked")||$("#disable").is(":checked")){
 				if($("#enable").is(":checked")){
@@ -448,6 +512,7 @@
 					able:able
 				},
 				success:function(data){
+					console.log(data["pi"]);
 					var $tbody=$("#selectIssue");
 					$tbody.empty();
 				
@@ -458,7 +523,17 @@
 						if(data["list"][i].orderLNum==""){
 							data["list"][i].orderLNum="미사용";
 						}
-						var $tr = $("<tr align='center'>");
+						var $tr = $("<tr align='center'>").click(function(){
+							if($(this).children().eq(3).text()=="미사용"){
+								if($(this).hasClass("active")){
+									$(this).removeClass("active");
+								}else{
+									$(this).addClass("active");
+								}
+							}else{
+								
+							}
+						});
 						var $couponCode = $("<td>").text(data["list"][i].couponCode);
 						var $userId=$("<td>").text(data["list"][i].userId);
 						var $userClass=$("<td>").text(data["list"][i].userClass);
@@ -472,6 +547,12 @@
 						$tbody.append($tr);
 					}
 					
+					if( data["list"].length==0){
+						var $tr = $("<tr align='center'>");
+						var $td = $("<td colspan='5'>").text("검색결과가 없습니다.");
+						$tr.append($td);
+						$tbody.append($tr);
+					}
 					
 					
 					var $pageDiv=$("<div>").addClass("ui pagination menu");
@@ -536,8 +617,7 @@
 				error:function(){
 					console.log("실패");
 				}
-			});
-			
+			});		
 		}
 	</script>
 </body>

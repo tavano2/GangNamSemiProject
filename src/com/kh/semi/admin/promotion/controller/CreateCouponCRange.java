@@ -64,14 +64,13 @@ public class CreateCouponCRange extends HttpServlet {
 			}
 		}
 		
+		System.out.println(categList);
+		
 		for (int i = 0; i < categList.size(); i++) {
 			String[] arr = categList.get(i).split(",");
 			bigCategList.add(arr[0]);
 			middleCategList.add(arr[1]);
 		}
-
-		System.out.println(bigCategList);
-		System.out.println(middleCategList);
 
 		if (discountMethod.equals("할인율")) {
 			 result =new PromotionService().createCouponCRate(map, bigCategList, middleCategList);

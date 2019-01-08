@@ -479,8 +479,6 @@ public class PromotionDao {
 		String query = prop.getProperty("createCouponC");
 		try {
 			pstmt = con.prepareStatement(query);
-			System.out.println(middleCategList);
-			System.out.println(bigCategList);
 			for (int i = 0; i < bigCategList.size(); i++) {
 				pstmt.setString(1, middleCategList.get(i));
 				pstmt.setString(2, bigCategList.get(i));
@@ -846,6 +844,31 @@ public class PromotionDao {
 			close(pstmt);
 		}	
 		return list;
+	}
+	//DB에서 선택된 미사용 쿠폰을 지우는 함수
+	public int deleteIssuedCoupon(Connection con, ArrayList<String> couponList, ArrayList<String> userIdList) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("deleteIssuedCoupon");
+		try {
+			pstmt = con.prepareStatement(query);
+			for(int i = 0; i < couponList.size(); i++) {
+				pstmt.setString(1, couponList.get(i));
+				pstmt.setString(2, userIdList.get(i));
+				result += pstmt.executeUpdate();	
+			}
+			if(result == couponList.size()) {
+				result = 1;
+			}else {
+				result = 0;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 

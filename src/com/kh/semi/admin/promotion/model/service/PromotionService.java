@@ -268,6 +268,19 @@ public class PromotionService {
 		close(con);
 		return list;
 	}
+
+	public int deleteIssuedCoupon(ArrayList<String> couponList, ArrayList<String> userIdList) {
+		Connection con = getConnection();
+		int result = 0;
+		result = new PromotionDao().deleteIssuedCoupon(con, couponList, userIdList);
+		if(result>0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		close(con);
+		return result;
+	}
 	
 
 	
