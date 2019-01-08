@@ -95,7 +95,7 @@
 </head>
 
 <body>
-	<%-- <%@ include file="/views/customer/common/mainNav.jsp"%> --%>
+	<%@ include file="/views/customer/common/mainNav.jsp"%>
   
 	<div class="content" align="center">
 		COUPLE<br><br>
@@ -127,7 +127,7 @@
 		 <!-- 상품 -->
 		<div class="ui grid">
 		  <div class="four wide column">
-		  <div id="movedetailPage">
+		 	<div id="movedetailPage">
 		  	<a href="#">
 		  	<img class="ui medium image" src="/semi/views/images/products/product1.jpg">
 		  	</a>
@@ -140,40 +140,6 @@
 			<span class="productColor">black / white / navy</span><br>
 			<span class="productDetail">가볍지만 몸을 포근하게 감싸주는 따뜻한 리뇽 짱짱맨은 저렴한가격 999,999,999원 입니다.</span>
 		  </div>
-		  <div class="four wide column">
-		 	 <a href="#">
-		  	<img class="ui medium image" src="/semi/views/images/products/product1.jpg">
-		  	</a><br>
-			<a class="ui brown label" name="best">BEST</a><br>
-			<hr class="productHr">
-			<span class="productTitle">리뇽 짱짱맨(Good boy)</span><br>
-			<span class="won"><span class="productPrice">999,999,999</span> won</span><br>
-			<span class="productColor">black / white / navy</span><br>
-			<span class="productDetail">가볍지만 몸을 포근하게 감싸주는 따뜻한 리뇽 짱짱맨은 저렴한가격 999,999,999원 입니다.</span>
-		  </div>
-		  <div class="four wide column">
-		  	<a href="#">
-		  	<img class="ui medium image" src="/semi/views/images/products/product1.jpg">
-		  	</a><br>
-			<a class="ui brown label" name="best">BEST</a><br>
-			<hr class="productHr">
-			<span class="productTitle">리뇽 짱짱맨(Good boy)</span><br>
-			<span class="won"><span class="productPrice">999,999,999</span> won</span><br>
-			<span class="productColor">black / white / navy</span><br>
-			<span class="productDetail">가볍지만 몸을 포근하게 감싸주는 따뜻한 리뇽 짱짱맨은 저렴한가격 999,999,999원 입니다.</span>
-		  </div>
-		  <div class="four wide column">
-		  	<a href="#">
-		  	<img class="ui medium image" src="/semi/views/images/products/product1.jpg">
-		  	</a><br>
-			<a class="ui brown label" name="best">BEST</a><br>
-			<hr class="productHr">
-			<span class="productTitle">리뇽 짱짱맨(Good boy)</span><br>
-			<span class="won"><span class="productPrice">999,999,999</span> won</span><br>
-			<span class="productColor">black / white / navy</span><br>
-			<span class="productDetail">가볍지만 몸을 포근하게 감싸주는 따뜻한 리뇽 짱짱맨은 저렴한가격 999,999,999원 입니다.</span>
-		  </div>
-		  
 		</div>
 	</div>
 	
@@ -202,6 +168,10 @@
     		})
     	})
     
+    	$(function(){
+    			var middleCode = '<%=request.getParameter("categ")%>';
+    			console.log(middleCode);
+    	});
     </script>
     
     

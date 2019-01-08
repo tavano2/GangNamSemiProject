@@ -128,5 +128,40 @@ public class CategoryDao {
       return result;
    }
 
+public ArrayList<Category> selectCategoryCustomer(Connection con) {
+	PreparedStatement pstmt = null;
+    ResultSet rset = null;
+    ArrayList<Category> list = null;
+    Category cate = null;
+    String query = prop.getProperty("selectCategoryCustomer");
+    
+    try {
+       pstmt = con.prepareStatement(query);
+       rset = pstmt.executeQuery();
+       if(rset != null) {
+          list = new ArrayList<Category>();
+          while(rset.next()) {
+             cate = new Category();
+             cate.setCateCode(rset.getString("CATEG_CODE"));
+             cate.setCateName(rset.getString("CATEG_NAME"));
+             cate.setCateUrl(rset.getString("CATEG_URL"));
+             cate.setCateMemo(rset.getString("CATEG_MEMO"));
+             cate.setCateLevel(rset.getInt("CATEG_LEVEL"));
+             cate.setCateRefCode(rset.getString("CATEG_REF_CODE"));
+             cate.setStatus(rset.getString("STATUS"));
+             
+             list.add(cate);
+          }
+       }
+    } catch (SQLException e) {
+       e.printStackTrace();
+    } finally {
+       close(pstmt);
+       close(rset);
+    }
+    
+    return list;
+}
+
 
 }

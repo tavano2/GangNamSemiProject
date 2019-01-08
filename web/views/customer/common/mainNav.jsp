@@ -11,6 +11,12 @@
     	}
     %>
 
+    <style>
+    	#best:hover{
+    		color:red !important;
+    	}
+    </style>
+
     <!-- 사이드바 오픈시 오버레이 -->
     <div class="overlay"></div>
 
@@ -116,71 +122,10 @@
    <!-- 카테고리 네비 -->
         <div class="ui text menu" id="cate_nav">
             <div class="item">
-                <a class="item" style="color: rgb(231, 76, 60)"> Best </a>
+                <a class="item" style="color: rgb(231, 76, 60)" name="best" id="best"> Best </a>
             </div>
-<%--             <% for (Category c : list){ %>
-            <% if(c.getCateLevel() == 0){ %>
-	            <div class="ui dropdown item">
-	            <%=c.getCateName() %>
-                <i class="dropdown icon"></i>
-                <div class="menu">
-            <% } else{ continue;} %>
-            <% for(Category ca : list){ %>
-            <% if(ca.getCateLevel() == 1 && ca.getCateRefCode().equals(c.getCateCode())){ %>
-            	<a class="item" name="middleCate"><%=ca.getCateName() %></a>
-            <% } else {continue;} %>
-            <% } %>
-                </div>
-            </div>
-            <% } %>  --%>
-            <div class="ui dropdown item">
-                OUTER
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item">JUMPER</a>
-                    <a class="item">MUSTANG</a>
-                    <a class="item">COAT</a>
-                    <a class="item">JACKET</a>
-                </div>
-            </div>
-            <div class="ui dropdown item">
-                TOP
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item">TEE</a>
-                    <a class="item">STRIPE</a>
-                    <a class="item">SWEATSHIRT&</a>
-                    <a class="item">HOODY</a>
-                </div>
-            </div>
-            <div class="ui dropdown item">
-                BOTTOM
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item">SLACKS</a>
-                    <a class="item">SKINNY</a>
-                    <a class="item">BOOTSCUT</a>
-                    <a class="item">JACKET</a>
-                </div>
-            </div>
-            <div class="ui dropdown item">
-                DRESS
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item">MINI</a>
-                    <a class="item">LONG</a>
-                </div>
-            </div>
-            <div class="ui dropdown item">
-                SKIRT
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item">MINI</a>
-                    <a class="item">LONG</a>
-                </div>
-            </div> 
-
-            <div class="right menu">
+ 
+            <div class="right menu" id="menuSearch">
                 <div class="item search-box">
                     <div class="ui transparent icon input">
                         <input type="text" placeholder="상품을 검색해주세요"> <i class="search link icon"></i>
@@ -194,4 +139,41 @@
             </div>
         </div>
         
-      
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script>
+      	$(function(){
+      		$.ajax({
+      			url:"/semi/selectCategory.main",
+      			type:"post",
+      			success:function(data){
+					var $menuSearch = $("#menuSearch");
+      				for(var key1 in data){
+      					if(data[key1].cateLevel == 0){
+		      				var $div1 = $("<div class='ui dropdown item'>").text(data[key1].cateName);
+		      				var $i = $("<i class='dropdown icon'>");
+		      				var $div2 = $("<div class='menu'>");
+		      				
+      						$div1.append($i);
+	      					for(var key2 in data){
+	      						if(data[key2].cateLevel == 1 && data[key2].cateRefCode == data[key1].cateCode){
+				      				var $a = $("<a class='item' name='middleCate' href='<%=request.getContextPath()%>/views/customer/member/category.jsp?categ=" + data[key2].cateCode + "'>");
+				      				var $input = $("<input type='hidden' value='"+ data[key2].cateCode +"' name='middleCode'>");
+				      				$div1.append($input);
+	      							$div2.append($a.text(data[key2].cateName));
+	      						}else{
+	      							continue;
+	      						}
+	      					}
+	      					$div1.append($div2);
+	      					$menuSearch.before($div1);
+      					}else{ continue; }
+      				}
+      				$('#cate_nav .ui.dropdown').dropdown();
+      			},
+      			error:function(){
+      			}
+      		});
+      	});
+      	
+      	
+      </script>
