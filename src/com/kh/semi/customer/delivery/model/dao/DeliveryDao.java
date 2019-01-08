@@ -158,6 +158,60 @@ public class DeliveryDao {
 		return list;
 	}
 
+	public int updateDnumStatus(Connection con, String dnum, String status) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "";		
+		if(status.equals("취소신청")) {
+			query = prop.getProperty("cancleStauts");
+		}else if(status.equals("교환신청")) {
+			query = prop.getProperty("tradeStatus");
+		}else if(status.equals("반품신청")) {
+			query = prop.getProperty("returnStatus");
+		}else {
+			query = prop.getProperty("refundStatus");
+		}
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, dnum);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
-
+	public ArrayList<HashMap<String, Object>> selectReturnDetailOrderList(Connection con, String lnum, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HashMap<String, Object>> list = null;
+		HashMap<String, Object> hmap = null;
+		String query = prop.getProperty("selectReturnDetailOrderList");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, lnum);
+			rset = pstmt.executeQuery();
+			if(rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while(rset.next()) {
+					hmap = new HashMap<String,Object>();
+					hmap.put("order_dnum", rset.getString("ORDER_DNUM"));
+					hmap.put("product_name", rset.getString("PRODUCT_NAME"));
+					hmap.put("order_amount", rset.getInt("ORDER_AMOUNT"));
+					hmap.put("product_price", rset.getInt("PRODUCT_PRICE"));
+					hmap.put("order_sname", rset.getString("ORDER_SNAME"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 }

@@ -10,9 +10,6 @@
     	 	arry = userId.split("@");
     	}
     %>
-<%
-	ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("list4");
-%>
 
     <!-- 사이드바 오픈시 오버레이 -->
     <div class="overlay"></div>

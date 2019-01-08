@@ -13,7 +13,7 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
-	ArrayList<HashMap<String,Object>> list = (ArrayList<HashMap<String,Object>>)request.getAttribute("list");
+	ArrayList<HashMap<String,Object>> wishList = (ArrayList<HashMap<String,Object>>)request.getAttribute("list");
 	
 	
 	
@@ -78,20 +78,20 @@
 				</thead>
 				<tbody>
 					<%
-						if(list != null){
+						if(wishList != null){
 					
-						for(HashMap<String,Object> hmap : list){ 
+						for(HashMap<String,Object> hmap : wishList){ 
 						int price = (int)(hmap.get("product_price"));
 						int post_price = 2500;
 					
 					%>
-					<tr class= "wishListTr" onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=hmap.get("product_code")%>'">
+					<tr class= "wishListTr">
 						<td><input type="checkbox" class="productChk" name="chkList" value="<%=hmap.get("product_code")%>"></td>
-						<td><img src = "/semi/image/customer/product/<%=hmap.get("change_name") %>" width="50px" height="50px"></td>
-						<td><%=hmap.get("product_name") %></td>
-						<td><%=comma((int)hmap.get("product_price")) %>원</td>
-						<td><%=comma((int)hmap.get("point")) %>원</td>					
-						<td><%=comma(price) %>원</td>
+						<td onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=hmap.get("product_code")%>'"><img src = "/semi/image/customer/product/<%=hmap.get("change_name") %>" width="50px" height="50px"></td>
+						<td onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=hmap.get("product_code")%>'"><%=hmap.get("product_name") %></td>
+						<td onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=hmap.get("product_code")%>'"><%=comma((int)hmap.get("product_price")) %>원</td>
+						<td onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=hmap.get("product_code")%>'"><%=comma((int)hmap.get("point")) %>원</td>					
+						<td onclick="location.href='<%=request.getContextPath()%>/reviewNoticeList.no?code=<%=hmap.get("product_code")%>'"><%=comma(price) %>원</td>
 					</tr>
 					<%	} %>
 					<%}else{ %>		
