@@ -100,7 +100,7 @@
 						<!-- <th>적립금</th> -->
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="dataTable">
 					<!-- tbody : 수정중 -->
 					<%
 						for (int i = 0; i < cartList.size(); i++) {
@@ -199,7 +199,7 @@
 		function cartDel(){
 			var chkedCartNum = $("#cartList").serialize();
 			
-			if($("#chkBox:checked").length > 0){
+			if($("[name='cartNum']:checked").length > 0){
 				$.ajax({
 					url:"<%=request.getContextPath()%>/deleteCartNum.pd",
 					type:"post",
@@ -258,6 +258,7 @@
 			cartList.action = "<%= request.getContextPath() %>/selectOrderProduct.or";
 			cartList.submit();
 		}
+		
 		
 	</script>
 

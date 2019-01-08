@@ -1468,6 +1468,7 @@ public class ProductDao {
 		try {
 			pstmt = con.prepareStatement(query); // ERROR > con
 			pstmt.setString(1, userId); // ERROR > userId
+			pstmt.setString(2, productCode);
 		
 			rset = pstmt.executeQuery();
 		

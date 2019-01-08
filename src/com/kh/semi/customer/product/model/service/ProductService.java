@@ -205,27 +205,27 @@ public class ProductService {
 		return result;
 	}
 	
-	public int insertCart(String productCode, String userId, String[] prodSelectOption, String[] prodSelectAmount) {
+	public int insertCart(String productCode, String userId, ArrayList<String> prodSelectOption, String[] prodSelectAmount) {
 		Connection con = getConnection();
 		int result = 0;
 		int result2 = 0;
 		
-		for(int i=0; i<prodSelectOption.length; i++) {
+		for(int i=0; i<prodSelectOption.size(); i++) {
 			int cartNum = new ProductDao().getCartNum(con);
 			
 			if(cartNum > 0) {
-				for(String option : prodSelectOption[i].split(", ")) {
+				for(String option : prodSelectOption.get(i).split(", ")) {
 					result2 += new ProductDao().insertCart(con, cartNum, productCode, userId, option, prodSelectAmount[i]);
 				}
 				
-				if(result2 == prodSelectOption[i].split(", ").length) {
+				if(result2 == prodSelectOption.get(i).split(", ").length) {
 					result++;
 					result2 = 0;
 				}
 			}
 		}
 		
-		if(result == prodSelectOption.length) {
+		if(result == prodSelectOption.size()) {
 			commit(con);
 		} else {
 			rollback(con);
