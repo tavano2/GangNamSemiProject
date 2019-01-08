@@ -537,6 +537,36 @@ public class ProductService {
 			return result;
 		}
 
+		//REVIEW 전체 게시글 조회
+		public int getReviewListCount(String productCode) {
+
+			Connection con = getConnection();
+			int getReviewListuCount = new ProductDao().getReviewListCount(con,productCode);
+			
+			close(con);
+			return getReviewListuCount;
+		}
+
+		//Review 삭제하깅
+		public int deleteReview(String productCode, String reviewRum) {
+
+			Connection con = getConnection();
+			int result = new ProductDao().deleteReview(con,productCode,reviewRum);
+			
+			close(con);
+			
+			return result;
+		}
+
+		//QnA 전체 게시글 조회
+		public int getListQnACount(String code) {
+
+			Connection con = getConnection();
+			int result = new ProductDao().getListQnACount(con,code);
+			close(con);
+			return result;
+		}
+
 
 
 
