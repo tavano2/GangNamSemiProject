@@ -233,16 +233,19 @@ public class AdminBoardDao {
 			return userClass;
 		}
 
-		//회원수만큼  쪽지 insert!
-		public int insertAdminNoteSend(Connection con, String noteTitle, String noteUser, String noteMember,
-				String noteContent, int cnt, String userId) {
-			
+		
+
+		
+		//쪽지 insert
+		public int insertAdminNoteSend(Connection con, String noteTitle, String noteContent, int cnt, String userId) {
 			PreparedStatement pstmt = null;
 			int insertNoteSend =0;
 			String query = prop.getProperty("insertAdminNoteSend");
 			
 			try {
 				pstmt =con.prepareStatement(query);
+				
+				
 				pstmt.setString(1, userId);
 				pstmt.setString(2, noteTitle);
 				pstmt.setString(3, noteContent);
@@ -254,8 +257,6 @@ public class AdminBoardDao {
 			}finally {
 				close(pstmt);
 			}
-			
-			
 			
 			return insertNoteSend;
 		}
