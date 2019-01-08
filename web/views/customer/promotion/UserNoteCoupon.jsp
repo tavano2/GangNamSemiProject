@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <%
-	ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) request.getAttribute("list");
+	ArrayList<HashMap<String, Object>> mlist = (ArrayList<HashMap<String, Object>>) request.getAttribute("list");
 	PageInfo pi = (PageInfo) request.getAttribute("pi");
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
@@ -73,9 +73,9 @@ table tbody>tr:hover {
 			</thead>
 			<tbody>
 				<%
-					if(list != null){
+					if(mlist != null){
 
-					for (HashMap<String, Object> hmap : list) {
+					for (HashMap<String, Object> hmap : mlist) {
 				%>
 				<tr onclick="location.href='<%=request.getContextPath()%>/selectDetailMsgAndCouponPage.pm?msgCouponNum=<%=hmap.get("msg_num")%>' ">
 					<td><%=hmap.get("msg_num")%></td>
@@ -87,7 +87,7 @@ table tbody>tr:hover {
 					}else{
 				%>
 				<tr>
-					<td colspan="4">쪽지가 없습니다.</td>
+					<td colspan="4" style='text-align:center'>쪽지가 없습니다.</td>
 				
 				</tr>
 				<%} %>

@@ -47,7 +47,8 @@ public class ReviewNoticeListServlet extends HttpServlet {
 		limit = 10;
 		
 		ProductService ps = new ProductService();
-		int listCount = ps.getListCount(); 
+		//전체 게시글 조회
+		int listCount = ps.getReviewListCount(code); 
 		
 		maxPage = (int)((double)listCount/limit+0.9);
 		
@@ -89,10 +90,10 @@ public class ReviewNoticeListServlet extends HttpServlet {
 		
 		limitQnA = 10;
 		
-		BoardService bsQnA = new BoardService();
+		ProductService bsQnA = new ProductService();
 		
 		//전체 게시글 수 조회
-		int listCountQnA = bsQnA.getListCount();
+		int listCountQnA = bsQnA.getListQnACount(code);
 		
 		//총 페이지 수 
 		maxPageQnA = (int)((double)listCountQnA/limitQnA+0.9);

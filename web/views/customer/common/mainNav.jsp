@@ -10,11 +10,13 @@
     	 	arry = userId.split("@");
     	}
     %>
+
     <style>
     	#best:hover{
     		color:red !important;
     	}
     </style>
+
     <!-- 사이드바 오픈시 오버레이 -->
     <div class="overlay"></div>
 

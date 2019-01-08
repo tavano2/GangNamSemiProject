@@ -203,7 +203,8 @@
 				url : "<%=request.getContextPath()%>/couponLookUp.pm",
 				type : "get",
 				data:{couponNum:$("#couponNum").val(),couponExp:$("#couponExp").val(),currentPage:currentPage},
-				success : function(data) {							
+				success : function(data) {		
+					console.log(data["pi"]);
 					$tbody.empty();
 					console.log(data["couponList"].length);
 					if(data["couponList"].length==0){

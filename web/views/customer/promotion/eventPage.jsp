@@ -11,7 +11,7 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
-	ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) request.getAttribute("list");
+	ArrayList<HashMap<String, Object>> elist = (ArrayList<HashMap<String, Object>>) request.getAttribute("list");
 %>
 
 <!DOCTYPE html>
@@ -61,8 +61,8 @@ table tbody>tr:hover{
 			</thead>
 			<tbody>
 				<%
-					if(list != null){
-					for (HashMap<String, Object> hmap : list) {
+					if(elist != null){
+					for (HashMap<String, Object> hmap : elist) {
 				%>
 				<tr onclick="location.href='<%=request.getContextPath()%>/eventDetailPage.bo?board_num=<%=hmap.get("board_num")%>' ">
 					<td><%=hmap.get("board_num")%></td>
@@ -76,7 +76,7 @@ table tbody>tr:hover{
 					}else{
 				%>
 					<tr>
-					<td colspan="5">게시한 게시글이 없습니다.</td>
+					<td colspan="5" style='text-align:center;'>게시한 게시글이 없습니다.</td>
 					
 					</tr>
 				

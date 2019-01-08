@@ -50,17 +50,29 @@ public class AdminBoardService {
 		
 		//회원수만큼  쪽지 insert!
 		public int insertAdminNoteSend(String noteTitle, String noteUser, String noteMember, String noteContent,
-				int cnt) {
+				int cnt,ArrayList<Msg> userClass) {
 			Connection con = getConnection();
 			
 			int insertNoteSend =0;
 			
-			for(int i=0; i<cnt; i++) {
-				 insertNoteSend = new AdminBoardDao().insertAdminNoteSend(con,noteTitle,noteUser,noteMember,noteContent,cnt);				
+			for(int i=0; i<userClass.size();i++) {
+				userClass.get(i).getUserId();
+		
+				 insertNoteSend = new AdminBoardDao().insertAdminNoteSend(con,noteTitle,noteUser,noteMember,noteContent,cnt,userClass.get(i).getUserId());				
 			}
 			
 			close(con);
 			
 			return insertNoteSend;
+		}
+		
+		//등급일시 해당 등급 userId 가져오깅
+		public ArrayList<Msg> selectAdminUserClass(String noteUser, String noteMember) {
+			Connection con  = getConnection();
+			ArrayList<Msg> userClass = new AdminBoardDao().selectAdminUserClass(con,noteUser,noteMember);
+			
+			close(con);
+			
+			return userClass;
 		}
 }

@@ -188,7 +188,7 @@ th>div {
 								if(userIdPwd.test(userPwd1)){
 									console.log(userIdPwd.test(userPwd1));
 									$("#userPwd1").css("border-color","red");
-									swal("아이디는 비밀번호로 사용할 수 없습니다.");
+									swal("아이디는 비밀번호에 포함될 수 없습니다.");
 								}else{
 									insertSeccess();
 								}
