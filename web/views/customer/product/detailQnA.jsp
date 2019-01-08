@@ -10,7 +10,7 @@ ArrayList<Product> SelectReplyList =(ArrayList<Product>) request.getAttribute("S
 ArrayList<Attachment>selectfileList = (ArrayList<Attachment>)request.getAttribute("selectfileList");
 String num = request.getParameter("num");
 String pQnABoardId = request.getParameter("pQnABoardId");
-
+String productCode = request.getParameter("productCode");
 %>
 <!DOCTYPE html>
 <html>
@@ -27,6 +27,11 @@ String pQnABoardId = request.getParameter("pQnABoardId");
 
 <!-- Common css -->
 <link href="/semi/css/customer/common/main.css" rel="stylesheet">
+
+<!-- alert CDN -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 
 <style>
 .detailQnAText{
@@ -184,8 +189,8 @@ margin-left:150px;
       	}
       %>
 			&nbsp;
-			<button class="ui brown basic mini button"
-				onclick="location.href='<%=request.getContextPath() %>/deleteQnA.pd?num=<%=num %>&QnABoardId=<%=pQnABoardId %>'"
+			<button class="ui brown basic mini button" id="QnADeleteBtn"
+				onclick="location.href='<%=request.getContextPath() %>/deleteQnA.pd?num=<%=num %>&pQnABoardId=<%=pQnABoardId %>&productCode=<%=productCode %>'"
 			>삭제하기</button> 
 		</div>
       <br> <br>
@@ -274,8 +279,13 @@ margin-left:150px;
    				
    			});
    		});
-   		
-   	
+   	/* 	
+   		$("#QnADeleteBtn").click(function(){
+   			swal("삭제쓰ㅠ")
+		 	.then((value) => {	
+				  location.reload();		
+			}); 
+   		}) */
    
    
    </script>

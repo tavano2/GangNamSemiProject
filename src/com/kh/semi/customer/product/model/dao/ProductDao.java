@@ -1500,7 +1500,6 @@ public class ProductDao {
 		int result=0;
 		
 		String query = prop.getProperty("deleteQnA");
-		System.out.println("123"+pQnABoardId);
 		
 		try {
 			pstmt=con.prepareStatement(query);
@@ -1513,6 +1512,75 @@ public class ProductDao {
 		}finally {
 			close(pstmt);
 		}
+		
+		return result;
+	}
+
+	//REVIEW 전체 게시글 조회
+	public int getReviewListCount(Connection con,String productCode) {
+		PreparedStatement pstmt = null;
+		int result=0;
+		ResultSet rset = null;
+		String query = prop.getProperty("getReviewListCount");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, productCode);
+			rset=pstmt.executeQuery();
+			if (rset.next()) {
+				result = rset.getInt(1);
+				//System.out.println("퐁 몇기니?"+result);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	//review 삭제하기
+	public int deleteReview(Connection con, String productCode, String reviewRum) {
+		PreparedStatement pstmt = null;
+		int result =0;
+		
+		String query = prop.getProperty("deleteReview");
+		
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, reviewRum);
+			result=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	//리븅 전체 게시판 조회
+	public int getListQnACount(Connection con, String code) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("getListQnACount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, code);
+			rset =pstmt.executeQuery();
+			if(rset.next()) {
+				result=rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
 		
 		return result;
 	}

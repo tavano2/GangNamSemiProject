@@ -25,13 +25,14 @@ public class DeleteQnAServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String num = request.getParameter("num");
 		String pQnABoardId = request.getParameter("pQnABoardId");
+		String productCode = request.getParameter("productCode");
+		//System.out.println(num+" 왓? "+pQnABoardId+" "+productCode);
 
 		int result = new ProductService().deleteQnA(num,pQnABoardId);
 		
-		System.out.println(result);
 		String page="";
 			if(result>0) {
-				page=request.getContextPath()+"reviewNoticeList.no?code="+pQnABoardId;
+				page=request.getContextPath()+"/reviewNoticeList.no?code="+productCode;
 				response.sendRedirect(page);
 			}else {
 				page="views/customer/common/errorPage.jsp";

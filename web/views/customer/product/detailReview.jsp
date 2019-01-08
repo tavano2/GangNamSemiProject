@@ -14,6 +14,8 @@
    ArrayList<Attachment> atList = (ArrayList<Attachment>)hmap.get("atList");
    ArrayList<ReviewList> reList = (ArrayList<ReviewList>)hmap.get("reList");
    
+   String reviewRum = request.getParameter("reviewRum");
+   String productCode=request.getParameter("code");
 
    %>
 <!DOCTYPE html>
@@ -87,7 +89,7 @@
          <% if(atList!=null){ 
 		
 		for(Attachment a : atList) { 
-		System.out.println("이거"+a.getFilePath()+a.getChangeName());
+	//	System.out.println("이거"+a.getFilePath()+a.getChangeName());
 		
 		%>
 		 <img src="/semi/views/images/InsertReview_uploadFiles/<%=a.getChangeName() %>" width="200px">
@@ -102,9 +104,9 @@
 					
 			<!--  <button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/product/updateReview.jsp';">수정하기</button>
 			&nbsp; -->
-			<button class="ui brown basic mini button" onclick="location.href='/semi/reviewNoticeList.no?code=<%=request.getParameter("productCode") %>'">이전으로</button> 
+			<button class="ui brown basic mini button" onclick="location.href='/semi/reviewNoticeList.no?code=<%=request.getParameter("code") %>'">이전으로</button> 
 			
-			<button class="ui brown basic mini button">삭제하기</button> 
+			<button class="ui brown basic mini button" onclick="location.href='/semi/deleteReview.pd?code=<%=productCode%>&reviewRum=<%=reviewRum%>'">삭제하기</button> 
 			
 		</div>
       <br> <br>
