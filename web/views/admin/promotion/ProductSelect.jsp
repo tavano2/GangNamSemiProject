@@ -467,10 +467,12 @@
 	
 		$("#saveBtn").click(function(){		
 			$table=$("<table>").addClass("ui celled table").attr("id","slectedProduct"); // tbody를 담을 table을 생성
-			$("#selectedProductList").prepend($("#titleTr")); //상품코드, 상품명, 판매가를 적을 tr을 selectedProductList의 맨 앞부분에 삽입함
-			$table.append($("#selectedProductList").children().each(function(){
+			$tbody=$("<tbody>");
+			$tbody.prepend($("#titleTr")); //상품코드, 상품명, 판매가를 적을 tr을 selectedProductList의 맨 앞부분에 삽입함
+			$tbody.append($("#selectedProductList").children().each(function(){
 				$(this).removeClass("active");
 			})); // table에 selectedProductList를 append함
+			$table.append($tbody);
 			window.opener.$("#selectedValue").append($table); // window.opener를 이용하여 부모 페이지의 selectedValue를 선택하여 table을 삽입
 			window.self.close(); //팝업 창을 닫는다
 		})

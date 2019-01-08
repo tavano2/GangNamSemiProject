@@ -282,8 +282,6 @@ span {
 			console.log($("#couponExp").val());// 쿠폰 설명
 			console.log($("div[name=discountMethod]").html());//혜택
 			console.log($("#couponDiscount").val())//쿠폰할인율
-			console.log($("#startDate").val());//시작일
-			console.log($("#endDate").val());//만기일
 			if(!($("#couponName").val()=="")){
 				if(!($("#couponExp").val()=="")){
 					if(!($("div[name=discountMethod]").text()=="")){
@@ -307,7 +305,6 @@ span {
 									});
 								}else if($("#productSelect").is(":checked")){
 									var productArr = new Array;
-									console.log($("#slectedProduct").children().children());
 									$("#slectedProduct").children().children().each(function(index, item){
 										productArr[index] = $(this).children("td").eq(0).text();
 										console.log(productArr[index]);
@@ -334,6 +331,9 @@ span {
 										bigCategArr[index]=$(this).children("td").eq(0).text();
 										middleCategArr[index]=$(this).children("td").eq(1).text();
 									});
+									console.log()
+									console.log(bigCategArr);
+									console.log(middleCategArr);
 									$.ajax({
 										url:"<%=request.getContextPath()%>/createCouponCRange.pm",
 										type:"get",
