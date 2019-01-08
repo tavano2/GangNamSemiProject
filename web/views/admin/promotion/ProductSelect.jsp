@@ -280,11 +280,7 @@
 								var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
 								var $bigCateg = $("#bigCateg");
 								$bigCateg.append($div);
-							 } else if(data[i].CATEG_LEVEL=="1"){
-								 var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
-									var $middleCateg = $("#middleCateg");
-									$middleCateg.append($div);
-							 }else{
+							  }else{
 								 var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
 									var $smallCateg = $("#smallCateg");
 									$smallCateg.append($div);
