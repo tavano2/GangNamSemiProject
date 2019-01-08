@@ -48,7 +48,7 @@
 												<tfoot>
 				<th colspan="6">
 					<div align="right">
-					<button class="ui brown basic mini button">삭제하기</button>
+					<button class="ui brown basic mini button" id="reviewUpdateBtn">삭제하기</button>
 				</div>
 				</th>
 			</tfoot>
@@ -73,7 +73,7 @@
 									<tfoot>
 				<th colspan="6">
 					<div align="right">
-					<button class="ui brown basic mini button">삭제하기</button>
+					<button class="ui brown basic mini button" id="qnaUpdateBtn">삭제하기</button>
 				</div>
 				</th>
 			</tfoot>
@@ -135,20 +135,17 @@
 				for(var key in data.resultList){
 					//tr 제이쿼리 변수
 					
-					/* $tr = $("<tr onclick=\"location.href='/semi/selectReview.pd?reviewRum="+data.resultList[key].board_num +" '\">"); */
-					var $tr = $("<tr>");
+					$tr = $("<tr>");
 					var $chkTd = $("<td>");
-					var $chk = $("<input type='checkbox' class='reviewChk' value='"  +  "'>");
-					var $boardNoTd = 	$("<td>").text(data.resultList[key].board_num);
-					var $boardTitleTd = $("<td>").text(decodeURIComponent(data.resultList[key].board_title));
-/* 					var $boardUserIdTd = $("<td>").text(decodeURIComponent(data.resultList[key].user_id)); */
-					var $boardCountTd = $("<td>").text(decodeURIComponent(data.resultList[key].board_count));
-					var $boardDateTd = $("<td>").text(data.resultList[key].board_date);
+					var $chk = $("<input type='checkbox' class='reviewChk' value='"  +data.resultList[key].board_id+  "'>");
+					var $boardNoTd = 	$("<td onclick=\"location.href='/semi/selectReview.pd?reviewRum="+data.resultList[key].board_id +" '\">").text(data.resultList[key].board_num);
+					var $boardTitleTd = $("<td onclick=\"location.href='/semi/selectReview.pd?reviewRum="+data.resultList[key].board_id +" '\">").text(decodeURIComponent(data.resultList[key].board_title));
+					var $boardCountTd = $("<td onclick=\"location.href='/semi/selectReview.pd?reviewRum="+data.resultList[key].board_id +" '\">").text(decodeURIComponent(data.resultList[key].board_count));
+					var $boardDateTd = $("<td onclick=\"location.href='/semi/selectReview.pd?reviewRum="+data.resultList[key].board_id +" '\">").text(data.resultList[key].board_date);
 					$chkTd.append($chk);
 					$tr.append($chkTd);
 					$tr.append($boardNoTd);
 					$tr.append($boardTitleTd);
-					/* $tr.append($boardUserIdTd); */
 					$tr.append($boardCountTd);
 					$tr.append($boardDateTd);
 					$tableBody.append($tr);
@@ -262,28 +259,24 @@
 				type : "get",
 				success : function(data){
 					console.log(data);
-				/* 	console.log(data.qnaList);
-					console.log(data.qnaPi); */
 
 					$tableBody = $("#qnaTbody");
 					$tableBody.html('');
 					
 					//테이블 리스트 구현
 					for(var key in data.qnaList){
-						$tr = $("<tr onclick=\"location.href='/semi/SelectOneQnA.no?num="+data.qnaList[key].board_num+"&pQnABoardId="+data.qnaList[key].board_id+"'\">");
+						$tr = $("<tr>");
 						
 						var $chkTd = $("<td>");
-						var $chk = $("<input type='checkbox' class='qnaChk'>");
-						var $boardNoTd = 	$("<td>").text(data.qnaList[key].board_num);
-						var $boardTitleTd = $("<td>").text(decodeURIComponent(data.qnaList[key].board_title));
-						/* var $boardUserIdTd = $("<td>").text(decodeURIComponent(data.qnaList[key].user_id)); */
-						var $boardCountTd = $("<td>").text(decodeURIComponent(data.qnaList[key].board_count));
-						var $boardDateTd = $("<td>").text(data.qnaList[key].board_date);
+						var $chk = $("<input type='checkbox' class='qnaChk' value='"  +data.qnaList[key].board_id+  "'>");
+						var $boardNoTd = 	$("<td onclick=\"location.href='/semi/SelectOneQnA.no?num="+data.qnaList[key].board_num+"&pQnABoardId="+data.qnaList[key].board_id+"'\">").text(data.qnaList[key].board_num);
+						var $boardTitleTd = $("<td onclick=\"location.href='/semi/SelectOneQnA.no?num="+data.qnaList[key].board_num+"&pQnABoardId="+data.qnaList[key].board_id+"'\">").text(decodeURIComponent(data.qnaList[key].board_title));
+						var $boardCountTd = $("<td onclick=\"location.href='/semi/SelectOneQnA.no?num="+data.qnaList[key].board_num+"&pQnABoardId="+data.qnaList[key].board_id+"'\">").text(decodeURIComponent(data.qnaList[key].board_count));
+						var $boardDateTd = $("<td onclick=\"location.href='/semi/SelectOneQnA.no?num="+data.qnaList[key].board_num+"&pQnABoardId="+data.qnaList[key].board_id+"'\">").text(data.qnaList[key].board_date);
 						$chkTd.append($chk);
 						$tr.append($chkTd);
 						$tr.append($boardNoTd);
 						$tr.append($boardTitleTd);
-					/* 	$tr.append($boardUserIdTd); */
 						$tr.append($boardCountTd);
 						$tr.append($boardDateTd);
 						$tableBody.append($tr);
@@ -373,6 +366,81 @@
 	function qnaLastPageMove(data){
 		ajax2(data);
 	}
+	
+	   $("#reviewCheckBoxReader").click(function(){
+   		var chk = $(this).is(":checked");
+   			if(chk){
+   				$(".reviewChk").prop('checked',true);
+   			}else{
+   				$(".reviewChk").prop('checked',false);
+   			}
+   		});	
+	
+	   
+	   
+	   $("#qnaCheckBoxReader").click(function(){
+	   		var chk = $(this).is(":checked");
+	   			if(chk){
+	   				$(".qnaChk").prop('checked',true);
+	   			}else{
+	   				$(".qnaChk").prop('checked',false);
+	   			}
+	   		});	
+	   
+	   var reviewChk = [];
+	   $("#reviewUpdateBtn").click(function(){
+		   $(".reviewChk:checked").each(function(){
+			   reviewChk.push($(this).val());
+		   });
+		   $.ajax({
+			   url:"<%=request.getContextPath()%>/updateReivewBoard.bo",
+			   type:"post",
+			   traditional : true,
+			   data:{nums:reviewChk},
+			   success:function(data){
+				   if(data == "성공"){
+					   location.reload();
+				   }else{
+					   alert("게시물 삭제 실패!");
+					   location.reload();
+				   }
+			   },
+			   error:function(data){
+				   console.log("데이터 통신 실패!");
+			   }
+		   });
+		   
+		   
+	   });
+	   
+	   var qnaChk = [];
+	   $("#qnaUpdateBtn").click(function(){
+		   $(".qnaChk:checked").each(function(){
+			   qnaChk.push($(this).val());
+		   });
+		   console.log(qnaChk);
+		   $.ajax({
+			   url:"<%=request.getContextPath()%>/updateReivewBoard.bo",
+			   type:"post",
+			   traditional : true,
+			   data:{nums:qnaChk},
+			   success:function(data){
+				   if(data == "성공"){
+					   location.reload();
+				   }else{
+					   alert("게시물 삭제 실패!");
+					   location.reload();
+				   }
+			   },
+			   error:function(data){
+				   console.log("데이터 통신 실패!");
+			   }
+		   });
+		   
+		   
+	   });
+	   
+	
 	
 </script>
 

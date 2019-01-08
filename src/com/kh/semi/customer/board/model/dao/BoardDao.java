@@ -833,6 +833,64 @@ public class BoardDao {
 		}
 		return listCount;
 	}
+
+	public ArrayList<HashMap<String, Object>> selectEventPageListNew(Connection con, int currentPage, int limit,
+			int pageType, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		ArrayList<HashMap<String, Object>> list = null;
+
+		String query = prop.getProperty("selectMyPageReviewList");
+		try {
+			pstmt = con.prepareStatement(query);
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, pageType);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			rset = pstmt.executeQuery();
+			if (rset != null) {
+				list = new ArrayList<HashMap<String, Object>>();
+				while (rset.next()) {
+					hmap = new HashMap<String, Object>();
+					hmap.put("board_id", rset.getInt("BOARD_ID"));
+					hmap.put("board_num", rset.getInt("BOARD_NUM"));
+					hmap.put("board_title", rset.getString("BOARD_TITLE"));
+					hmap.put("board_content", rset.getString("BOARD_CONTENT"));
+					hmap.put("user_id", rset.getString("USER_ID"));
+					hmap.put("board_date", rset.getDate("BOARD_DATE"));
+					hmap.put("board_count", rset.getInt("BOARD_COUNT"));
+					hmap.put("status", rset.getString("STATUS"));
+					list.add(hmap);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		return list;
+	}
+
+	public int updateReviewBoard(Connection con, String userId, String item) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateReivewBoard");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, item);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 
 }

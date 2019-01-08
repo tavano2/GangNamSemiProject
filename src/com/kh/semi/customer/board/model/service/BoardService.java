@@ -315,6 +315,32 @@ public class BoardService {
 	}
 
 
+	public ArrayList<HashMap<String, Object>> selectEventPageListNew(int currentPage, int limit, int pageType,
+			String userId) {
+		Connection con = getConnection();
+		ArrayList<HashMap<String, Object>> list = new BoardDao().selectEventPageListNew(con,currentPage,limit,pageType,userId);
+		close(con);
+		return list;
+	}
+
+
+	public int updateReivewBoard(String userId, String[] boardId) {
+		Connection con = getConnection();
+		int update = 0;
+		int result = 0;
+		for(String item : boardId) {
+			update += new BoardDao().updateReviewBoard(con,userId,item);
+		}
+		if(update == boardId.length) {
+			commit(con);
+			result = 1;
+		}else {
+			rollback(con);
+		}
+		return result;
+	}
+
+
 
 
 
