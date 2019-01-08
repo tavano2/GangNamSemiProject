@@ -8,41 +8,80 @@ public class Product implements Serializable{
 	String productName;
 	String productMemo;
 	String productDmemo;
-	String categoryCode;
 	int productAmount;
 	int productPrice;
 	Date productDate;
-	String bestS;
-	String sellS;
-	String displayS;
-	String status;
+	String bestStatus;
+	String sellStatus;
+	String displayStatus;
+	String delStatus;
+	String cateCode;
+	String cateName;
+	String cateUrl;
+	String cateMemo;
+	int cateLevel;
+	String cateRefCode;
+	String cateStatus;
+	String fileId;
+	int placeNum;
+	int boardId;
+	String originName;
+	String changeName;
+	String filePath;
+	Date uploadDate;
+	int fileLevel;
+	int downloadCount;
+	String fileStatus;
 	
 	public Product() {}
 
 	@Override
 	public String toString() {
 		return "Product [productCode=" + productCode + ", productName=" + productName + ", productMemo=" + productMemo
-				+ ", productDmemo=" + productDmemo + ", categoryCode=" + categoryCode + ", productAmount="
-				+ productAmount + ", productPrice=" + productPrice + ", productDate=" + productDate + ", bestS=" + bestS
-				+ ", sellS=" + sellS + ", displayS=" + displayS + ", status=" + status + "]";
+				+ ", productDmemo=" + productDmemo + ", productAmount=" + productAmount + ", productPrice="
+				+ productPrice + ", productDate=" + productDate + ", bestStatus=" + bestStatus + ", sellStatus="
+				+ sellStatus + ", displayStatus=" + displayStatus + ", delStatus=" + delStatus + ", cateCode="
+				+ cateCode + ", cateName=" + cateName + ", cateUrl=" + cateUrl + ", cateMemo=" + cateMemo
+				+ ", cateLevel=" + cateLevel + ", cateRefCode=" + cateRefCode + ", cateStatus=" + cateStatus
+				+ ", fileId=" + fileId + ", placeNum=" + placeNum + ", boardId=" + boardId + ", originName="
+				+ originName + ", changeName=" + changeName + ", filePath=" + filePath + ", uploadDate=" + uploadDate
+				+ ", fileLevel=" + fileLevel + ", downloadCount=" + downloadCount + ", fileStatus=" + fileStatus + "]";
 	}
 
-	public Product(String productCode, String productName, String productMemo, String productDmemo, String categoryCode,
-			int productAmount, int productPrice, Date productDate, String bestS, String sellS, String displayS,
-			String status) {
+	public Product(String productCode, String productName, String productMemo, String productDmemo, int productAmount,
+			int productPrice, Date productDate, String bestStatus, String sellStatus, String displayStatus,
+			String delStatus, String cateCode, String cateName, String cateUrl, String cateMemo, int cateLevel,
+			String cateRefCode, String cateStatus, String fileId, int placeNum, int boardId, String originName,
+			String changeName, String filePath, Date uploadDate, int fileLevel, int downloadCount, String fileStatus) {
 		super();
 		this.productCode = productCode;
 		this.productName = productName;
 		this.productMemo = productMemo;
 		this.productDmemo = productDmemo;
-		this.categoryCode = categoryCode;
 		this.productAmount = productAmount;
 		this.productPrice = productPrice;
 		this.productDate = productDate;
-		this.bestS = bestS;
-		this.sellS = sellS;
-		this.displayS = displayS;
-		this.status = status;
+		this.bestStatus = bestStatus;
+		this.sellStatus = sellStatus;
+		this.displayStatus = displayStatus;
+		this.delStatus = delStatus;
+		this.cateCode = cateCode;
+		this.cateName = cateName;
+		this.cateUrl = cateUrl;
+		this.cateMemo = cateMemo;
+		this.cateLevel = cateLevel;
+		this.cateRefCode = cateRefCode;
+		this.cateStatus = cateStatus;
+		this.fileId = fileId;
+		this.placeNum = placeNum;
+		this.boardId = boardId;
+		this.originName = originName;
+		this.changeName = changeName;
+		this.filePath = filePath;
+		this.uploadDate = uploadDate;
+		this.fileLevel = fileLevel;
+		this.downloadCount = downloadCount;
+		this.fileStatus = fileStatus;
 	}
 
 	public String getProductCode() {
@@ -77,14 +116,6 @@ public class Product implements Serializable{
 		this.productDmemo = productDmemo;
 	}
 
-	public String getCategoryCode() {
-		return categoryCode;
-	}
-
-	public void setCategoryCode(String categoryCode) {
-		this.categoryCode = categoryCode;
-	}
-
 	public int getProductAmount() {
 		return productAmount;
 	}
@@ -109,38 +140,175 @@ public class Product implements Serializable{
 		this.productDate = productDate;
 	}
 
-	public String getBestS() {
-		return bestS;
+	public String getBestStatus() {
+		return bestStatus;
 	}
 
-	public void setBestS(String bestS) {
-		this.bestS = bestS;
+	public void setBestStatus(String bestStatus) {
+		this.bestStatus = bestStatus;
 	}
 
-	public String getSellS() {
-		return sellS;
+	public String getSellStatus() {
+		return sellStatus;
 	}
 
-	public void setSellS(String sellS) {
-		this.sellS = sellS;
+	public void setSellStatus(String sellStatus) {
+		this.sellStatus = sellStatus;
 	}
 
-	public String getDisplayS() {
-		return displayS;
+	public String getDisplayStatus() {
+		return displayStatus;
 	}
 
-	public void setDisplayS(String displayS) {
-		this.displayS = displayS;
+	public void setDisplayStatus(String displayStatus) {
+		this.displayStatus = displayStatus;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getDelStatus() {
+		return delStatus;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setDelStatus(String delStatus) {
+		this.delStatus = delStatus;
 	}
 
+	public String getCateCode() {
+		return cateCode;
+	}
+
+	public void setCateCode(String cateCode) {
+		this.cateCode = cateCode;
+	}
+
+	public String getCateName() {
+		return cateName;
+	}
+
+	public void setCateName(String cateName) {
+		this.cateName = cateName;
+	}
+
+	public String getCateUrl() {
+		return cateUrl;
+	}
+
+	public void setCateUrl(String cateUrl) {
+		this.cateUrl = cateUrl;
+	}
+
+	public String getCateMemo() {
+		return cateMemo;
+	}
+
+	public void setCateMemo(String cateMemo) {
+		this.cateMemo = cateMemo;
+	}
+
+	public int getCateLevel() {
+		return cateLevel;
+	}
+
+	public void setCateLevel(int cateLevel) {
+		this.cateLevel = cateLevel;
+	}
+
+	public String getCateRefCode() {
+		return cateRefCode;
+	}
+
+	public void setCateRefCode(String cateRefCode) {
+		this.cateRefCode = cateRefCode;
+	}
+
+	public String getCateStatus() {
+		return cateStatus;
+	}
+
+	public void setCateStatus(String cateStatus) {
+		this.cateStatus = cateStatus;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+
+	public int getPlaceNum() {
+		return placeNum;
+	}
+
+	public void setPlaceNum(int placeNum) {
+		this.placeNum = placeNum;
+	}
+
+	public int getBoardId() {
+		return boardId;
+	}
+
+	public void setBoardId(int boardId) {
+		this.boardId = boardId;
+	}
+
+	public String getOriginName() {
+		return originName;
+	}
+
+	public void setOriginName(String originName) {
+		this.originName = originName;
+	}
+
+	public String getChangeName() {
+		return changeName;
+	}
+
+	public void setChangeName(String changeName) {
+		this.changeName = changeName;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public Date getUploadDate() {
+		return uploadDate;
+	}
+
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
+	}
+
+	public int getFileLevel() {
+		return fileLevel;
+	}
+
+	public void setFileLevel(int fileLevel) {
+		this.fileLevel = fileLevel;
+	}
+
+	public int getDownloadCount() {
+		return downloadCount;
+	}
+
+	public void setDownloadCount(int downloadCount) {
+		this.downloadCount = downloadCount;
+	}
+
+	public String getFileStatus() {
+		return fileStatus;
+	}
+
+	public void setFileStatus(String fileStatus) {
+		this.fileStatus = fileStatus;
+	}
+
+	
 	
 	
 }

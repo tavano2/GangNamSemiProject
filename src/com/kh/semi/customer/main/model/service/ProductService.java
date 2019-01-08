@@ -17,4 +17,12 @@ public class ProductService {
 		return list;
 	}
 
+	public ArrayList<Product> selectAllProduct() {
+		Connection con = getConnection();
+		ArrayList<Product> list = new ProductDao().selectAllProduct(con);
+		close(con);
+		
+		return list;
+	}
+
 }

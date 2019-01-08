@@ -33,7 +33,6 @@ public class ProductDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Product> list = null;
-		Product pro = null;
 		String query = prop.getProperty("selectProduct");
 		
 		try {
@@ -44,18 +43,13 @@ public class ProductDao {
 			if(rset != null) {
 				list = new ArrayList<Product>();
 				while(rset.next()) {
+					Product pro = new Product();
 					pro.setProductCode(rset.getString("PRODUCT_CODE"));
 					pro.setProductName(rset.getString("PRODUCT_NAME"));
-					pro.setProductMemo(rset.getString("PRODUCT_MEMO"));
-					pro.setProductDmemo(rset.getString("PRODUCT_DMEMO"));
-					pro.setCategoryCode(rset.getString("CATEGORY_CODE"));
-					pro.setProductAmount(rset.getInt("PRODUCT_AMOUNT"));
 					pro.setProductPrice(rset.getInt("PRODUCT_PRICE"));
-					pro.setProductDate(rset.getDate("PRODUCT_DATE"));
-					pro.setBestS(rset.getString("BEST_STATUS"));
-					pro.setSellS(rset.getString("SELL_STATUS"));
-					pro.setDisplayS(rset.getString("DISPLAY_STATUS"));
-					pro.setStatus(rset.getString("STATUS"));
+					pro.setProductMemo(rset.getString("PRODUCT_MEMO"));
+					pro.setBestStatus(rset.getString("BEST_STATUS"));
+					pro.setChangeName(rset.getString("CHANGE_NAME"));
 					
 					list.add(pro);
 				}
@@ -66,7 +60,39 @@ public class ProductDao {
 			close(pstmt);
 			close(rset);
 		}
+		return list;
+	}
+
+	public ArrayList<Product> selectAllProduct(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> list = null;
+		String query = prop.getProperty("selectAllProduct");
 		
+		try {
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset != null) {
+				list = new ArrayList<Product>();
+				while(rset.next()) {
+					Product pro = new Product();
+					pro.setProductCode(rset.getString("PRODUCT_CODE"));
+					pro.setProductName(rset.getString("PRODUCT_NAME"));
+					pro.setProductPrice(rset.getInt("PRODUCT_PRICE"));
+					pro.setProductMemo(rset.getString("PRODUCT_MEMO"));
+					pro.setBestStatus(rset.getString("BEST_STATUS"));
+					pro.setChangeName(rset.getString("CHANGE_NAME"));
+					
+					list.add(pro);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
 		return list;
 	}
 }

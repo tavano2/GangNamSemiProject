@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class Attachment implements Serializable{
+	String productCode;
 	String fileId;
 	int placeNum;
 	int boardId;
-	String productCode;
 	String originName;
 	String changeName;
 	String filePath;
