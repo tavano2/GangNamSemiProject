@@ -55,7 +55,7 @@
         <ul class="components">
             <!-- <p>소제목</p> -->
             <li><a href="/semi/index.jsp">홈</a></li>
-            <li><a href="/semi/views/customer/board/notice.jsp">공지사항</a></li>
+            <li><a href="<%=request.getContextPath()%>/selectNoticeList.bo">공지사항</a></li>
             <li><a href="<%=request.getContextPath()%>/selectCartList.pd">장바구니</a></li>
             <li><a href="/semi/views/customer/delivery/orderList.jsp">주문</a></li>
             <li><a href="<%=request.getContextPath()%>/selectMessageAndCoupon.pm">쪽지/쿠폰함</a></li>
@@ -69,7 +69,7 @@
             <a class="item" href="<%= request.getContextPath()%>/selectFAQList.bo">
                 Help
             </a>
-            <a class="item"  href="/semi/views/customer/board/notice.jsp">
+            <a class="item"  href="<%=request.getContextPath()%>/selectNoticeList.bo">
                 NOTICE
             </a>
             <a class="item" style="color : rgb(211, 84, 0)">

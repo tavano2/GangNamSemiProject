@@ -6,7 +6,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>notice.jsp</title>
+	<title>NOTICE</title>
 
 
     <!-- Semantic UI CSS CDN -->

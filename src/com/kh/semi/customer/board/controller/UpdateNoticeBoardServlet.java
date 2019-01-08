@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class DeleteNoticeBoardServlet
+ * Servlet implementation class UpdateNoticeBoardServlet
  */
-@WebServlet("/deleteNoticeBoard.bo")
-public class DeleteNoticeBoardServlet extends HttpServlet {
+@WebServlet("/updateNoticeBoard.bo")
+public class UpdateNoticeBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteNoticeBoardServlet() { // 게시글 삭제
+    public UpdateNoticeBoardServlet() { // 게시글 수정
         super();
         // TODO Auto-generated constructor stub
     }

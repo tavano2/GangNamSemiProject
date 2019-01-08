@@ -16,7 +16,7 @@
 	 */
 </style>
 	<meta charset="UTF-8">
-	<title>noticeBoard.jsp</title>
+	<title>NOTICE_BOARD</title>
 	<!-- noticeBoard.jsp >> Detail. -->
 
 
