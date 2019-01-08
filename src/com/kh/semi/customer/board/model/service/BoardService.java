@@ -319,3 +319,16 @@ public class BoardService {
 
 
 }
+
+//공지사항 게시판
+
+
+
+
+
+
+
+
+
+
+

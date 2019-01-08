@@ -836,3 +836,13 @@ public class BoardDao {
 	
 
 }
+
+// 공지사항 게시판
+
+
+
+
+
+
+
+
