@@ -58,6 +58,7 @@
         		  <H2>게시판 관리</H2>
                 <br><br>
                 <H4>전체 게시물 보기</H4>
+                <form action="">
                 <div class="tablemax">
                 <table class="ui celled table first-col">
                    
@@ -101,6 +102,7 @@
 
             </div>
 
+		</form>
             </div>
 
         </div>
