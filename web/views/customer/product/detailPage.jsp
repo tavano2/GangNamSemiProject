@@ -339,7 +339,7 @@ input[type="number"]::-webkit-inner-spin-button {
 											</td>
 											<td>
 												<div class="cartBtnDiv">
-													<button class="ui grey basic button cartBtn" id="addWishListBtn"><span><i class="heart outline icon"></i>WISH LIST</span></button>
+													<div class="ui grey basic button cartBtn" id="addWishListBtn"><span><i class="heart outline icon"></i>WISH LIST</span></div>
 												</div>
 											</td>
 										</tr>
@@ -960,7 +960,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			
 		}
 		
-		
+		<%if(loginUser != null) {%>
 		$(function(){
 			var productCode = "<%= pro.getProductCode() %>";
 			
@@ -1023,6 +1023,8 @@ input[type="number"]::-webkit-inner-spin-button {
 			
 			return false;
 		}
+		
+		<%}%>
 		
 	</script>
 	
