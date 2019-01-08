@@ -158,20 +158,22 @@
 	                    	<%for(UserClass uc : classList){ %>
 	                    		<tr>
 	                    			<td><%= uc.getClassCode() %></td>
-	                    			<td><%= uc.getClassName() %></td>
+	                    			<td class="className"><%= uc.getClassName() %></td>
 	                    			<td><%= uc.getClassMemo() %></td>
 	                    			<td><%= uc.getDicountRate() == 0 ? 0 : uc.getDicountRate() * 100 + "%" %></td>
 	                    			<td><%= uc.getPointRate() == 0 ? 0 : uc.getPointRate() * 100 + "%" %></td>
 	                    			<td><%= uc.getFreeDelevery().equals("D") ? "미적용" : "적용"%></td>
-	                    			<td><%= comma(uc.getStandardPrice()) %></td>
+	                    			<td class="standardPrice"><%= comma(uc.getStandardPrice()) %></td>
 	                    			<td><%= uc.getMemberCount() %></td>
 	                    			<td>
 	                    				<% if(uc.getStatus().equals("E")) {%>
 	                    				<div class="ui mini compact icon button" onclick="changeClassStatus(this, '<%= uc.getClassCode()  %>', '<%= uc.getStatus() %>'); return false;"><i class="check icon"></i></div>
 	                    				<%} else { %>
 	                    				<div class="ui mini compact icon button" onclick="changeClassStatus(this, '<%= uc.getClassCode()  %>', '<%= uc.getStatus() %>'); return false;"><i class="close icon"></i></div>
-	                    				<%if(uc.getMemberCount() > 0){ %>
-	                    				<div class="ui mini compact icon button" onclick="changeMemberClass('<%= uc.getClassCode()  %>'); return false;"><i class="exchange icon"></i></div>
+	                    					<%if(uc.getMemberCount() > 0){ %>
+	                    					<div class="ui mini compact icon button" onclick="changeMemberClass('<%= uc.getClassCode()  %>'); return false;"><i class="exchange icon"></i></div>
+	                    					<%} else {%>
+	                    					<div class="ui mini compact icon button" onclick="deleteClass('<%= uc.getClassCode()  %>'); return false;"><i class="cut icon"></i></div>
 	                    				<%}} %>
 	                    			</td>
 	                    		</tr>
@@ -283,6 +285,10 @@
 
 	    $('.ui.radio.checkbox').checkbox();
     	
+		function pageBtn(num){
+			location.href = "<%= request.getContextPath()%>/userClassListSelect.me?currentPage=" + num;
+		}
+	    
 	    function changeMemberClass(originClassCode){
 	    	$('.modal .ui.dropdown').dropdown('restore defaults');
 	    	$("#originClassCode").val(originClassCode);
@@ -310,10 +316,10 @@
 	    }
 	    
 	    function changeClassStatus(btn, originClassCode, status){
+ 	    	var className = $(btn).parent().siblings(".className").text();
+	    	var standardPrice = $(btn).parent().siblings(".standardPrice").text();
+ 
 	    	var msg = "";
-	    	
-	    	
-	    	
 	    	if(status == "E"){
 	    		msg = "비활성화하시겠습니까?";
 	    	} else {
@@ -323,9 +329,30 @@
 	    		$.ajax({
 	    			url: "<%= request.getContextPath() %>/changeClassStatus.me",
 	    			type: "post",
-	    			data: {originClassCode:originClassCode, status:status},
-	    			success: function(data){
-	    				alert("수정하였습니다.");
+	    			data: {
+	    				originClassCode:originClassCode,
+	    				status:status,
+	    				className:className,
+	    				standardPrice:standardPrice
+	    			}, success: function(msg){
+	    				alert(msg);
+	    				location.reload();
+	    			}, error: function(){
+	    				console.log("실패");
+	    			}
+	    		});
+	    	}
+	    }
+	    
+	    function deleteClass(originClassCode){
+	    	if(confirm("완전히 삭제하시겠습니까?")){
+	    		$.ajax({
+	    			url: "<%= request.getContextPath() %>/deleteClass.me",
+	    			type: "post",
+	    			data: {
+	    				originClassCode:originClassCode
+	    			}, success: function(msg){
+	    				alert(msg);
 	    				location.reload();
 	    			}, error: function(){
 	    				console.log("실패");

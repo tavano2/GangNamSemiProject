@@ -342,6 +342,68 @@ public class AdminMemberDao {
 		
 		return result;
 	}
+
+
+	public ArrayList<UserClass> chkChangeClassStatus(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<UserClass> classList = null;
+		
+		String query = prop.getProperty("chkChangeClassStatus");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			classList = new ArrayList<UserClass>();
+			
+			while(rset.next()) {
+				UserClass uc = new UserClass();
+				
+				uc.setClassCode(rset.getString("CLASS_CODE"));
+				uc.setClassName(rset.getString("CLASS_NAME"));
+				uc.setClassMemo(rset.getString("CLASS_MEMO"));
+				uc.setDicountRate(rset.getDouble("DICOUNT_RATE"));
+				uc.setPointRate(rset.getDouble("POINT_RATE"));
+				uc.setFreeDelevery(rset.getString("FREE_DELEVERY"));
+				uc.setStandardPrice(rset.getInt("STANDARD_PRICE"));
+				uc.setStatus(rset.getString("STATUS"));
+				
+				classList.add(uc);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return classList;
+	}
+
+
+	public int deleteClass(Connection con, String originClassCode) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteClass");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, originClassCode);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 
 
