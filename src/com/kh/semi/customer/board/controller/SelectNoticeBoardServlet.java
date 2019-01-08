@@ -17,7 +17,7 @@ public class SelectNoticeBoardServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectNoticeBoardServlet() { // Board 조회 (상세보기)
+    public SelectNoticeBoardServlet() { // 게시글 상세보기 ( * 공지사항이므로 [ 수정 / 삭제 ] 권한 관리자에게만 부여. )
         super();
         // TODO Auto-generated constructor stub
     }

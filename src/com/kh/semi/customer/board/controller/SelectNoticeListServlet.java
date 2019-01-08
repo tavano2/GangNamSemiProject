@@ -17,7 +17,7 @@ public class SelectNoticeListServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectNoticeListServlet() { // 공지사항 조회
+    public SelectNoticeListServlet() { // 공지사항 게시판 조회
         super();
         // TODO Auto-generated constructor stub
     }

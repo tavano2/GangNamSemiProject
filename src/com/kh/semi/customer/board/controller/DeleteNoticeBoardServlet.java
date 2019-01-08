@@ -17,7 +17,7 @@ public class DeleteNoticeBoardServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteNoticeBoardServlet() {
+    public DeleteNoticeBoardServlet() { // 게시글 삭제
         super();
         // TODO Auto-generated constructor stub
     }

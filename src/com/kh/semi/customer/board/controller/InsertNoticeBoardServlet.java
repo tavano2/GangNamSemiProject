@@ -17,7 +17,7 @@ public class InsertNoticeBoardServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertNoticeBoardServlet() {
+    public InsertNoticeBoardServlet() { // 게시글 작성
         super();
         // TODO Auto-generated constructor stub
     }
