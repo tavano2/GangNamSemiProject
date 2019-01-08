@@ -132,4 +132,26 @@ public class AdminMemberService {
 		return result;
 	}
 
+	public ArrayList<UserClass> chkChangeClassStatus() {
+		Connection con = getConnection();
+		ArrayList<UserClass> classList = new AdminMemberDao().chkChangeClassStatus(con);
+		
+		close(con);
+		return classList;
+	}
+
+	public int deleteClass(String originClassCode) {
+		Connection con = getConnection();
+		int result = new AdminMemberDao().deleteClass(con, originClassCode);
+		
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+
 }
