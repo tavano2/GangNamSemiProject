@@ -4,9 +4,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	HashMap<String, Object> list = (HashMap<String, Object>)request.getAttribute("list");
-	ArrayList<Board> bList = (ArrayList<Board>)list.get("bList");
-	HashMap<String, Attachment> atMap = (HashMap<String, Attachment>)list.get("atMap");
+	HashMap<String, Object> FAQlist = (HashMap<String, Object>)request.getAttribute("list");
+	ArrayList<Board> bList = (ArrayList<Board>)FAQlist.get("bList");
+	HashMap<String, Attachment> atMap = (HashMap<String, Attachment>)FAQlist.get("atMap");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	String categ = (String)request.getAttribute("categ");
 	String search = (String)request.getAttribute("search");

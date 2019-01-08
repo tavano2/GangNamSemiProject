@@ -57,15 +57,14 @@
 <!-- jQuery Custom Scroller CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-
-<script>
-	// Checkbox > 일괄 Check 기능
-	$(document).ready(function() {
-		$('.check-all').click(function() {
-			$('.class').prop('checked', this.checked);
+	<script>
+		// Checkbox > 일괄 Check 기능
+		$(document).ready(function() {
+			$('.check-all').click(function() {
+				$('.class').attr('checked', this.checked);
+			});
 		});
-	});
-</script>
+	</script>
 
 </head>
 <body>
@@ -100,7 +99,7 @@
 						<!-- <th>적립금</th> -->
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="dataTable">
 					<!-- tbody : 수정중 -->
 					<%
 						for (int i = 0; i < cartList.size(); i++) {
@@ -199,7 +198,7 @@
 		function cartDel(){
 			var chkedCartNum = $("#cartList").serialize();
 			
-			if($("#chkBox:checked").length > 0){
+			if($("[name='cartNum']:checked").length > 0 && confirm("삭제하시겠습니까?")){
 				$.ajax({
 					url:"<%=request.getContextPath()%>/deleteCartNum.pd",
 					type:"post",
@@ -222,7 +221,7 @@
 				type:"post",
 				data:{cartNum:cartNum, amount:amount},
 				success: function(data){
-					location.reload();
+					$(btn).parents("tr").find(".amount").text(amount);
 				}, error: function(){
 					console.log("실패");
 				}
@@ -239,7 +238,7 @@
 					type:"post",
 					data:{cartNum:cartNum, amount:amount},
 					success: function(data){
-						location.reload();
+						$(btn).parents("tr").find(".amount").text(amount);
 					}, error: function(){
 						console.log("실패");
 					}
@@ -259,7 +258,14 @@
 			cartList.submit();
 		}
 		
+		$(function(){
+			$("#dataTable tr td:first-child").click(function(){
+				var chkbox = $(this).find("input:checkbox");
+				$(chkbox).attr("checked", !chkbox.is(':checked'));
+			});
+		});
 	</script>
+
 
 	<%
 		} else { // 비 로그인 상태일 시 로그인 페이지로 이동한다.

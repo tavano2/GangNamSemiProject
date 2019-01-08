@@ -167,9 +167,9 @@
 	                    			<td><%= uc.getMemberCount() %></td>
 	                    			<td>
 	                    				<% if(uc.getStatus().equals("E")) {%>
-	                    				<div class="ui mini compact icon button" onclick="changeClassStatus('<%= uc.getClassCode()  %>', '<%= uc.getStatus() %>'); return false;"><i class="check icon"></i></div>
+	                    				<div class="ui mini compact icon button" onclick="changeClassStatus(this, '<%= uc.getClassCode()  %>', '<%= uc.getStatus() %>'); return false;"><i class="check icon"></i></div>
 	                    				<%} else { %>
-	                    				<div class="ui mini compact icon button" onclick="changeClassStatus('<%= uc.getClassCode()  %>', '<%= uc.getStatus() %>'); return false;"><i class="close icon"></i></div>
+	                    				<div class="ui mini compact icon button" onclick="changeClassStatus(this, '<%= uc.getClassCode()  %>', '<%= uc.getStatus() %>'); return false;"><i class="close icon"></i></div>
 	                    				<%if(uc.getMemberCount() > 0){ %>
 	                    				<div class="ui mini compact icon button" onclick="changeMemberClass('<%= uc.getClassCode()  %>'); return false;"><i class="exchange icon"></i></div>
 	                    				<%}} %>
@@ -309,8 +309,17 @@
 	    	}
 	    }
 	    
-	    function changeClassStatus(originClassCode, status){
-	    	if(confirm("수정하시겠습니까?")){
+	    function changeClassStatus(btn, originClassCode, status){
+	    	var msg = "";
+	    	
+	    	
+	    	
+	    	if(status == "E"){
+	    		msg = "비활성화하시겠습니까?";
+	    	} else {
+	    		msg = "활성화하시겠습니까?";
+	    	}
+	    	if(confirm(msg)){
 	    		$.ajax({
 	    			url: "<%= request.getContextPath() %>/changeClassStatus.me",
 	    			type: "post",
@@ -329,8 +338,6 @@
 	    	var classInputBox = $("#classInputBox").serialize();
 	    	
 	    	var chk = true;
-	    	
-	    	
 	    	
 	    	if(chk){
 	    		$.ajax({
