@@ -26,7 +26,7 @@
 	<div class="content">
 		<br> <br>
 		<div align="center"
-			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">DEATIL
+			style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 20px;">DETAIL
 			BOARD</div>
 		<br> <br>
 		<hr>
