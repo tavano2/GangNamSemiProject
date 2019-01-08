@@ -91,7 +91,14 @@ public class insertCartServlet extends HttpServlet {
 				if(result > 0) {
 					response.setContentType("application/json");
 					response.setCharacterEncoding("utf-8");
-					String[] msg = new String[] {"Y", "장바구니에 상품이 정상적으로 담겼습니다."};
+					
+					String[] msg = {"", ""};
+					if(prodSelectOptionList.size() != prodSelectOption.length) {
+						msg = new String[] {"Y", "중복된 상품을 제외하고 장바구니에 담았습니다."};
+					} else {
+						msg = new String[] {"Y", "장바구니에 상품이 정상적으로 담겼습니다."};
+					}
+					
 					
 					new Gson().toJson(msg, response.getWriter());
 				} else {
