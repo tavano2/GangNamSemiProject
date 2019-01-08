@@ -202,20 +202,57 @@ public class AdminBoardDao {
 			return cnt;
 		}
 
-		//회원 수만큼 쪽지 insert
+	
+
+		//등급일시 해당 등급 userId 가져오깅
+		public ArrayList<Msg> selectAdminUserClass(Connection con, String noteUser, String noteMember) {
+			ArrayList<Msg> userClass = null;
+			PreparedStatement pstmt= null;
+			ResultSet rset = null;
+			
+			String query = prop.getProperty("selectAdminUserClass");
+
+			try {
+				pstmt=con.prepareStatement(query);
+				pstmt.setString(1, noteMember);
+				rset=pstmt.executeQuery();
+				
+				userClass= new ArrayList<>();
+				while(rset.next()) {
+					Msg mm = new Msg();
+					mm.setUserId(rset.getString("USER_ID"));
+					userClass.add(mm);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rset);
+			}
+			
+			return userClass;
+		}
+
+		//회원수만큼  쪽지 insert!
 		public int insertAdminNoteSend(Connection con, String noteTitle, String noteUser, String noteMember,
-				String noteContent, int cnt) {
+				String noteContent, int cnt, String userId) {
 			
 			PreparedStatement pstmt = null;
 			int insertNoteSend =0;
 			String query = prop.getProperty("insertAdminNoteSend");
-/*			INSERT INTO MSG VALUES(code('SEQ_MS','MS'),'user01@naver.com','밀어서 잠금 해제','삭제된 쪽지내용',to_date('2018-12-24','YYYY-MM-DD'),'D');
-			INSERT INTO MSG VALUES(code('SEQ_MS','MS'),?,?,?,to_date('2018-12-24','YYYY-MM-DD'),'E');*/
 			
 			try {
-				pstmt=con.prepareStatement(query);
-			} catch (SQLException e) {
-				e.printStackTrace();
+				pstmt =con.prepareStatement(query);
+				pstmt.setString(1, userId);
+				pstmt.setString(2, noteTitle);
+				pstmt.setString(3, noteContent);
+
+				insertNoteSend= pstmt.executeUpdate();
+				
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}finally {
+				close(pstmt);
 			}
 			
 			

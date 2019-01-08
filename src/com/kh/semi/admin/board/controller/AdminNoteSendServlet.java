@@ -26,14 +26,17 @@ public class AdminNoteSendServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String noteTitle = request.getParameter("noteTitle");	//제목
-		String noteUser = request.getParameter("noteUser");	//사용자
+		String noteUser = request.getParameter("noteUser");	//입력한 사용자
+	
+		
 		String noteMember = request.getParameter("noteMember");	//등급
+		
 		String noteContent = request.getParameter("noteContent");	//내영
 		
-		System.out.println(noteTitle);
-		System.out.println(noteUser);
-		System.out.println(noteMember);
-		System.out.println(noteContent);
+		System.out.println("noteTitle"+noteTitle);
+		System.out.println("noteUser"+noteUser);
+		System.out.println("noteMember"+noteMember);
+		System.out.println("noteContent"+noteContent);
 		
 		int cnt=0;
 		//등급이 몇명인지 가져오기
@@ -42,10 +45,11 @@ public class AdminNoteSendServlet extends HttpServlet {
 		}
 
 		//등급일시 해당 등급 userId 가져오깅
-	//	ArrayList<Msg> msg
+		ArrayList<Msg> userClass = new AdminBoardService().selectAdminUserClass(noteUser,noteMember);
+		System.out.println("가졍오닝?"+userClass);
 		
 		//회원수만큼  쪽지 insert!
-		int insertNoteSend = new AdminBoardService().insertAdminNoteSend(noteTitle,noteUser,noteMember,noteContent,cnt);
+		int insertNoteSend = new AdminBoardService().insertAdminNoteSend(noteTitle,noteUser,noteMember,noteContent,cnt,userClass);
 		
 	}
 
