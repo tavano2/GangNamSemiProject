@@ -59,5 +59,13 @@ public class CateService {
       return result;
    }
 
+public ArrayList<Category> selectCategoryCustomer() {
+	 Connection con = getConnection();
+     ArrayList<Category> list = new CategoryDao().selectCategoryCustomer(con);
+     close(con);
+     
+     return list;
+}
+
    
 }

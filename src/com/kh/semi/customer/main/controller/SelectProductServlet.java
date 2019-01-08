@@ -1,4 +1,4 @@
-package com.kh.semi.customer.member.controller;
+package com.kh.semi.customer.main.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,25 +10,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.kh.semi.admin.product.model.service.CateService;
-import com.kh.semi.admin.product.model.vo.Category;
+import com.kh.semi.customer.main.model.service.ProductService;
+import com.kh.semi.customer.main.model.vo.Product;
 
-@WebServlet("/selectCategory.main")
-public class SelectCategoryServlet extends HttpServlet {
+@WebServlet("/selectProduct.main")
+public class SelectProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectCategoryServlet() {
+    public SelectProductServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Category> list = new CateService().selectCategoryCustomer();
+		String middleCode = request.getParameter("middleCode");
 		
-		if(list != null ) {
-			response.setContentType("application/json");
-			new Gson().toJson(list, response.getWriter());
+		ArrayList<Product> list = new ProductService().selectProduct(middleCode);
+		
+		String page = "";
+		if(list != null) {
+			request.setAttribute("list", list);
+			page = "views/customer/member/category.jsp";
 		}
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
