@@ -259,7 +259,12 @@
 			cartList.submit();
 		}
 		
-		
+		$(function(){
+			$("#dataTable tr").click(function(){
+				var chkbox = $(this).find("input:checkbox");
+				$(chkbox).attr("checked", !chkbox.is(':checked'));
+			});
+		});
 	</script>
 
 	<%
