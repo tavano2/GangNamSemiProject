@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.kh.semi.customer.main.model.service.ProductService;
 import com.kh.semi.customer.main.model.vo.Product;
 
@@ -22,17 +23,20 @@ public class SelectProductServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("utf-8");
+		
 		String middleCode = request.getParameter("middleCode");
+		ArrayList<Product> list = null;
 		
-		ArrayList<Product> list = new ProductService().selectProduct(middleCode);
-		
-		String page = "";
-		if(list != null) {
-			request.setAttribute("list", list);
-			page = "views/customer/member/category.jsp";
+		if(middleCode.equals("null")) {
+			list = new ProductService().selectAllProduct();
+		}else {
+			list = new ProductService().selectProduct(middleCode);
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
+		
+		
+		response.setContentType("application/json");
+		new Gson().toJson(list, response.getWriter());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

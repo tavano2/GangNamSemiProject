@@ -156,7 +156,7 @@
       						$div1.append($i);
 	      					for(var key2 in data){
 	      						if(data[key2].cateLevel == 1 && data[key2].cateRefCode == data[key1].cateCode){
-				      				var $a = $("<a class='item' name='middleCate' href='<%=request.getContextPath()%>/views/customer/member/category.jsp?categ=" + data[key2].cateCode + "'>");
+				      				var $a = $("<a class='item' name='middleCate' href='<%=request.getContextPath()%>/index.jsp?categ=" + data[key2].cateCode + "'>");
 				      				var $input = $("<input type='hidden' value='"+ data[key2].cateCode +"' name='middleCode'>");
 				      				$div1.append($input);
 	      							$div2.append($a.text(data[key2].cateName));
