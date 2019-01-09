@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.semi.customer.board.model.service.NoticeService;
-import com.kh.semi.customer.board.model.vo.Notice;
+import com.kh.semi.customer.board.model.service.BoardService;
+import com.kh.semi.customer.board.model.vo.Board;
 
 /**
  * Servlet implementation class SelectNoticeBoardServlet
  */
-@WebServlet("/selectNoticeBoard.bo") // 게시글 상세보기 ( * 공지사항이므로 [ 수정 / 삭제 ] 권한 관리자에게만 부여. )
+@WebServlet("/selectNoticeBoard.bo") // 게시글 상세보기
 public class SelectNoticeBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,7 +33,7 @@ public class SelectNoticeBoardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String num = request.getParameter("num");
 		
-		Notice n = new NoticeService().selectOne(num);
+		Board  n = new BoardService().selectOne(num);
 		
 		String page = "";
 		if(n != null) {
