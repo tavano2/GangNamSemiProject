@@ -13,6 +13,7 @@
     <!-- Admin Common CSS -->
     <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
     
+    
 <style>
    .productAddBtn{
       text-align:center;
@@ -27,6 +28,7 @@
 </head>
 
 <body>
+
    
    <!-- 사이드바 메뉴 -->
     <%@ include file = "/views/admin/common/adminSidebarProduct.jsp" %>
@@ -52,19 +54,9 @@
                     <td>
                        <table class="ui celled table first-col">
                           <tr>
-                             <td>
-                                <div class="ui fitted checkbox">
-                                          <input type="checkbox" name="example"><label></label>
-                                      </div>
-                                   </td>
                                    <td>옵션명</td>
                           </tr>
                           <tr>
-                             <td>
-                                <div class="ui fitted checkbox">
-                                          <input type="checkbox" name="example"><label></label>
-                                      </div>
-                             </td>
                              <td>
                                 <input type="text" id="optionName">&nbsp;&nbsp;
                              </td>
@@ -86,7 +78,8 @@
        <%@ include file = "/views/admin/common/adminFooter.jsp" %>
     </div>
 
-
+	<!-- alert CDN -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- J-query CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
@@ -114,6 +107,18 @@
     function cancelBtn(){
     	location.href="<%=request.getContextPath()%>/views/admin/product/adminOptionManagement.jsp";
     }
+    function issueSuccess(){
+		swal("옵션 등록 성공!", "확인 버튼을 눌러주세요.", "success")
+		.then((value) => {	
+			  location.reload();		
+		});
+	}
+    function issueFail(){
+		swal("옵션 등록 실패!", "확인 버튼을 눌러주세요.", "success")
+		.then((value) => {	
+			  location.reload();		
+		});
+	}
     
     $(function(){
     	$("#insertBtn").click(function(){
@@ -124,11 +129,11 @@
     			data:{optionName : optionName},
     			type:"post",
     			success:function(data){
-    				console.log("성공")
+					issueSuccess();
     				$("#optionName").val("");
     			},
     			error:function(){
-    				console.log("실패");
+					issueFail();
     			}
     		});
     	});

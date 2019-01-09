@@ -255,6 +255,8 @@
     </div>
 
 
+	<!-- alert CDN -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- J-query CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
@@ -433,6 +435,16 @@
 			reader.readAsDataURL(value.files[0]);
 		}
 	}
+	
+	
+	
+	function issueSuccess(){
+		swal("상품 등록 성공!", "확인 버튼을 눌러주세요.", "success")
+		.then((value) => {	
+			  location.reload();		
+		});
+	}
+	
 	
 	function addProduct(){
 		$("#addForm").submit();

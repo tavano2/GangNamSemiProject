@@ -167,4 +167,53 @@ public class ProductDao {
 		}
 		return list;
 	}
+
+	public ArrayList<Product> selectSearchProduct(Connection con, String search,String orderBy) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> list = null;
+		String query = "";
+		
+		if(orderBy.equals("0")) {
+			query = prop.getProperty("selectSearchNewProduct");
+		} else if(orderBy.equals("2")) {
+			query = prop.getProperty("selectSearchLowProduct");
+		} else if(orderBy.equals("3")) {
+			query = prop.getProperty("selectSearchHighProduct");
+		} else if(orderBy.equals("4")) {
+			query = prop.getProperty("selectSearchNameProduct");
+		} else {
+			query = prop.getProperty("selectSearchProduct");
+		}
+		
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, search);
+			pstmt.setString(2, search);
+			rset = pstmt.executeQuery();
+			
+			if(rset != null) {
+				list = new ArrayList<Product>();
+				while(rset.next()) {
+					Product pro = new Product();
+					pro.setProductCode(rset.getString("PRODUCT_CODE"));
+					pro.setProductName(rset.getString("PRODUCT_NAME"));
+					pro.setProductPrice(rset.getInt("PRODUCT_PRICE"));
+					pro.setProductMemo(rset.getString("PRODUCT_MEMO"));
+					pro.setBestStatus(rset.getString("BEST_STATUS"));
+					pro.setChangeName(rset.getString("CHANGE_NAME"));
+					
+					list.add(pro);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		return list;
+		
+	}
 }

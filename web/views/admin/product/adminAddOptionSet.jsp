@@ -141,6 +141,8 @@
     </div>
 
 
+	<!-- alert CDN -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- J-query CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
@@ -170,7 +172,19 @@
 	var submitName = "";
 	var num1 = "";
 	var name1 = "";
-    
+	
+	function issueSuccess(){
+		swal("옵션세트 등록 성공!", "확인 버튼을 눌러주세요.", "success")
+		.then((value) => {	
+			  location.reload();		
+		});
+	}
+	function issueFail(){
+		swal("옵션세트 등록 실패!", "확인 버튼을 눌러주세요.", "success")
+		.then((value) => {	
+			  location.reload();		
+		});
+	}
 	
 	// 옵션 전체조회
     $(function(){
@@ -205,7 +219,7 @@
     		    	});
     			},
     			error:function(){
-    				console.log("실패");
+					issueFail();
     			}
     		});
     	});
@@ -293,6 +307,8 @@
     			data:{optionSetMemo : optionSetMemo , submitNum1 : submitNum1 , submitName1 : submitName1},
     			type:"post",
     			success:function(data){
+    				issueSuccess();
+    				
     				console.log("성공");
     			},
     			error:function(){
