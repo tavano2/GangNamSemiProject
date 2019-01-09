@@ -186,7 +186,7 @@
 								<td class="cuponTd">발급대상</td>
 								<td>
 									<div class="ui input focus" id="cuponBoxcontent">
-										<input type="text" id="issuedObject">
+										<input type="text" id="issuedObject" disabled="disabled" readonly="readonly">
 									</div>
 								</td>
 							</tr>

@@ -314,7 +314,8 @@ span {
 										type:"get",
 										data:{productArr:productArr,couponName:$("#couponName").val(),couponExp:$("#couponExp").val(),discountMethod:$("div[name=discountMethod]").html(),couponDiscount:$("#couponDiscount").val(),couponDate:$("#couponDate").val()},
 										success:function(data){
-											if(data>1){
+											console.log(data);
+											if(data>0){
 												insertSeccess();
 											}else{
 												insertFail();

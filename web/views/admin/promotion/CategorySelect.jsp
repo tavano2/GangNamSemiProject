@@ -14,6 +14,9 @@
 <!-- Admin Common CSS -->
 <link rel="stylesheet" href="/semi/css/admin/common/adminMain.css">
 
+<!-- alert CDN -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 <style>
 .first-col td:first-child {
@@ -189,7 +192,7 @@
 						 }else{
 							 var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
 								var $smallCateg = $("#smallCateg");
-								$smallCateg.append($div);
+								//$smallCateg.append($div);
 						 }	 					
 					} 
 				},
@@ -223,13 +226,21 @@
 			});
 
 			$("#addCategBtn").click(function() {
-				$tbody = $("#addCateg");
-				$tr = $("<tr align='center'>");
-				$td1 = $("<td>");
-				$td2 = $("<td>");
-				$tr.append($td1.text($("#selectBigCateg").val()));
-				$tr.append($td2.text($("#selectMiddleCateg").val()))
-				$tbody.append($tr);
+				if(!($("#selectBigCateg").val()=="")){
+					if(!($("#selectMiddleCateg").val()=="")){
+						$tbody = $("#addCateg");
+						$tr = $("<tr align='center'>");
+						$td1 = $("<td>");
+						$td2 = $("<td>");
+						$tr.append($td1.text($("#selectBigCateg").val()));
+						$tr.append($td2.text($("#selectMiddleCateg").val()))
+						$tbody.append($tr);
+					}else{
+						swal("중분류를 추가해주세요!");
+					}			
+				}else{
+					swal("대분류를 추가해주세요!");
+				}		
 			});
 		})
 
