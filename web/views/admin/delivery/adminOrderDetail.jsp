@@ -113,7 +113,7 @@
 		                                        <div class="item" data-value="3" onclick="changeStateBtn(this);">환불완료</div>
 		                                    </div>
 	                                    </div>
-	                                	<button class="ui basic black button" type="button" onclick="">환불</button>
+	                                	<button class="ui basic black button" type="button" onclick="location.href='https://admin.iamport.kr/'">환불</button>
 	                                </div>
                                 </div>
                             </th></tr>
