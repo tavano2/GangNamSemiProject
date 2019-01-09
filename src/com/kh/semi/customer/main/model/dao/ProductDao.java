@@ -29,11 +29,23 @@ public class ProductDao {
 	      }
 	   }
 
-	public ArrayList<Product> selectProduct(Connection con, String middleCode) {
+	public ArrayList<Product> selectProduct(Connection con, String middleCode, String orderBy) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Product> list = null;
-		String query = prop.getProperty("selectProduct");
+		String query = "";
+		
+		if(orderBy.equals("0")) {
+			query = prop.getProperty("selectNewProduct");
+		} else if(orderBy.equals("2")) {
+			query = prop.getProperty("selectLowProduct");
+		} else if(orderBy.equals("3")) {
+			query = prop.getProperty("selectHighProduct");
+		} else if(orderBy.equals("4")) {
+			query = prop.getProperty("selectNameProduct");
+		} else {
+			query = prop.getProperty("selectProduct");
+		}
 		
 		try {
 			pstmt = con.prepareStatement(query);
@@ -66,11 +78,23 @@ public class ProductDao {
 		return list;
 	}
 
-	public ArrayList<Product> selectAllProduct(Connection con) {
+	public ArrayList<Product> selectAllProduct(Connection con, String orderBy) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Product> list = null;
-		String query = prop.getProperty("selectAllProduct");
+		String query = "";
+		
+		if(orderBy.equals("0")) {
+			query = prop.getProperty("selectAllNewProduct");
+		} else if(orderBy.equals("2")) {
+			query = prop.getProperty("selectAllLowProduct");
+		} else if(orderBy.equals("3")) {
+			query = prop.getProperty("selectAllHighProduct");
+		} else if(orderBy.equals("4")) {
+			query = prop.getProperty("selectAllNameProduct");
+		} else {
+			query = prop.getProperty("selectAllProduct");
+		}
 		
 		try {
 			pstmt = con.prepareStatement(query);
@@ -99,11 +123,23 @@ public class ProductDao {
 		return list;
 	}
 
-	public ArrayList<Product> selectBestProduct(Connection con) {
+	public ArrayList<Product> selectBestProduct(Connection con, String orderBy) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Product> list = null;
-		String query = prop.getProperty("selectBestProduct");
+		String query = "";
+		
+		if(orderBy.equals("0")) {
+			query = prop.getProperty("selectBestNewProduct");
+		} else if(orderBy.equals("2")) {
+			query = prop.getProperty("selectBestLowProduct");
+		} else if(orderBy.equals("3")) {
+			query = prop.getProperty("selectBestHighProduct");
+		} else if(orderBy.equals("4")) {
+			query = prop.getProperty("selectBestNameProduct");
+		} else {
+			query = prop.getProperty("selectBestProduct");
+		}
 		
 		try {
 			pstmt = con.prepareStatement(query);

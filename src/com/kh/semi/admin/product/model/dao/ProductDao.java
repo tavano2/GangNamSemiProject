@@ -75,7 +75,6 @@ public class ProductDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("insertAttachment");
-		
 		try {
 			for(int i = 0; i < fileList.size(); i++) {
 				int level = 0;
