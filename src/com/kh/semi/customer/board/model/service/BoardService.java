@@ -345,7 +345,7 @@ public class BoardService {
 	}
 
 	// 공지사항 게시판 : 전체 게시글 조회
-	public ArrayList<Board> selectList() {
+	public ArrayList<Board> selectNoticeList() {
 		Connection con = getConnection();
 		
 		ArrayList<Board> list = new BoardDao().selectList(con);

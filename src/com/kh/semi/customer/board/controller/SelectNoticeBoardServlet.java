@@ -15,7 +15,7 @@ import com.kh.semi.customer.board.model.vo.Board;
 /**
  * Servlet implementation class SelectNoticeBoardServlet
  */
-@WebServlet("/selectNoticeBoard.bo") // 게시글 상세보기 ( * 공지사항이므로 [ 수정 / 삭제 ] 권한 관리자에게만 부여. )
+@WebServlet("/selectNoticeBoard.bo") // 게시글 상세보기
 public class SelectNoticeBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

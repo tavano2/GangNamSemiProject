@@ -14,26 +14,21 @@ import com.kh.semi.customer.board.model.service.BoardService;
 import com.kh.semi.customer.board.model.vo.Board;
 
 
-/**
- * Servlet implementation class SelectNoticeBoardList
- */
+
 @WebServlet("/selectNoticeList.bo") // 공지사항 게시판 조회
 public class SelectNoticeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public SelectNoticeListServlet() { 
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Board> list = new BoardService().selectList();
+		
+		ArrayList<Board> list = new BoardService().selectNoticeList();
 		
 		System.out.println("controller : " + list);
 		
@@ -52,11 +47,9 @@ public class SelectNoticeListServlet extends HttpServlet {
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		doGet(request, response);
 	}
 
