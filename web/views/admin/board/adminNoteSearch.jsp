@@ -152,9 +152,9 @@
 					<!-- 검색 결과 테이블 -->
 					<thead>
 						<tr>
-							<th colspan="9">
+							<!-- <th colspan="9">
 								<div class="ui selection dropdown">
-									<!-- <input type="hidden" name="gender"> -->
+									<input type="hidden" name="gender">
 									<i class="dropdown icon"></i>
 									<div class="default text">10개씩보기</div>
 									<div class="menu">
@@ -164,7 +164,7 @@
 										<div class="item" data-value="3">100개씩 보기</div>
 									</div>
 								</div>
-							</th>
+							</th> -->
 						</tr>
 						<tr>
 							<th></th>

@@ -182,12 +182,12 @@
 				<table class="ui celled table order-result">
 					<!-- 검색 결과 테이블 -->
 					<thead>
-						<tr>
+						<!-- <tr>
 							<th colspan="9">
 								<button class="ui black button">스팸 신고</button>
 								<button class="ui black button">스팸 해제</button>
 							</th>
-						</tr>
+						</tr> -->
 						<tr>
 							<th></th>
 							<th>번호</th>
