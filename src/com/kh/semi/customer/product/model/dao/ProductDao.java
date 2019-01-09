@@ -1027,13 +1027,14 @@ public class ProductDao {
 			try {
 				pstmt=con.prepareStatement(query);
 				pstmt.setInt(1, fileList.get(i).getBoardId());
-				pstmt.setString(2, fileList.get(i).getOriginName());
-				pstmt.setString(3, fileList.get(i).getChangeName());
-				pstmt.setString(4, fileList.get(i).getFilePath());
-				System.out.println(fileList.size());
+				pstmt.setString(2, fileList.get(i).getProductCode());
+				pstmt.setString(3, fileList.get(i).getOriginName());
+				pstmt.setString(4, fileList.get(i).getChangeName());
+				pstmt.setString(5, fileList.get(i).getFilePath());
+				/*System.out.println(fileList.size());
 				System.out.println(fileList.get(i).getOriginName());
 				System.out.println(fileList.get(i).getChangeName());
-				System.out.println(fileList.get(i).getFilePath());
+				System.out.println(fileList.get(i).getFilePath());*/
 				result += pstmt.executeUpdate();
 			} catch (SQLException e) {
 
