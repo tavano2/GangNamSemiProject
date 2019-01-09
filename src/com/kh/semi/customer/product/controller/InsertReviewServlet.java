@@ -94,7 +94,7 @@ public class InsertReviewServlet extends HttpServlet {
 			
 			String page="";
 			if(result[0]>0) {
-				response.sendRedirect(request.getContextPath()+"/selectReview.pd?reviewRum="+result[1]+"&code="+productCode);
+				response.sendRedirect(request.getContextPath()+"/selectReview.pd?reviewRum="+result[1]+"&productCode="+productCode);
 				
 			}else {
 				for(int i=0; i<saveFiles.size();i++) {
