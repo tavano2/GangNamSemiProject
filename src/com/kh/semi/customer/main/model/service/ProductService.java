@@ -33,4 +33,12 @@ public class ProductService {
 		return list;
 	}
 
+	public ArrayList<Product> SelectSearchProduct(String search,String val) {
+		Connection con = getConnection();
+		ArrayList<Product> list = new ProductDao().selectSearchProduct(con,search,val);
+		close(con);
+		
+		return list;
+	}
+
 }

@@ -103,8 +103,10 @@ public class InsertProductServlet extends HttpServlet {
 			System.out.println(fileList.size());
 			
 			int result = new ProductService().insertProductOption(fileList,fileList.get(0),optionCode);
-					
+			
+			System.out.println(result);
 			if(result > 0) {
+				request.setAttribute("result", result);
 				response.sendRedirect(request.getContextPath()+"/selectCateInProduct.product");
 			}
 		}

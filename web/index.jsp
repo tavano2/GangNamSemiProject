@@ -137,6 +137,8 @@
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
 
 
+	<!-- alert CDN -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- J-query CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
@@ -288,7 +290,7 @@
 	   				for(var key1 in data){
 	   					if(ref == data[key1].cateCode){
 	       					$("#bigCateName").text(data[key1].cateName);
-	    					var $div3 = $("<div class='ui celled horizontal list' id='product-list'>");
+	    					var $div3 = $("#product-list");
 	       					for(var key2 in data){
 	       						if(data[key2].cateLevel == 1 && data[key2].cateRefCode == data[key1].cateCode){
 	       							
@@ -312,7 +314,6 @@
 					
 					// 메뉴바 상품리스트
 					$("a[name=menuList]").click(function(){
-			    		console.log("d");
 			    		middleCode = $(this).children("input").val();
 				    	$.ajax({
 				    		url:"/semi/selectProduct.main",
@@ -371,7 +372,118 @@
 	   				console.log("실패");
 	   			}
 	   		});
+	    	
+	    	// 상품검색
+	    	$("#searchBtn").click(function(){
+	    		var searchProduct = $("input[name=searchProduct]").val();
+	    		$.ajax({
+	    			url:"/semi/selectSearchProduct.main",
+	    			type:"post",
+	    			data:{searchProduct : searchProduct , val : "1"},
+	    			success:function(data){
+	    				var $showProduct = $("#showProduct");
+		    			var $productCount = $("#productCount");
+		    			$showProduct.html('');
+		    			for(var key in data){
+		    				var $div1 = $("<div class='four wide column'>");
+		    				var $div2 = $("<div name='movedetailPage'>");
+		    				var $a1 = $("<a href='<%=request.getContextPath()%>/reviewNoticeList.no?code="+ data[key].productCode +"'>");
+		    				var $img = $("<img class='ui medium image' src='<%=request.getContextPath()%>/image/customer/product/"+ data[key].changeName +"'>");
+		    				var $br = $("<br>");
+		    				var $br1 = $("<br>");
+
+		    				$a1.append($img);
+		    				$div2.append($a1);
+		    				$div1.append($div2);
+		    				$div1.append($br);
+		    				if(data[key].bestStatus == 'E'){
+			    				var $a2 = $("<a class='ui brown label'>").text("BEST");
+		    					$div1.append($a2);
+		    					$div1.append($br);
+		    				}
+		    				var $hr = $("<hr class='productHr'>");
+		    				var $span1 = $("<span class='productTitle'>").text(data[key].productName);
+		    				var $span2 = $("<span class='won'>");
+		    				var $span3 = $("<span class='productPrice'>").text(numComma(data[key].productPrice)+" won");
+		    				var $span4 = $("<span class='productDetail'>").text(data[key].productMemo);
+		    				
+		    				$span2.append($span3);
+		    				$div1.append($hr);
+		    				$div1.append($span1);
+		    				$div1.append($br1);
+		    				$div1.append($span2);
+		    				$div1.append($br);
+		    				$div1.append($span4);
+		    				$showProduct.append($div1);
+		    			}
+		    			$("#productCount").text(data.length);
+		    			$("#bigCateName").text("'"+searchProduct+"' 에 대한 검색 결과 입니다.");
+		    			$("#product-list").html('');
+		    			
+		    			$("a[name=orderBy]").click(function(){
+		    	    		val = $(this).children("input").val();
+		    	    		console.log(val);
+		    		    	$.ajax({
+		    		    		url:"/semi/selectSearchProduct.main",
+		    		    		type:"post",
+		    		    		data:{searchProduct : searchProduct , val : val},
+		    		    		success:function(data){
+		    		    			var $showProduct = $("#showProduct");
+		    		    			var $productCount = $("#productCount");
+		    		    			$showProduct.html('');
+		    		    			for(var key in data){
+		    		    				var $div1 = $("<div class='four wide column'>");
+		    		    				var $div2 = $("<div name='movedetailPage'>");
+		    		    				var $a1 = $("<a href='<%=request.getContextPath()%>/reviewNoticeList.no?code="+ data[key].productCode +"'>");
+		    		    				var $img = $("<img class='ui medium image' src='<%=request.getContextPath()%>/image/customer/product/"+ data[key].changeName +"'>");
+		    		    				var $br = $("<br>");
+		    		    				var $br1 = $("<br>");
+
+		    		    				$a1.append($img);
+		    		    				$div2.append($a1);
+		    		    				$div1.append($div2);
+		    		    				$div1.append($br);
+		    		    				if(data[key].bestStatus == 'E'){
+		    			    				var $a2 = $("<a class='ui brown label'>").text("BEST");
+		    		    					$div1.append($a2);
+		    		    					$div1.append($br);
+		    		    				}
+		    		    				var $hr = $("<hr class='productHr'>");
+		    		    				var $span1 = $("<span class='productTitle'>").text(data[key].productName);
+		    		    				var $span2 = $("<span class='won'>");
+		    		    				var $span3 = $("<span class='productPrice'>").text(data[key].productPrice+" won");
+		    		    				var $span4 = $("<span class='productDetail'>").text(data[key].productMemo);
+		    		    				
+		    		    				$span2.append($span3);
+		    		    				$div1.append($hr);
+		    		    				$div1.append($span1);
+		    		    				$div1.append($br1);
+		    		    				$div1.append($span2);
+		    		    				$div1.append($br);
+		    		    				$div1.append($span4);
+		    		    				$showProduct.append($div1);
+		    		    			}
+		    		    		},
+		    		    		error:function(){
+		    		    			console.log("실패");
+		    		    		}
+		    		    	});
+
+		    	    	});
+	    			},
+	    			error:function(){
+						issueFail();
+	    			}
+	    		});
+	    	});
     	});
+    	
+    	function issueFail(){
+    		swal("상품 검색 실패!", "확인 버튼을 눌러주세요.", "success")
+    		.then((value) => {	
+    			  location.reload();		
+    		});
+    	}
     		
     </script>
 </body>
