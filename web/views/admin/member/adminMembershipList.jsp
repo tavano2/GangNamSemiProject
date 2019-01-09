@@ -166,6 +166,7 @@
 	                    			<td class="standardPrice"><%= comma(uc.getStandardPrice()) %></td>
 	                    			<td><%= uc.getMemberCount() %></td>
 	                    			<td>
+	                    				<%if(!uc.getClassName().equals("ADMIN")){ %>
 	                    				<% if(uc.getStatus().equals("E")) {%>
 	                    				<div class="ui mini compact icon button" onclick="changeClassStatus(this, '<%= uc.getClassCode()  %>', '<%= uc.getStatus() %>'); return false;"><i class="check icon"></i></div>
 	                    				<%} else { %>
@@ -174,7 +175,7 @@
 	                    					<div class="ui mini compact icon button" onclick="changeMemberClass('<%= uc.getClassCode()  %>'); return false;"><i class="exchange icon"></i></div>
 	                    					<%} else {%>
 	                    					<div class="ui mini compact icon button" onclick="deleteClass('<%= uc.getClassCode()  %>'); return false;"><i class="cut icon"></i></div>
-	                    				<%}} %>
+	                    				<%}}} %>
 	                    			</td>
 	                    		</tr>
 	                    	<%} %>
