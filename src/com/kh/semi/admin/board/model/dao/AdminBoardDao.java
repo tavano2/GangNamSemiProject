@@ -104,7 +104,61 @@ public class AdminBoardDao {
 		public ArrayList<AdminPostManagement> adminPostSearch(Connection con, String boardSelect, String spanSelect,
 				String titleSelect, String contentSearch, String replyStatus, Date startDate, Date endDate) {
 
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			ArrayList<AdminPostManagement> PostSearchList = null;
+			AdminPostManagement postSearch=null;
+			
+			String query = prop.getProperty("adminPostSearch");
+			
+			try {
+				pstmt=con.prepareStatement(query);
+				pstmt.setString(1, boardSelect);
+				pstmt.setString(2, spanSelect);
+				pstmt.setString(3, contentSearch);
+				pstmt.setString(4, contentSearch);
+				pstmt.setString(5, contentSearch);
+				pstmt.setString(6, contentSearch);
+				pstmt.setString(7, contentSearch);
+				pstmt.setString(8, replyStatus);
+				pstmt.setDate(9, startDate);
+				pstmt.setDate(10, endDate);
+				
+				rset=pstmt.executeQuery();
+				
+				PostSearchList = new ArrayList<AdminPostManagement>();
+				
+				while(rset.next()) {
+					postSearch = new AdminPostManagement();
+					postSearch.setBoardId(rset.getInt("BOARD_ID"));
+					postSearch.setBoardType(rset.getInt("BOARD_TYPE"));
+					postSearch.setBoardNum(rset.getInt("BOARD_NUM"));
+					postSearch.setBoardTitle(rset.getString("BOARD_TITLE"));
+					postSearch.setBoardContent(rset.getString("BOARD_CONTENT"));
+					postSearch.setUserId(rset.getString("USER_ID"));
+					postSearch.setModifyDate(rset.getDate("MODIFY_DATE"));
+					postSearch.setReplyStatus(rset.getString("REPLY_STATUS"));
+					postSearch.setUserPoint(rset.getInt("USER_POINT"));
+					postSearch.setStatus(rset.getString("STATUS"));
+					postSearch.setProductQcode(rset.getString("PRODUCT_RCODE"));
+					postSearch.setProductRcode(rset.getString("PRODUCT_QCODE"));
+					
+					PostSearchList.add(postSearch);
+				}
 
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rset);
+			}
+			
+			
+			return PostSearchList;
+			
+		}
+		
+/*
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			ArrayList<AdminPostManagement> PostSearchList = null;
@@ -174,8 +228,8 @@ public class AdminBoardDao {
 			
 			
 			
-			return PostSearchList;
-		}
+			return PostSearchList;*/
+		
 		//등급이 몇명인지 가져오기
 		public int adminNoteSend(Connection con, String noteMember) {
 			PreparedStatement pstmt = null;

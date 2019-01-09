@@ -42,13 +42,15 @@ public class AdminPostManagementServlet extends HttpServlet {
 		Date startDate =new Date(new GregorianCalendar(Integer.parseInt(startDateArr[0]), Integer.parseInt(startDateArr[1])-1, Integer.parseInt(startDateArr[2])).getTimeInMillis());
 		Date endDate = new Date(new GregorianCalendar(Integer.parseInt(endDateArr[0]),Integer.parseInt(endDateArr[1])-1,Integer.parseInt(endDateArr[2])).getTimeInMillis());
 		
+		/*System.out.println("==================");
 		System.out.println(BoardSelect+" : BoardSelect");
 		System.out.println(spanSelect+" : spanSelect");
 		System.out.println(TitleSelect+" : TitleSelect");
 		System.out.println(contentSearch+" : contentSearch");
 		System.out.println(replyStatus+" : replyStatus");
-		System.out.println(startDate);
-		System.out.println(endDate);
+		System.out.println(startDate+" : startDate");
+		System.out.println(endDate+" : endDate");
+		System.out.println("==================");*/
 		
 		ArrayList<AdminPostManagement> PostSearchList = 
 				new AdminBoardService().adminPostSearch(BoardSelect,spanSelect,TitleSelect,
