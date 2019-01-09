@@ -85,13 +85,14 @@ public class UserMyBoardReviewListServlet extends HttpServlet {
 		}
 		
 		//내가 리스트로 담은 해쉬맵 제이슨으로 변환
+		response.setCharacterEncoding("UTF-8");
 		if(reviewList != null) {
 			reviewListJson = new JSONArray();
 			for(HashMap<String, Object> hmaps : reviewList) {
 				reviewHashMap = new JSONObject();
 				reviewHashMap.put("board_id", hmaps.get("board_id"));
 				reviewHashMap.put("board_num", hmaps.get("board_num"));
-				reviewHashMap.put("board_title", URLEncoder.encode((String)hmaps.get("board_title"), "utf-8"));
+				reviewHashMap.put("board_title", URLEncoder.encode((String)hmaps.get("board_title"), "UTF-8").replace("+", " "));
 				reviewHashMap.put("board_content", URLEncoder.encode((String)hmaps.get("board_content"), "utf-8"));
 				reviewHashMap.put("user_id", URLEncoder.encode((String)hmaps.get("user_id"), "utf-8"));
 				reviewHashMap.put("board_date", URLEncoder.encode(((Date)hmaps.get("board_date")).toString(), "utf-8"));
@@ -112,7 +113,7 @@ public class UserMyBoardReviewListServlet extends HttpServlet {
 		
 		
 		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
+		
 		PrintWriter out = response.getWriter();
 		out.print(result.toJSONString());
 		out.flush();
