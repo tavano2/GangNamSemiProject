@@ -46,7 +46,7 @@ public class NoticeService {
 		int result = 0;
 		
 		if(n != null) {
-			result = new NoticeDao().updateCount(con, n.getNno());
+			result = new NoticeDao().updateCount(con, n.getNno());//get"Nno"->*
 			if(result > 0) commit(con);
 			else rollback(con);
 		}
