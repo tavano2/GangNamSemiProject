@@ -92,6 +92,9 @@
 	.label{
 		color:black !important;
 	}
+	#bigCateName{
+		font-size:20px;
+	}
 </style>
 </head>
 
@@ -99,7 +102,7 @@
 	<%@ include file="/views/customer/common/mainNav.jsp"%>
   
 	<div class="content" align="center">
-		COUPLE<br><br>
+		<span id="bigCateName"></span><br><br>
 		<div class="ui celled horizontal list" id="product-list">
 		  <div class="item"><a href="#">TEE</a></div>
 		  <div class="item"><a href="#">SHIRT</a></div>
@@ -111,7 +114,7 @@
 		 <div class="jumbotron text-left" id="customer-product">
 		 <hr class="productHr">
 		 	<div id="total-item">
-		 		Total <span style="color:black;">??</span> items
+		 		Total <span style="color:black;" id="productCount">??</span> items
 		 	</div>
 		 	<div id="orderBy">
 			 	<div class="ui celled horizontal list" id="orderByItems">
@@ -162,6 +165,7 @@
     
     	$(function(){
 	    	var middleCode = "<%=request.getParameter("categ")%>";
+	    	var bigName = "<%=request.getParameter("bigName")%>"
 	    	
 	    	$.ajax({
 	    		url:"/semi/selectProduct.main",
@@ -169,6 +173,7 @@
 	    		data:{middleCode : middleCode},
 	    		success:function(data){
 	    			var $showProduct = $("#showProduct");
+	    			var $productCount = $("#productCount");
 	    			for(var key in data){
 	    				var $div1 = $("<div class='four wide column'>");
 	    				var $div2 = $("<div name='movedetailPage'>");
@@ -176,13 +181,13 @@
 	    				var $img = $("<img class='ui medium image' src='<%=request.getContextPath()%>/image/customer/product/"+ data[key].changeName +"'>");
 	    				var $br = $("<br>");
 	    				var $br1 = $("<br>");
-	    				
+
 	    				$a1.append($img);
 	    				$div2.append($a1);
 	    				$div1.append($div2);
 	    				$div1.append($br);
 	    				if(data[key].bestStatus == 'E'){
-		    				var $a2 = $("<a class='ui brown label'>");
+		    				var $a2 = $("<a class='ui brown label'>").text("BEST");
 	    					$div1.append($a2);
 	    					$div1.append($br);
 	    				}
@@ -200,7 +205,18 @@
 	    				$div1.append($br);
 	    				$div1.append($span4);
 	    				$showProduct.append($div1);
+
+	    				 if(middleCode == "null"){
+							$("#bigCateName").text("All");
+						}else if(middleCode == "best"){
+							$("#bigCateName").text("BEST").css({"color":"red"});
+						}else{
+							$("#bigCateName").text(bigName);
+						} 
+	    				
+	    				
 	    			}
+	    			
 	    		},
 	    		error:function(){
 	    			console.log("실패");
@@ -208,7 +224,40 @@
 	    	});
     	});
     		
-    	
+    	/* $.ajax({
+  			url:"/semi/selectCategory.main",
+  			type:"post",
+  			success:function(data2){
+  				for(var key1 in data2){
+  					if(data2[key1].cateLevel == 0){
+      					for(var key2 in data2){
+      						if(data2[key2].cateLevel == 1 && data2[key2].cateRefCode == data2[key1].cateCode){
+      							if(middleCode == "null"){
+      								$("#bigCateName").text("All");
+      							}else if(middleCode == "best"){
+      								$("#bigCateName").text("BEST").css({"color":"red"});
+      							}else{
+      								$("#bigCateName").text(data2[key1].cateName);
+      								
+      								var $div3 = $("<div class='ui celled horizontal list' id='product-list'>");
+      								var $div4 = $("<div class='item'");
+      								var $a3 = $("<a href='#'>");
+      								
+      								$a3.text(data2[key2].cateName);
+      								$div4.append($a3);
+      								$div3.append($div4);
+      								$("#customer-product").before($div3);
+      							} 
+      						}else{
+      							continue;
+      						}
+      					}
+  					}else{ continue; }
+  				}
+  			},
+  			error:function(){
+  			}
+  		}); */
     </script>
 </body>
 

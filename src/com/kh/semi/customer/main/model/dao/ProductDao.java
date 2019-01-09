@@ -50,6 +50,9 @@ public class ProductDao {
 					pro.setProductMemo(rset.getString("PRODUCT_MEMO"));
 					pro.setBestStatus(rset.getString("BEST_STATUS"));
 					pro.setChangeName(rset.getString("CHANGE_NAME"));
+					pro.setCateRefCode(rset.getString("CATEG_REF_CODE"));
+					pro.setCateName(rset.getString("CATEG_NAME"));
+					pro.setCateCode(rset.getString("CATEG_CODE"));
 					
 					list.add(pro);
 				}
@@ -68,6 +71,39 @@ public class ProductDao {
 		ResultSet rset = null;
 		ArrayList<Product> list = null;
 		String query = prop.getProperty("selectAllProduct");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset != null) {
+				list = new ArrayList<Product>();
+				while(rset.next()) {
+					Product pro = new Product();
+					pro.setProductCode(rset.getString("PRODUCT_CODE"));
+					pro.setProductName(rset.getString("PRODUCT_NAME"));
+					pro.setProductPrice(rset.getInt("PRODUCT_PRICE"));
+					pro.setProductMemo(rset.getString("PRODUCT_MEMO"));
+					pro.setBestStatus(rset.getString("BEST_STATUS"));
+					pro.setChangeName(rset.getString("CHANGE_NAME"));
+					
+					list.add(pro);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		return list;
+	}
+
+	public ArrayList<Product> selectBestProduct(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> list = null;
+		String query = prop.getProperty("selectBestProduct");
 		
 		try {
 			pstmt = con.prepareStatement(query);
