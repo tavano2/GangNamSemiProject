@@ -141,23 +141,23 @@
                             <td>상품준비중</td>
                             <td class="center aligned"><input type="text" name="productReady" value="<%= comma(todayWork.get("productReady")) %> 건" readonly></td>
                             <td>취소처리중</td>
-                            <td class="center aligned"><input type="text" name="cancel" value="<%= comma(todayWork.get("deliveryReady")) %> 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="cancel" value="<%= comma(todayWork.get("cancel")) %> 건" readonly></td>
                         </tr>
                         <tr>
                         	<td>배송준비중</td>
-                            <td class="center aligned"><input type="text" name="deliveryReady" value="<%= comma(todayWork.get("deliveryWating")) %> 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="deliveryReady" value="<%= comma(todayWork.get("deliveryReady")) %> 건" readonly></td>
                         	<td>교환처리중</td>
-                            <td class="center aligned"><input type="text" name="exchange" value="<%= comma(todayWork.get("delivering")) %> 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="exchange" value="<%= comma(todayWork.get("exchange")) %> 건" readonly></td>
                         </tr>
                         <tr>
                             <td>배송대기중</td>
-                            <td class="center aligned"><input type="text" name="deliveryWating" value="<%= comma(todayWork.get("cancel")) %> 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="deliveryWating" value="<%= comma(todayWork.get("deliveryWating")) %> 건" readonly></td>
                         	<td>반품처리중</td>
-                            <td class="center aligned"><input type="text" name="returnProd" value="<%= comma(todayWork.get("exchange")) %> 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="returnProd" value="<%= comma(todayWork.get("returnProd")) %> 건" readonly></td>
                         </tr>
                         <tr>
                         	<td>배송중</td>
-                            <td class="center aligned"><input type="text" name="delivering" value="<%= comma(todayWork.get("returnProd")) %> 건" readonly></td>
+                            <td class="center aligned"><input type="text" name="delivering" value="<%= comma(todayWork.get("delivering")) %> 건" readonly></td>
                         	<td>환불처리중</td>
                             <td class="center aligned"><input type="text" name="refund" value="<%= comma(todayWork.get("refund")) %> 건" readonly></td>
                         </tr>
