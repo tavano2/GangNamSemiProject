@@ -388,6 +388,13 @@
 					$tbody.append($tr);
 				} else break;
 			}
+			
+			if(searchResult == 0){
+				var $tr = $("<tr>");
+				var $td1 = $("<td align='center' colspan='12'>").text("검색 결과가 없습니다.");
+				$tr.append($td1);
+				$tbody.append($tr);
+			}
 		}
 		
 		//검색결과 리셋

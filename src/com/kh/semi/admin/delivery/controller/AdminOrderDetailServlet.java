@@ -39,7 +39,8 @@ public class AdminOrderDetailServlet extends HttpServlet {
 		Map<String, Object> hmap = new AdminDeliveryService().getOrderDetail(orderLnum);
 		
 		if(hmap != null) {
-			
+			String uri = request.getParameter("uri");
+			System.out.println(uri);
 			/*for(OrderDetail od : (ArrayList<OrderDetail>)hmap.get("detailList")) {
 				System.out.println(od);
 			}
@@ -86,6 +87,7 @@ public class AdminOrderDetailServlet extends HttpServlet {
 			hmap.put("detailList", detailListChange);
 			
 			request.setAttribute("hmap", hmap);
+			request.setAttribute("uri", uri);
 			request.getRequestDispatcher("/views/admin/delivery/adminOrderDetail.jsp").forward(request, response);
 		} else {
 			request.setAttribute("msg", "주문 상세 페이지 오픈 실패!");

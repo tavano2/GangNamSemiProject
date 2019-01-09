@@ -90,7 +90,7 @@ public class InsertQnAServlet extends HttpServlet {
 				at.setFilePath(filePath);
 				at.setOriginName(orginFiles.get(i));
 				at.setChangeName(saveFiles.get(i));
-				
+				at.setProductCode(productCode);
 				fileList.add(at);
 				}
 			

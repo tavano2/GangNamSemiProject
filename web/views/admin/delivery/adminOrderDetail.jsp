@@ -249,6 +249,10 @@
 				
         		</form>
         		
+       			<div class="ui container center aligned search-btn">
+                    <button class="ui black basic button" onclick="location.href='/semi/adminDeliveryMain.de'">메인으로</button>
+                </div>
+        		
         	</div>
         </div>
 
