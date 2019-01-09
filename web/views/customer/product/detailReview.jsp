@@ -104,7 +104,7 @@
 					
 			<!--  <button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/product/updateReview.jsp';">수정하기</button>
 			&nbsp; -->
-			<button class="ui brown basic mini button" onclick="location.href='/semi/reviewNoticeList.no?code=<%=request.getParameter("productCode") %>'">이전으로</button> 
+			<button class="ui brown basic mini button" onclick="location.href='/semi/reviewNoticeList.no?code=<%=productCode%>'">이전으로</button> 
 			
 			<button class="ui brown basic mini button" onclick="location.href='/semi/deleteReview.pd?code=<%=productCode%>&reviewRum=<%=reviewRum%>'">삭제하기</button> 
 			
