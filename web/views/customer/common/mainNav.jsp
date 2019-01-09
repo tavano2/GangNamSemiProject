@@ -122,7 +122,7 @@
    <!-- 카테고리 네비 -->
         <div class="ui text menu" id="cate_nav">
             <div class="item">
-                <a class="item" style="color: rgb(231, 76, 60)" name="best" id="best"> Best </a>
+                <a class="item" style="color: rgb(231, 76, 60)" name="best" id="best" href="<%=request.getContextPath()%>/index.jsp?categ=best"> Best </a>
             </div>
  
             <div class="right menu" id="menuSearch">
@@ -156,7 +156,7 @@
       						$div1.append($i);
 	      					for(var key2 in data){
 	      						if(data[key2].cateLevel == 1 && data[key2].cateRefCode == data[key1].cateCode){
-				      				var $a = $("<a class='item' name='middleCate' href='<%=request.getContextPath()%>/index.jsp?categ=" + data[key2].cateCode + "'>");
+				      				var $a = $("<a class='item' name='middleCate' href='<%=request.getContextPath()%>/index.jsp?categ=" + data[key2].cateCode + "&bigName="+ data[key1].cateName +"'>");
 				      				var $input = $("<input type='hidden' value='"+ data[key2].cateCode +"' name='middleCode'>");
 				      				$div1.append($input);
 	      							$div2.append($a.text(data[key2].cateName));

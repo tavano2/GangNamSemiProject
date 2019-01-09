@@ -25,4 +25,12 @@ public class ProductService {
 		return list;
 	}
 
+	public ArrayList<Product> selectBestProduct() {
+		Connection con = getConnection();
+		ArrayList<Product> list = new ProductDao().selectBestProduct(con);
+		close(con);
+		
+		return list;
+	}
+
 }

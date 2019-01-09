@@ -30,7 +30,10 @@ public class SelectProductServlet extends HttpServlet {
 		
 		if(middleCode.equals("null")) {
 			list = new ProductService().selectAllProduct();
-		}else {
+		}else if(middleCode.equals("best")) {
+			list = new ProductService().selectBestProduct();
+		}
+		else {
 			list = new ProductService().selectProduct(middleCode);
 		}
 		
