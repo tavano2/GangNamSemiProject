@@ -15,7 +15,7 @@
    ArrayList<ReviewList> reList = (ArrayList<ReviewList>)hmap.get("reList");
    
    String reviewRum = request.getParameter("reviewRum");
-   String productCode=request.getParameter("code");
+   String productCode=request.getParameter("productCode");
 
    %>
 <!DOCTYPE html>
@@ -104,7 +104,7 @@
 					
 			<!--  <button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/product/updateReview.jsp';">수정하기</button>
 			&nbsp; -->
-			<button class="ui brown basic mini button" onclick="location.href='/semi/reviewNoticeList.no?code=<%=request.getParameter("code") %>'">이전으로</button> 
+			<button class="ui brown basic mini button" onclick="location.href='/semi/reviewNoticeList.no?code=<%=request.getParameter("productCode") %>'">이전으로</button> 
 			
 			<button class="ui brown basic mini button" onclick="location.href='/semi/deleteReview.pd?code=<%=productCode%>&reviewRum=<%=reviewRum%>'">삭제하기</button> 
 			
@@ -120,9 +120,7 @@
 
 
    <!-- J-query CDN -->
-   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    <!-- Semantic UI JS CDN -->
    <script
       src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
