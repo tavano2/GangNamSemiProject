@@ -324,6 +324,24 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<!-- 체크박스 널 모달 -->
+<div class="ui basic modal modal7">
+  <div class="ui icon header">
+    <i class="archive icon"></i>
+   	에러!
+  </div>
+  <div class="content">
+    <p>죄송합니다. 신청처리 체크 박스를 확인하셨나요? 재확인 부탁드립니다.</p>
+  </div>
+  <div class="actions">
+    <div class="ui green ok inverted button" id="checkBox">
+      <i class="checkmark icon"></i>
+      확인
+    </div>
+  </div>
+</div>
 
 
 	
@@ -685,6 +703,13 @@
 				if(modalReturnStatus == '상태'){
 					modalReturnStatus = '취소신청';
 				}
+				
+				if(!snameItems.length > 0){
+					$('.modal7').modal('show');
+					return false;
+				}
+				
+				
 				
 				if(modalReturnStatus == '취소신청'){
 					for(var key in snameItems){
