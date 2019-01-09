@@ -10,7 +10,7 @@
 	Product SelectOneQnA = (Product)request.getAttribute("SelectOneQnA");
 	ArrayList<Product> SelectReplyList = (ArrayList<Product>)request.getAttribute("SelectReplyList");
 	ArrayList<Attachment> selectfileList = (ArrayList<Attachment>)request.getAttribute("selectfileList");
-	
+	String productCode = (String)request.getAttribute("productCode");
 	//System.out.print("sdf"+SelectOneQnA);
 
 %>
@@ -80,7 +80,8 @@
 		</div>
 		<br>
 		
-		<form action="<%=request.getContextPath() %>/updateQnA.pd" method="post" encType="multipart/form-data">
+		<form action="<%=request.getContextPath() %>/updateQnA.pd" method="post" encType="multipart/form-data" name="updateQnAForm">
+		<input type="hidden" name="productCode" value="<%= productCode %>">
 		<table class="ui celled table first-col">
 
 		<tbody>
@@ -130,14 +131,15 @@
 					
 					<input type="hidden" name="atstatus" value="n" id="atstatus">
 					<input type="hidden" name="deleteChangeName" value="<%=a.getChangeName() %>">
+					<input type="hidden" name="fildId" value="<%=a.getFileId() %>">
 					<span id="orginAt"><%=a.getOriginName() %></span><button onclick="deleteAt(this); return false;">삭제하기</button>
 					
 					</td>
 				<%}}else{ %>
 					<td>첨부파일</td>
 					<td>
-					<input type="hidden" name="insertAtt" value="y" id="insertAtt">
-					<input type="file" name="file">
+					<input type="hidden" name="insertAtt" value="n" id="insertAtt">
+					<input type="file" name="file" id="file">
 					</td>
 				<%} %>
 				</tr>
@@ -145,7 +147,7 @@
 		</table>
 
 		<div align="center">
-			<button type="submit" class="ui secondary button">등록하기</button>
+			<button class="ui secondary button" onclick="updateBtn(); return false;">등록하기</button>
 			<button type="reset" class="ui button">취소하기</button>
 
 		</div>
@@ -189,7 +191,15 @@
 			$("#atstatus").val("y");
 			$("#orginAt").hide();
 			$(deletebtn).hide();
-			$("#Attd").append($("<input type='file' name='file'>"));
+			$("#Attd").append($("<input type='file' name='file' id='file'>"));
+			$("#Attd").append($("<input type='hidden' name='insertAtt' value='n' id='insertAtt'>"));
+		}
+		
+		function updateBtn(){
+			if($("#file").length > 0 && $("#file").val() != "") {
+				$("#insertAtt").val("y");
+			}
+			updateQnAForm.submit();
 		}
 	
 	</script>

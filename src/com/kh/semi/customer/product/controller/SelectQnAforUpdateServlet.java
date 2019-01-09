@@ -37,6 +37,7 @@ public class SelectQnAforUpdateServlet extends HttpServlet {
 		//System.out.println("num"+num);
 		String pQnABoardId = request.getParameter("pQnABoardId");
 		
+		String productCode = request.getParameter("productCode");
 
 		//System.out.println("pQnABoardId : "+pQnABoardId);
 		//상세페이징 뿌려주깅
@@ -61,6 +62,7 @@ public class SelectQnAforUpdateServlet extends HttpServlet {
 			request.setAttribute("SelectOneQnA", SelectOneQnA);
 			request.setAttribute("SelectReplyList", SelectReplyList);
 			request.setAttribute("selectfileList", selectfileList);
+			request.setAttribute("productCode", productCode);
 		}else {
 			page="views/customer/common/errorPage.jsp";
 			request.setAttribute("msg", "QnA상세보기 실행");

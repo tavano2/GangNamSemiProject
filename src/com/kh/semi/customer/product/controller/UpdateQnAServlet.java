@@ -70,7 +70,9 @@ public class UpdateQnAServlet extends HttpServlet {
 			String num = multiRequest.getParameter("pQnABoardnum");
 			String deleteChangeName = multiRequest.getParameter("deleteChangeName");
 			String insertAtt = multiRequest.getParameter("insertAtt")==null?"":multiRequest.getParameter("insertAtt");
-		/*	
+			String productCode = multiRequest.getParameter("productCode");
+			String fildId = multiRequest.getParameter("fildId");
+		/*
 			System.out.println("서블릿"+multiTitle);
 			System.out.println("서블릿"+multiContent);
 			System.out.println("서블릿"+userId);
@@ -95,10 +97,10 @@ public class UpdateQnAServlet extends HttpServlet {
 			System.out.println("서블릿"+updateQnABoard);
 			*/
 			//System.out.println("업데이트"+fileList);
-			int result = new ProductService().updateQnA(updateQnABoard,fileList,pQnABoardId,atstatus,insertAtt);
+			int result = new ProductService().updateQnA(updateQnABoard,fileList,pQnABoardId,atstatus,insertAtt,fildId);
 			
 			if(result>0) {
-				response.sendRedirect(request.getContextPath()+"/SelectOneQnA.no?num="+num+"&pQnABoardId="+pQnABoardId);
+				response.sendRedirect(request.getContextPath()+"/SelectOneQnA.no?num="+num+"&pQnABoardId="+pQnABoardId + "&productCode=" + productCode);
 				
 
 				
