@@ -11,6 +11,7 @@ import com.kh.semi.customer.board.model.vo.Notice;
 
 public class NoticeService {
 
+	// 공지사항 게시판 : 전체 게시글 조회
 	public ArrayList<Notice> selectList() {
 		Connection con = getConnection();
 		
@@ -22,6 +23,7 @@ public class NoticeService {
 		return list;
 	}
 
+	// 공지사항 게시판 : 게시글 등록
 	public int insertNotice(Notice n) {
 		Connection con = getConnection();
 		
@@ -35,6 +37,7 @@ public class NoticeService {
 		return result;
 	}
 
+	// 공지사항 게시판 : 조회수 반영
 	public Notice selectOne(String num) {
 		Connection con = getConnection();
 		
@@ -53,6 +56,7 @@ public class NoticeService {
 		return n;
 	}
 
+	// 공지사항 게시판 : 게시글 수정
 	public int updateNotice(Notice n) {
 		Connection con = getConnection();
 		
@@ -66,6 +70,7 @@ public class NoticeService {
 		return result;
 	}
 
+	// 공지사항 게시판 : 게시글 삭제
 	public int deleteNotice(int nno) {
 		Connection con = getConnection();
 		
