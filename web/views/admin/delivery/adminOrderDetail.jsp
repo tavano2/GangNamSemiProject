@@ -106,7 +106,7 @@
 	                                	<div class="ui selection dropdown">
 		                                    <input type="hidden">
 		                                    <i class="dropdown icon"></i>
-		                                    <div class="default text">주문상태 변경</div>
+		                                    <div class="default text">취소/반품/환불</div>
 		                                    <div class="menu">
 		                                        <div class="item" data-value="1" onclick="changeStateBtn(this);">취소완료</div>
 		                                        <div class="item" data-value="2" onclick="changeStateBtn(this);">반품완료</div>
