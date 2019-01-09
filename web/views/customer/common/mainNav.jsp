@@ -81,11 +81,11 @@
                 EVENT
             </a>
             <div class="right menu">
-            <a class="item" href="<%=request.getContextPath()%>/reviewNoticeList.no?code=PD000003">
+            <%-- <a class="item" href="<%=request.getContextPath()%>/reviewNoticeList.no?code=PD000003">
                        예솔쓰 상세페이징
-                </a> 
+                </a>  --%>
                <%if(loginUser != null && loginUser.getUserId().equals("admin")) { %>
-		  		<a class="item" href="<%= request.getContextPath() %>/adminHomeInfo.bo">
+		  		<a class="item" href="<%= request.getContextPath() %>/views/admin/member/adminMainMember.jsp">
                        	Administrator </a>
                  <%} %> 
                  <%if(loginUser == null) {%>
