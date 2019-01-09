@@ -283,7 +283,7 @@
 							  }else{
 								 var $div = $("<div>").addClass("item").text(decodeURIComponent(data[i].CATEG_MEMO));
 									var $smallCateg = $("#smallCateg");
-									$smallCateg.append($div);
+									//$smallCateg.append($div);
 							 }	 					
 						} 
 					},
