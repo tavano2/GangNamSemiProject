@@ -32,17 +32,6 @@ public class InsertProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		
-		/*String productName = request.getParameter("productName");
-		String productMemo = request.getParameter("productMemo");
-		String productDmemo = request.getParameter("productDmemo");
-		String productPrice = request.getParameter("productPrice");
-		String productAmount = request.getParameter("productAmount");
-		String productDisplay = request.getParameter("productDisplay");
-		String productSell = request.getParameter("productSell");
-		String cateCode = request.getParameter("cateCode");
-		String optionCode1 = request.getParameter("optionCode");
-		String[] optionCode = optionCode1.split(",");*/
-		
 		if(ServletFileUpload.isMultipartContent(request)) {
 		
 			int maxSize = 1024 * 1024 * 10;
@@ -63,24 +52,6 @@ public class InsertProductServlet extends HttpServlet {
 			String optionCode1 = multiRequest.getParameter("optionSelected");
 			String[] optionCode = optionCode1.split(",");
 			
-			/*System.out.println(productName);
-			System.out.println(productMemo);
-			System.out.println(productDmemo);
-			System.out.println(productPrice);
-			System.out.println(productAmount);
-			System.out.println(productDisplay);
-			System.out.println(productSell);
-			System.out.println(cateCode);*/
-			
-			Attachment at = new Attachment();
-			at.setProductName(productName);
-			at.setProductMemo(productMemo);
-			at.setProductDmemo(productDmemo);
-			at.setProductPrice(Integer.parseInt(productPrice));
-			at.setProductAmount(Integer.parseInt(productAmount));
-			at.setDisplayS(productDisplay);
-			at.setSellS(productSell);
-			at.setCategoryCode(cateCode);
 			
 			// 다중 파일을 묶어서 업로드 하기 위해 컬렉션 사용
 			// 저장한 파일의 이름을 저장할 arrayList 생성
@@ -97,24 +68,41 @@ public class InsertProductServlet extends HttpServlet {
 				
 				System.out.println("name : " + name);
 				
-				saveFiles.add(multiRequest.getFilesystemName(name));
-				originFiles.add(multiRequest.getOriginalFileName(name));
+				if(multiRequest.getFilesystemName(name) != null) {
+					saveFiles.add(multiRequest.getFilesystemName(name));
+					originFiles.add(multiRequest.getOriginalFileName(name));
+				}
 				
 				System.out.println("fileSystem name : " + multiRequest.getFilesystemName(name));
 				System.out.println("originFile name : " + multiRequest.getOriginalFileName(name));
 			}
 			
+			//imgList(0)
+			//
+			//
+			
 			// Attachment 객체 생성하여 arrayList 객체 생성
 			ArrayList<Attachment> fileList = new ArrayList<Attachment>();
 			for(int i = originFiles.size() -1; i >= 0; i--) {
+				Attachment at = new Attachment();
 				at.setFilePath(filePath);
 				at.setOriginName(originFiles.get(i));
 				at.setChangeName(saveFiles.get(i));
+				at.setProductName(productName);
+				at.setProductMemo(productMemo);
+				at.setProductDmemo(productDmemo);
+				at.setProductPrice(Integer.parseInt(productPrice));
+				at.setProductAmount(Integer.parseInt(productAmount));
+				at.setDisplayS(productDisplay);
+				at.setSellS(productSell);
+				at.setCategoryCode(cateCode);
 				
 				fileList.add(at);
 			}
 			
-			int result = new ProductService().insertProductOption(fileList,at,optionCode);
+			System.out.println(fileList.size());
+			
+			int result = new ProductService().insertProductOption(fileList,fileList.get(0),optionCode);
 					
 			if(result > 0) {
 				response.sendRedirect(request.getContextPath()+"/selectCateInProduct.product");

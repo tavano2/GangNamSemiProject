@@ -241,7 +241,7 @@
             </form>
             <div id="fileArea">
             	<input type="file" id="thumbnailImg" name="thumbnailImg" onchange="loadImg(this,1)">
-            	<input type="file" name="imgList" onchange="loadImg(this,2)">
+            	<input type="file" name="imgList1" onchange="loadImg(this,2)">
             </div>
 
         	<div class="productAddBtn">
@@ -395,7 +395,7 @@
 		});
 		
 		$("div[name=subImg]").eq(0).click(function(){
-			$("input[name=imgList]").eq(0).click();
+			$("input[name=imgList1]").eq(0).click();
 		});
 	});
 	
@@ -421,7 +421,7 @@
 								$imgPlus.append($div);
 								
 								var $fileArea = $("#fileArea");
-								var $input = $("<input type='file' id='imgList"+cnt2+"' name='imgList' onchange='loadImg(this,"+cnt2+")'>");
+								var $input = $("<input type='file' id='imgList"+cnt2+"' name='imgList"+(cnt2-1)+"' onchange='loadImg(this,"+cnt2+")'>");
 								$fileArea.append($input);
 						}
 					}
@@ -433,54 +433,6 @@
 			reader.readAsDataURL(value.files[0]);
 		}
 	}
-	
-	// 상품등록
-	/*  $(function(){
-		$("#addBtn").click(function(){
-			var productName = $("#productName").val();
-			var productMemo = $("#productMemo").val();
-			var productDmemo = $("#productDmemo").val();
-			var productPrice = $("#productPrice").val();
-			var productAmount = $("#productAmount").val();
-			var productDisplay = $("input[type=radio][name=productDisplay]:checked").val();
-			var productSell = $("input[type=radio][name=productSell]:checked").val();
-			var cateCode = cateCode1;
-			var optionCode = "";
-			
-			var size = $("input[name=optionSet]").length;
-			for(var i = 0; i < size; i ++){
-				var optionCode1 = $("input[name=optionSet]").eq(i).val();
-				if(optionCode == ""){
-					optionCode += optionCode1;
-				}else{
-					optionCode += "," + optionCode1;
-				}
-			}
-			
-			var formData = $("#fileForm").serialize();
-			
-			$.ajax({
-				url:"/semi/insertProduct.product",
-				data:{productName : productName,
-					  productMemo : productMemo,
-					  productDmemo : productDmemo,
-					  productPrice : productPrice,
-					  productAmount : productAmount,
-					  productDisplay : productDisplay,
-					  productSell : productSell,
-					  cateCode : cateCode,
-					  optionCode : optionCode,
-					  formData : formData},
-				type:"post",
-				success:function(data){
-					console.log("성공");
-				},
-				error:function(){
-					console.log("실패");
-				}
-			});
-		});
-	});  */
 	
 	function addProduct(){
 		$("#addForm").submit();

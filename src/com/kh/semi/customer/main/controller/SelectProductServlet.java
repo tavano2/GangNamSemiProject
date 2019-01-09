@@ -26,15 +26,17 @@ public class SelectProductServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		
 		String middleCode = request.getParameter("middleCode");
+		String orderBy = request.getParameter("val");
+		
 		ArrayList<Product> list = null;
 		
 		if(middleCode.equals("null")) {
-			list = new ProductService().selectAllProduct();
+			list = new ProductService().selectAllProduct(orderBy);
 		}else if(middleCode.equals("best")) {
-			list = new ProductService().selectBestProduct();
+			list = new ProductService().selectBestProduct(orderBy);
 		}
 		else {
-			list = new ProductService().selectProduct(middleCode);
+			list = new ProductService().selectProduct(middleCode,orderBy);
 		}
 		
 		
