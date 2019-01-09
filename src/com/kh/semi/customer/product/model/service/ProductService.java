@@ -431,22 +431,24 @@ public class ProductService {
 	
 	
 	//qna수정하기
-		public int updateQnA(Board updateQnABoard, ArrayList<Attachment> fileList,String pQnABoardId,String atstatus,String insertAtt) {
+		public int updateQnA(Board updateQnABoard, ArrayList<Attachment> fileList,String pQnABoardId,String atstatus,String insertAtt, String fildId) {
 			Connection con = getConnection();
 			int result=0;
 			int result2=0;
 			
 			int result1 = new ProductDao().updateQnA(con,updateQnABoard,pQnABoardId);
 			
-			
+
 			
 			//원래 사진이있을시 삭제하고 update
 			if(atstatus.equals("y")) {
-				result2 = new ProductDao().updateQnAAttachment(con,fileList,pQnABoardId);		
+				result2 = new ProductDao().deleteQnAAttachment(con,fildId);		
 				
 			}else {
 				result2=1;
 			}
+			
+
 			
 			if(result1>0) {
 				

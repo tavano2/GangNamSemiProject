@@ -184,7 +184,7 @@ margin-left:150px;
       	if(loginUser !=null && !loginUser.getUserId().equals("admin")&& SelectReplyList.size()==0){
       %>		
 			 <button class="ui brown basic mini button" id="QnAupdateBtn"
-			 onclick="location.href='<%=request.getContextPath()%>/selectforUpdate.pd?num=<%=num %>&pQnABoardId=<%=pQnABoardId%>'">수정하기</button>
+			 onclick="location.href='<%=request.getContextPath()%>/selectforUpdate.pd?num=<%=num %>&pQnABoardId=<%=pQnABoardId%>&productCode=<%=productCode %>'">수정하기</button>
  		<%
       	}
       %>

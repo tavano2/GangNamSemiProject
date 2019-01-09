@@ -1089,6 +1089,7 @@ public class ProductDao {
 			
 			while(rset.next()) {
 				at = new Attachment();
+				at.setFileId(rset.getString("FILE_ID"));
 				at.setFilePath(rset.getString("FILE_PATH"));
 				at.setChangeName(rset.getString("CHANGE_NAME"));
 				at.setOriginName(rset.getString("ORIGIN_NAME"));
@@ -1381,30 +1382,26 @@ public class ProductDao {
 
 
 	//상품문의 사진 수정쓰
-	public int updateQnAAttachment(Connection con, ArrayList<Attachment> fileList, String pQnABoardId) {
+	public int deleteQnAAttachment(Connection con, String fildId) {
 		PreparedStatement pstmt = null;
 		int result =0;
 		
-		String query = prop.getProperty("updateQnAAttachment");
+		String query = prop.getProperty("deleteQnAAttachment");
 		//System.out.println("다오"+fileList.get(0).getOriginName());
 		//System.out.println("e다오"+fileList.get(0).getChangeName());
 		//System.out.println("다오"+pQnABoardId);
 		
-		for(int i=0; i<fileList.size();i++) {
-			try {
-				pstmt=con.prepareStatement(query);
-				pstmt.setString(1, fileList.get(i).getOriginName());
-				pstmt.setString(2, fileList.get(i).getChangeName());
-				pstmt.setString(3, pQnABoardId);
-				
-				result +=pstmt.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}finally {
-				close(pstmt);
-			}
+		try {
+			pstmt=con.prepareStatement(query);
+			pstmt.setString(1, fildId);
+			
+			result =pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
 		}
-		
+
 		return result;
 	}
 

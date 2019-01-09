@@ -212,6 +212,7 @@
 	bottom: 6%;
 	right: 3%;
 	position: fixed;
+	z-index: 9999;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
