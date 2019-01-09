@@ -2,11 +2,13 @@ package com.kh.semi.customer.board.model.dao;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import com.kh.semi.customer.board.model.vo.Notice;
 
 public class NoticeDao {
-
+	private Properties prop = new Properties();
+	
 	public ArrayList<Notice> selectList(Connection con) {
 		// TODO Auto-generated method stub
 		return null;
