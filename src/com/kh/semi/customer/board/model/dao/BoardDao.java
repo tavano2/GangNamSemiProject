@@ -892,6 +892,38 @@ public class BoardDao {
 		return result;
 	}
 	
+	// 공지사항
+	
+	public ArrayList<Board> selectList(Connection con) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int insertNotice(Connection con, Board n) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public Board selectOne(Connection con, String num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int updateCount(Connection con, Object nno) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int updateNotice(Connection con, Board n) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int deleteNotice(Connection con, Board b) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }
 

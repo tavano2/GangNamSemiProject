@@ -1,5 +1,9 @@
 package com.kh.semi.customer.board.model.service;
 
+import static com.kh.semi.admin.common.JDBCTemplate.close;
+import static com.kh.semi.admin.common.JDBCTemplate.commit;
+import static com.kh.semi.admin.common.JDBCTemplate.getConnection;
+import static com.kh.semi.admin.common.JDBCTemplate.rollback;
 import static com.kh.semi.customer.common.JDBCTemplate.*;
 
 import java.sql.Connection;
@@ -339,6 +343,85 @@ public class BoardService {
 		}
 		return result;
 	}
+
+	// 공지사항 게시판 : 전체 게시글 조회
+	public ArrayList<Board> selectList() {
+		Connection con = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectList(con);
+		
+		close(con);
+		
+		
+		return list;
+	}
+
+	// 공지사항 게시판 : 게시글 등록
+	public int insertBoard(Board b) {
+		Connection con = getConnection();
+		
+		int result = new BoardDao().insertNotice(con, b);
+		
+		if(result > 0) commit(con);
+		else rollback(con);
+		
+		close(con);
+	
+		return result;
+	}
+	
+	
+
+	// 공지사항 게시판 : 조회수 반영
+	public Board selectOne(String num) {
+		Connection con = getConnection();
+		
+		Board b = new BoardDao().selectOne(con, num);
+		
+		int result = 0;
+		
+		if(b != null) {
+			result = new BoardDao().updateCount(con, b.getBoardNum());	//
+			if(result > 0) commit(con);
+			else rollback(con);
+		}
+		
+		close(con);
+	
+		return b;
+	}
+
+	// 공지사항 게시판 : 게시글 수정
+	public int updateNotice(Board n) {
+		Connection con = getConnection();
+		
+		int result = new BoardDao().updateNotice(con, n);
+		
+		if(result > 0) commit(con);
+		else rollback(con);
+		
+		close(con);
+		
+		return result;
+	}
+
+	// 공지사항 게시판 : 게시글 삭제
+	public int deleteNotice(Board b) {
+		Connection con = getConnection();
+		
+		int result = new BoardDao().deleteNotice(con, b);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
 
 
 

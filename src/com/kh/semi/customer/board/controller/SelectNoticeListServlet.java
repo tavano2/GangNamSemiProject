@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.semi.customer.board.model.service.NoticeService;
-import com.kh.semi.customer.board.model.vo.Notice;
+import com.kh.semi.customer.board.model.service.BoardService;
+import com.kh.semi.customer.board.model.vo.Board;
 
 
 /**
@@ -33,7 +33,7 @@ public class SelectNoticeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Notice> list = new NoticeService().selectList();
+		ArrayList<Board> list = new BoardService().selectList();
 		
 		System.out.println("controller : " + list);
 		

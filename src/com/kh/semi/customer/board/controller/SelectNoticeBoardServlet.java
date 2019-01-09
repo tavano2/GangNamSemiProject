@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.semi.customer.board.model.service.NoticeService;
-import com.kh.semi.customer.board.model.vo.Notice;
+import com.kh.semi.customer.board.model.service.BoardService;
+import com.kh.semi.customer.board.model.vo.Board;
 
 /**
  * Servlet implementation class SelectNoticeBoardServlet
@@ -33,7 +33,7 @@ public class SelectNoticeBoardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String num = request.getParameter("num");
 		
-		Notice n = new NoticeService().selectOne(num);
+		Board  n = new BoardService().selectOne(num);
 		
 		String page = "";
 		if(n != null) {

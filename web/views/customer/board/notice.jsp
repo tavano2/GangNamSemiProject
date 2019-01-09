@@ -41,7 +41,9 @@
 			</thead>
 			
 			<tbody>
+			<%-- <% for(Notice n : list){ %> --%>
 				<tr>
+					<td></td>
 					<td>1</td>
 					<td><a href="/semi/views/customer/board/noticeBoard.jsp">Notice 01</a></td>
 					<td>Ian</td>
@@ -65,7 +67,9 @@
 				<th colspan="4">
 					<!--  작성하기는 관리자만 가능하다.  -->
 					<div align="right">
+					<% if(loginUser != null && loginUser.getUserId().equals("admin")){ %>
 						<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/board/insertBoard.jsp';">작성하기</button>
+					<% } %>
 					</div>
 				</th>
 			</tfoot>
