@@ -72,9 +72,9 @@
             <a class="item"  href="<%=request.getContextPath()%>/selectNoticeList.bo">
                 NOTICE
             </a>
-            <a class="item" style="color : rgb(211, 84, 0)">
+            <!-- <a class="item" style="color : rgb(211, 84, 0)">
                 DAILY
-            </a>
+            </a> -->
             
 
             <a class="item" style="color : rgb(231, 76, 60)" href="<%=request.getContextPath()%>/eventPageList.bo">
