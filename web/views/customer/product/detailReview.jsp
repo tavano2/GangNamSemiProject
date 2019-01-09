@@ -15,7 +15,7 @@
    ArrayList<ReviewList> reList = (ArrayList<ReviewList>)hmap.get("reList");
    
    String reviewRum = request.getParameter("reviewRum");
-   String productCode=request.getParameter("code");
+   String productCode=request.getParameter("productCode");
 
    %>
 <!DOCTYPE html>
@@ -104,7 +104,7 @@
 					
 			<!--  <button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/product/updateReview.jsp';">수정하기</button>
 			&nbsp; -->
-			<button class="ui brown basic mini button" onclick="location.href='/semi/reviewNoticeList.no?code=<%=request.getParameter("code") %>'">이전으로</button> 
+			<button class="ui brown basic mini button" onclick="location.href='/semi/reviewNoticeList.no?code=<%=request.getParameter("productCode") %>'">이전으로</button> 
 			
 			<button class="ui brown basic mini button" onclick="location.href='/semi/deleteReview.pd?code=<%=productCode%>&reviewRum=<%=reviewRum%>'">삭제하기</button> 
 			
