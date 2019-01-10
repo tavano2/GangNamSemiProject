@@ -91,7 +91,7 @@
 				<b>주문 내역</b>
 			</div>
 			<div class="four wide column" align="right">
-				<button class="ui brown basic mini button">이전으로</button>
+				<button class="ui brown basic mini button" onclick="location.href='<%=request.getContextPath()%>/selectCartList.pd'">이전으로</button>
 			</div>
 		</div>
 
@@ -178,7 +178,7 @@
 		<br>
 		<div class="ui grid">
 			<div class="sixteen wide column" align="right">
-				<button class="ui brown basic mini button">이전으로</button>
+				<button class="ui brown basic mini button" onclick="location.href='<%=request.getContextPath()%>/selectCartList.pd'">이전으로</button>
 			</div>
 		</div>
 		<br> <br> <br>
