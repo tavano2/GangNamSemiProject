@@ -104,7 +104,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>스팸 관리</td>
+							<td>스팸 여부</td>
 							<td>
 								<div class="ui selection dropdown">
 									 <input type="hidden" name="spanSelect"> 

@@ -43,21 +43,6 @@
            <div class="content-box">
            <h2 class="ui header">상품 목록</h2>
            <hr>
-           <table class="ui celled table first-col">
-                 <tr>
-                         <th>전체 <span>0</span>건</th>
-                         <th>판매함 <span>0</span>건</th>
-                         <th>판매안함 <span>0</span>건</th>
-                         <th>진열함 <span>0</span>건</th>
-                         <th>진열안함 <span>0</span>건</th>
-                         <th>
-                            <div class="productAddBtn">
-                               <button class="ui blue button" onclick="location.href='/semi/views/admin/product/adminSimpleAdd.jsp'">상품등록</button>
-                            </div>
-                            
-                         </th> <!-- 간단등록으로 이동 -->
-                   </tr>
-                   </table>
                 <table class="ui celled table first-col">
                    
                    <tr>
@@ -76,19 +61,7 @@
                             <input type="text" size="30" style="height:30px;" name="selectInput">
                          </td>
                    </tr>
-<!--                    <tr>
-                         <td>상품분류</td>
-                         <td id="catePlus">
-                            <div class="ui selection dropdown">
-                                <input type="hidden" name="bigCate" onchange="middleChoice(this.value)">
-                                <i class="dropdown icon"></i>
-                                <div class="default text">-대분류 선택</div>
-                                <div class="menu" id="bigCateSelect">
-                                </div>
-                            </div>
-                         </td>
-                   </tr>
- -->                   <tr>
+                  <tr>
                          <td>진열상태</td>
                          <td>
                             <div class="ui form">
@@ -157,15 +130,6 @@
            </div>
            <br>
            <hr>
-         <h2 class="ui header">상품 검색 목록</h2>
-         <h4>[ 총 <span class="productCount">1</span>개 ]</h4>
-              <button class="ui black button" disabled>진열/판매 수정</button>
-              <button class="ui white button">진열함</button>
-              <button class="ui white button">진열안함</button>
-              <button class="ui white button">판매함</button>
-              <button class="ui white button">판매안함</button>
-              <button class="ui white button">삭제</button>
-              <button class="ui white button">복구</button>
               
               <table class="ui celled table order-result">
                     <!-- 검색 결과 테이블 -->
