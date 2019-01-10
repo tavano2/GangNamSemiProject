@@ -14,7 +14,7 @@
             <a class="item" href="<%=request.getContextPath()%>/selectCategory.product">
                 <i class="grid layout icon"></i> 상품관리
             </a>
-            <a class="item" href="/semi/views/admin/board/adminBoardManagement.jsp">
+            <a class="item" href="/semi/views/admin/board/adminPostManagement.jsp">
                 <i class="table icon"></i> 게시판관리
             </a>
             <a class="item" href="<%=request.getContextPath()%>/adminDeliveryMain.de">
