@@ -118,8 +118,7 @@
 					</div>
 				</form>
 				<div align="center" id="resultDataDiv" margin-top="50px">
-					<h3>희희</h3>
-				
+					
 				</div>
 			</div>
 		</div>
