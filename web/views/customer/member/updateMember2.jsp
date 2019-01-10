@@ -41,7 +41,7 @@
 					<br>
 					<br>
 					<button type="submit" class="ui secondary button">확인</button>
-					<div class="ui button" onclick="location.href='/semi/views/customer/member/userMyPage.jsp'">이전으로</div>
+					<div class="ui button" onclick="location.href='<%=request.getContextPath()%>/selectMyPage.me'">이전으로</div>
 				</div>
 			</form>
 				<br>
