@@ -301,7 +301,7 @@
                    var $tr = $("<tr>");
                    var $productCode = $("<td>").text(data[key].productCode);
                    var $productName = $("<td>").text(data[key].productName);
-                   var $productCate = $("<td>").text(data[key].productCate);
+                   var $productCate = $("<td>").text(data[key].categoryName);
                    var $productPrice = $("<td>").text(data[key].productPrice);
                    
                    $tr.append($check);

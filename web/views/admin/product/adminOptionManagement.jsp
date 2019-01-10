@@ -97,6 +97,7 @@
     </div>
 
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- J-query CDN -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Semantic UI JS CDN -->
@@ -122,6 +123,20 @@
   .checkbox();
     	
     
+    
+    function issueSuccess(){
+		swal("옵션 삭제 성공!", "확인 버튼을 눌러주세요.", "success")
+		.then((value) => {	
+			  location.reload();		
+		});
+	}
+	function issueFail(){
+		swal("옵션 삭제 실패!", "확인 버튼을 눌러주세요.", "success")
+		.then((value) => {	
+			  location.reload();		
+		});
+	}
+	
     		// ajax를 사용하여 옵션검색
 		    $(function(){
 		    	$("#selectBtn").click(function(){
@@ -189,10 +204,10 @@
     					type:"post",
     					data:{optionCode : optionCode},
     					success:function(data){
-    						console.log("성공");
+    						issueSuccess();
     					},
     					error:function(){
-    						console.log("실패");
+    						issueFail();
     					}
     				});
     			});

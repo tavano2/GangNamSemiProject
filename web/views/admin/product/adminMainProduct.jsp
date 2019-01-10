@@ -109,7 +109,7 @@
          </div>
          <br>
             <div class="categoryBtn">
-                 <button class="ui blue button" type="submit" onclick="cateAdd();">분류추가</button>
+                 <button class="ui blue button" type="submit" onclick="cateAdd();" id="addBtn">분류추가</button>
                  <button class="ui white button" onclick="cateDelete();">삭제</button>
               </div>
          </div>
@@ -175,7 +175,7 @@
                     </tr>
                 </table>
                 <div class="productAddBtn">
-               <button class="ui blue button" type="submit" onclick="cateUpdate();">확인</button>
+               <button class="ui blue button" type="submit" onclick="cateUpdate();" id="updateBtn">확인</button>
             </div>
                 </div>
                 </form>
@@ -189,7 +189,7 @@
        <%@ include file = "/views/admin/common/adminFooter.jsp" %>
     </div>
 
-
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<!-- alert CDN -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- J-query CDN -->
@@ -256,7 +256,20 @@
          }
       });
    });
-      
+    
+    function issueSuccess1(){
+		swal("카테고리 추가 성공!", "확인 버튼을 눌러주세요.", "success")
+		.then((value) => {	
+			  location.reload();		
+		});
+	}
+    
+    function issueSuccess2(){
+		swal("카데고리 수정 성공!", "확인 버튼을 눌러주세요.", "success")
+		.then((value) => {	
+			  location.reload();		
+		});
+	}
    
    function cateUpdate(){
       $("#updateForm").submit();
@@ -270,6 +283,13 @@
       location.href="<%=request.getContextPath()%>/deleteCate.product?code="+code;
    }
    
+   $("#addBtn").click(function(){
+	  alert('카테고리 추가 성공 !');
+   });
+   
+   $("#updateBtn").click(function(){
+		  alert('카테고리 수정 성공 !')
+	   });
     </script>
     
     

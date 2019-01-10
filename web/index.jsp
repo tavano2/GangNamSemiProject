@@ -95,6 +95,10 @@
 	#bigCateName{
 		font-size:20px;
 	}
+	#look{
+		background:white;
+		color:white;
+	}
 </style>
 </head>
 
@@ -197,6 +201,10 @@
 		    				var $a2 = $("<a class='ui brown label'>").text("BEST");
 	    					$div1.append($a2);
 	    					$div1.append($br);
+	    				}else{
+	    					var $a2 = $("<a class='ui label' id='look'>").text("NORMAL");
+	    					$div1.append($a2);
+	    					$div1.append($br);
 	    				}
 	    				var $hr = $("<hr class='productHr'>");
 	    				var $span1 = $("<span class='productTitle'>").text(data[key].productName);
@@ -252,11 +260,15 @@
 			    				var $a2 = $("<a class='ui brown label'>").text("BEST");
 		    					$div1.append($a2);
 		    					$div1.append($br);
+		    				}else{
+		    					var $a2 = $("<a class='ui label' id='look'>").text("NORMAL");
+		    					$div1.append($a2);
+		    					$div1.append($br);
 		    				}
 		    				var $hr = $("<hr class='productHr'>");
 		    				var $span1 = $("<span class='productTitle'>").text(data[key].productName);
 		    				var $span2 = $("<span class='won'>");
-		    				var $span3 = $("<span class='productPrice'>").text(data[key].productPrice+" won");
+		    				var $span3 = $("<span class='productPrice'>").text(numComma(data[key].productPrice)+" won");
 		    				var $span4 = $("<span class='productDetail'>").text(data[key].productMemo);
 		    				
 		    				$span2.append($span3);
@@ -339,11 +351,15 @@
 					    				var $a2 = $("<a class='ui brown label'>").text("BEST");
 				    					$div1.append($a2);
 				    					$div1.append($br);
+				    				}else{
+				    					var $a2 = $("<a class='ui label' id='look'>").text("NORMAL");
+				    					$div1.append($a2);
+				    					$div1.append($br);
 				    				}
 				    				var $hr = $("<hr class='productHr'>");
 				    				var $span1 = $("<span class='productTitle'>").text(data[key].productName);
 				    				var $span2 = $("<span class='won'>");
-				    				var $span3 = $("<span class='productPrice'>").text(data[key].productPrice+" won");
+				    				var $span3 = $("<span class='productPrice'>").text(numComma(data[key].productPrice)+" won");
 				    				var $span4 = $("<span class='productDetail'>").text(data[key].productMemo);
 				    				
 				    				$span2.append($span3);
@@ -400,6 +416,10 @@
 			    				var $a2 = $("<a class='ui brown label'>").text("BEST");
 		    					$div1.append($a2);
 		    					$div1.append($br);
+		    				}else{
+		    					var $a2 = $("<a class='ui label' id='look'>").text("NORMAL");
+		    					$div1.append($a2);
+		    					$div1.append($br);
 		    				}
 		    				var $hr = $("<hr class='productHr'>");
 		    				var $span1 = $("<span class='productTitle'>").text(data[key].productName);
@@ -447,11 +467,15 @@
 		    			    				var $a2 = $("<a class='ui brown label'>").text("BEST");
 		    		    					$div1.append($a2);
 		    		    					$div1.append($br);
+		    		    				}else{
+		    		    					var $a2 = $("<a class='ui label' id='look'>").text("NORMAL");
+		    		    					$div1.append($a2);
+		    		    					$div1.append($br);
 		    		    				}
 		    		    				var $hr = $("<hr class='productHr'>");
 		    		    				var $span1 = $("<span class='productTitle'>").text(data[key].productName);
 		    		    				var $span2 = $("<span class='won'>");
-		    		    				var $span3 = $("<span class='productPrice'>").text(data[key].productPrice+" won");
+		    		    				var $span3 = $("<span class='productPrice'>").text(numComma(data[key].productPrice)+" won");
 		    		    				var $span4 = $("<span class='productDetail'>").text(data[key].productMemo);
 		    		    				
 		    		    				$span2.append($span3);
