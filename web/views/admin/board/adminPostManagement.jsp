@@ -94,6 +94,7 @@
 									<div class="menu">
 										<!-- <div class="item" data-value="1">FAQ</div> -->
 								
+								
 										<div class="item" data-value="1">FAQ</div>
 										<div class="item" data-value="2">공지사항</div>
 										<div class="item" data-value="3">이벤트</div>
@@ -104,7 +105,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>스팸 관리</td>
+							<td>스팸 여부</td>
 							<td>
 								<div class="ui selection dropdown">
 									 <input type="hidden" name="spanSelect"> 

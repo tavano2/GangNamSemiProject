@@ -55,7 +55,7 @@
            <h2 class="ui header" style="text-align:center;">상품분류 설정</h2>
            <br><br><br><br>
            <div class="overflowDiv">
-         <div style="overflow:scroll; width:350px; height:400px;" class="overInnerDiv">
+         <div style="overflow:scroll; width:350px; height:400px;" class="overInnerDiv" id="scrollDiv">
           <div class="ui list" id="divList">
               <% for (Category c : list){ %>
               <% if(c.getCateLevel() == 0) {%>
@@ -283,8 +283,18 @@
       location.href="<%=request.getContextPath()%>/deleteCate.product?code="+code;
    }
    
+   var scrollCnt = 0;
    $("#addBtn").click(function(){
+	   scrollCnt++;
 	  alert('카테고리 추가 성공 !');
+	  $("#scrollDiv").scrollTop($("#scrollDiv")[0].scrollHeight);
+	  console.log(scrollCnt);
+   });
+   
+   $(function(){
+		if(scrollCnt != 0){
+			$("#scrollDiv").scrollTop($("#scrollDiv")[0].scrollHeight);	  
+		}	   
    });
    
    $("#updateBtn").click(function(){
