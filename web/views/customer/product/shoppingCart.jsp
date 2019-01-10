@@ -110,7 +110,7 @@
 								}%>)
 							</a>
 						</td>
-						<td class="center aligned"><%=comma(pdList.get(cartList.get(i).getProductCode()).getProductPrice())%></td>
+						<td class="center aligned price"><%=comma(pdList.get(cartList.get(i).getProductCode()).getProductPrice())%></td>
 						<!-- 상품 목록에서 상품 코드와 가격(상품 정보) 가져오기. | 단일 수량 -->
 						<td class="center aligned amount"><%=cartList.get(i).getAmount()%></td>
 						<td class="center aligned">
@@ -125,7 +125,7 @@
 							</div>
 						</td>
 						<!-- 장바구니 수량  -->
-						<td class="center aligned"><%=comma(pdList.get(cartList.get(i).getProductCode()).getProductPrice() * cartList.get(i).getAmount())%></td>
+						<td class="center aligned sum-price"><%=comma(pdList.get(cartList.get(i).getProductCode()).getProductPrice() * cartList.get(i).getAmount())%></td>
 						<!-- 상품 목록에서 상품 코드와 가격(상품 정보) 가져오기. | 복수 수량 -->
 					</tr>
 					<%	
@@ -213,9 +213,17 @@
 			}
 		}
 		
+		//금액 천 단위로 콤마 찍기
+		function numComma(num){
+			var numStr = String(num);
+			return numStr.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,"$1,");
+		}
+		
 		function amountUp(btn){
 			var cartNum = $(btn).parents("tr").find("input:checkbox").val();
 			var amount = Number($(btn).parents("tr").find(".amount").text()) + 1;
+			var priceStr = $(btn).parents("tr").find(".price").text();
+			var price = Number(priceStr.replace(",", ""));
 			
 			$.ajax({
 				url:"<%=request.getContextPath()%>/updateCartNumAmount.pd",
@@ -223,6 +231,8 @@
 				data:{cartNum:cartNum, amount:amount},
 				success: function(data){
 					$(btn).parents("tr").find(".amount").text(amount);
+					$(btn).parents("tr").find(".sum-price").text(numComma(price*amount));
+					
 				}, error: function(){
 					console.log("실패");
 				}
@@ -233,6 +243,8 @@
 			if ($(btn).parents("tr").find(".amount").text() > 1){
 				var cartNum = $(btn).parents("tr").find("input:checkbox").val();
 				var amount = Number($(btn).parents("tr").find(".amount").text()) - 1;
+				var priceStr = $(btn).parents("tr").find(".price").text();
+				var price = Number(priceStr.replace(",", ""));
 				
 				$.ajax({
 					url:"<%=request.getContextPath()%>/updateCartNumAmount.pd",
@@ -240,6 +252,8 @@
 					data:{cartNum:cartNum, amount:amount},
 					success: function(data){
 						$(btn).parents("tr").find(".amount").text(amount);
+						$(btn).parents("tr").find(".sum-price").text(numComma(price*amount));
+						
 					}, error: function(){
 						console.log("실패");
 					}
