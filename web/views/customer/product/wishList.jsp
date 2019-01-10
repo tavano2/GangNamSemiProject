@@ -61,7 +61,7 @@
 				<b>위시 리스트</b>
 			</div>
 			<div class="four wide column" align="right">
-				<button class="ui brown basic mini button" onclick="location.href='/semi/views/customer/member/userMyPage.jsp'">이전으로</button>
+				<button class="ui brown basic mini button" onclick="location.href='<%=request.getContextPath()%>/selectMyPage.me'">이전으로</button>
 			</div>
 		</div>
 		<!-- 위시리스트 내역 -->

@@ -59,7 +59,7 @@ table tbody>tr:hover {
 			</div>
 			<div class="four wide column" align="right">
 				<button class="ui brown basic mini button"
-					onclick="location.href='/semi/views/customer/member/userMyPage.jsp'">마이페이지로</button>
+					onclick="location.href='<%=request.getContextPath()%>/selectMyPage.me'">마이페이지로</button>
 			</div>
 		</div>
 		<!-- 테이블 -->
