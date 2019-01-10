@@ -26,6 +26,7 @@ public class SelectCategoryInProduct extends HttpServlet {
 		
 		String page = "";
 		if(list1 != null) {
+			request.setAttribute("result", request.getAttribute("result"));
 			request.setAttribute("list1", list1);
 			page = "views/admin/product/adminSimpleAdd.jsp";
 		}

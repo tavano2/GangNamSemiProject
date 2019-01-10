@@ -448,7 +448,12 @@
 	
 	function addProduct(){
 		$("#addForm").submit();
+		issueSuccess();
 	}
+	
+	$("#addBtn").click(function(){
+		alert('상품 등록 성공 !')
+	});
     </script>
     
 </body>
