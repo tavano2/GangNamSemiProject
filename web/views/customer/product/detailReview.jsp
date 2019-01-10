@@ -50,6 +50,7 @@
 
 .reviewText {
    margin-left: 200px;
+   width:800px;
 }
 
 .updateDeleteBtn{
@@ -92,7 +93,7 @@
 	//	System.out.println("이거"+a.getFilePath()+a.getChangeName());
 		
 		%>
-		 <img src="/semi/views/images/InsertReview_uploadFiles/<%=a.getChangeName() %>" width="200px">
+		 <img src="/semi/views/images/InsertReview_uploadFiles/<%=a.getChangeName() %>" width="800px">
 		
 		
 		<%}} %>
