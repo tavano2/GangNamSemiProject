@@ -156,15 +156,14 @@ margin-left:150px;
                <a class="avatar"> <img src="/semi/views/images/products/person1.JPG">
                </a>
                <div class="content">
-               <tabel>
-               <tr>
-               	
-               </tr>
-               <tr></tr>
-                  <textarea rows="3" cols="80" id="replyContent"></textarea>
+               <table>
+               <tbody>
+               <tr><td><textarea rows="3" cols="80" id="replyContent"></textarea></td><td>
                    <button class="ui grey basic button replyBtn"
-									id="replyBtn">등록</button>
-								
+									id="replyBtn">등록</button></td></tr>
+                  
+				</tbody>
+				</table>
                </div>
             </div>
          </div>

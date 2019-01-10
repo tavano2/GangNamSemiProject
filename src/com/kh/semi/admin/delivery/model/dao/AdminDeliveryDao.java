@@ -748,12 +748,16 @@ public class AdminDeliveryDao {
 			pstmt.setString(2, "배송준비중");
 			pstmt.setString(3, "배송대기중");
 			pstmt.setString(4, "배송중");
-			pstmt.setString(5, "최소");
-			pstmt.setString(6, "교환");
-			pstmt.setString(7, "반품");
-			pstmt.setString(8, "환불");
-			pstmt.setString(9, "구매확정");
-			pstmt.setString(10, "완료");
+			pstmt.setString(5, "취소신청");
+			pstmt.setString(6, "취소처리중");
+			pstmt.setString(7, "교환신청");
+			pstmt.setString(8, "교환처리중");
+			pstmt.setString(9, "반품신청");
+			pstmt.setString(10, "반품처리중");
+			pstmt.setString(11, "환불신청");
+			pstmt.setString(12, "환불처리중");
+			pstmt.setString(13, "구매확정");
+			pstmt.setString(14, "완료");
 			
 			rset = pstmt.executeQuery();
 			
