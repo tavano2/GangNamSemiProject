@@ -49,22 +49,7 @@
 <!-- Common css -->
 <link href="/semi/css/customer/common/main.css" rel="stylesheet">
 
-<!-- J-query CDN -->
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- Semantic UI JS CDN -->
-<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-<!-- jQuery Custom Scroller CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-	<script>
-		// Checkbox > 일괄 Check 기능
-		$(document).ready(function() {
-			$('.check-all').click(function() {
-				$('.class').attr('checked', this.checked);
-			});
-		});
-	</script>
 
 </head>
 <body>
@@ -187,10 +172,26 @@
 	</div>
 
 	<%@ include file="/views/customer/common/mainFooter.jsp"%>
-
+	
+	<!-- J-query CDN -->
+	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- Semantic UI JS CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+	<!-- jQuery Custom Scroller CDN -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
 	<!-- Common js -->
 	<script src="/semi/js/customer/common/main.js"></script>
+
+	<script>
+		// Checkbox > 일괄 Check 기능
+		$(document).ready(function() {
+			$('.check-all').click(function() {
+				$('.class').attr('checked', this.checked);
+			});
+		});
+	</script>
 
 	<script>
 		$('.contextBox .ui.dropdown').dropdown(); //컨텐츠 박스의 드롭다운 실행
